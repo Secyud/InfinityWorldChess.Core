@@ -1,5 +1,4 @@
 ﻿using InfinityWorldChess.Ugf;
-using Secyud.Ugf.Resource;
 using UnityEngine;
 
 namespace InfinityWorldChess.ManufacturingDomain

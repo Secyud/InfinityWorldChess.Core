@@ -3,7 +3,6 @@ using InfinityWorldChess.GlobalDomain;
 using InfinityWorldChess.RoleDomain;
 using InfinityWorldChess.SkillDomain;
 using InfinityWorldChess.Ugf;
-using Secyud.Ugf.Resource;
 
 namespace InfinityWorldChess.BasicBundle.PassiveSkills
 {

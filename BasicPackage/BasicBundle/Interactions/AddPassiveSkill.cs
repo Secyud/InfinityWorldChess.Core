@@ -1,7 +1,6 @@
 ﻿using InfinityWorldChess.BasicBundle.PassiveSkills;
 using InfinityWorldChess.PlayerDomain;
 using JetBrains.Annotations;
-using Secyud.Ugf.Resource;
 
 namespace InfinityWorldChess.BasicBundle.Interactions
 {

@@ -2,68 +2,52 @@
 
 using Secyud.Ugf.Archiving;
 using System.Globalization;
-using System.IO;
+using Secyud.Ugf.DataManager;
 
 #endregion
 
 namespace InfinityWorldChess.RoleDomain
 {
-	public partial class Role
-	{
-		public BasicProperty Basic { get; } = new();
+    public partial class Role
+    {
+        public BasicProperty Basic { get; } = new();
 
-		public class BasicProperty : IArchivable
-		{
-			// 生辰八字
-			public int BirthYear;
-			public byte BirthMonth;
-			public byte BirthDay;
-			public byte BirthHour;
-			// 性别
-			public bool Female;
+        public class BasicProperty : DataObject
+        {
+            [S(0, ignore: true)] public readonly RoleAvatar Avatar = new();
+            // 生辰八字
+            [S(1)] public int BirthYear;
+            [S(2)] public byte BirthMonth;
+            [S(3)] public byte BirthDay;
+            [S(4)] public byte BirthHour;
+            // 性别
+            [S(5)] public bool Female;
+            // 名
+            [S(6)] public string FirstName;
+            // 姓
+            [S(7)] public string LastName;
+            [S(8)] public string Description;
 
-			// 名
-			public string FirstName;
-			// 姓
-			public string LastName;
-			public string Description;
+            public string Name
+            {
+                get =>
+                    CultureInfo.CurrentCulture.TwoLetterISOLanguageName == "zh"
+                        ? $"{LastName}{FirstName}"
+                        : $"{FirstName} {LastName}";
+                set => LastName = value;
+            }
 
-			public readonly RoleAvatar Avatar = new();
+            public override void Save(IArchiveWriter writer)
+            {
+                base.Save(writer);
+                Avatar.Save(writer);
+            }
 
-			public string Name
-			{
-				get =>
-					CultureInfo.CurrentCulture.TwoLetterISOLanguageName == "zh"
-						? $"{LastName}{FirstName}"
-						: $"{FirstName} {LastName}";
-				set => LastName = value;
-			}
-
-			public void Save(BinaryWriter writer)
-			{
-				writer.Write(BirthYear);
-				writer.Write(BirthMonth);
-				writer.Write(BirthDay);
-				writer.Write(BirthHour);
-				writer.Write(Female);
-				writer.Write(FirstName);
-				writer.Write(LastName);
-				writer.Write(Description??string.Empty);
-				Avatar.Save(writer);
-			}
-
-			public void Load(BinaryReader reader)
-			{
-				BirthYear = reader.ReadInt32();
-				BirthMonth = reader.ReadByte();
-				BirthDay = reader.ReadByte();
-				BirthHour = reader.ReadByte();
-				Female = reader.ReadBoolean();
-				FirstName = reader.ReadString();
-				LastName = reader.ReadString();
-				Description = reader.ReadString();
-				Avatar.Load(reader);
-			}
-		}
-	}
+            public override void Load(IArchiveReader reader)
+            {
+                base.Load(reader);
+                Avatar.Load(reader);
+            }
+        }
+    }
 }

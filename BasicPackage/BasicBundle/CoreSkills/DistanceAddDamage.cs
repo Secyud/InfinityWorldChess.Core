@@ -1,6 +1,5 @@
 ﻿using InfinityWorldChess.SkillDomain;
 using Secyud.Ugf.HexMap.Utilities;
-using Secyud.Ugf.Resource;
 
 namespace InfinityWorldChess.BasicBundle.CoreSkills
 {

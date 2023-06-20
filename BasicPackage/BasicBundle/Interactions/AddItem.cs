@@ -1,6 +1,5 @@
 ﻿using InfinityWorldChess.BasicBundle.Items;
 using InfinityWorldChess.PlayerDomain;
-using Secyud.Ugf.Resource;
 
 namespace InfinityWorldChess.BasicBundle.Interactions
 {

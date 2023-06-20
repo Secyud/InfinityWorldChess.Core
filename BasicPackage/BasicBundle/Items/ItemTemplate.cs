@@ -2,7 +2,6 @@
 using InfinityWorldChess.Ugf;
 using Secyud.Ugf;
 using Secyud.Ugf.AssetLoading;
-using Secyud.Ugf.Resource;
 using UnityEngine;
 
 namespace InfinityWorldChess.BasicBundle.Items

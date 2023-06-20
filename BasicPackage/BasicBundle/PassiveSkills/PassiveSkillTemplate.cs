@@ -5,7 +5,6 @@ using InfinityWorldChess.Ugf;
 using Secyud.Ugf;
 using Secyud.Ugf.AssetLoading;
 using Secyud.Ugf.HexMap;
-using Secyud.Ugf.Resource;
 using UnityEngine;
 using UnityEngine.Playables;
 

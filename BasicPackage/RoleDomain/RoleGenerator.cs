@@ -11,7 +11,7 @@ using InfinityWorldChess.BasicBundle.CoreSkills;
 using InfinityWorldChess.BasicBundle.FormSkills;
 using InfinityWorldChess.BasicBundle.Items;
 using InfinityWorldChess.BasicBundle.PassiveSkills;
-using Secyud.Ugf.Resource;
+using Secyud.Ugf.DataManager;
 
 #endregion
 

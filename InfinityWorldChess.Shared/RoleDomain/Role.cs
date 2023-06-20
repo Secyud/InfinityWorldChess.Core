@@ -6,6 +6,7 @@ using Secyud.Ugf;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using Secyud.Ugf.Archiving;
 using UnityEngine;
 
 #endregion
@@ -22,7 +23,7 @@ namespace InfinityWorldChess.RoleDomain
 
 		public void SetContent(Transform transform)
 		{
-			Og.DefaultProvider.Get<IRoleService>().SetContent(transform, this);
+			U.Get<IRoleService>().SetContent(transform, this);
 		}
 
 
@@ -49,7 +50,7 @@ namespace InfinityWorldChess.RoleDomain
 				_extraProperties[typeof(TProperty)] = property;
 		}
 
-		public void Save(BinaryWriter writer)
+		public void Save(IArchiveWriter writer)
 		{
 			writer.Write(Id);
 			Basic.Save(writer);
@@ -63,10 +64,10 @@ namespace InfinityWorldChess.RoleDomain
 			Relation.Save(writer);
 			writer.Write(_extraProperties.Count);
 			foreach (RoleProperty extraProperty in _extraProperties.Values)
-				writer.WriteArchiving(extraProperty);
+				writer.Write(extraProperty);
 		}
 
-		public void Load(BinaryReader reader, WorldChecker position)
+		public void Load(IArchiveReader reader, WorldChecker position)
 		{
 			Id = reader.ReadInt32();
 			Basic.Load(reader);

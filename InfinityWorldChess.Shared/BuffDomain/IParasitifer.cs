@@ -10,6 +10,6 @@ namespace InfinityWorldChess.BuffDomain
 	public interface IParasitifer<TTarget>
 		where TTarget : class, IParasitifer<TTarget>
 	{
-		SortedDictionary<TypeDescriptor, IParasiteBuff<TTarget>> Parasites { get; }
+		SortedDictionary<TypeStruct, IParasiteBuff<TTarget>> Parasites { get; }
 	}
 }

@@ -2,7 +2,6 @@
 using Secyud.Ugf;
 using Secyud.Ugf.Archiving;
 using Secyud.Ugf.AssetLoading;
-using Secyud.Ugf.Resource;
 using UnityEngine;
 
 namespace InfinityWorldChess.ActivityDomain

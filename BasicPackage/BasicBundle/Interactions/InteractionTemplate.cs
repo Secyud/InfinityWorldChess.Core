@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using InfinityWorldChess.InteractionDomain;
 using Secyud.Ugf;
 using Secyud.Ugf.AssetLoading;
-using Secyud.Ugf.Resource;
+using Secyud.Ugf.DataManager;
 using UnityEngine;
 
 namespace InfinityWorldChess.BasicBundle.Interactions

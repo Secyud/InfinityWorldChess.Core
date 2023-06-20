@@ -1,5 +1,4 @@
 using InfinityWorldChess.RoleDomain;
-using Secyud.Ugf.Resource;
 
 namespace InfinityWorldChess.BasicBundle.PassiveSkills
 {

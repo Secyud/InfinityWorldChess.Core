@@ -16,7 +16,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using InfinityWorldChess.ActivityDomain;
-using Secyud.Ugf.Resource;
+using Secyud.Ugf.DataManager;
 
 #endregion
 

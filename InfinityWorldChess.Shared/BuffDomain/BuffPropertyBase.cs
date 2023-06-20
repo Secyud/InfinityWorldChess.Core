@@ -5,12 +5,13 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Secyud.Ugf.Archiving;
 
 #endregion
 
 namespace InfinityWorldChess.BuffDomain
 {
-	public class BuffPropertyBase<TTarget, TAbstractBuff> : SortedDictionary<TypeDescriptor, TAbstractBuff>
+	public class BuffPropertyBase<TTarget, TAbstractBuff> : SortedDictionary<TypeStruct, TAbstractBuff>
 		where TAbstractBuff : class, IBuff<TTarget>
 	{
 		public virtual TBuff Get<TBuff>() where TBuff : class, IBuff<TTarget>
@@ -69,23 +70,23 @@ namespace InfinityWorldChess.BuffDomain
 		
 		
 
-		public virtual void Save(BinaryWriter writer)
+		public virtual void Save(IArchiveWriter writer)
 		{
 			TAbstractBuff[] buffs = Values
-				.Where(b => b.GetTypeId() != Guid.Empty)
+				.Where(b => b is IArchivable)
 				.ToArray();
 
 			writer.Write(buffs.Length);
 			foreach (TAbstractBuff buff in buffs)
-				writer.WriteArchiving(buff);
+				writer.Write(buff);
 		}
 
-		public virtual void Load(BinaryReader reader, TTarget target)
+		public virtual void Load(IArchiveReader reader, TTarget target)
 		{
 			int count = reader.ReadInt32();
 			for (int i = 0; i < count; i++)
 			{
-				TAbstractBuff buff = reader.ReadArchiving<TAbstractBuff>();
+				TAbstractBuff buff = reader.Read<TAbstractBuff>();
 				Install(buff, target);
 			}
 		}

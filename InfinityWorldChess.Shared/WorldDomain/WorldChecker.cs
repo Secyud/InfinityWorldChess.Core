@@ -7,6 +7,7 @@ using Secyud.Ugf.HexMap;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using Secyud.Ugf;
 
 #endregion
 
@@ -138,20 +139,14 @@ namespace InfinityWorldChess.WorldDomain
 			return Math.Min(value / 1024 - 1, SharedConsts.MaxWorldResourceLevel);
 		}
 
-		public void Save(BinaryWriter writer)
+		public void Save(IArchiveWriter writer)
 		{
-			writer.Write(Stone);
-			writer.Write(Tree);
-			writer.Write(Farm);
-			writer.Write(SpecialIndex);
+			U.AutoSaveObject(this,writer);
 		}
 
-		public void Load(BinaryReader reader)
+		public void Load(IArchiveReader reader)
 		{
-			Stone = reader.ReadInt32();
-			Tree = reader.ReadInt32();
-			Farm = reader.ReadInt32();
-			SpecialIndex = reader.ReadInt32();
+			U.AutoLoadObject(this,reader);
 		}
 	}
 }

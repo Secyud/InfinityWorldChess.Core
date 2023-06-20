@@ -8,7 +8,7 @@ using Secyud.Ugf.Modularity;
 namespace InfinityWorldChess.BundleDomain
 {
 	// all event is enormous, separate them
-	public interface IBundle : ICanBeShown, IHasContent, IOnGameArchiving
+	public interface IBundle : ICanBeShown, IHasContent
 	{
 
 	}

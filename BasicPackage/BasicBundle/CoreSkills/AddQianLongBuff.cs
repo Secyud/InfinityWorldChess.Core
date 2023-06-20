@@ -1,7 +1,6 @@
 using InfinityWorldChess.BasicBundle.BattleBuffs;
 using InfinityWorldChess.BattleDomain;
 using Secyud.Ugf.HexMap;
-using Secyud.Ugf.Resource;
 
 namespace InfinityWorldChess.BasicBundle.CoreSkills
 {

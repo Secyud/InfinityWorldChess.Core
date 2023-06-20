@@ -1,5 +1,4 @@
 ﻿using InfinityWorldChess.SkillDomain;
-using Secyud.Ugf.Resource;
 
 namespace InfinityWorldChess.BasicBundle.CoreSkills
 {

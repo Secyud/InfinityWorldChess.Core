@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using JetBrains.Annotations;
-using Secyud.Ugf.Resource;
+using Secyud.Ugf.DataManager;
 
 namespace InfinityWorldChess.BasicBundle.Interactions
 {

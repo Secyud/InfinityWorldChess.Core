@@ -8,7 +8,6 @@ using Secyud.Ugf;
 using Secyud.Ugf.AssetLoading;
 using Secyud.Ugf.HexMap;
 using Secyud.Ugf.HexMap.Utilities;
-using Secyud.Ugf.Resource;
 using UnityEngine;
 using UnityEngine.Playables;
 

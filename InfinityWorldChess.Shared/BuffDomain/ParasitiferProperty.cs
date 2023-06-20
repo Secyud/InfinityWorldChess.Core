@@ -11,7 +11,7 @@ namespace InfinityWorldChess.BuffDomain
 		BuffPropertyBase<TTarget, IParasiteBuff<TTarget>>, IParasitifer<TTarget>
 		where TTarget : class, IParasitifer<TTarget>
 	{
-		public SortedDictionary<TypeDescriptor, IParasiteBuff<TTarget>> Parasites => this;
+		public SortedDictionary<TypeStruct, IParasiteBuff<TTarget>> Parasites => this;
 
 		public override void Install<TBuff>(TBuff buff, TTarget target)
 		{

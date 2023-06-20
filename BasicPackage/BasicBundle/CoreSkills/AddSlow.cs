@@ -1,7 +1,6 @@
 ﻿using InfinityWorldChess.BasicBundle.BattleBuffs;
 using InfinityWorldChess.BattleDomain;
 using InfinityWorldChess.BuffDomain;
-using Secyud.Ugf.Resource;
 
 namespace InfinityWorldChess.BasicBundle.CoreSkills
 {

@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using InfinityWorldChess.ActivityDomain;
-using Secyud.Ugf.Resource;
 
 namespace InfinityWorldChess.BasicBundle.ActivityBundle
 {

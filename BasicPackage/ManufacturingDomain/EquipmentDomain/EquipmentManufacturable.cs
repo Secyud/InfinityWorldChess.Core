@@ -2,7 +2,6 @@
 
 using InfinityWorldChess.ItemDomain.EquipmentDomain;
 using InfinityWorldChess.Ugf;
-using Secyud.Ugf.Resource;
 using Secyud.Ugf.TableComponents;
 using UnityEngine;
 

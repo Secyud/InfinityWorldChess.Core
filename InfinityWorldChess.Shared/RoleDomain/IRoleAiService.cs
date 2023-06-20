@@ -6,7 +6,8 @@ using Secyud.Ugf.DependencyInjection;
 
 namespace InfinityWorldChess.RoleDomain
 {
-	public interface IRoleAiService : ISingleton
+	[Registry]
+	public interface IRoleAiService
 	{
 		void AutoEquipCoreSkill(Role role);
 

@@ -2,7 +2,6 @@
 using InfinityWorldChess.BasicBundle.BattleBuffs;
 using InfinityWorldChess.BasicBundle.BattleBuffs.Recorders;
 using InfinityWorldChess.BattleDomain;
-using Secyud.Ugf.Resource;
 
 namespace InfinityWorldChess.BasicBundle.PassiveSkills
 {

@@ -11,11 +11,11 @@ using InfinityWorldChess.RoleDomain;
 using Secyud.Ugf;
 using Secyud.Ugf.DependencyInjection;
 using Secyud.Ugf.Modularity;
-using Secyud.Ugf.Resource;
 using System.IO;
 using InfinityWorldChess.BasicBundle.CoreSkills;
 using InfinityWorldChess.BasicBundle.Interactions;
 using InfinityWorldChess.PlayerDomain;
+using Secyud.Ugf.DataManager;
 
 #endregion
 
@@ -24,7 +24,7 @@ namespace InfinityWorldChess
     [DependsOn(
         typeof(InfinityWorldChessDomainModule)
     )]
-    public class BasicPackageModule : IUgfModule, IOnGameArchiving, IPostConfigure
+    public class BasicPackageModule : IUgfModule, IPostConfigure
     {
         public void ConfigureGame(ConfigurationContext context)
         {

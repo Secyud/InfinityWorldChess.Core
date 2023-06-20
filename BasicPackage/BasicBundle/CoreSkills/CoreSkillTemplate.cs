@@ -2,7 +2,6 @@
 using InfinityWorldChess.SkillDomain;
 using InfinityWorldChess.Ugf;
 using Secyud.Ugf.HexMap;
-using Secyud.Ugf.Resource;
 using UnityEngine;
 
 namespace InfinityWorldChess.BasicBundle.CoreSkills

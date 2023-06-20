@@ -22,7 +22,7 @@ namespace InfinityWorldChess.RoleDomain
 
 		public void AutoEquipPassiveSkill()
 		{
-			IRoleAiService ai = Og.DefaultProvider.Get<IRoleAiService>();
+			IRoleAiService ai = U.Get<IRoleAiService>();
 			if (ai is not null)
 				ai.AutoEquipPassiveSkill(this);
 			else
