@@ -1,0 +1,127 @@
+{
+  "version": 3,
+  "targets": {
+    ".NETStandard,Version=v2.1": {
+      "Ugf.HexMap/1.0.0": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v2.1",
+        "dependencies": {
+          "Ugf.Unity": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/Ugf.HexMap.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Ugf.HexMap.dll": {}
+        }
+      },
+      "Ugf.Unity/1.0.0": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v2.1",
+        "dependencies": {
+          "UgfBase": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/Ugf.Unity.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Ugf.Unity.dll": {}
+        }
+      },
+      "UgfBase/1.0.0": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v2.1",
+        "compile": {
+          "bin/placeholder/UgfBase.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/UgfBase.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Ugf.HexMap/1.0.0": {
+      "type": "project",
+      "path": "../Ugf.HexMap/Ugf.HexMap.csproj",
+      "msbuildProject": "../Ugf.HexMap/Ugf.HexMap.csproj"
+    },
+    "Ugf.Unity/1.0.0": {
+      "type": "project",
+      "path": "../Ugf.Unity/Ugf.Unity.csproj",
+      "msbuildProject": "../Ugf.Unity/Ugf.Unity.csproj"
+    },
+    "UgfBase/1.0.0": {
+      "type": "project",
+      "path": "../UgfBase/UgfBase.csproj",
+      "msbuildProject": "../UgfBase/UgfBase.csproj"
+    }
+  },
+  "projectFileDependencyGroups": {
+    ".NETStandard,Version=v2.1": [
+      "Ugf.HexMap >= 1.0.0"
+    ]
+  },
+  "packageFolders": {
+    "C:\\Users\\Secyud\\.nuget\\packages\\": {}
+  },
+  "project": {
+    "version": "1.0.0",
+    "restore": {
+      "projectUniqueName": "D:\\Projects\\Ugf\\Outer\\Core.csproj",
+      "projectName": "Core",
+      "projectPath": "D:\\Projects\\Ugf\\Outer\\Core.csproj",
+      "packagesPath": "C:\\Users\\Secyud\\.nuget\\packages\\",
+      "outputPath": "D:\\Projects\\Ugf\\Outer\\obj\\",
+      "projectStyle": "PackageReference",
+      "configFilePaths": [
+        "C:\\Users\\Secyud\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+      ],
+      "originalTargetFrameworks": [
+        "netstandard2.1"
+      ],
+      "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "https://api.nuget.org/v3/index.json": {}
+      },
+      "frameworks": {
+        "netstandard2.1": {
+          "targetAlias": "netstandard2.1",
+          "projectReferences": {
+            "D:\\Projects\\Ugf\\Ugf.HexMap\\Ugf.HexMap.csproj": {
+              "projectPath": "D:\\Projects\\Ugf\\Ugf.HexMap\\Ugf.HexMap.csproj"
+            }
+          }
+        }
+      },
+      "warningProperties": {
+        "warnAsError": [
+          "NU1605"
+        ]
+      }
+    },
+    "frameworks": {
+      "netstandard2.1": {
+        "targetAlias": "netstandard2.1",
+        "imports": [
+          "net461",
+          "net462",
+          "net47",
+          "net471",
+          "net472",
+          "net48",
+          "net481"
+        ],
+        "assetTargetFallback": true,
+        "warn": true,
+        "frameworkReferences": {
+          "NETStandard.Library": {
+            "privateAssets": "all"
+          }
+        },
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.304\\RuntimeIdentifierGraph.json"
+      }
+    }
+  }
+}
