@@ -4,7 +4,6 @@ using InfinityWorldChess.RoleDomain;
 using InfinityWorldChess.Ugf;
 using Secyud.Ugf;
 using System.Linq;
-using InfinityWorldChess.PlayerDomain;
 
 #endregion
 
@@ -18,7 +17,7 @@ namespace InfinityWorldChess.SkillDomain
 		private void Awake()
 		{
 			_skills = new IFormSkill[SharedConsts.FormSkillCount];
-			_context = Og.Get<GameScope,SkillGameContext>();
+			_context = U.Get<SkillGameContext>();
 		}
 
 		private void Refresh()

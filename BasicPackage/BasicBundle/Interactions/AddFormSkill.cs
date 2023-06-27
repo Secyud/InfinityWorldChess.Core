@@ -1,21 +1,18 @@
 ﻿using InfinityWorldChess.BasicBundle.FormSkills;
 using InfinityWorldChess.PlayerDomain;
+using Secyud.Ugf.DataManager;
 
 namespace InfinityWorldChess.BasicBundle.Interactions
 {
     public class AddFormSkill : InteractionAction
     {
-        private FormSkillTemplate _skill;
+        [field: S(ID = 0)]public string SkillName;
 
         public override void Invoke()
         {
-            if (_skill is not null)
-                GameScope.PlayerGameContext.Role.FormSkill.LearnedSkills.Add(_skill);
-        }
-
-        public override void SetAction(params string[] message)
-        {
-            _skill = message[0].CreateAndInit<FormSkillTemplate>();
+            if (SkillName is null) return;
+            FormSkillTemplate skill = DataObject.Create<FormSkillTemplate>(SkillName);
+            GameScope.Instance.Player.Role.FormSkill.LearnedSkills.Add(skill);
         }
     }
 }

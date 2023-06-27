@@ -6,8 +6,8 @@ using Secyud.Ugf.ButtonComponents;
 using Secyud.Ugf.HexMap;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using Secyud.Ugf;
+using Secyud.Ugf.DataManager;
 
 #endregion
 
@@ -15,11 +15,11 @@ namespace InfinityWorldChess.WorldDomain
 {
 	public class WorldChecker : IArchivable
 	{
-		private int _specialIndex = -1;
-		private int _stone;
-		private int _tree;
-		private int _farm;
-		private byte _pathState;
+		[S(ID = 0)]private int _specialIndex = -1;
+		[S(ID = 1)]private int _stone;
+		[S(ID = 2)]private int _tree;
+		[S(ID = 3)]private int _farm;
+		[S(ID = 4)]private byte _pathState;
 
 
 		public byte PathState

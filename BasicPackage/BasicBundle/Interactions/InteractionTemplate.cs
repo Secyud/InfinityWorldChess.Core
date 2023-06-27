@@ -1,23 +1,46 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Ugf;
 using InfinityWorldChess.InteractionDomain;
 using Secyud.Ugf;
-using Secyud.Ugf.AssetLoading;
 using Secyud.Ugf.DataManager;
 using UnityEngine;
 
 namespace InfinityWorldChess.BasicBundle.Interactions
 {
-    public class InteractionTemplate : ResourcedBase, IInteractionUnit
+    public class InteractionTemplate : DataObject, IInteractionUnit
     {
-        [R(4)] public string Text { get; set; }
-        [R(5)] public string Answer { get; set; }
+        private List<Tuple<string, IInteractionUnit>> _selections;
+        [field: S(ID = 0)] public string Text { get; set; }
+        [field: S(ID = 1)] public string Answer { get; set; }
+        [field: S(ID = 2)] public IObjectAccessor<Sprite> Background { get; set; }
+        [field: S(ID = 3)] public InteractionAction SelectAction { get; set; }
 
-        public IObjectAccessor<Sprite> Background { get; set; }
-        public InteractionAction SelectAction { get; set; }
+        [field: S(ID = 4, Style = EditStyle.FlagOrMemo)]
+        public string SelectionStr { get; set; }
 
-        public IList<Tuple<string, IInteractionUnit>> Selections { get; } =
-            new List<Tuple<string, IInteractionUnit>>();
+        public IList<Tuple<string, IInteractionUnit>> Selections
+        {
+            get
+            {
+                if (_selections is null)
+                {
+                    _selections = new List<Tuple<string, IInteractionUnit>>();
+                    string[] names = SelectionStr.Split(",");
+                    foreach (string n in names)
+                    {
+                        string name = n.Trim();
+                        if (name.IsNullOrEmpty())
+                            continue;
+                        InteractionTemplate template = Create<InteractionTemplate>(name);
+                        _selections.Add(new Tuple<string, IInteractionUnit>(
+                            template.Answer, template));
+                    }
+                }
+
+                return _selections;
+            }
+        }
 
         public void OnStart()
         {
@@ -26,37 +49,6 @@ namespace InfinityWorldChess.BasicBundle.Interactions
         public void OnEnd()
         {
             SelectAction?.Invoke();
-        }
-
-        private InteractionAction GetAction(ResourceDescriptor descriptor, int id)
-        {
-            string actionName = descriptor.Get<string>(id);
-            if (actionName.IsNullOrEmpty()) return null;
-            string[] actParam = actionName.Split(',');
-            ResourceDescriptor actionDescriptor = Og.InitializeManager.GetResource<InteractionAction>(actParam[0]);
-            InteractionAction action = Og.ClassManager.Construct<InteractionAction>(actionDescriptor.TypeId);
-            action.SetAction(actParam[1..]);
-            return action;
-        }
-
-        protected override void SetDefaultValue()
-        {
-            Background = AtlasSpriteContainer.Create(
-                IwcAb.Instance, Descriptor, 0);
-            SelectAction = GetAction(Descriptor, 2);
-            string[] names = Descriptor.Get<string>(3).Split(",");
-            Selections.Clear();
-            foreach (string n in names)
-            {
-                string name = n.Trim();
-                if (name.IsNullOrEmpty())
-                    continue;
-                InteractionTemplate template = new InteractionTemplate().Init(name);
-                Selections.Add(new Tuple<string, IInteractionUnit>(
-                    template.Answer,
-                    template
-                ));
-            }
         }
     }
 }

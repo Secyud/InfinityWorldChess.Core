@@ -3,15 +3,16 @@
 using InfinityWorldChess.SkillDomain;
 using InfinityWorldChess.WorldDomain;
 using Secyud.Ugf.AssetLoading;
-using Secyud.Ugf.DependencyInjection;
 using System.Collections.Generic;
+using Secyud.Ugf.DependencyInjection;
 using UnityEngine;
 
 #endregion
 
 namespace InfinityWorldChess.BattleDomain
 {
-	public class BattleGlobalService : ISingleton
+	[Registry()]
+	public class BattleGlobalService
 	{
 		public readonly List<PrefabContainer<Transform>>[,] Features;
 		public readonly PrefabContainer<Transform>[] SpecialFeatures;

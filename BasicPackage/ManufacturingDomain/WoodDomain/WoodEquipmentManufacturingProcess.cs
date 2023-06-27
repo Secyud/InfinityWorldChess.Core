@@ -1,8 +1,8 @@
 #region
 
 using InfinityWorldChess.ItemDomain.EquipmentDomain;
+using InfinityWorldChess.Ugf;
 using Secyud.Ugf;
-using System;
 using UnityEngine;
 
 #endregion

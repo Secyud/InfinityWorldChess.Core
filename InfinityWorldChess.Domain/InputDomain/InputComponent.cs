@@ -15,13 +15,13 @@ namespace InfinityWorldChess.InputDomain
 		[SerializeField] private InputKeyWord KeyWord;
 		[SerializeField] private RectTransform UiLayer;
 		private InputService _service;
-		private IInputKeyMapService _map;
+		private InputKeyMapService _map;
 		private SButton _button;
 
 		private void Awake()
 		{
-			_service = Og.DefaultProvider.Get<InputService>();
-			_map = Og.DefaultProvider.Get<IInputKeyMapService>();
+			_service = U.Get<InputService>();
+			_map = U.Get<InputKeyMapService>();
 			_button = GetComponent<SButton>();
 		}
 

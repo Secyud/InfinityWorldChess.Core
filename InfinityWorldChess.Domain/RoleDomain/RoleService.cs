@@ -8,7 +8,8 @@ using UnityEngine;
 
 namespace InfinityWorldChess.RoleDomain
 {
-	public class RoleService : IRoleService, ITransient
+	[Registry(LifeTime = DependencyLifeTime.Transient)]
+	public class RoleService : IRoleService
 	{
 		private readonly RoleResourceManager _resourceManager;
 

@@ -2,9 +2,9 @@
 
 using InfinityWorldChess.RoleDomain;
 using InfinityWorldChess.Ugf;
-using Secyud.Ugf;
 using System.Linq;
 using InfinityWorldChess.GlobalDomain;
+using Secyud.Ugf;
 using UnityEngine;
 
 #endregion
@@ -22,7 +22,7 @@ namespace InfinityWorldChess.ItemDomain.EquipmentDomain
 			byte i = (byte)index;
 			if (_role.Equipment[i] is null)
 			{
-				Og.ScopeFactory.GetScope<GlobalScope>().OnItemSelectionOpen(
+				U.Factory.Application.DependencyManager.GetScope<GlobalScope>().OnItemSelectionOpen(
 					_role.Item.Where(
 						u => u is IEquipment e &&
 							(0b1 << index & e.EquipCode) > 0

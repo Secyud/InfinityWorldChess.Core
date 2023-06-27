@@ -27,14 +27,14 @@ namespace InfinityWorldChess.BattleDomain
 
         public virtual void OnBattleFinish()
         {
-            Og.ScopeFactory.DestroyScope<BattleScope>();
+            U.Factory.Application.DependencyManager.DestroyScope<BattleScope>();
             Scope = null;
         }
 
         public virtual void OnBattleCreate()
         {
             GameScope.OnInterrupt();
-            Scope = Og.ScopeFactory.CreateScope<BattleScope>();
+            Scope = U.Factory.Application.DependencyManager.CreateScope<BattleScope>();
             Scope.CreateBattle(this);
         }
 

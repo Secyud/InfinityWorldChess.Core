@@ -17,11 +17,11 @@ namespace InfinityWorldChess.RoleDomain
 		{
 			Values.Set(
 				property.Name,
-				Og.L["Gender_" + (property.Female ? "Female" : "Male")],
+				U.T["Gender_" + (property.Female ? "Female" : "Male")],
 				property.BirthYear.ToString(),
-				Og.L[$"{nameof(MonthType)}_{property.BirthMonth}"] + " " +
-				Og.L[$"{nameof(DayType)}_{property.BirthDay}"] + " " +
-				Og.L[$"{nameof(HourType)}_{property.BirthHour}"]
+				U.T[$"{nameof(MonthType)}_{property.BirthMonth}"] + " " +
+				U.T[$"{nameof(DayType)}_{property.BirthDay}"] + " " +
+				U.T[$"{nameof(HourType)}_{property.BirthHour}"]
 			);
 		}
 	}

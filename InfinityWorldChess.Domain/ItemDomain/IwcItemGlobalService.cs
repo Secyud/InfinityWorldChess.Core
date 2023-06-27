@@ -1,13 +1,14 @@
 ﻿#region
 
-using Secyud.Ugf.DependencyInjection;
 using System.Collections.Generic;
+using Secyud.Ugf.DependencyInjection;
 
 #endregion
 
 namespace InfinityWorldChess.ItemDomain
 {
-	public class IwcItemGlobalService :IItemGlobalService, ISingleton
+	[Registry()]
+	public class IwcItemGlobalService :IItemGlobalService
 	{
 		public List<IItem> List { get; } = new();
 	}

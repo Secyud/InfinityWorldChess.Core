@@ -24,7 +24,7 @@ namespace InfinityWorldChess.ManufacturingDomain
 		public override void SetContent(Transform transform)
 		{
 			base.SetContent(transform);
-			transform.AddListShown(Og.L["特性"], Buff);
+			transform.AddListShown(U.T["特性"], Buff);
 		}
 	}
 }

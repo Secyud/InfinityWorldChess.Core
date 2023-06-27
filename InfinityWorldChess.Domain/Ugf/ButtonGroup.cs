@@ -38,7 +38,7 @@ namespace InfinityWorldChess.Ugf
 				if (Float)
 					b.onClick.AddListener(() => Destroy(gameObject));
 				SText t = TextTemplate.Instantiate(b.transform);
-				t.text = Og.L[button.ShowName];
+				t.text = U.T[button.ShowName];
 				button.SetButton(b);
 			}
 			if (Float && LayoutElement is GridLayoutGroup group)
@@ -56,7 +56,7 @@ namespace InfinityWorldChess.Ugf
 			IEnumerable<ButtonRegistration<TItem>> buttons,
 			UnityAction refreshAction = null)
 		{
-			ButtonGroup group = Instantiate(this, Og.Canvas.transform);
+			ButtonGroup group = Instantiate(this, U.Canvas.transform);
 			group.OnInitialize(target, buttons, refreshAction);
 			group.Replace(ref _instance);
 			return group;

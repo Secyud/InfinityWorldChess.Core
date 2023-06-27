@@ -1,15 +1,14 @@
 ﻿using Secyud.Ugf.AssetLoading;
 using Secyud.Ugf.DependencyInjection;
-using UnityEditor;
 
 namespace InfinityWorldChess.GlobalDomain
 {
-    [DependScope(typeof(GlobalScope))]
-    public class MainMenuScope:DependencyScope
+    [Registry(DependScope = typeof(GlobalScope))]
+    public class MainMenuScope:DependencyScopeProvider
     {
         public static IMonoContainer<MainMenuComponent> MainMenu;
         
-        public MainMenuScope(DependencyManager dependencyManager,IwcAb ab) : base(dependencyManager)
+        public MainMenuScope(IwcAb ab) 
         {
             MainMenu ??= MonoContainer<MainMenuComponent>.Create(ab);
             MainMenu.Create();

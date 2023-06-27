@@ -1,2 +1,6 @@
 ﻿.idea
 .gitignore
+bin
+obj
+*.sln
+*.csproj

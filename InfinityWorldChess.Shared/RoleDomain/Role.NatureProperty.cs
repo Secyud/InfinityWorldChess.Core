@@ -1,7 +1,6 @@
 #region
 
 using Secyud.Ugf.Archiving;
-using System.IO;
 
 #endregion
 
@@ -69,13 +68,13 @@ namespace InfinityWorldChess.RoleDomain
 				set => Properties[8] = value;
 			}
 
-			public void Save(BinaryWriter writer)
+			public void Save(IArchiveWriter writer)
 			{
 				foreach (float property in Properties)
 					writer.Write(property);
 			}
 
-			public void Load(BinaryReader reader)
+			public void Load(IArchiveReader reader)
 			{
 				for (int i = 0; i < Properties.Length; i++)
 					Properties[i] = reader.ReadSingle();

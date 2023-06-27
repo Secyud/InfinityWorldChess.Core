@@ -1,25 +1,28 @@
-﻿
-using InfinityWorldChess.PlayerDomain;
+﻿using InfinityWorldChess.PlayerDomain;
+using InfinityWorldChess.RoleDomain;
 using Secyud.Ugf.AssetLoading;
 using Secyud.Ugf.DependencyInjection;
 
 namespace InfinityWorldChess.InteractionDomain
 {
-    [DependScope(typeof(GameScope))]
-    public class InteractionScope:DependencyScope
+    [Registry(DependScope = typeof(GameScope))]
+    public class InteractionScope : DependencyScopeProvider
     {
-        private static  IMonoContainer<RoleInteractionComponent> _roleInteractionComponent;
+        private static IMonoContainer<RoleInteractionComponent> _roleInteractionComponent;
 
-        public static InteractionContext Context;
+        public static InteractionScope Instance { get; private set; }
         
-        public InteractionScope(DependencyManager dependencyProvider,IwcAb ab) : base(dependencyProvider)
+        public Role LeftRole { get; set; }
+        public Role RightRole { get; set; }
+        public RoleInteractionComponent Component => _roleInteractionComponent.Value;
+
+        public InteractionScope(IwcAb ab)
         {
             _roleInteractionComponent ??= MonoContainer<RoleInteractionComponent>.Create(ab);
             _roleInteractionComponent.Create();
-            Context = Get<InteractionContext>();
-            Context.Component = _roleInteractionComponent.Value;
+            Instance = this;
         }
-        
+
         public void OnCreation(IInteractionUnit unit)
         {
             _roleInteractionComponent.Value.SetInteraction(unit);
@@ -28,7 +31,7 @@ namespace InfinityWorldChess.InteractionDomain
         public override void Dispose()
         {
             _roleInteractionComponent.Destroy();
-            Context = null;
+            Instance = null;
         }
     }
 }

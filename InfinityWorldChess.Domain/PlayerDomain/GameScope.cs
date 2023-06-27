@@ -1,26 +1,35 @@
 ﻿using InfinityWorldChess.GlobalDomain;
 using InfinityWorldChess.RoleDomain;
 using InfinityWorldChess.WorldDomain;
+using Secyud.Ugf;
 using Secyud.Ugf.AssetLoading;
 using Secyud.Ugf.DependencyInjection;
-using UnityEditor;
 
 namespace InfinityWorldChess.PlayerDomain
 {
-    [DependScope(typeof(GlobalScope))]
-    public class GameScope : DependencyScope
+    [Registry(DependScope = typeof(GlobalScope))]
+    public class GameScope : DependencyScopeProvider
     {
         private static IMonoContainer<SystemMenuComponent> _systemMenu;
         private static IMonoContainer<RoleMessageComponent> _roleMessage;
         private static IMonoContainer<WorldMapComponent> _map;
         private static IMonoContainer<WorldUiComponent> _ui;
+        private WorldGameContext _worldContext;
+        private PlayerGameContext _playerContext;
+        private RoleGameContext _roleContext;
 
-        public static WorldGameContext WorldGameContext;
-        public static PlayerGameContext PlayerGameContext;
-        public static RoleGameContext RoleGameContext;
-        
+        public WorldGameContext World =>
+            _worldContext ??= Get<WorldGameContext>();
 
-        public GameScope(DependencyManager dependencyProvider, IwcAb ab) : base(dependencyProvider)
+        public PlayerGameContext Player =>
+            _playerContext ??= Get<PlayerGameContext>();
+
+        public RoleGameContext Role =>
+            _roleContext ??= Get<RoleGameContext>();
+
+        public static GameScope Instance { get; private set; }
+
+        public GameScope(IwcAb ab)
         {
             _systemMenu ??= MonoContainer<SystemMenuComponent>.Create(ab);
             _roleMessage ??= MonoContainer<RoleMessageComponent>.Create(ab);
@@ -29,22 +38,18 @@ namespace InfinityWorldChess.PlayerDomain
 
             _ui.Create();
             _map.Create();
-            _map.Value.Grid.HexMapManager = Get<WorldHexMapManager>();
+            _map.Value.Grid.HexMapManager = U.Get<WorldHexMapManager>();
 
-            WorldGameContext = Get<WorldGameContext>();
-            WorldGameContext.Map = _map.Value;
-            WorldGameContext.Ui = _ui.Value;
-            PlayerGameContext = Get<PlayerGameContext>();
-            RoleGameContext = Get<RoleGameContext>();
+            Instance = this;
         }
 
         public override void Dispose()
         {
+            _systemMenu.Destroy();
+            _roleMessage.Destroy();
             _ui.Destroy();
             _map.Destroy();
-            WorldGameContext = null;
-            PlayerGameContext = null;
-            RoleGameContext = null;
+            Instance = null;
         }
 
         public static void OnSystemMenuCreation()
@@ -86,13 +91,13 @@ namespace InfinityWorldChess.PlayerDomain
             _map.Value.Hide();
             _ui.Value.gameObject.SetActive(false);
         }
-        
+
         public static void ExitGame()
         {
 #if UNITY_EDITOR
             EditorApplication.isPlaying = false;
 #else
-			UnityEngine.Application.Quit();
+            UnityEngine.Application.Quit();
 #endif
         }
     }

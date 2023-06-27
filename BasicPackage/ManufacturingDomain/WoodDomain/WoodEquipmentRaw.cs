@@ -1,4 +1,5 @@
 ﻿using InfinityWorldChess.Ugf;
+using Secyud.Ugf.DataManager;
 using UnityEngine;
 
 namespace InfinityWorldChess.ManufacturingDomain
@@ -8,9 +9,9 @@ namespace InfinityWorldChess.ManufacturingDomain
 		WoodEquipmentManufacturingContext, WoodEquipmentManufacturingProcessTf,
 		WoodEquipmentManufacturingProperty>
 	{
-		[R(257)] public byte Width { get; set; }
+		[field: S(ID=257)] public byte Width { get; set; }
 
-		[R(258)] public byte Height { get; set; }
+		[field: S(ID=258)] public byte Height { get; set; }
 		
 		public override void SetContent(Transform transform)
 		{

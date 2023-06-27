@@ -1,7 +1,6 @@
 ﻿#region
 
 using Secyud.Ugf.Archiving;
-using System.IO;
 using Secyud.Ugf.DataManager;
 
 #endregion
@@ -12,33 +11,12 @@ namespace InfinityWorldChess.RoleDomain
     {
         public class AvatarElement4 : IArchivable
         {
-            [S()]public int Id;
-            public byte X;
-            public byte Y;
-            public byte Z;
-            public byte W;
+            [S(ID = 0)]public int Id;
+            [S(ID = 1)]public byte X= 0x80;
+            [S(ID = 2)]public byte Y= 0x80;
+            [S(ID = 3)]public byte Z= 0x80;
+            [S(ID = 4)]public byte W= 0x80;
 
-            public AvatarElement4()
-            {
-                
-            }
-            public AvatarElement4(int id)
-            {
-                Id = id;
-                X = 0x80;
-                Y = 0x80;
-                Z = 0x80;
-                W = 0x80;
-            }
-
-            public AvatarElement4(int id, byte x, byte y, byte z, byte w)
-            {
-                Id = id;
-                X = x;
-                Y = y;
-                Z = z;
-                W = w;
-            }
 
             public void Save(IArchiveWriter writer)
             {
@@ -60,32 +38,12 @@ namespace InfinityWorldChess.RoleDomain
         }
         public class AvatarElement2X : IArchivable
         {
-            public int Id1;
-            public int Id2;
-            public byte X;
-            public byte Y;
-            public byte Z;
-            public byte W;
-
-            public AvatarElement2X(int id1, int id2)
-            {
-                Id1 = id1;
-                Id2 = id2;
-                X = 0x80;
-                Y = 0x80;
-                Z = 0x80;
-                W = 0x80;
-            }
-
-            public AvatarElement2X(int id1, int id2, byte x, byte y, byte z, byte w)
-            {
-                Id1 = id1;
-                Id2 = id2;
-                X = x;
-                Y = y;
-                Z = z;
-                W = w;
-            }
+            [S(ID = 0)]public int Id1;
+            [S(ID = 1)]public int Id2;
+            [S(ID = 2)]public byte X= 0x80;
+            [S(ID = 3)]public byte Y= 0x80;
+            [S(ID = 4)]public byte Z= 0x80;
+            [S(ID = 5)]public byte W= 0x80;
 
             public void Save(IArchiveWriter writer)
             {
@@ -109,12 +67,7 @@ namespace InfinityWorldChess.RoleDomain
         }
         public class AvatarElement : IArchivable
         {
-            public int Id;
-
-            public AvatarElement(int id)
-            {
-                Id = id;
-            }
+            [S(ID = 0)]public int Id;
 
             public void Save(IArchiveWriter writer)
             {
@@ -127,15 +80,15 @@ namespace InfinityWorldChess.RoleDomain
             }
         }
 
-        [S(ignore:true)]public AvatarElement BackItem = new();
-        [S(ignore:true)]public AvatarElement BackHair;
-        [S(ignore:true)]public AvatarElement Body;
-        [S(ignore:true)]public AvatarElement Head;
-        [S(ignore:true)]public AvatarElement4 HeadFeature;
-        [S(ignore:true)]public AvatarElement2X NoseMouth;
-        [S(ignore:true)]public AvatarElement4 Eye;
-        [S(ignore:true)]public AvatarElement4 Brow;
-        [S(ignore:true)]public AvatarElement FrontHair;
+        [S(ID = 0)]public AvatarElement BackItem = new();
+        [S(ID = 1)]public AvatarElement BackHair;
+        [S(ID = 2)]public AvatarElement Body;
+        [S(ID = 3)]public AvatarElement Head;
+        [S(ID = 4)]public AvatarElement4 HeadFeature;
+        [S(ID = 5)]public AvatarElement2X NoseMouth;
+        [S(ID = 6)]public AvatarElement4 Eye;
+        [S(ID = 7)]public AvatarElement4 Brow;
+        [S(ID = 8)]public AvatarElement FrontHair;
 
         public void Save(IArchiveWriter writer)
         {

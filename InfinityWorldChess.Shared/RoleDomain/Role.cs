@@ -5,7 +5,6 @@ using InfinityWorldChess.WorldDomain;
 using Secyud.Ugf;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using Secyud.Ugf.Archiving;
 using UnityEngine;
 
@@ -82,7 +81,7 @@ namespace InfinityWorldChess.RoleDomain
 			int count = reader.ReadInt32();
 			for (int i = 0; i < count; i++)
 			{
-				RoleProperty property = reader.ReadArchiving<RoleProperty>();
+				RoleProperty property = reader.Read<RoleProperty>();
 				_extraProperties[property!.GetType()] = property;
 			}
 		}

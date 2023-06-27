@@ -2,27 +2,27 @@
 
 using Secyud.Ugf;
 using Secyud.Ugf.AssetLoading;
-using Secyud.Ugf.DependencyInjection;
 using Secyud.Ugf.HexMap;
 using InfinityWorldChess.RoleDomain;
 using InfinityWorldChess.Ugf;
+using Secyud.Ugf.DependencyInjection;
 using Secyud.Ugf.HexMap.Generator;
 using Secyud.Ugf.HexMap.Utilities;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Playables;
 using Object = UnityEngine.Object;
 
 #endregion
 
 namespace InfinityWorldChess.BattleDomain
 {
-	public partial class BattleContext : IScoped
+	[Registry(LifeTime = DependencyLifeTime.Scoped,DependScope = typeof(BattleScope))]
+	public partial class BattleContext 
 	{
 		private readonly PrefabContainer<HexUnit> _battleUnitPrefab;
 		private readonly PrefabContainer<TextMeshPro> _simpleTextMesh;
 		private IBattleAiController _controller;
-		private IBattleAiController Controller => _controller ??= Og.Get<BattleScope, IwcBattleAiController>();
+		private IBattleAiController Controller => _controller ??= U.Get<IwcBattleAiController>();
 		
 		public  BattleMapComponent Map { get; internal set; }
 		public  BattleUiComponent Ui { get; internal set; }
@@ -30,7 +30,7 @@ namespace InfinityWorldChess.BattleDomain
 		public BattleContext(IwcAb ab)
 		{
 			_battleUnitPrefab = PrefabContainer<HexUnit>.Create(
-				ab, Og.TypeToPath<BattleContext>() + "Unit.prefab"
+				ab, U.TypeToPath<BattleContext>() + "Unit.prefab"
 			);
 			_simpleTextMesh = PrefabContainer<TextMeshPro>.Create(
 				ab, "InfinityWorldChess/BattleDomain/DamageText.prefab"
@@ -49,7 +49,7 @@ namespace InfinityWorldChess.BattleDomain
 			
 			if (Battle.Cell is not null)
 			{
-				HexMapGenerator mapGenerator = Og.DefaultProvider.Get<HexMapGenerator>();
+				HexMapGenerator mapGenerator = U.Get<HexMapGenerator>();
 				mapGenerator.Parameter = Battle.Cell.GetGeneratorParameter(Width, Height);
 				mapGenerator.GenerateMap(grid, Width, Height);
 			}

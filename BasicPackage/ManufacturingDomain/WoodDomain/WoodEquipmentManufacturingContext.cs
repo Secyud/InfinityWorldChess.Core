@@ -3,10 +3,9 @@
 using InfinityWorldChess.ItemDomain.EquipmentDomain;
 using InfinityWorldChess.RoleDomain;
 using Secyud.Ugf.BasicComponents;
-using Secyud.Ugf.DependencyInjection;
 using Secyud.Ugf.Layout;
-using System;
 using System.Linq;
+using InfinityWorldChess.Ugf;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -18,8 +17,7 @@ namespace InfinityWorldChess.ManufacturingDomain
 		EquipmentManufacturingContextBase<
 			WoodEquipmentRaw, WoodEquipmentManufacturingProcess, WoodEquipmentManufacturingBlueprint,
 			WoodEquipmentManufacturingContext, WoodEquipmentManufacturingProcessTf,
-			WoodEquipmentManufacturingProperty>,
-		ISingleton
+			WoodEquipmentManufacturingProperty>
 	{
 		public WoodEquipmentData WoodData { get; private set; }
 

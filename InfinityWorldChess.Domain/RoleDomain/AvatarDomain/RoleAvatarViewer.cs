@@ -16,7 +16,7 @@ namespace InfinityWorldChess.RoleDomain
 
 		protected override void Awake()
 		{
-			Resource = Og.DefaultProvider.Get<RoleResourceManager>();
+			Resource = U.Get<RoleResourceManager>();
 			Size = Content.rect.width;
 			Content.pivot = Content.anchorMin = Content.anchorMax = new Vector2(0.5f, 1);
 			Content.anchoredPosition = Vector2.zero;

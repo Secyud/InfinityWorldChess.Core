@@ -1,9 +1,8 @@
 ﻿using InfinityWorldChess.Ugf;
-using Secyud.Ugf;
-using Secyud.Ugf.Archiving;
 using Secyud.Ugf.BasicComponents;
 using System.IO;
-using Secyud.Ugf.Modularity;
+using InfinityWorldChess.ArchivingDomain;
+using Secyud.Ugf;
 using UnityEngine;
 
 namespace InfinityWorldChess.GlobalDomain
@@ -14,23 +13,26 @@ namespace InfinityWorldChess.GlobalDomain
         [SerializeField] private RectTransform Content;
         [SerializeField] private GameObject DeleteSlotButton;
         private int _index;
-        private ISlot _slot;
+        private ArchivingSlot _slot;
         private string _path;
-        private IArchivingContext _archivingContext;
-        private IArchivingContext ArchivingContext => 
-            _archivingContext ??= Og.DefaultProvider.Get<IArchivingContext>();
+        private ArchivingContext _archivingContext;
+
+        private ArchivingContext ArchivingContext =>
+            _archivingContext ??= U.Get<ArchivingContext>();
 
         public void OnClick()
         {
             ArchivingContext.CurrentSlot = ArchivingContext.Slots[_index];
-            Og.ScopeFactory.DestroyScope<MainMenuScope>();
-            if (ArchivingContext.CurrentSlotExist)
+            U.Factory.Application.DependencyManager.DestroyScope<MainMenuScope>();
+            if (ArchivingContext.CurrentSlot.Exist)
             {
-                UgfApplicationFactory<StartupModule>.GameLoad();
+                U.Factory.GameInitialize();
                 IwcAb.Instance.LoadingPanelInk.Instantiate();
             }
             else
-                Og.ScopeFactory.CreateScope<CreatorScope>();
+            {
+                U.Factory.Application.DependencyManager.CreateScope<CreatorScope>();
+            }
         }
 
         public void OnDeleteSlotClick()
@@ -52,7 +54,7 @@ namespace InfinityWorldChess.GlobalDomain
             _slot.PrepareSlotLoading();
             Name.text = _slot.Name;
             _slot.SetContent(Content);
-            _path = Path.Combine(Og.ArchivingPath, _slot.Id.ToString());
+            _path = Path.Combine(SharedConsts.SavePath, _slot.Id.ToString());
             DeleteSlotButton.SetActive(Directory.Exists(_path));
         }
     }

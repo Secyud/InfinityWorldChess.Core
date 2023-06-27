@@ -1,21 +1,18 @@
 ﻿using InfinityWorldChess.BasicBundle.Items;
 using InfinityWorldChess.PlayerDomain;
+using Secyud.Ugf.DataManager;
 
 namespace InfinityWorldChess.BasicBundle.Interactions
 {
     public class AddItem : InteractionAction
     {
-        private ItemTemplate _item;
+        [field: S(ID = 0)]public string ItemName;
 
         public override void Invoke()
         {
-            if (_item is not null)
-                GameScope.PlayerGameContext.Role.Item.Add(_item);
-        }
-
-        public override void SetAction(params string[] message)
-        {
-            _item = message[0].CreateAndInit<ItemTemplate>();
+            if (ItemName is null) return;
+            ItemTemplate item = DataObject.Create<ItemTemplate>(ItemName);
+            GameScope.Instance.Player.Role.Item.Add(item);
         }
     }
 }

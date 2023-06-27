@@ -1,4 +1,5 @@
 ﻿using InfinityWorldChess.Ugf;
+using Secyud.Ugf.DataManager;
 using UnityEngine;
 
 namespace InfinityWorldChess.ManufacturingDomain
@@ -8,7 +9,7 @@ namespace InfinityWorldChess.ManufacturingDomain
 		StoneEquipmentManufacturingContext, StoneEquipmentManufacturingProcessTf,
 		StoneEquipmentManufacturingProperty>
 	{
-		[R(257)]public byte Volume { get; set; }
+		[field: S(ID=257)]public byte Volume { get; set; }
 
 		public override void SetContent(Transform transform)
 		{

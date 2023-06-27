@@ -5,10 +5,12 @@ using Secyud.Ugf.AssetLoading;
 using Secyud.Ugf.Collections;
 using Secyud.Ugf.TableComponents;
 using System.Collections.Generic;
+using Secyud.Ugf.DependencyInjection;
 using UnityEngine;
 
 namespace InfinityWorldChess.ManufacturingDomain
 {
+	[Registry]
 	public abstract partial class FlavorManufacturingContextBase
 		<TFlavor,TComponent, TProcess, TContext, TProcessTf, TProperty>
 		where TContext : FlavorManufacturingContextBase<TFlavor,TComponent, TProcess, TContext, TProcessTf, TProperty>
@@ -30,7 +32,7 @@ namespace InfinityWorldChess.ManufacturingDomain
 			}
 
 			Factory.Create();
-			Data = new(mainRole, this as TContext);
+			Data = new FlavorData(mainRole, this as TContext);
 			Factory.Value.OnInitialize(Data);
 
 			List<TProcess> processes = null;

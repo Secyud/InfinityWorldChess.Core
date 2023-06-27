@@ -1,8 +1,6 @@
-﻿using InfinityWorldChess.BuffDomain;
-using InfinityWorldChess.RoleDomain;
+﻿using InfinityWorldChess.RoleDomain;
 using InfinityWorldChess.Ugf;
 using Secyud.Ugf.BasicComponents;
-using Secyud.Ugf.FunctionalComponents;
 using Secyud.Ugf.Layout;
 using UnityEngine;
 

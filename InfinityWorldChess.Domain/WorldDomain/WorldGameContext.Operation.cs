@@ -4,6 +4,7 @@ using InfinityWorldChess.RoleDomain;
 using Secyud.Ugf.HexMap;
 using System.Collections.Generic;
 using System.Linq;
+using System.Ugf.Collections.Generic;
 using UnityEngine;
 
 #endregion

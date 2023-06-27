@@ -38,7 +38,7 @@ namespace InfinityWorldChess.GlobalDomain
 
 		public void OnExitGameClick()
 		{
-			Og.ScopeFactory.GetScope<MainMenuScope>().ExitGame();
+			U.Get<MainMenuScope>().ExitGame();
 		}
 	}
 }

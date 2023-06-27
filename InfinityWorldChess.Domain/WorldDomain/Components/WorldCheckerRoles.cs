@@ -20,7 +20,7 @@ namespace InfinityWorldChess.WorldDomain
 
 		private void Awake()
 		{
-			_playerGameContext ??= GameScope.PlayerGameContext;
+			_playerGameContext ??= GameScope.Instance.Player;
 			_buttonTableHelperBh = new RoleButtonTableHelper<RoleWorldCheckerBf>();
 		}
 

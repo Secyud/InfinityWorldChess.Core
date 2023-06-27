@@ -1,13 +1,15 @@
 ﻿#region
 
 using System.Collections.Generic;
+using Secyud.Ugf.DependencyInjection;
 using UnityEngine;
 
 #endregion
 
 namespace InfinityWorldChess.InputDomain
 {
-	public class InputKeyMapService : IInputKeyMapService
+	[Registry()]
+	public class InputKeyMapService 
 	{
 		private readonly Dictionary<InputKeyWord, KeyCode> _map = new();
 

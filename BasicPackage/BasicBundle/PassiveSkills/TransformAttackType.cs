@@ -3,6 +3,7 @@ using InfinityWorldChess.GlobalDomain;
 using InfinityWorldChess.RoleDomain;
 using InfinityWorldChess.SkillDomain;
 using InfinityWorldChess.Ugf;
+using Secyud.Ugf.DataManager;
 
 namespace InfinityWorldChess.BasicBundle.PassiveSkills
 {
@@ -10,7 +11,7 @@ namespace InfinityWorldChess.BasicBundle.PassiveSkills
 		public class TransformAttackType : PassiveSkillTemplate, IOnBattleRoleInitialize,
 			IActionable<SkillInteraction>
 		{
-			[R(256)] public int D256 { get; set; }
+			[field:S(ID=256)] public int D256 { get; set; }
 
 			public int Priority => 1;
 

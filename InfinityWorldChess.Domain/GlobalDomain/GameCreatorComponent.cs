@@ -1,5 +1,6 @@
 #region
 
+using System.Linq;
 using InfinityWorldChess.BiographyDomain;
 using InfinityWorldChess.BundleDomain;
 using InfinityWorldChess.ItemDomain;
@@ -8,9 +9,7 @@ using InfinityWorldChess.RoleDomain;
 using InfinityWorldChess.Ugf;
 using InfinityWorldChess.WorldDomain;
 using Secyud.Ugf;
-using Secyud.Ugf.Modularity;
 using Secyud.Ugf.TableComponents;
-using System.Linq;
 using UnityEngine;
 
 #endregion
@@ -36,7 +35,7 @@ namespace InfinityWorldChess.GlobalDomain
 				IwcTableHelperFh<IBiography, BiographyTf>>
 			_biographyMultiSelectTableHelper;
 
-		private GameCreatorContext _context;
+		private CreatorScope _scope;
 		private ItemMultiSelectTableHelper _itemMultiSelectTableHelper;
 
 		private void Awake()
@@ -58,44 +57,44 @@ namespace InfinityWorldChess.GlobalDomain
 
 		private void Start()
 		{
-			_context ??= CreatorScope.Context;
-			Role.BasicProperty basic = _context.Basic;
+			_scope ??= CreatorScope.Instance;
+			Role.BasicProperty basic = _scope.Basic;
 
 			NameEditor.OnInitialize(basic);
 			BirthEditor.OnInitialize(basic);
-			NatureEditor.OnInitialize(_context.Nature);
+			NatureEditor.OnInitialize(_scope.Nature);
 			AvatarEditor.OnInitialize(basic);
 
 			_bundleMultiSelectTableHelper.OnInitialize(
 				ActivityBundleMultiSelectTable,
 				IwcAb.Instance.VerticalCellInk.Value,
-				Og.DefaultProvider.Get<IBundleGlobalService>().Bundles.Get().ToList(),
-				_context.Bundles
+				U.Get<IBundleGlobalService>().Bundles.Get().ToList(),
+				_scope.Bundles
 			);
 
 			_biographyMultiSelectTableHelper.OnInitialize(
 				BiographyMultiSelectTable,
 				IwcAb.Instance.VerticalCellInk.Value,
-				Og.DefaultProvider.Get<IBiographyGlobalService>().Biographies.Get().ToList(),
-				_context.Biography
+				U.Get<IBiographyGlobalService>().Biographies.Get().ToList(),
+				_scope.Biography
 			);
 
 			_itemMultiSelectTableHelper.OnInitialize(
 				ItemMultiSelectTable,
 				IwcAb.Instance.VerticalCellInk.Value,
-				Og.DefaultProvider.Get<IwcItemGlobalService>().List,
-				_context.Item
+				U.Get<IwcItemGlobalService>().List,
+				_scope.Item
 			);
 
-			PlayerSettingEditor.OnInitialize(_context.PlayerSetting);
+			PlayerSettingEditor.OnInitialize(_scope.PlayerSetting);
 
-			WorldSettingEditor.OnInitialize(_context.WorldSetting);
+			WorldSettingEditor.OnInitialize(_scope.WorldSetting);
 		}
 
 		public void SetGender(bool female)
 		{
-			_context.Basic.Female = female;
-			AvatarEditor.OnInitialize(_context.Basic);
+			_scope.Basic.Female = female;
+			AvatarEditor.OnInitialize(_scope.Basic);
 		}
 
 		public void EnterGame()
@@ -105,13 +104,13 @@ namespace InfinityWorldChess.GlobalDomain
 			
 			IwcAb.Instance.LoadingPanelInk.Instantiate();
 
-			UgfApplicationFactory<StartupModule>.GameCreate();
+			U.Factory.GameInitialize();
 		}
 
 		public void ReturnMainMenu()
 		{
-			Og.ScopeFactory.CreateScope<MainMenuScope>();
-			Og.ScopeFactory.DestroyScope<CreatorScope>();
+			U.Factory.Application.DependencyManager.CreateScope<MainMenuScope>();
+			U.Factory.Application.DependencyManager.DestroyScope<CreatorScope>();
 		}
 	}
 }

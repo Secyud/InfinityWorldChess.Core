@@ -1,10 +1,10 @@
 #region
 
+using System.Ugf.Collections.Generic;
 using InfinityWorldChess.Ugf;
 using Secyud.Ugf;
 using Secyud.Ugf.BasicComponents;
 using Secyud.Ugf.FunctionalComponents;
-using System.Collections.Generic;
 using UnityEngine;
 
 #endregion
@@ -23,7 +23,7 @@ namespace InfinityWorldChess.RoleDomain
 		
 		private void Awake()
 		{
-			_roleResourceManager = Og.DefaultProvider.Get<RoleResourceManager>();
+			_roleResourceManager = U.Get<RoleResourceManager>();
 		}
 
 		public bool Check()
@@ -33,7 +33,7 @@ namespace InfinityWorldChess.RoleDomain
 				_basicProperty.FirstName.Length == 0||
 				_basicProperty.LastName.Length == 0)
 			{
-				Og.L[TipTexts].CreateTipFloatingOnCenter();
+				U.T[TipTexts].CreateTipFloatingOnCenter();
 				return false;
 			}
 

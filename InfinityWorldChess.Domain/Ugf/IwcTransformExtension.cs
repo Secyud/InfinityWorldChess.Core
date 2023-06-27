@@ -8,6 +8,8 @@ using Secyud.Ugf.BasicComponents;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Ugf;
+using System.Ugf.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -29,22 +31,22 @@ namespace InfinityWorldChess.Ugf
 
 		public static SText AddTitle1(this Transform transform, string text)
 		{
-			return IwcAb.Instance.TitleText1.Value.Create(transform, Og.L[text]);
+			return IwcAb.Instance.TitleText1.Value.Create(transform, U.T[text]);
 		}
 
 		public static SText AddTitle2(this Transform transform, string text)
 		{
-			return IwcAb.Instance.TitleText2.Value.Create(transform, " " + Og.L[text]);
+			return IwcAb.Instance.TitleText2.Value.Create(transform, " " + U.T[text]);
 		}
 
 		public static SText AddTitle3(this Transform transform, string text)
 		{
-			return IwcAb.Instance.TitleText3.Value.Create(transform, "  " + Og.L[text]);
+			return IwcAb.Instance.TitleText3.Value.Create(transform, "  " + U.T[text]);
 		}
 
 		public static SText AddParagraph(this Transform transform, string text)
 		{
-			return IwcAb.Instance.BodyFieldText.Value.Create(transform, Og.L.Translate(text));
+			return IwcAb.Instance.BodyFieldText.Value.Create(transform, U.T.Translate(text));
 		}
 
 		public static void AddSimpleShown(this Transform transform, ICanBeShown shown)
@@ -66,7 +68,7 @@ namespace InfinityWorldChess.Ugf
 			transform.AddTitle2(title);
 			foreach (string str in result.Select(
 				item =>
-					$"<size=18><color=#202000ff><b>【{Og.L.Translate(item.ShowName)}】</b> {Og.L.Translate(item.ShowDescription)}</color></size>"
+					$"<size=18><color=#202000ff><b>【{U.T.Translate(item.ShowName)}】</b> {U.T.Translate(item.ShowDescription)}</color></size>"
 			))
 			{
 				IwcAb.Instance.BodyFieldText.Value.Create(transform, str.Point());

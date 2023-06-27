@@ -1,4 +1,5 @@
 using InfinityWorldChess.Ugf;
+using Secyud.Ugf.DataManager;
 using UnityEngine;
 
 namespace InfinityWorldChess.ManufacturingDomain
@@ -10,7 +11,7 @@ namespace InfinityWorldChess.ManufacturingDomain
 			MetalEquipmentManufacturingProperty>,
 		IHasMeltingPoint
 	{
-		[R(257)]public short MeltingPoint { get; set; }
+		[field: S(ID=257)]public short MeltingPoint { get; set; }
 
 		public override void SetContent(Transform transform)
 		{

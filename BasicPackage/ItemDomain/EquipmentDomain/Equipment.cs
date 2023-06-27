@@ -6,7 +6,6 @@ using InfinityWorldChess.Ugf;
 using Secyud.Ugf;
 using Secyud.Ugf.Archiving;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using UnityEngine;
 
@@ -65,7 +64,7 @@ namespace InfinityWorldChess.ItemDomain.EquipmentDomain
 
 		public int this[int index] => Property[index];
 
-		public override void Save(BinaryWriter writer)
+		public override void Save(IArchiveWriter writer)
 		{
 			writer.Write(Antique);
 			writer.Write(TypeCode);
@@ -76,7 +75,7 @@ namespace InfinityWorldChess.ItemDomain.EquipmentDomain
 			base.Save(writer);
 		}
 
-		public void Load(BinaryReader reader)
+		public void Load(IArchiveReader reader)
 		{
 			Antique = reader.ReadInt32();
 			TypeCode = reader.ReadByte();
@@ -103,6 +102,5 @@ namespace InfinityWorldChess.ItemDomain.EquipmentDomain
 			transform.AddEquipmentProperty(this);
 			transform.AddListShown("特效", Values);
 		}
-
 	}
 }

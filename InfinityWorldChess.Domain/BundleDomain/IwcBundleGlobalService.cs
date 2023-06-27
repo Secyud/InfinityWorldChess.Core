@@ -7,7 +7,8 @@ using Secyud.Ugf.DependencyInjection;
 
 namespace InfinityWorldChess.BundleDomain
 {
-	public class IwcBundleGlobalService : IBundleGlobalService,ISingleton
+	[Registry()]
+	public class IwcBundleGlobalService : IBundleGlobalService
 	{
 		public RegistrableList<IBundle> Bundles { get; } = new();
 	}

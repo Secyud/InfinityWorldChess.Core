@@ -1,8 +1,8 @@
 #region
 
-using Secyud.Ugf;
 using Secyud.Ugf.BasicComponents;
 using System;
+using Secyud.Ugf;
 using UnityEngine;
 
 #endregion
@@ -58,7 +58,7 @@ namespace InfinityWorldChess.RoleDomain
 
 		public BodyPartSelectComponent Create(byte code)
 		{
-			BodyPartSelectComponent ret = this.Instantiate(Og.Canvas.transform);
+			BodyPartSelectComponent ret = this.Instantiate(U.Canvas.transform);
 
 			ret.OnInitialize(code);
 

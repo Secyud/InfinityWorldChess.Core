@@ -25,7 +25,7 @@ namespace InfinityWorldChess.Ugf
 		{
 			_refreshAction = refreshAction;
 			BindPrepareCellAction(PrepareCell);
-			_buttons = Og.DefaultProvider.Get<TButtonService>().Get;
+			_buttons =U.Get<TButtonService>().Get;
 		}
 
 

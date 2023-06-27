@@ -14,19 +14,21 @@ namespace InfinityWorldChess.RoleDomain
 
         public class BasicProperty : DataObject
         {
-            [S(0, ignore: true)] public readonly RoleAvatar Avatar = new();
-            // 生辰八字
-            [S(1)] public int BirthYear;
-            [S(2)] public byte BirthMonth;
-            [S(3)] public byte BirthDay;
-            [S(4)] public byte BirthHour;
-            // 性别
-            [S(5)] public bool Female;
+            [S(ID = 0)] public readonly RoleAvatar Avatar = new();
+
+            [S(ID = 1)] public int BirthYear;
+            [S(ID = 2)] public byte BirthMonth;
+            [S(ID = 3)] public byte BirthDay;
+            [S(ID = 4)] public byte BirthHour;
+
+            [S(ID = 5)] public bool Female;
+
             // 名
-            [S(6)] public string FirstName;
+            [S(ID = 6)] public string FirstName;
+
             // 姓
-            [S(7)] public string LastName;
-            [S(8)] public string Description;
+            [S(ID = 7)] public string LastName;
+            [S(ID = 8)] public string Description;
 
             public string Name
             {

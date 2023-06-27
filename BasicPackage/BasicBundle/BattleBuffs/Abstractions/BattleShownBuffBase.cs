@@ -2,20 +2,19 @@
 using InfinityWorldChess.BuffDomain;
 using InfinityWorldChess.Ugf;
 using Secyud.Ugf;
-using Secyud.Ugf.AssetLoading;
+using Secyud.Ugf.DataManager;
 using UnityEngine;
 
 namespace InfinityWorldChess.BasicBundle.BattleBuffs.Abstractions
 {
-	public abstract class BattleShownBuffBase : ResourcedBase, IBuffCanBeShown<RoleBattleChess>
+	public abstract class BattleShownBuffBase : DataObject, IBuffCanBeShown<RoleBattleChess>
 	{
+		[field: S(ID = 0, DataType = DataType.Initialed)]
+		public IObjectAccessor<Sprite> ShowIcon { get; set; }
+		public virtual bool Visible => true;
+		public abstract string ShowName { get; }
+		public abstract string ShowDescription { get; }
 		public RoleBattleChess Launcher { get; set; }
-
-		protected override void SetDefaultValue()
-		{
-			ShowIcon = AtlasSpriteContainer.Create(
-				IwcAb.Instance, Descriptor,0);
-		}
 
 		public virtual void Install(RoleBattleChess target)
 		{
@@ -28,14 +27,6 @@ namespace InfinityWorldChess.BasicBundle.BattleBuffs.Abstractions
 		public virtual void Overlay(IBuff<RoleBattleChess> finishBuff)
 		{
 		}
-
-		public virtual bool Visible => true;
-
-		public abstract string ShowName { get; }
-
-		public abstract string ShowDescription { get; }
-
-		public IObjectAccessor<Sprite> ShowIcon { get; set; }
 
 		public virtual void SetContent(Transform transform)
 		{

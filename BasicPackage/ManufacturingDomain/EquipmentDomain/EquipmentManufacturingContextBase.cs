@@ -8,12 +8,14 @@ using Secyud.Ugf.BasicComponents;
 using Secyud.Ugf.Collections;
 using Secyud.Ugf.TableComponents;
 using System.Collections.Generic;
+using Secyud.Ugf.DependencyInjection;
 using UnityEngine;
 
 #endregion
 
 namespace InfinityWorldChess.ManufacturingDomain
 {
+	[Registry]
 	public abstract partial class EquipmentManufacturingContextBase
 		<TRaw, TProcess, TBlueprint, TContext, TTableFunction, TProperty>
 		where TContext : EquipmentManufacturingContextBase<TRaw, TProcess, TBlueprint, TContext, TTableFunction,
@@ -34,7 +36,7 @@ namespace InfinityWorldChess.ManufacturingDomain
 			Factory = MonoContainer<EquipmentManufacturingComponent>.Create(ab);
 			ManufacturingCell = PrefabContainer<SButton>.Create(
 				ab,
-				Og.DotToPath(typeof(Manufacturable).Namespace) + "/" +
+				U.DotToPath(typeof(Manufacturable).Namespace) + "/" +
 				nameof(ManufacturingCell) + ".prefab"
 			);
 		}

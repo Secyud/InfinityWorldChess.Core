@@ -7,7 +7,6 @@ using InfinityWorldChess.Ugf;
 using Secyud.Ugf;
 using Secyud.Ugf.Archiving;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using InfinityWorldChess.PlayerDomain;
 using UnityEngine;
@@ -57,7 +56,7 @@ namespace InfinityWorldChess.ItemDomain.FoodDomain
 
 		public void Eating()
 		{
-			Role role = GameScope.RoleGameContext.MainOperationRole;
+			Role role = GameScope.Instance.Role.MainOperationRole;
 			foreach (IBuff<Role> buff in RoleBuffFactories.Select(u => u.Get()))
 				buff.Install(role);
 		}
@@ -69,7 +68,7 @@ namespace InfinityWorldChess.ItemDomain.FoodDomain
 				buff.Install(role);
 		}
 
-		public override void Save(BinaryWriter writer)
+		public override void Save(IArchiveWriter writer)
 		{
 			this.SaveShown(writer);
 			this.SaveMouthFeel(writer);
@@ -77,7 +76,7 @@ namespace InfinityWorldChess.ItemDomain.FoodDomain
 			base.Save(writer);
 		}
 
-		public void Load(BinaryReader reader)
+		public void Load(IArchiveReader reader)
 		{
 			this.LoadShown(reader);
 			this.LoadMouthFeel(reader);

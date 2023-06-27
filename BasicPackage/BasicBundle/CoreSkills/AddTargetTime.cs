@@ -1,5 +1,6 @@
 ﻿using InfinityWorldChess.BattleDomain;
 using InfinityWorldChess.SkillDomain;
+using Secyud.Ugf.DataManager;
 
 namespace InfinityWorldChess.BasicBundle.CoreSkills
 {
@@ -8,7 +9,7 @@ namespace InfinityWorldChess.BasicBundle.CoreSkills
     /// </summary>
     public class AddTargetTime : CoreSkillTemplate
     {
-        [R(256)] public float F256 { get; set; }
+        [field: S(ID = 256)] public float F256 { get; set; }
 
         protected override string HDescription =>
             $"此招式延缓敌方{F256:N0}时序。";

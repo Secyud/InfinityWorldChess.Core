@@ -1,21 +1,18 @@
 ﻿using InfinityWorldChess.BasicBundle.CoreSkills;
 using InfinityWorldChess.PlayerDomain;
+using Secyud.Ugf.DataManager;
 
 namespace InfinityWorldChess.BasicBundle.Interactions
 {
     public class AddCoreSkill : InteractionAction
     {
-        private CoreSkillTemplate _skill;
+        [field: S(ID = 0)]public string SkillName;
 
         public override void Invoke()
         {
-            if (_skill is not null)
-                GameScope.PlayerGameContext.Role.CoreSkill.LearnedSkills.Add(_skill);
-        }
-
-        public override void SetAction(params string[] message)
-        {
-            _skill = message[0].CreateAndInit<CoreSkillTemplate>();
+            if (SkillName is null) return;
+            CoreSkillTemplate skill = DataObject.Create<CoreSkillTemplate>(SkillName);
+            GameScope.Instance.Player.Role.CoreSkill.LearnedSkills.Add(skill);
         }
     }
 }

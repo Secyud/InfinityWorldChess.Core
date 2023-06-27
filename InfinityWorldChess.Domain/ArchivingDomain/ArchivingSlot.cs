@@ -1,16 +1,14 @@
-﻿using InfinityWorldChess.PlayerDomain;
+﻿using System.IO;
+using InfinityWorldChess.PlayerDomain;
 using InfinityWorldChess.RoleDomain;
-using Secyud.Ugf;
 using Secyud.Ugf.Archiving;
-using Secyud.Ugf.Modularity;
-using System.IO;
 using UnityEngine;
 
-namespace InfinityWorldChess.ArchivingComponent
+namespace InfinityWorldChess.ArchivingDomain
 {
-	public class IwcSlot : ISlot
+	public class ArchivingSlot 
 	{
-		public IwcSlot(int id)
+		public ArchivingSlot(int id)
 		{
 			Id = id;
 		}
@@ -21,19 +19,24 @@ namespace InfinityWorldChess.ArchivingComponent
 
 		private Role.BasicProperty _basicProperty;
 
-		public void PrepareSlotSaving(SavingContext context)
+
+		private static string SavePath => SharedConsts.SaveFilePath("slot");
+		
+		public void PrepareSlotSaving()
 		{
-			using BinaryWriter writer = context.GetWriter("slot.slot");
-			GameScope.PlayerGameContext.Role.Basic.Save(writer);
+			SharedConsts.SaveFolder = Id;
+			using FileStream stream = File.OpenWrite(SavePath);
+			using DefaultArchiveWriter writer = new (stream);
+			GameScope.Instance.Player.Role.Basic.Save(writer);
 		}
 
 		public void PrepareSlotLoading()
 		{
-			string path = Path.Combine(Og.ArchivingPath, Id.ToString(), "slot.slot");
+			string path = SavePath;
 			if (File.Exists(path))
 			{
-				using FileStream fileStream = File.Open(path, FileMode.Open);
-				BinaryReader reader = new(fileStream);
+				using FileStream fileStream = File.OpenRead(path);
+				DefaultArchiveReader reader = new(fileStream);
 				_basicProperty = new Role.BasicProperty();
 				_basicProperty.Load(reader);
 			}
@@ -54,5 +57,7 @@ namespace InfinityWorldChess.ArchivingComponent
 				viewer.OnInitialize(_basicProperty);
 			}
 		}
+		
+		public bool Exist => File.Exists(SavePath);
 	}
 }

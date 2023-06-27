@@ -2,10 +2,10 @@
 
 using InfinityWorldChess.SkillDomain;
 using Secyud.Ugf;
-using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
+using System.Ugf.Collections.Generic;
+using Secyud.Ugf.Archiving;
 
 #endregion
 
@@ -79,14 +79,14 @@ namespace InfinityWorldChess.RoleDomain
 				}
 			}
 
-			public void Save(BinaryWriter writer)
+			public void Save(IArchiveWriter writer)
 			{
 				writer.Write(LearnedSkills.Count);
 				for (int i = 0; i < LearnedSkills.Count; i++)
 				{
 					IPassiveSkill skill = LearnedSkills[i];
 					skill.SaveIndex = i;
-					writer.WriteArchiving(skill);
+					writer.Write(skill);
 					writer.Write(skill.Yin);
 					writer.Write(skill.Yang);
 					writer.Write(skill.Living);
@@ -99,14 +99,14 @@ namespace InfinityWorldChess.RoleDomain
 					writer.Write(_skills[i]?.SaveIndex ?? -1);
 			}
 
-			public void Load(BinaryReader reader, Role role)
+			public void Load(IArchiveReader reader, Role role)
 			{
 				LearnedSkills.Clear();
 				int count = reader.ReadInt32();
 
 				for (int i = 0; i < count; i++)
 				{
-					IPassiveSkill skill = reader.ReadArchiving<IPassiveSkill>();
+					IPassiveSkill skill = reader.Read<IPassiveSkill>();
 					skill!.SaveIndex = i;
 					skill.Yin = reader.ReadInt16();
 					skill.Yang = reader.ReadInt16();

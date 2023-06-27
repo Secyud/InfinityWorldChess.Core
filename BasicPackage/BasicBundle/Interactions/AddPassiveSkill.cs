@@ -1,22 +1,18 @@
 ﻿using InfinityWorldChess.BasicBundle.PassiveSkills;
 using InfinityWorldChess.PlayerDomain;
-using JetBrains.Annotations;
+using Secyud.Ugf.DataManager;
 
 namespace InfinityWorldChess.BasicBundle.Interactions
 {
     public class AddPassiveSkill : InteractionAction
     {
-        private PassiveSkillTemplate _skill;
+        [field: S(ID = 0)]public string SkillName;
 
         public override void Invoke()
         {
-            if (_skill is not null)
-                GameScope.PlayerGameContext.Role.PassiveSkill.LearnedSkills.Add(_skill);
-        }
-
-        public override void SetAction([NotNull] params string[] message)
-        {
-            _skill = message[0].CreateAndInit<PassiveSkillTemplate>();
+            if (SkillName is null) return;
+            PassiveSkillTemplate skill = DataObject.Create<PassiveSkillTemplate>(SkillName);
+            GameScope.Instance.Player.Role.PassiveSkill.LearnedSkills.Add(skill);
         }
     }
 }

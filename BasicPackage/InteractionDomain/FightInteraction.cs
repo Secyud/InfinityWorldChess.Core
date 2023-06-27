@@ -25,13 +25,13 @@ namespace InfinityWorldChess.InteractionDomain
 		public void OnEnd()
 		{
 			Fight fight = new(
-				InteractionScope.Context.LeftRole,
-				InteractionScope.Context.RightRole)
+				InteractionScope.Instance.LeftRole,
+				InteractionScope.Instance.RightRole)
 			{
-				Cell = InteractionScope.Context.RightRole.Position.Cell
+				Cell = InteractionScope.Instance.RightRole.Position.Cell
 			};
 			fight.OnBattleCreate();
-			Og.ScopeFactory.DestroyScope<InteractionScope>();
+			U.Factory.Application.DependencyManager.DestroyScope<InteractionScope>();
 		}
 
 		public int Id => 0;

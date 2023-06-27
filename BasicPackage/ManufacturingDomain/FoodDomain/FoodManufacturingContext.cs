@@ -1,8 +1,6 @@
 ﻿using InfinityWorldChess.ItemDomain.FoodDomain;
 using InfinityWorldChess.RoleDomain;
 using InfinityWorldChess.Ugf;
-using Secyud.Ugf;
-using Secyud.Ugf.DependencyInjection;
 using System.Linq;
 using InfinityWorldChess.GlobalDomain;
 using UnityEngine;
@@ -11,7 +9,7 @@ namespace InfinityWorldChess.ManufacturingDomain
 {
 	public class FoodManufacturingContext : FlavorManufacturingContextBase
 	<Food, FoodManufacturingComponent, FoodManufacturingProcess, FoodManufacturingContext,
-		FoodManufacturingProcessTf, FoodManufacturingProperty>, ISingleton
+		FoodManufacturingProcessTf, FoodManufacturingProperty>
 	{
 
 		public FoodManufacturingData FoodData { get; private set; }
@@ -37,7 +35,7 @@ namespace InfinityWorldChess.ManufacturingDomain
 
 			public void OnSelectMainRawButtonClick()
 			{
-				Og.ScopeFactory.GetScope<GlobalScope>().OnItemSelectionOpen(
+				GlobalScope.Instance.OnItemSelectionOpen(
 					RoleItem.Where(u => u is FoodRaw).ToList(),
 					i => MainRaw = i as FoodRaw
 				);
@@ -45,7 +43,7 @@ namespace InfinityWorldChess.ManufacturingDomain
 
 			public void OnSelectSupportRawButtonClick()
 			{
-				Og.ScopeFactory.GetScope<GlobalScope>().OnItemSelectionOpen(
+				GlobalScope.Instance.OnItemSelectionOpen(
 					RoleItem.Where(u => u is FoodRaw).ToList(),
 					i => SupportRaw = i as FoodRaw
 				);

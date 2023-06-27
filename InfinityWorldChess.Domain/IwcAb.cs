@@ -17,9 +17,8 @@ namespace InfinityWorldChess
 {
 	public class IwcAb : IAssetLoader
 	{
+		public static IwcAb Instance => _instance ??= U.Get<IwcAb>();
 		private static IwcAb _instance;
-
-		public static IwcAb Instance => _instance ??= Og.DefaultProvider.Get<IwcAb>();
 
 		public readonly IObjectAccessor<SFloating> AutoCloseFloating;
 		public readonly IObjectAccessor<SText> BodyFieldText;

@@ -1,8 +1,8 @@
-﻿using Secyud.Ugf;
-using Secyud.Ugf.ButtonComponents;
+﻿using Secyud.Ugf.ButtonComponents;
 using Secyud.Ugf.TableComponents;
 using System.Collections.Generic;
 using System.Linq;
+using Secyud.Ugf;
 using UnityEngine;
 
 namespace InfinityWorldChess.RoleDomain.TableComponents
@@ -16,7 +16,7 @@ namespace InfinityWorldChess.RoleDomain.TableComponents
 		public RoleButtonTableHelper()
 		{
 			BindPrepareCellAction(PrepareCell);
-			_buttons = Og.DefaultProvider.Get<TButtonService>().Get;
+			_buttons = U.Get<TButtonService>().Get;
 		}
 
 

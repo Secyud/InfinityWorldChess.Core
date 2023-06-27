@@ -2,36 +2,33 @@
 
 using InfinityWorldChess.RoleDomain;
 using Secyud.Ugf.AssetLoading;
-using Secyud.Ugf.DependencyInjection;
 using Secyud.Ugf.HexMap;
 using Secyud.Ugf.HexMap.Utilities;
 using System.Collections.Generic;
+using System.Ugf.Collections.Generic;
+using InfinityWorldChess.PlayerDomain;
+using Secyud.Ugf.DependencyInjection;
 using UnityEngine;
 
 #endregion
 
 namespace InfinityWorldChess.WorldDomain
 {
-	public class WorldHexMapManager : IScoped, IHexMapManager
+	[Registry()]
+	public class WorldHexMapManager :  IHexMapManager
 	{
-		private readonly WorldGameContext _gameContext;
 		private readonly WorldGlobalService _globalService;
-		private readonly RoleGameContext _roleGameContext;
 
 		public WorldHexMapManager(
-			WorldGlobalService globalService,
-			WorldGameContext gameContext,
-			RoleGameContext roleGameContext)
+			WorldGlobalService globalService)
 		{
 			_globalService = globalService;
-			_gameContext = gameContext;
-			_roleGameContext = roleGameContext;
 		}
 
 
 		public Transform GetFeature(HexCell cell)
 		{
-			WorldChecker cellMessage = _gameContext.GetChecker(cell);
+			WorldChecker cellMessage = GameScope.Instance.World.GetChecker(cell);
 			if (cellMessage is null) return null;
 
 			int type = cellMessage.GetResourceType();
@@ -44,7 +41,7 @@ namespace InfinityWorldChess.WorldDomain
 
 		public Transform GetSpecialFeature(HexCell cell)
 		{
-			WorldChecker cellMessage = _gameContext.GetChecker(cell);
+			WorldChecker cellMessage = GameScope.Instance.World.GetChecker(cell);
 			if (cellMessage is null) return null;
 
 			int index = cellMessage.SpecialIndex;
@@ -58,10 +55,8 @@ namespace InfinityWorldChess.WorldDomain
 
 		public int GetSpeed(HexUnit unit)
 		{
-			Role role = _roleGameContext.Get(unit.Id);
-			if (role is null) return 1;
-
-			return role.GetSpeed();
+			Role role = GameScope.Instance.Role.Get(unit.Id);
+			return role?.GetSpeed() ?? 1;
 		}
 	}
 }

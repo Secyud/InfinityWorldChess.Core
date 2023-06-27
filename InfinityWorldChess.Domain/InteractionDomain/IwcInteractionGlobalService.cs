@@ -1,12 +1,11 @@
 ﻿using InfinityWorldChess.RoleDomain;
 using Secyud.Ugf.Collections;
-using Secyud.Ugf.DependencyInjection;
 using System;
 using System.Linq;
 
 namespace InfinityWorldChess.InteractionDomain
 {
-	public class IwcInteractionGlobalService:IInteractionGlobalService,ISingleton
+	public class IwcInteractionGlobalService:IInteractionGlobalService
 	{
 		public RegistrableDictionary<int, IInteractionUnitHead> TotalInteractions { get; } = new();
 
@@ -14,8 +13,8 @@ namespace InfinityWorldChess.InteractionDomain
 
 		public IInteractionUnit GenerateFreeInteraction(Role left, Role right)
 		{
-			InteractionScope.Context.LeftRole = left;
-			InteractionScope.Context.RightRole = right;
+			InteractionScope.Instance.LeftRole = left;
+			InteractionScope.Instance.RightRole = right;
 			FreeInteractionBegin freeInteractionBegin = new();
 			foreach (IFreeInteractionUnit interaction in 
 				FreeInteractions.Get().Where(interaction => interaction.VisibleFor(left,right)))

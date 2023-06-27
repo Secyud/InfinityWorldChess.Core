@@ -1,35 +1,38 @@
-﻿using System;
+﻿using System.Ugf;
 using InfinityWorldChess.BattleDomain;
-using InfinityWorldChess.GlobalDomain;
 using InfinityWorldChess.PlayerDomain;
 using InfinityWorldChess.SkillDomain;
 using InfinityWorldChess.Ugf;
 using Secyud.Ugf;
-using Secyud.Ugf.AssetLoading;
+using Secyud.Ugf.DataManager;
 using Secyud.Ugf.HexMap;
 using Secyud.Ugf.HexMap.Utilities;
 using UnityEngine;
-using UnityEngine.Playables;
 
 namespace InfinityWorldChess.BasicBundle
 {
-    public abstract class ActiveSkillBase : ResourcedBase, IActiveSkill
+    public abstract class ActiveSkillBase : DataObject, IActiveSkill
     {
-        [R(3, true)] public string ShowDescription { get; set; }
-        [R(4)] public byte Score { get; set; }
-        [R(5)] public byte ExecutionConsume { get; set; }
-        [R(6)] public byte PositionType { get; set; }
-        [R(7)] public byte PositionStart { get; set; }
-        [R(8)] public byte PositionEnd { get; set; }
-        [R(9)] public byte RangeType { get; set; }
-        [R(10)] public byte RangeStart { get; set; }
-        [R(11)] public byte RangeEnd { get; set; }
-        [R(12)] public float EnergyConsume { get; set; }
-        public string ShowName => Descriptor?.Name;
+        [field: S(ID = 0, DataType = DataType.Initialed)]
+        public string ShowDescription { get; set; }
+        [field: S(ID = 1, DataType = DataType.Initialed)]
+        public IObjectAccessor<HexUnitPlay> UnitPlay { get; set; }
+        [field: S(ID = 2, DataType = DataType.Initialed)]
+        public IObjectAccessor<Sprite> ShowIcon { get; set; }
+
+        [field: S(ID = 0)] public byte Score { get; set; }
+        [field: S(ID = 1)] public byte ExecutionConsume { get; set; }
+        [field: S(ID = 2)] public byte PositionType { get; set; }
+        [field: S(ID = 3)] public byte PositionStart { get; set; }
+        [field: S(ID = 4)] public byte PositionEnd { get; set; }
+        [field: S(ID = 5)] public byte RangeType { get; set; }
+        [field: S(ID = 6)] public byte RangeStart { get; set; }
+        [field: S(ID = 7)] public byte RangeEnd { get; set; }
+        [field: S(ID = 8)] public float EnergyConsume { get; set; }
+        
+        public string ShowName => ObjectName;
         public virtual SkillTargetType TargetType => SkillTargetType.Enemy;
         public virtual bool Damage => true;
-        public IObjectAccessor<HexUnitPlay> UnitPlay { get; set; }
-        public IObjectAccessor<Sprite> ShowIcon { get; set; }
         protected abstract string HDescription { get; }
         public int SaveIndex { get; set; }
 
@@ -43,21 +46,14 @@ namespace InfinityWorldChess.BasicBundle
             }
         }
 
-        protected override void SetDefaultValue()
-        {
-            ShowIcon = AtlasSpriteContainer.Create(IwcAb.Instance, Descriptor, 0);
-            UnitPlay = PrefabContainer<HexUnitPlay>.Create(IwcAb.Instance, Descriptor, 2);
-        }
-
         public virtual void Release()
         {
-            
         }
 
         public virtual void SetContent(Transform transform)
         {
             transform.AddSimpleShown(this);
-            if (GameScope.PlayerGameContext.PlayerSetting?.WuXueQiCai == true)
+            if (GameScope.Instance.Player.PlayerSetting?.WuXueQiCai == true)
             {
                 transform.AddTitle3("技能信息");
                 transform.AddParagraph(HideDescription);

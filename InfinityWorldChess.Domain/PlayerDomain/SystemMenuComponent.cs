@@ -20,8 +20,8 @@ namespace InfinityWorldChess.PlayerDomain
 			"未保存的进度将会丢失".CreateEnsureFloatingOnCenter(() =>
 			{
 				GameScope.OnSystemMenuShutdown();
-				UgfApplicationFactory<StartupModule>.GameShutdown();
-				Og.ScopeFactory.CreateScope<MainMenuScope>();
+				U.Factory.GameShutdown();
+				U.Factory.Application.DependencyManager.CreateScope<MainMenuScope>();
 			});
 		}
 
@@ -34,8 +34,12 @@ namespace InfinityWorldChess.PlayerDomain
 		{
 			LoadingPanel loading = IwcAb.Instance.LoadingPanelCircle.Instantiate();
 			loading.DestroyAction = endAction;
-			UgfApplicationFactory<StartupModule>.GameSaving();
+			
+			
+			U.Factory.SaveGame();
 		}
+		
+		
 
 		public void SaveAndExit()
 		{

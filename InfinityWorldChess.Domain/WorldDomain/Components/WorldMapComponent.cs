@@ -34,25 +34,25 @@ namespace InfinityWorldChess.WorldDomain
 
 		private void OnCellLeftClick(HexCell cell)
 		{
-			GameScope.WorldGameContext.SelectedChecker = GameScope.WorldGameContext.GetChecker(cell);
+			GameScope.Instance.World.SelectedChecker = GameScope.Instance.World.GetChecker(cell);
 		}
 
 		private void OnCellHover(HexCell cell)
 		{
-			GameScope.WorldGameContext.HoverChecker = GameScope.WorldGameContext.GetChecker(cell);
+			GameScope.Instance.World.HoverChecker = GameScope.Instance.World.GetChecker(cell);
 		}
 
 		private void OnCellRightClick(HexCell cell)
 		{
 			Grid.FindPath(
-				GameScope.PlayerGameContext.Unit.Location,
-				cell, GameScope.PlayerGameContext.Unit
+				GameScope.Instance.Player.Unit.Location,
+				cell, GameScope.Instance.Player.Unit
 			);
 
-			GameScope.WorldGameContext.Path = Grid.GetPath();
+			GameScope.Instance.World.Path = Grid.GetPath();
 			
 			IwcAb.Instance.ButtonGroupInk.Value.Create(
-				cell, Og.DefaultProvider.Get<WorldHexCellBf>().Get.SelectVisibleFor(cell)
+				cell, U.Get<WorldHexCellBf>().Get.SelectVisibleFor(cell)
 			);
 		}
 	}

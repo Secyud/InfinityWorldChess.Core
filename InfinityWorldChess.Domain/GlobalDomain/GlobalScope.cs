@@ -13,21 +13,28 @@ using UnityEngine.UI;
 
 namespace InfinityWorldChess.GlobalDomain
 {
-    public class GlobalScope : DependencyScope
+    [Registry]
+    public class GlobalScope : DependencyScopeProvider
     {
         private static IMonoContainer<SelectableTable> _selectTable;
         private static IMonoContainer<BodyPartSelectComponent> _bodyPartSelect;
 
         private IwcTableHelperSh<IItem, ItemTf> _itemTableHelper;
         private RoleSelectTableHelper _roleSelectTableHelper;
+        public static GlobalScope Instance { get; private set; }
         
-        public GlobalScope(DependencyManager dependencyProvider,IwcAb ab)
-            : base(dependencyProvider)
+        public GlobalScope(IwcAb ab)
         {
             _selectTable ??= MonoContainer<SelectableTable>.Create(ab);
             _bodyPartSelect ??= MonoContainer<BodyPartSelectComponent>.Create(ab);
+            Instance = this;
         }
-        
+
+        public override void Dispose()
+        {
+            Instance = null;
+        }
+
         public virtual void OnItemSelectionOpen(List<IItem> items, UnityAction<IItem> action)
         {
             _selectTable.Create();

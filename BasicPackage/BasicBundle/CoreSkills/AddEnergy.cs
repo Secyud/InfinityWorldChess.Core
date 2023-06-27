@@ -1,10 +1,11 @@
 ﻿using InfinityWorldChess.SkillDomain;
+using Secyud.Ugf.DataManager;
 
 namespace InfinityWorldChess.BasicBundle.CoreSkills
 {
     public class AddEnergy : CoreSkillTemplate
     {
-        [R(256)] public float F256 { get; set; }
+        [field: S(ID = 256)] public float F256 { get; set; }
 			
         protected override string HDescription =>
             $"此招式恢复自身{F256:P0}内力。";

@@ -3,7 +3,6 @@
 using InfinityWorldChess.ItemDomain.EquipmentDomain;
 using InfinityWorldChess.RoleDomain;
 using Secyud.Ugf.BasicComponents;
-using Secyud.Ugf.DependencyInjection;
 using Secyud.Ugf.Layout;
 using System.Linq;
 using UnityEngine;
@@ -15,7 +14,7 @@ namespace InfinityWorldChess.ManufacturingDomain
 	public class MetalEquipmentManufacturingContext : EquipmentManufacturingContextBase<
 		MetalEquipmentRaw, MetalEquipmentManufacturingProcess, MetalEquipmentManufacturingBlueprint,
 		MetalEquipmentManufacturingContext, MetalEquipmentManufacturingProcessTf,
-		MetalEquipmentManufacturingProperty>, ISingleton
+		MetalEquipmentManufacturingProperty>
 	{
 
 		public MetalEquipmentData MetalData { get; private set; }

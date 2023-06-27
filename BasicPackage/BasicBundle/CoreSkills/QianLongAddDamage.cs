@@ -1,11 +1,12 @@
 using InfinityWorldChess.BasicBundle.BattleBuffs;
 using InfinityWorldChess.SkillDomain;
+using Secyud.Ugf.DataManager;
 
 namespace InfinityWorldChess.BasicBundle.CoreSkills
 {
     public class QianLongAddDamage : CoreSkillTemplate
     {
-        [R(256)] public float F256 { get; set; }
+        [field: S(ID = 256)] public float F256 { get; set; }
 
         protected override string HDescription =>
             $"潜龙状态将会额外增加此招式{F256:P0}伤害。";

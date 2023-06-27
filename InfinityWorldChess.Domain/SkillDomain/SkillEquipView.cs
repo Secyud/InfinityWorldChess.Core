@@ -2,7 +2,6 @@
 
 using InfinityWorldChess.PlayerDomain;
 using InfinityWorldChess.RoleDomain;
-using Secyud.Ugf;
 using UnityEngine;
 
 #endregion
@@ -26,8 +25,8 @@ namespace InfinityWorldChess.SkillDomain
 		public virtual void OnInitialize(Role role)
 		{
 			TargetRole = role;
-			bool b = role == Og.Get<GameScope,PlayerGameContext>().Role ||
-			         GameScope.PlayerGameContext.PlayerSetting.YunChouWeiWo;
+			bool b = role == GameScope.Instance.Player.Role ||
+			         GameScope.Instance.Player.PlayerSetting.YunChouWeiWo;
 			foreach (SkillCell skillCell in Cells)
 				skillCell.SetInstallable(b);
 		}

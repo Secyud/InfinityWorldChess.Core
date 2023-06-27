@@ -1,15 +1,15 @@
-﻿using System;
-using InfinityWorldChess.BasicBundle.BattleBuffs;
+﻿using InfinityWorldChess.BasicBundle.BattleBuffs;
 using InfinityWorldChess.BasicBundle.BattleBuffs.Recorders;
 using InfinityWorldChess.BattleDomain;
+using Secyud.Ugf.DataManager;
 
 namespace InfinityWorldChess.BasicBundle.PassiveSkills
 {
     public class RemoveDeBuff : PassiveSkillTemplate, IOnBattleRoleInitialize
     {
-        [R(256)] private byte DeBuffType { get; set; }
+        [field:S(ID=256)] private byte DeBuffType { get; set; }
 
-        [R(257)] private int Value { get; set; }
+        [field:S(ID=257)] private int Value { get; set; }
 
         private RoleBattleChess _chess;
 

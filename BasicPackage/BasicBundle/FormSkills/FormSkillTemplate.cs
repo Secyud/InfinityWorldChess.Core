@@ -1,6 +1,7 @@
 ﻿using InfinityWorldChess.BattleDomain;
 using InfinityWorldChess.SkillDomain;
 using InfinityWorldChess.Ugf;
+using Secyud.Ugf.DataManager;
 using Secyud.Ugf.HexMap;
 using Secyud.Ugf.HexMap.Utilities;
 using UnityEngine;
@@ -9,9 +10,9 @@ namespace InfinityWorldChess.BasicBundle.FormSkills
 {
 	public class FormSkillTemplate : ActiveSkillBase, IFormSkill
 	{
-		[R(13)]public byte Type { get; set; }
+		[field: S(ID = 9)]public byte Type { get; set; }
 
-		[R(14)]public byte State { get; set; }
+		[field: S(ID = 10)]public byte State { get; set; }
 
 
 		protected override string HDescription => "没有特殊效果。";

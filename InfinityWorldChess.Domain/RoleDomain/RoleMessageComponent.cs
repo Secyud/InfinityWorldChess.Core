@@ -60,7 +60,7 @@ namespace InfinityWorldChess.RoleDomain
 
         public void OnInitialize(Role role)
         {
-            _context ??= GameScope. RoleGameContext;
+            _context ??= GameScope. Instance.Role;
             _context.MainOperationRole = role;
 
             BasicForm.OnInitialize(role.Basic);

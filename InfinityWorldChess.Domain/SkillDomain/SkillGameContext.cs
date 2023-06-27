@@ -2,16 +2,17 @@
 
 using InfinityWorldChess.Ugf;
 using Secyud.Ugf.AssetLoading;
-using Secyud.Ugf.DependencyInjection;
 using Secyud.Ugf.TableComponents;
 using System.Collections.Generic;
+using Secyud.Ugf.DependencyInjection;
 using UnityEngine.Events;
 
 #endregion
 
 namespace InfinityWorldChess.SkillDomain
 {
-	public class SkillGameContext : ISingleton
+	[Registry()]
+	public class SkillGameContext 
 	{
 		public readonly IMonoContainer<SelectableTable> CoreSkillSelectTable;
 		public readonly IMonoContainer<SelectableTable> FormSkillSelectTable;

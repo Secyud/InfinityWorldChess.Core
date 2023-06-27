@@ -1,8 +1,6 @@
 #region
 
-using Secyud.Ugf.Archiving;
 using System;
-using System.Data.Common;
 using System.IO;
 using Secyud.Ugf.DataManager;
 
@@ -12,9 +10,9 @@ namespace InfinityWorldChess.RoleDomain
 {
     public class RoleBodyPart : DataObject
     {
-        [S(0)] private float _realValue;
+        [S(ID =0)] private float _realValue;
 
-        [field: S(1)]
+        [field: S(ID =1)]
         public int MaxValue { get; set; }
 
         public float RealValue

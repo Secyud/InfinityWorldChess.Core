@@ -1,11 +1,12 @@
 ﻿using InfinityWorldChess.BattleDomain;
 using InfinityWorldChess.SkillDomain;
+using Secyud.Ugf.DataManager;
 
 namespace InfinityWorldChess.BasicBundle.CoreSkills
 {
     public class MultiAttackFactor0 : CoreSkillTemplate
     {
-        [R(256)] public float F256 { get; set; }
+        [field: S(ID = 256)] public float F256 { get; set; }
 
         protected override string HDescription =>
             $"若前置招式为阴，攻击系数乘{1+F256:P0}。";

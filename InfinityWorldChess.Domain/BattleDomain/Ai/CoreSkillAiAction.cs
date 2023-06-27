@@ -5,6 +5,7 @@ using Secyud.Ugf.HexMap;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Ugf.Collections.Generic;
 
 namespace InfinityWorldChess.BattleDomain
 {

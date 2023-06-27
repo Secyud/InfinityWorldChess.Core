@@ -2,11 +2,10 @@
 
 using InfinityWorldChess.ItemDomain;
 using Secyud.Ugf.Archiving;
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
+using System.Ugf.Collections.Generic;
 
 #endregion
 
@@ -20,25 +19,25 @@ namespace InfinityWorldChess.RoleDomain
 		{
 			private readonly List<IItem> _items = new();
 
-			public void Save(BinaryWriter writer)
+			public void Save(IArchiveWriter writer)
 			{
 				writer.Write(Count);
 				for (int i = 0; i < Count; i++)
 				{
 					IItem item = this[i];
-					writer.WriteArchiving(item);
+					writer.Write(item);
 					item.SaveIndex = i;
 				}
 			}
 
-			public void Load(BinaryReader reader)
+			public void Load(IArchiveReader reader)
 			{
 				Clear();
 				int count = reader.ReadInt32();
 
 				for (int i = 0; i < count; i++)
 				{
-					IItem item = reader.ReadArchiving<IItem>();
+					IItem item = reader.Read<IItem>();
 					item!.SaveIndex = i;
 					this.AddLast(item);
 				}
@@ -108,6 +107,7 @@ namespace InfinityWorldChess.RoleDomain
 				get => _items[index];
 				set => _items[index] = value;
 			}
+
 		}
 	}
 }

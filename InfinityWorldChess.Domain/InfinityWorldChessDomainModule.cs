@@ -1,10 +1,13 @@
 ﻿#region
 
+using System.Collections;
+using InfinityWorldChess.ArchivingDomain;
 using InfinityWorldChess.GlobalDomain;
 using InfinityWorldChess.PlayerDomain;
 using InfinityWorldChess.RoleDomain;
 using InfinityWorldChess.WorldDomain;
 using Secyud.Ugf;
+using Secyud.Ugf.Archiving;
 using Secyud.Ugf.AssetLoading;
 using Secyud.Ugf.DependencyInjection;
 using Secyud.Ugf.HexMap;
@@ -19,8 +22,8 @@ namespace InfinityWorldChess
         typeof(InfinityWorldChessSharedModule),
         typeof(UgfHexMapModule)
     )]
-    public class InfinityWorldChessDomainModule : IUgfModule, IPostConfigure, IOnGameArchiving, IOnPreInitialization,
-        IOnPostInitialization, IOnGameShutdown
+    public class InfinityWorldChessDomainModule : IUgfModule, IPostConfigure,
+        IOnPreInitialization, IOnInitialization, IOnPostInitialization, IOnArchiving
     {
         public const string AssetBundleName = InfinityWorldChessSharedModule.AssetBundleName;
 
@@ -36,53 +39,70 @@ namespace InfinityWorldChess
 
             context.Get<WorldHexCellBf>().Register(new TravelButtonRegistration());
 
-            context.Get<IDependencyScopeFactory>().CreateScope<GlobalScope>();
+            IDependencyManager manager = context.Get<IDependencyManager>();
+            manager.CreateScope<GlobalScope>();
         }
 
-        public void OnGamePreInitialization()
+
+        public IEnumerator OnGamePreInitialization(GameInitializeContext context)
         {
-            Og.ScopeFactory.CreateScope<GameScope>();
+            IUgfApplication app = context.Get<IUgfApplication>();
+            app.DependencyManager.CreateScope<GameScope>();
+            yield return null;
         }
-        public void OnGameLoading(LoadingContext context)
+
+        public IEnumerator OnGameInitializing(GameInitializeContext context)
         {
-            Og.Get<GameScope,WorldGameContext>().OnGameLoading(context);
-            Og.Get<GameScope,RoleGameContext>().OnGameLoading(context);
-            Og.Get<GameScope,PlayerGameContext>().OnGameLoading(context);
+            if (SharedConsts.LoadGame)
+            {
+                yield return LoadGame();
+            }
+            else
+            {
+                yield return GameScope.Instance.World.OnGameCreation();
+                yield return GameScope.Instance.Role.OnGameCreation();
+                yield return GameScope.Instance.Player.OnGameCreation();
+            }
         }
 
-        public void OnGameSaving(SavingContext context)
+        public IEnumerator OnGamePostInitialization(GameInitializeContext context)
         {
-            Og.Get<GameScope,WorldGameContext>().OnGameSaving(context);
-            Og.Get<GameScope,RoleGameContext>().OnGameSaving(context);
-            Og.Get<GameScope,PlayerGameContext>().OnGameSaving(context);
+            U.Factory.Application.DependencyManager.DestroyScope<CreatorScope>();
+            SetPlayer(
+                GameScope.Instance.World,
+                GameScope.Instance.Player,
+                GameScope.Instance.Role
+            );
+            yield return null;
         }
 
+        public int GameInitializeStep { get; } = 30;
 
 
-        public void OnGameCreation()
+        public IEnumerator SaveGame()
         {
-           Og.Get<GameScope,WorldGameContext>().OnGameCreation();
-           Og.Get<GameScope,RoleGameContext>().OnGameCreation();
-           Og.Get<GameScope,PlayerGameContext>().OnGameCreation();
+            yield return GameScope.Instance.World.OnGameSaving();
+            yield return GameScope.Instance.Role.OnGameSaving();
+            yield return GameScope.Instance.Player.OnGameSaving();
         }
+
+        public IEnumerator LoadGame()
+        {
+            yield return GameScope.Instance.World.OnGameLoading();
+            yield return GameScope.Instance.Role.OnGameLoading();
+            yield return GameScope.Instance.Player.OnGameLoading();
+        }
+
 
         public void OnGameShutdown()
         {
-            Og.ScopeFactory.DestroyScope<GameScope>();
+            U.Factory.Application.DependencyManager.DestroyScope<GameScope>();
         }
 
-        public void OnGamePostInitialization()
-        {
-            Og.ScopeFactory.DestroyScope<CreatorScope>();
-            SetPlayer(
-                GameScope.WorldGameContext,
-                GameScope.PlayerGameContext,
-                GameScope.RoleGameContext
-            );
-        }
-
-
-        private void SetPlayer(WorldGameContext world, PlayerGameContext player, RoleGameContext role)
+        private void SetPlayer(
+            WorldGameContext world,
+            PlayerGameContext player,
+            RoleGameContext role)
         {
             Role pr = player.Role;
             HexUnit pu = world.WorldUnitPrefab.Instantiate(world.Map.Grid.transform);

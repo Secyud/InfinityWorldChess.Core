@@ -5,24 +5,27 @@ using Secyud.Ugf.DependencyInjection;
 namespace InfinityWorldChess.BattleDomain
 {
     
-    [DependScope(typeof(GlobalScope))]
-    public class BattleScope : DependencyScope
+    [Registry(DependScope=typeof(GlobalScope))]
+    public class BattleScope : DependencyScopeProvider
     {
         private static MonoContainer<BattleUiComponent> _ui;
         private static MonoContainer<BattleMapComponent> _map;
+        private  BattleContext _context;
 
-        public Battle Battle { get; private set; }
 
-        public static BattleContext Context { get; private set; }
+        public static BattleContext Context =>
+            Instance._context??=Instance.Get<BattleContext>();
+
+        public static BattleScope Instance { get; private set; }
         
-        public BattleScope(DependencyManager dependencyProvider, IwcAb ab) : base(dependencyProvider)
+        public Battle Battle { get; private set; }
+        
+        public BattleScope( IwcAb ab) 
         {
             _ui ??= MonoContainer<BattleUiComponent>.Create(ab);
             _map ??= MonoContainer<BattleMapComponent>.Create(ab, onCanvas: false);
             _ui.Create();
             _map.Create();
-            _map.Value.Grid.HexMapManager = Get<IBattleHexMapManager>();
-            Context = Get<BattleContext>();
             Context.Ui = _ui.Value;
             Context.Map = _map.Value;
         }
@@ -30,12 +33,13 @@ namespace InfinityWorldChess.BattleDomain
         public void CreateBattle(Battle battle)
         {
             Context.OnCreation(battle);
+            _map.Value.Grid.HexMapManager = Get<IBattleHexMapManager>();
         }
 
         public override void Dispose()
         {
             Context.OnShutDown();
-            Context = null;
+            Instance = null;
             _ui.Destroy();
             _map.Destroy();
         }

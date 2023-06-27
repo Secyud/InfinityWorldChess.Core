@@ -1,6 +1,7 @@
 ﻿using InfinityWorldChess.BattleDomain;
 using InfinityWorldChess.SkillDomain;
 using InfinityWorldChess.Ugf;
+using Secyud.Ugf.DataManager;
 using Secyud.Ugf.HexMap;
 using UnityEngine;
 
@@ -8,12 +9,12 @@ namespace InfinityWorldChess.BasicBundle.CoreSkills
 {
     public class CoreSkillTemplate : SkillWithFlowBase, ICoreSkill
     {
-        [R(13)] public float AttackFactor { get; set; }
-        [R(14)] public float FixedAttackValue { get; set; }
-        [R(15)] public byte FullCode { get; set; }
-        [R(16)] public byte MaxLayer { get; set; }
-        [R(17)] public byte ConditionCode { get; set; }
-        [R(18)] public byte ConditionMask { get; set; }
+        [field: S(ID = 9)] public float AttackFactor { get; set; }
+        [field: S(ID = 10)] public float FixedAttackValue { get; set; }
+        [field: S(ID = 11)] public byte FullCode { get; set; }
+        [field: S(ID = 12)] public byte MaxLayer { get; set; }
+        [field: S(ID = 13)] public byte ConditionCode { get; set; }
+        [field: S(ID = 14)] public byte ConditionMask { get; set; }
         protected override string HDescription => "没有特殊效果。";
 
         public override void SetContent(Transform transform)

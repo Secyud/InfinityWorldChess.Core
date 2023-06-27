@@ -4,7 +4,8 @@ using InfinityWorldChess.ItemDomain;
 using InfinityWorldChess.ItemDomain.EquipmentDomain;
 using Secyud.Ugf;
 using System.Collections.Generic;
-using System.IO;
+using System.Ugf.Collections.Generic;
+using Secyud.Ugf.Archiving;
 
 #endregion
 
@@ -35,7 +36,7 @@ namespace InfinityWorldChess.RoleDomain
 
 		public void AutoEquipEquipment()
 		{
-			IRoleAiService ai = Og.DefaultProvider.Get<IRoleAiService>();
+			IRoleAiService ai = U.Get<IRoleAiService>();
 			if (ai is not null)
 				ai.AutoEquipFormSkill(this);
 			else
@@ -70,7 +71,7 @@ namespace InfinityWorldChess.RoleDomain
 				}
 			}
 
-			public void Save(BinaryWriter writer)
+			public void Save(IArchiveWriter writer)
 			{
 				for (int i = 0; i < SharedConsts.MaxBodyPartsCount; i++)
 				{
@@ -91,7 +92,7 @@ namespace InfinityWorldChess.RoleDomain
 				}
 			}
 
-			public void Load(BinaryReader reader, Role role)
+			public void Load(IArchiveReader reader, Role role)
 			{
 				for (byte i = 0; i < SharedConsts.MaxBodyPartsCount; i++)
 				{

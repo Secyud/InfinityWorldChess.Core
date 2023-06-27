@@ -1,8 +1,7 @@
 #region
 
-using Secyud.Ugf.Archiving;
 using System;
-using System.IO;
+using Secyud.Ugf.DataManager;
 
 #endregion
 
@@ -18,43 +17,29 @@ namespace InfinityWorldChess.RoleDomain
 			return Math.Max((int)(64 + 256 * speed / (256 + speed)), 1);
 		}
 
-		public class BodyPartProperty : IArchivable
+		public class BodyPartProperty : DataObject
 		{
+			[field:S(ID = 0)]
 			public RoleBodyPart Living { get; set; } = new();
 
+			[field:S(ID = 1)]
 			public RoleBodyPart Kiling { get; set; } = new();
 
+			[field:S(ID = 2)]
 			public RoleBodyPart Nimble { get; set; } = new();
 
+			[field:S(ID = 3)]
 			public RoleBodyPart Defend { get; set; } = new();
 
-			public RoleBodyPart this[BodyType part]
-			{
-				get => part switch
+			public RoleBodyPart this[BodyType part] =>
+				part switch
 				{
 					BodyType.Living => Living,
 					BodyType.Kiling => Kiling,
 					BodyType.Nimble => Nimble,
 					BodyType.Defend => Defend,
-					_ => throw new ArgumentOutOfRangeException(nameof(part), part, null)
+					_               => throw new ArgumentOutOfRangeException(nameof(part), part, null)
 				};
-			}
-
-			public void Save(BinaryWriter writer)
-			{
-				Living.Save(writer);
-				Kiling.Save(writer);
-				Nimble.Save(writer);
-				Defend.Save(writer);
-			}
-
-			public void Load(BinaryReader reader)
-			{
-				Living.Load(reader);
-				Kiling.Load(reader);
-				Nimble.Load(reader);
-				Defend.Load(reader);
-			}
 		}
 	}
 }

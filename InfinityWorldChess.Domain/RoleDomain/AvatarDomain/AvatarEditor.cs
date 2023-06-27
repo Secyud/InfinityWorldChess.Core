@@ -1,9 +1,10 @@
 ﻿#region
 
-using Secyud.Ugf;
 using Secyud.Ugf.BasicComponents;
 using System;
 using System.Collections.Generic;
+using System.Ugf.Collections.Generic;
+using Secyud.Ugf;
 using UnityEngine;
 
 #endregion
@@ -21,7 +22,7 @@ namespace InfinityWorldChess.RoleDomain
 
 		protected void Awake()
 		{
-			_manager = Og.DefaultProvider.Get<RoleResourceManager>();
+			_manager = U.Get<RoleResourceManager>();
 		}
 
 		public void OnInitialize(Role.BasicProperty basic)

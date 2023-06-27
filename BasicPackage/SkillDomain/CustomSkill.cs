@@ -4,11 +4,9 @@ using InfinityWorldChess.Ugf;
 using Secyud.Ugf;
 using Secyud.Ugf.Archiving;
 using Secyud.Ugf.HexMap;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
-using UnityEngine.Playables;
 
 namespace InfinityWorldChess.SkillDomain
 {
@@ -84,20 +82,29 @@ namespace InfinityWorldChess.SkillDomain
 				effect.Cast(battleChess, releasePosition);
 		}
 
-		public void Save(BinaryWriter writer)
+		public void Save(IArchiveWriter writer)
 		{
 			this.SaveShown(writer);
 			
-			writer.WriteArchiving(Condition);
-			writer.WriteArchiving(Position);
-			writer.WriteArchiving(Result);
+			writer.Write(Condition);
+			writer.Write(Position);
+			writer.Write(Result);
 			writer.Write(Effects.Count);
-			writer.WriteArchiving(Effects);
+			foreach (ISkillCastEffect effect in Effects)
+				writer.Write(effect);
 		}
 
-		public void Load(BinaryReader reader)
+		public void Load(IArchiveReader reader)
 		{
-			throw new System.NotImplementedException();
+			this.LoadShown(reader);
+			
+			Condition = reader.Read<ISkillCastCondition>();
+			Position =reader.Read<ISkillCastPosition>();
+			Result=reader.Read<ISkillCastResult>();
+			int count =reader.ReadInt32();
+			Effects.Clear();
+			for (int i = 0; i < count; i++)
+				Effects.Add(reader.Read<ISkillCastEffect>());
 		}
 	}
 }

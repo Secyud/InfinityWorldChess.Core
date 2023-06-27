@@ -2,10 +2,10 @@
 
 using InfinityWorldChess.RoleDomain;
 using InfinityWorldChess.Ugf;
-using Secyud.Ugf;
 using Secyud.Ugf.TableComponents;
 using System.Diagnostics.CodeAnalysis;
 using InfinityWorldChess.PlayerDomain;
+using Secyud.Ugf;
 using UnityEngine;
 
 #endregion
@@ -22,7 +22,7 @@ namespace InfinityWorldChess.SkillDomain
 
 		private void Awake()
 		{
-			_scope = Og.ScopeFactory.GetScope<GameScope>();
+			_scope = U.Factory.Application.DependencyManager.GetScope<GameScope>();
 		}
 
 		public void ChangeView(int type)

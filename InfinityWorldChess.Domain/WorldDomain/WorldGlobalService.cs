@@ -1,15 +1,16 @@
 #region
 
 using Secyud.Ugf.AssetLoading;
-using Secyud.Ugf.DependencyInjection;
 using System.Collections.Generic;
+using Secyud.Ugf.DependencyInjection;
 using UnityEngine;
 
 #endregion
 
 namespace InfinityWorldChess.WorldDomain
 {
-	public class WorldGlobalService : ISingleton
+	[Registry]
+	public class WorldGlobalService 
 	{
 		public readonly PrefabContainer<Transform>[] Features;
 		public readonly List<PrefabContainer<Transform>>[,] ResourceFeatures;

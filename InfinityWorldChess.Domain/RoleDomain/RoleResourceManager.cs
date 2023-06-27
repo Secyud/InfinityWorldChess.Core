@@ -1,19 +1,20 @@
 ﻿#region
 
 using InfinityWorldChess.Ugf;
-using Secyud.Ugf;
 using Secyud.Ugf.AssetLoading;
 using Secyud.Ugf.Collections;
-using Secyud.Ugf.DependencyInjection;
 using System.Collections.Generic;
 using System.IO;
+using Secyud.Ugf;
+using Secyud.Ugf.DependencyInjection;
 using UnityEngine;
 
 #endregion
 
 namespace InfinityWorldChess.RoleDomain
 {
-	public class RoleResourceManager : ISingleton
+	[Registry()]
+	public class RoleResourceManager 
 	{
 		public readonly AvatarResourceGroup Male = new();
 		public readonly AvatarResourceGroup Female = new();
@@ -33,7 +34,7 @@ namespace InfinityWorldChess.RoleDomain
 
 		public RoleResourceManager()
 		{
-			string path = Path.Combine(Og.AppPath,"Data", nameof(RoleResourceManager));
+			string path = Path.Combine(Application.dataPath,"Data", nameof(RoleResourceManager));
 			LastNames = Path.Combine(path, nameof(LastNames)).GetStringListFromPath();
 			FirstNameFrontFemale = Path.Combine(path, nameof(FirstNameFrontFemale)).GetCharListFromPath();
 			FirstNameFrontMale = Path.Combine(path, nameof(FirstNameFrontMale)).GetCharListFromPath();
@@ -60,8 +61,8 @@ namespace InfinityWorldChess.RoleDomain
 
 			int totalLength = front.Count + behind.Count;
 			string ret = "";
-			int i1 = Og.GetRandom(totalLength);
-			int i2 = Og.GetRandom(totalLength - i1);
+			int i1 = U.GetRandom(totalLength);
+			int i2 = U.GetRandom(totalLength - i1);
 			if (i1 < front.Count)
 				ret += front[i1];
 			if (i2 < behind.Count)

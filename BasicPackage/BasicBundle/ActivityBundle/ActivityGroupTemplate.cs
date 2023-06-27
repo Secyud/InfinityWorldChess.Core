@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
 using InfinityWorldChess.ActivityDomain;
+using Secyud.Ugf.DataManager;
 
 namespace InfinityWorldChess.BasicBundle.ActivityBundle
 {
-    public class ActivityGroupTemplate:ResourcedBase,IActivityGroup
+    public class ActivityGroupTemplate:DataObject,IActivityGroup
     {
         public IActivity Active { get; set; }
         public IList<IActivity> Activities { get; } = new List<IActivity>();

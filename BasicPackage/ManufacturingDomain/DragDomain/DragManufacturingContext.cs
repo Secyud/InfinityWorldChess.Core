@@ -1,14 +1,13 @@
 ﻿using InfinityWorldChess.ItemDomain.FoodDomain;
 using InfinityWorldChess.RoleDomain;
 using InfinityWorldChess.Ugf;
-using Secyud.Ugf.DependencyInjection;
 using System;
 
 namespace InfinityWorldChess.ManufacturingDomain
 {
 	public class DragManufacturingContext : FlavorManufacturingContextBase
 	<Drag, DragManufacturingComponent, DragManufacturingProcess, DragManufacturingContext,
-		DragManufacturingProcessTf, DragManufacturingProperty>, ISingleton
+		DragManufacturingProcessTf, DragManufacturingProperty>
 	{
 
 		public DragManufacturingData DragData { get; private set; }

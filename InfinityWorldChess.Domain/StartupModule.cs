@@ -13,7 +13,8 @@ namespace InfinityWorldChess
 	{
 		public void PostConfigureGame(ConfigurationContext context)
 		{
-			context.Get<IDependencyScopeFactory>().CreateScope<MainMenuScope>();
+			IDependencyManager manager = context.Get<IDependencyManager>();
+			manager.CreateScope<MainMenuScope>();
 		}
 
 		public void ConfigureGame(ConfigurationContext context)

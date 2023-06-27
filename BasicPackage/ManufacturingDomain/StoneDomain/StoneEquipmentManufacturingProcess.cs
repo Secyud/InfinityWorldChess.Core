@@ -27,7 +27,7 @@ namespace InfinityWorldChess.ManufacturingDomain
 		public override void SetContent(Transform transform)
 		{
 			base.SetContent(transform);
-			transform.AddParagraph($"{Og.L["目标槽位"]}: {RangeStart}-{RangeEnd}");
+			transform.AddParagraph($"{U.T["目标槽位"]}: {RangeStart}-{RangeEnd}");
 		}
 
 	}

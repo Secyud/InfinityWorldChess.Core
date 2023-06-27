@@ -5,7 +5,6 @@ using InfinityWorldChess.Ugf;
 using Secyud.Ugf;
 using Secyud.Ugf.BasicComponents;
 using System.Linq;
-using InfinityWorldChess.PlayerDomain;
 using UnityEngine;
 
 #endregion
@@ -21,11 +20,11 @@ namespace InfinityWorldChess.SkillDomain
 
 		private void Awake()
 		{
-			_context = Og.Get<GameScope,SkillGameContext>();
+			_context = U.Get<SkillGameContext>();
 			_skillSelectArray = new byte[SharedConsts.CoreSkillLayerCount];
 			_skills = new ICoreSkill[SharedConsts.CoreSkillCount];
 			for (int i = 0; i < SharedConsts.CoreSkillLayerCount; i++)
-				Selected[i].text = Og.L["阴"];
+				Selected[i].text = U.T["阴"];
 		}
 
 		private void SelectRoleCoreSkill(int index, ICoreSkill skill)
@@ -67,7 +66,7 @@ namespace InfinityWorldChess.SkillDomain
 		{
 			int selectLayer = index / SharedConsts.CoreSkillCodeCount;
 			byte selectCode = (byte)(index % SharedConsts.CoreSkillCodeCount);
-			Selected[selectLayer].text = Og.L[selectCode>0?"阳":"阴"];
+			Selected[selectLayer].text = U.T[selectCode>0?"阳":"阴"];
 			RefreshShowSkills(selectLayer, selectCode);
 		}
 

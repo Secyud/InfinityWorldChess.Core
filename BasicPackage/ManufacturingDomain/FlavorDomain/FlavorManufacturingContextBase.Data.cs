@@ -5,9 +5,9 @@ using InfinityWorldChess.Ugf;
 using Secyud.Ugf;
 using Secyud.Ugf.AssetLoading;
 using Secyud.Ugf.TableComponents;
-using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Ugf;
 using InfinityWorldChess.GlobalDomain;
 using UnityEngine;
 
@@ -89,7 +89,7 @@ namespace InfinityWorldChess.ManufacturingDomain
 
 			public void OnProcessFlavorSelect(TProcess process)
 			{
-				Og.ScopeFactory.GetScope<GlobalScope>().OnItemSelectionOpen(
+				GlobalScope.Instance.OnItemSelectionOpen(
 					RoleItem.Where(u => u is IHasFlavor).ToList(),
 					i =>
 					{
@@ -128,14 +128,14 @@ namespace InfinityWorldChess.ManufacturingDomain
 			{
 				if (Name.IsNullOrWhiteSpace())
 				{
-					Og.L.Translate("请输入名称").CreateTipFloatingOnCenter();
+					U.T.Translate("请输入名称").CreateTipFloatingOnCenter();
 					return;
 				}
 
 				TFlavor flavor = GetResult();
 				if (flavor is null)
 				{
-					Og.L.Translate("请添加必须材料").CreateTipFloatingOnCenter();
+					U.T.Translate("请添加必须材料").CreateTipFloatingOnCenter();
 					return;
 				}
 
@@ -143,7 +143,7 @@ namespace InfinityWorldChess.ManufacturingDomain
 				AddedProcesses.Clear();
 				_factory.AddedProcessesTable.RefreshFilter();
 				_factory.ResultContent.RefreshContent(flavor);
-				Og.L.Translate($"获得: {Name}").CreateTipFloatingOnCenter();
+				U.T.Translate($"获得: {Name}").CreateTipFloatingOnCenter();
 			}
 
 			public void OnShutdown()

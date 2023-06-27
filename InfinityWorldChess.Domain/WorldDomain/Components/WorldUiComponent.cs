@@ -26,7 +26,7 @@ namespace InfinityWorldChess.WorldDomain
 
 		public void CallGameMenu()
 		{
-			GameScope.OnRoleMessageCreation(GameScope.PlayerGameContext.Role, 0);
+			GameScope.OnRoleMessageCreation(GameScope.Instance.Player.Role, 0);
 		}
 
 
@@ -48,7 +48,7 @@ namespace InfinityWorldChess.WorldDomain
 			if (_currentPanel)
 			{
 				_currentPanel.gameObject.SetActive(true);
-				_currentPanel.OnInitialize(GameScope.PlayerGameContext.Role.Position);
+				_currentPanel.OnInitialize(GameScope.Instance.Player.Role.Position);
 				Content.enabled = true;
 			}
 		}
@@ -65,8 +65,8 @@ namespace InfinityWorldChess.WorldDomain
 
 		public void ResetCamera()
 		{
-			GameScope.WorldGameContext.Map.MapCamera.SetTargetPosition(
-				GameScope.PlayerGameContext.Unit.transform.position
+			GameScope.Instance.World.Map.MapCamera.SetTargetPosition(
+				GameScope.Instance.Player.Unit.transform.position
 			);
 		}
 		public void OpenSystemMenu()

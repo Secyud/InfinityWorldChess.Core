@@ -1,28 +1,29 @@
 #region
 
+using System.Collections;
 using InfinityWorldChess.BiographyDomain;
 using InfinityWorldChess.BundleDomain;
 using InfinityWorldChess.GlobalDomain;
 using InfinityWorldChess.ItemDomain;
 using InfinityWorldChess.RoleDomain;
 using InfinityWorldChess.WorldDomain;
-using Secyud.Ugf;
-using Secyud.Ugf.DependencyInjection;
 using Secyud.Ugf.HexMap;
 using Secyud.Ugf.HexMap.Utilities;
-using Secyud.Ugf.Modularity;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using InfinityWorldChess.ActivityDomain;
+using Secyud.Ugf;
+using Secyud.Ugf.Archiving;
 using Secyud.Ugf.DataManager;
+using Secyud.Ugf.DependencyInjection;
 
 #endregion
 
 namespace InfinityWorldChess.PlayerDomain
 {
-    public class PlayerGameContext : IScoped, IOnGameArchiving
+    [Registry(LifeTime = DependencyLifeTime.Scoped,DependScope = typeof(GameScope))]
+    public class PlayerGameContext 
     {
         private readonly WorldGameContext _worldGameContext;
         private HexUnit _unit;
@@ -33,6 +34,8 @@ namespace InfinityWorldChess.PlayerDomain
         public readonly List<ActivityResult> CompleteActivity = new();
 
         public Role Role { get; private set; }
+
+        private static readonly string SavePath = SharedConsts.SaveFilePath(nameof(PlayerGameContext));
 
         public virtual HexUnit Unit
         {
@@ -53,10 +56,10 @@ namespace InfinityWorldChess.PlayerDomain
             _worldGameContext = worldGameContext;
         }
 
-        public virtual void OnGameLoading(LoadingContext context)
+        public virtual IEnumerator OnGameLoading()
         {
-            BinaryReader reader = context.GetReader(nameof(PlayerGameContext));
-            ClassManager tm = Og.ClassManager;
+            using FileStream stream = File.OpenRead(SavePath);
+            using DefaultArchiveReader reader = new(stream);
 
             int index = reader.ReadInt32();
             Role = new Role();
@@ -72,27 +75,28 @@ namespace InfinityWorldChess.PlayerDomain
             Bundles.Capacity = count;
             for (int i = 0; i < count; i++)
             {
-                IBundle bundle = tm.Construct(reader) as IBundle;
-                bundle!.OnGameLoading(context);
+                IBundle bundle = reader.Read<IBundle>();
+                bundle.OnGameLoading();
                 Bundles.Add(bundle);
+                if (U.AddStep())
+                    yield return null;
             }
             
             count = reader.ReadInt32();
-            InitializeManager im = Og.InitializeManager;
             CompleteActivity.Capacity = count;
             for (int i = 0; i < count; i++)
             {
                 string name = reader.ReadString();
-                ActivityResult result = new();
-                result.InitSetting(im.GetResource(typeof(ActivityResult),name));
+                ActivityResult result = DataObject.Create<ActivityResult>(name);
                 CompleteActivity.Add(result);
+                
             }
         }
 
-        public virtual void OnGameSaving(SavingContext context)
+        public virtual IEnumerator OnGameSaving()
         {
-            BinaryWriter writer = context.GetWriter(nameof(PlayerGameContext));
-
+            using FileStream stream = File.OpenRead(SavePath);
+            using DefaultArchiveWriter writer = new(stream);
             writer.Write(Role.Position.Cell.Index);
             Role.Save(writer);
 
@@ -108,51 +112,53 @@ namespace InfinityWorldChess.PlayerDomain
 
             writer.Write(Bundles.Count);
             foreach (IBundle t in Bundles)
-                writer.Write(t.GetTypeId());
+                writer.Write(t);
             
             writer.Write(CompleteActivity.Count);
             foreach (ActivityResult activityResult in CompleteActivity)
                 writer.Write(activityResult.ShowName);
+            if (U.AddStep())
+                yield return null;
         }
 
-        public virtual void OnGameCreation()
+        public virtual IEnumerator OnGameCreation()
         {
-            GameCreatorContext gcc = CreatorScope.Context;
+            CreatorScope cs = CreatorScope.Instance;
 
             Role = new Role
             {
                 Basic =
                 {
-                    FirstName = gcc.Basic.FirstName,
-                    LastName = gcc.Basic.LastName,
-                    BirthHour = gcc.Basic.BirthHour,
-                    BirthDay = gcc.Basic.BirthDay,
-                    BirthMonth = gcc.Basic.BirthMonth,
-                    BirthYear = gcc.Basic.BirthYear,
+                    FirstName = cs.Basic.FirstName,
+                    LastName = cs.Basic.LastName,
+                    BirthHour = cs.Basic.BirthHour,
+                    BirthDay = cs.Basic.BirthDay,
+                    BirthMonth = cs.Basic.BirthMonth,
+                    BirthYear = cs.Basic.BirthYear,
                     Avatar =
                     {
-                        BackItem = gcc.Basic.Avatar.BackItem,
-                        BackHair = gcc.Basic.Avatar.BackHair,
-                        Body = gcc.Basic.Avatar.Body,
-                        Head = gcc.Basic.Avatar.Head,
-                        HeadFeature = gcc.Basic.Avatar.HeadFeature,
-                        NoseMouth = gcc.Basic.Avatar.NoseMouth,
-                        Eye = gcc.Basic.Avatar.Eye,
-                        Brow = gcc.Basic.Avatar.Brow,
-                        FrontHair = gcc.Basic.Avatar.FrontHair,
+                        BackItem = cs.Basic.Avatar.BackItem,
+                        BackHair = cs.Basic.Avatar.BackHair,
+                        Body = cs.Basic.Avatar.Body,
+                        Head = cs.Basic.Avatar.Head,
+                        HeadFeature = cs.Basic.Avatar.HeadFeature,
+                        NoseMouth = cs.Basic.Avatar.NoseMouth,
+                        Eye = cs.Basic.Avatar.Eye,
+                        Brow = cs.Basic.Avatar.Brow,
+                        FrontHair = cs.Basic.Avatar.FrontHair,
                     },
                 },
                 Nature =
                 {
-                    Recognize = gcc.Nature.Recognize,
-                    Stability = gcc.Nature.Stability,
-                    Confident = gcc.Nature.Confident,
-                    Efficient = gcc.Nature.Efficient,
-                    Gregarious = gcc.Nature.Gregarious,
-                    Altruistic = gcc.Nature.Altruistic,
-                    Rationality = gcc.Nature.Rationality,
-                    Foresighted = gcc.Nature.Foresighted,
-                    Intelligent = gcc.Nature.Intelligent,
+                    Recognize = cs.Nature.Recognize,
+                    Stability = cs.Nature.Stability,
+                    Confident = cs.Nature.Confident,
+                    Efficient = cs.Nature.Efficient,
+                    Gregarious = cs.Nature.Gregarious,
+                    Altruistic = cs.Nature.Altruistic,
+                    Rationality = cs.Nature.Rationality,
+                    Foresighted = cs.Nature.Foresighted,
+                    Intelligent = cs.Nature.Intelligent,
                 },
                 BodyPart =
                 {
@@ -179,20 +185,25 @@ namespace InfinityWorldChess.PlayerDomain
                 }
             };
 
-            foreach (IItem item in gcc.Item)
+            foreach (IItem item in cs.Item)
                 Role.Item.Add(item);
 
-            HexMetrics.InitializeHashGrid(gcc.WorldSetting.Seed);
+            HexMetrics.InitializeHashGrid(cs.WorldSetting.Seed);
 
-            Bundles.AddRange(gcc.Bundles);
+            Bundles.AddRange(cs.Bundles);
 
-            foreach (IBiography biography in gcc.Biography)
+            foreach (IBiography biography in cs.Biography)
                 biography.OnGameCreation(Role);
 
             Role.Position = _worldGameContext.Checkers.First(u => u.SpecialIndex == 1);
 
-            foreach (IBundle bundle in gcc.Bundles)
+            foreach (IBundle bundle in cs.Bundles)
+            {
                 bundle.OnGameCreation();
+                
+                if (U.AddStep())
+                    yield return null;
+            }
         }
     }
 }

@@ -1,10 +1,9 @@
 ﻿using Secyud.Ugf;
-using Secyud.Ugf.DependencyInjection;
 using UnityEngine;
 
 namespace InfinityWorldChess.Ugf
 {
-	public class IwcFunctionService:IFunctionService,ISingleton
+	public class IwcFunctionService:IFunctionService
 	{
 		public RectTransform CreateFloatingForContent(IHasContent content)
 		{

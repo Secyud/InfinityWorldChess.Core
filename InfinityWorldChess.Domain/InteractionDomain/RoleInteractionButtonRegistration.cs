@@ -15,9 +15,9 @@ namespace InfinityWorldChess.InteractionDomain
 
 		public override void Trigger()
 		{
-			_interactionGlobalService ??= Og.DefaultProvider.Get<IInteractionGlobalService>();
-			Role role = GameScope.PlayerGameContext.Role;
-			Og.ScopeFactory.CreateScope<InteractionScope>().OnCreation(
+			_interactionGlobalService ??= U.Get<IInteractionGlobalService>();
+			Role role = GameScope.Instance.Player.Role;
+			U.Factory.Application.DependencyManager.CreateScope<InteractionScope>().OnCreation(
 				_interactionGlobalService.GenerateFreeInteraction(role,Target));
 		}
 

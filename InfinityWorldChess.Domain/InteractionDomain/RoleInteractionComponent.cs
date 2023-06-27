@@ -2,13 +2,13 @@
 
 using InfinityWorldChess.RoleDomain;
 using InfinityWorldChess.Ugf;
-using Secyud.Ugf;
 using Secyud.Ugf.BasicComponents;
 using Secyud.Ugf.Layout;
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using InfinityWorldChess.PlayerDomain;
+using Secyud.Ugf;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -30,15 +30,15 @@ namespace InfinityWorldChess.InteractionDomain
         {
             if (unit is null)
             {
-                Og.ScopeFactory.DestroyScope<InteractionScope>();
+                U.Factory.Application.DependencyManager.DestroyScope<InteractionScope>();
                 return;
             }
 
             unit.OnStart();
 
-            LeftViewer.OnInitialize(InteractionScope.Context.LeftRole.Basic);
+            LeftViewer.OnInitialize(InteractionScope.Instance.LeftRole.Basic);
 
-            RightViewer.OnInitialize(InteractionScope.Context.RightRole.Basic);
+            RightViewer.OnInitialize(InteractionScope.Instance.RightRole.Basic);
 
             SetSaying(unit.Text, unit.Background?.Value);
 
@@ -52,7 +52,7 @@ namespace InfinityWorldChess.InteractionDomain
                             () =>
                             {
                                 unit.OnEnd();
-                                Og.ScopeFactory.DestroyScope<InteractionScope>();
+                                U.Factory.Application.DependencyManager.DestroyScope<InteractionScope>();
                             }
                         )
                     }
@@ -78,12 +78,12 @@ namespace InfinityWorldChess.InteractionDomain
 
         public void OnLeftViewClick()
         {
-            GameScope.OnRoleMessageCreation(InteractionScope.Context.LeftRole, 0);
+            GameScope.OnRoleMessageCreation(InteractionScope.Instance.LeftRole, 0);
         }
 
         public void OnRightViewClick()
         {
-            GameScope.OnRoleMessageCreation(InteractionScope.Context.RightRole, 0);
+            GameScope.OnRoleMessageCreation(InteractionScope.Instance.RightRole, 0);
         }
 
         private void SetSaying(string text, Sprite sprite = null)

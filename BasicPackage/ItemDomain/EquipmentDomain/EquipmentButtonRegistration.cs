@@ -14,14 +14,14 @@ namespace InfinityWorldChess.ItemDomain.EquipmentDomain
 	{
 		public override void Trigger()
 		{
-			Og.ScopeFactory.GetScope<GlobalScope>()
+			U.Factory.Application.DependencyManager.GetScope<GlobalScope>()
 				.OnBodySelectionOpen((Target as IEquipment)!.EquipCode, SetEquipment);
 		}
 
 		public void SetEquipment(int body)
 		{
 			IEquipment equipment = Target as IEquipment;
-			GameScope scope = Og.ScopeFactory.GetScope<GameScope>();
+			GameScope scope = U.Factory.Application.DependencyManager.GetScope<GameScope>();
 			Role role = scope.Get<RoleGameContext>().MainOperationRole;
 			if (body < 0)
 				role.TryRemoveEquipment(equipment);
@@ -36,7 +36,7 @@ namespace InfinityWorldChess.ItemDomain.EquipmentDomain
 
 		public override bool Visible()
 		{
-			return GameScope.RoleGameContext.IsPlayerView();
+			return GameScope.Instance.Role.IsPlayerView();
 		}
 	}
 }

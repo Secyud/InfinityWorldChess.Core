@@ -4,9 +4,9 @@ using InfinityWorldChess.Ugf;
 using JetBrains.Annotations;
 using Secyud.Ugf;
 using Secyud.Ugf.TableComponents;
-using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Ugf;
 using InfinityWorldChess.GlobalDomain;
 using UnityEngine;
 
@@ -100,7 +100,8 @@ namespace InfinityWorldChess.ManufacturingDomain
 
 			public void OnSelectBlueprintButtonClick()
 			{
-				Og.ScopeFactory.GetScope<GlobalScope>().OnItemSelectionOpen(
+				GlobalScope.Instance
+					.OnItemSelectionOpen(
 					RoleItem.Where(u => u is TBlueprint).ToList(),
 					i =>
 					{
@@ -112,7 +113,7 @@ namespace InfinityWorldChess.ManufacturingDomain
 
 			public void OnSelectRawButtonClick()
 			{
-				Og.ScopeFactory.GetScope<GlobalScope>().OnItemSelectionOpen(
+				GlobalScope.Instance.OnItemSelectionOpen(
 					RoleItem.Where(u => u is TRaw).ToList(),
 					i =>
 					{
@@ -133,7 +134,7 @@ namespace InfinityWorldChess.ManufacturingDomain
 			{
 				if (EquipmentName.IsNullOrWhiteSpace())
 				{
-					Og.L.Translate("请输入武器名称").CreateTipFloatingOnCenter();
+					U.T.Translate("请输入武器名称").CreateTipFloatingOnCenter();
 					return;
 				}
 
@@ -146,11 +147,11 @@ namespace InfinityWorldChess.ManufacturingDomain
 					Raw = default;
 					_context.SelectRaw(Raw);
 					_factory.ResultContent.RefreshContent(equipment);
-					Og.L.Translate($"成功锻造武器: {EquipmentName}").CreateTipFloatingOnCenter();
+					U.T.Translate($"成功锻造武器: {EquipmentName}").CreateTipFloatingOnCenter();
 				}
 				else
 				{
-					Og.L.Translate("缺少蓝图/材料！").CreateTipFloatingOnCenter();
+					U.T.Translate("缺少蓝图/材料！").CreateTipFloatingOnCenter();
 				}
 			}
 

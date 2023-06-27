@@ -1,19 +1,21 @@
 #region
 
+using System.Collections;
 using InfinityWorldChess.PlayerDomain;
 using InfinityWorldChess.WorldDomain;
-using Secyud.Ugf;
-using Secyud.Ugf.DependencyInjection;
-using Secyud.Ugf.Modularity;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Secyud.Ugf;
+using Secyud.Ugf.Archiving;
+using Secyud.Ugf.DependencyInjection;
 
 #endregion
 
 namespace InfinityWorldChess.RoleDomain
 {
-	public class RoleGameContext : IScoped, IOnGameArchiving
+	[Registry(LifeTime = DependencyLifeTime.Scoped,DependScope = typeof(GameScope))]
+	public class RoleGameContext
 	{
 		private int _maxRoleId;
 
@@ -23,6 +25,8 @@ namespace InfinityWorldChess.RoleDomain
 
 		public Role MainOperationRole { get; set; }
 
+		private static readonly string SavePath = SharedConsts.SaveFilePath(nameof(RoleGameContext));
+
 		public bool IsPlayer()
 		{
 			return MainOperationRole.Id == 0;
@@ -30,7 +34,7 @@ namespace InfinityWorldChess.RoleDomain
 
 		public bool IsPlayerView()
 		{
-			return IsPlayer() || GameScope.PlayerGameContext.PlayerSetting.YunChouWeiWo;
+			return IsPlayer() || GameScope.Instance.Player.PlayerSetting.YunChouWeiWo;
 		}
 
 		public Role SupportOperationRole { get; set; }
@@ -41,28 +45,31 @@ namespace InfinityWorldChess.RoleDomain
 			return role;
 		}
 
-		public virtual void OnGameLoading(LoadingContext context)
+		public virtual IEnumerator OnGameLoading()
 		{
-			BinaryReader reader = context.GetReader(nameof(RoleGameContext));
-			WorldGameContext gmCtx = GameScope.WorldGameContext;
+			using FileStream stream = File.OpenRead(SavePath);
+			using DefaultArchiveReader reader = new(stream);
+			WorldGameContext gmCtx = GameScope.Instance.World;
 
 			Roles = new Dictionary<int, Role>();
 			int count = reader.ReadInt32();
-
+			
 			for (int i = 0; i < count; i++)
 			{
 				Role role = new();
 				WorldChecker checker = gmCtx.Checkers[reader.ReadInt32()];
 				role.Load(reader, checker);
 				Roles[role.Id] = role;
+				if (U.AddStep())
+					yield return null;
 			}
 			_maxRoleId = Roles.Keys.Max();
 		}
 
-		public virtual void OnGameSaving(SavingContext context)
+		public virtual IEnumerator OnGameSaving()
 		{
-			BinaryWriter writer = context.GetWriter(nameof(RoleGameContext));
-
+			using FileStream stream = File.OpenRead(SavePath);
+			using DefaultArchiveWriter writer = new(stream);
 
 			int count = Roles.Count;
 			writer.Write(count);
@@ -71,18 +78,22 @@ namespace InfinityWorldChess.RoleDomain
 			{
 				writer.Write(Roles[i].Relation.Position.Cell.Index);
 				Roles[i].Save(writer);
+				if (U.AddStep())
+					yield return null;
 			}
 		}
 
-		public virtual void OnGameCreation()
+		public virtual IEnumerator OnGameCreation()
 		{
 			Roles = new Dictionary<int, Role>();
 			_maxRoleId = 1;
-			foreach (Role role in Og.DefaultProvider.Get<IRoleGenerator>().GenerateRole())
+			foreach (Role role in U.Get<IRoleGenerator>().GenerateRole())
 			{
 				int id = MaxRoleId;
 				Roles[id] = role;
 				role.Id = id;
+				if (U.AddStep())
+					yield return null;
 			}
 		}
 	}

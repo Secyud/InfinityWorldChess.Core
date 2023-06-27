@@ -29,7 +29,7 @@ namespace InfinityWorldChess.RoleDomain
 
         protected virtual void Awake()
         {
-            Resource = Og.DefaultProvider.Get<RoleResourceManager>();
+            Resource = U.Get<RoleResourceManager>();
             Size = Content.rect.width * 0.65f;
             Content.pivot = Content.anchorMin = Content.anchorMax = new Vector2(0.5f, 0.5f);
             Content.anchoredPosition = Vector2.zero;

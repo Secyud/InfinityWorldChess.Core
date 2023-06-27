@@ -1,5 +1,6 @@
 ﻿using InfinityWorldChess.BattleDomain;
 using InfinityWorldChess.SkillDomain;
+using Secyud.Ugf.DataManager;
 
 namespace InfinityWorldChess.BasicBundle.CoreSkills
 {
@@ -8,7 +9,7 @@ namespace InfinityWorldChess.BasicBundle.CoreSkills
     /// </summary>
     public class DamageAddHealth : CoreSkillTemplate
     {
-        [R(256)] private float F256 { get; set; }
+        [field: S(ID = 256)] private float F256 { get; set; }
 
         protected override string HDescription =>
             $"此招式将造成伤害的{F256:P0}转化为自身生命。";

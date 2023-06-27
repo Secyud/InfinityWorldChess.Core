@@ -7,7 +7,8 @@ using Secyud.Ugf.DependencyInjection;
 
 namespace InfinityWorldChess.BiographyDomain
 {
-	public class IwcBiographyGlobalService :IBiographyGlobalService, ISingleton
+	[Registry()]
+	public class IwcBiographyGlobalService :IBiographyGlobalService
 	{
 		public  RegistrableList<IBiography> Biographies { get; } = new();
 	}

@@ -3,9 +3,8 @@
 using InfinityWorldChess.SkillDomain;
 using Secyud.Ugf;
 using Secyud.Ugf.Archiving;
-using System;
 using System.Collections.Generic;
-using System.IO;
+using System.Ugf.Collections.Generic;
 
 #endregion
 
@@ -17,7 +16,7 @@ namespace InfinityWorldChess.RoleDomain
 
 		public void AutoEquipFormSkill()
 		{
-			IRoleAiService ai = Og.DefaultProvider.Get<IRoleAiService>();
+			IRoleAiService ai = U.Get<IRoleAiService>();
 			if (ai is not null)
 				ai.AutoEquipFormSkill(this);
 			else
@@ -66,13 +65,13 @@ namespace InfinityWorldChess.RoleDomain
 				return state * SharedConsts.FormSkillTypeCount + type;
 			}
 
-			public void Save(BinaryWriter writer)
+			public void Save(IArchiveWriter writer)
 			{
 				writer.Write(LearnedSkills.Count);
 				for (int i = 0; i < LearnedSkills.Count; i++)
 				{
 					IFormSkill skill = LearnedSkills[i];
-					writer.WriteArchiving(skill);
+					writer.Write(skill);
 					skill.SaveIndex = i;
 				}
 
@@ -80,14 +79,14 @@ namespace InfinityWorldChess.RoleDomain
 					writer.Write(_skills[i]?.FormSkill.SaveIndex ?? -1);
 			}
 
-			public void Load(BinaryReader reader)
+			public void Load(IArchiveReader reader)
 			{
 				LearnedSkills.Clear();
 				int count = reader.ReadInt32();
 
 				for (int i = 0; i < count; i++)
 				{
-					IFormSkill skill = reader.ReadArchiving<IFormSkill>();
+					IFormSkill skill = reader.Read<IFormSkill>();
 					skill!.SaveIndex = i;
 					LearnedSkills.AddLast(skill);
 				}

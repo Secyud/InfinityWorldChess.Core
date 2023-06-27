@@ -23,7 +23,7 @@ namespace InfinityWorldChess.ItemDomain.FoodDomain
 
 		public override bool Visible()
 		{
-			return GameScope.RoleGameContext.IsPlayerView();
+			return GameScope.Instance.Role.IsPlayerView();
 		}
 	}
 }

@@ -13,7 +13,7 @@ namespace InfinityWorldChess.PlayerDomain
 
 		private void Awake()
 		{
-			PlayerSetting setting =  GameScope.PlayerGameContext.PlayerSetting;
+			PlayerSetting setting =  GameScope.Instance.Player.PlayerSetting;
 			if (setting is null)
 				enabled = false;
 			else if (Type switch

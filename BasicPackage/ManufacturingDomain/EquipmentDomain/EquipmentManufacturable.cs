@@ -2,6 +2,7 @@
 
 using InfinityWorldChess.ItemDomain.EquipmentDomain;
 using InfinityWorldChess.Ugf;
+using Secyud.Ugf.DataManager;
 using Secyud.Ugf.TableComponents;
 using UnityEngine;
 
@@ -9,43 +10,43 @@ using UnityEngine;
 
 namespace InfinityWorldChess.ManufacturingDomain
 {
-	public class EquipmentManufacturable<TRaw, TProcess, TBlueprint, TContext, TTableFunction, TProperty>
-		: Manufacturable
-		where TContext : EquipmentManufacturingContextBase<TRaw, TProcess, TBlueprint, TContext, TTableFunction,
-			TProperty>
-		where TBlueprint : EquipmentManufacturingBlueprintBase<TRaw, TProcess, TBlueprint, TContext,
-			TTableFunction, TProperty>
-		where TRaw : EquipmentManufacturable<TRaw, TProcess, TBlueprint, TContext, TTableFunction, TProperty>
-		where TProcess : ManufacturingProcessBase<TContext, Equipment>
-		where TTableFunction : TableFunctionBase<TProcess>
-		where TProperty : ManufacturingPropertyBase<TProcess>
-	{
-		public int[] Property { get; } = new int[SharedConsts.EquipmentPropertyCount];
+    public class EquipmentManufacturable<TRaw, TProcess, TBlueprint, TContext, TTableFunction, TProperty>
+        : Manufacturable
+        where TContext : EquipmentManufacturingContextBase<TRaw, TProcess, TBlueprint, TContext, TTableFunction,
+            TProperty>
+        where TBlueprint : EquipmentManufacturingBlueprintBase<TRaw, TProcess, TBlueprint, TContext,
+            TTableFunction, TProperty>
+        where TRaw : EquipmentManufacturable<TRaw, TProcess, TBlueprint, TContext, TTableFunction, TProperty>
+        where TProcess : ManufacturingProcessBase<TContext, Equipment>
+        where TTableFunction : TableFunctionBase<TProcess>
+        where TProperty : ManufacturingPropertyBase<TProcess>
+    {
+        private int[] _property;
 
-		[R(256)] public int Endurance { get; set; }
+        public int[] Property => _property ??= new[]
+        {
+            Property00, Property01, Property10, Property11
+        };
 
-		public virtual void BeforeManufacturing(TContext context)
-		{
-		}
+        [field: S(ID = 1)] public int Property00 { get; set; }
+        [field: S(ID = 2)] public int Property01 { get; set; }
+        [field: S(ID = 3)] public int Property10 { get; set; }
+        [field: S(ID = 4)] public int Property11 { get; set; }
+        [field: S(ID = 256)] public int Endurance { get; set; }
 
-		public virtual void AfterManufacturing(TContext context)
-		{
-		}
+        public virtual void BeforeManufacturing(TContext context)
+        {
+        }
 
-		protected override void SetDefaultValue( )
-		{
-			base.SetDefaultValue();
-			for (byte i = 0; i < SharedConsts.EquipmentPropertyCount; i++)
-			{
-				Property[i] = Descriptor.Get<short>(512 + i);
-			}
-		}
+        public virtual void AfterManufacturing(TContext context)
+        {
+        }
 
-		public override void SetContent(Transform transform)
-		{
-			base.SetContent(transform);
-			transform.AddShapeProperty(Property);
-			transform.AddParagraph("应力:".Point() + Endurance);
-		}
-	}
+        public override void SetContent(Transform transform)
+        {
+            base.SetContent(transform);
+            transform.AddShapeProperty(Property);
+            transform.AddParagraph("应力:".Point() + Endurance);
+        }
+    }
 }

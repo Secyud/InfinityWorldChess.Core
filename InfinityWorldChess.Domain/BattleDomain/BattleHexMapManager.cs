@@ -1,17 +1,19 @@
 #region
 
 using Secyud.Ugf.AssetLoading;
-using Secyud.Ugf.DependencyInjection;
 using Secyud.Ugf.HexMap;
 using Secyud.Ugf.HexMap.Utilities;
 using System.Collections.Generic;
+using System.Ugf.Collections.Generic;
+using Secyud.Ugf.DependencyInjection;
 using UnityEngine;
 
 #endregion
 
 namespace InfinityWorldChess.BattleDomain
 {
-	public class BattleHexMapManager : IScoped, IBattleHexMapManager
+	[Registry(LifeTime = DependencyLifeTime.Scoped,DependScope = typeof(BattleScope))]
+	public class BattleHexMapManager : IBattleHexMapManager
 	{
 		private readonly BattleContext _context;
 		private readonly BattleGlobalService _globalService;

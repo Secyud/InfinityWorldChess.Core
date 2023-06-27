@@ -3,9 +3,8 @@
 using InfinityWorldChess.PlayerDomain;
 using InfinityWorldChess.RoleDomain;
 using InfinityWorldChess.WorldDomain;
-using Secyud.Ugf;
 using Secyud.Ugf.ButtonComponents;
-using System.IO;
+using Secyud.Ugf.Archiving;
 
 #endregion
 
@@ -23,8 +22,8 @@ namespace InfinityWorldChess.ManufacturingDomain
 
 		public override void Trigger()
 		{
-			Role role = GameScope.PlayerGameContext.Role;
-			GameScope scope = Og.ScopeFactory.GetScope<GameScope>();
+			Role role = GameScope.Instance.Player.Role;
+			GameScope scope = GameScope.Instance;
 			switch (Type)
 			{
 			case 0:
@@ -60,12 +59,12 @@ namespace InfinityWorldChess.ManufacturingDomain
 			}
 		}
 
-		public void Save(BinaryWriter writer)
+		public void Save(IArchiveWriter writer)
 		{
 			writer.Write(Type);
 		}
 
-		public void Load(BinaryReader reader)
+		public void Load(IArchiveReader reader)
 		{
 			Type = reader.ReadInt32();
 		}

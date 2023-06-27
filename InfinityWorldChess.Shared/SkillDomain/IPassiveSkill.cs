@@ -2,7 +2,6 @@
 
 using InfinityWorldChess.GlobalDomain;
 using Secyud.Ugf;
-using UnityEngine.Playables;
 
 #endregion
 

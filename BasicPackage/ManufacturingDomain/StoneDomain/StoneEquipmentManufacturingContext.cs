@@ -3,7 +3,6 @@
 using InfinityWorldChess.ItemDomain.EquipmentDomain;
 using InfinityWorldChess.RoleDomain;
 using Secyud.Ugf.BasicComponents;
-using Secyud.Ugf.DependencyInjection;
 using Secyud.Ugf.Layout;
 using System.Linq;
 using UnityEngine;
@@ -15,8 +14,7 @@ namespace InfinityWorldChess.ManufacturingDomain
 	public class StoneEquipmentManufacturingContext : EquipmentManufacturingContextBase<
 			StoneEquipmentRaw, StoneEquipmentManufacturingProcess, StoneEquipmentManufacturingBlueprint,
 			StoneEquipmentManufacturingContext, StoneEquipmentManufacturingProcessTf,
-			StoneEquipmentManufacturingProperty>,
-		ISingleton
+			StoneEquipmentManufacturingProperty>
 	{
 
 		public StoneEquipmentData StoneData { get; private set; }

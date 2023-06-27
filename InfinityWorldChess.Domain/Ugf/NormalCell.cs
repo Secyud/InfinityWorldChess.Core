@@ -13,7 +13,7 @@ namespace InfinityWorldChess.Ugf
 
 		public override void OnInitialize(ICanBeShown item)
 		{
-			Name.text = Og.L[item?.ShowName];
+			Name.text = U.T[item?.ShowName];
 			base.OnInitialize(item);
 		}
 	}
