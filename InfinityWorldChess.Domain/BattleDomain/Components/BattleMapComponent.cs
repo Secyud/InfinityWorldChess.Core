@@ -14,7 +14,7 @@ namespace InfinityWorldChess.BattleDomain
 
 		private void Update()
 		{
-			BattleScope.Context.OnUpdate();
+			BattleScope.Instance.Context.OnUpdate();
 		}
 
 		public void AddBillBoard(HexCell cell,Transform t,float height = 10)

@@ -11,7 +11,7 @@ namespace InfinityWorldChess.SkillDomain
 {
 	public class SkillTarget : ISkillTarget, IObjectAccessor<IBattleChess[]>
 	{
-		private static BattleContext Context => BattleScope.Context;
+		private static BattleContext Context => BattleScope.Instance.Context;
 
 		private SkillTarget(IEnumerable<IBattleChess> chesses)
 		{

@@ -22,26 +22,26 @@ namespace InfinityWorldChess.BasicBundle.BattleBuffs.Recorders
 		
 		private void CalculateRemove()
 		{
-			TimeFinished -= BattleScope.Context.TotalTime - TimeRecord;
+			TimeFinished -= BattleScope.Instance.Context.TotalTime - TimeRecord;
 			if (TimeRecord <= 0 && _target is not null)
 			{
 				_target.UnInstall(_buffType);
 				return;
 			}
-			TimeRecord = BattleScope.Context.TotalTime;
+			TimeRecord = BattleScope.Instance.Context.TotalTime;
 		}
 		
 		public  void Install(RoleBattleChess target)
 		{
 			_target = target;
-			BattleScope.Context.RoundBeginAction += CalculateRemove;
-			TimeRecord = BattleScope.Context.TotalTime;
+			BattleScope.Instance.Context.RoundBeginAction += CalculateRemove;
+			TimeRecord = BattleScope.Instance.Context.TotalTime;
 		}
 		
 
 		public void UnInstall()
 		{
-			BattleScope.Context.RoundBeginAction -= CalculateRemove;
+			BattleScope.Instance.Context.RoundBeginAction -= CalculateRemove;
 		}
 
 		public void Overlay(TimeRecorder recorder)

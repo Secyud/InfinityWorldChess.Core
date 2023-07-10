@@ -4,23 +4,19 @@ using Secyud.Ugf.DependencyInjection;
 
 namespace InfinityWorldChess.BattleDomain
 {
-    
-    [Registry(DependScope=typeof(GlobalScope))]
+    [Registry(DependScope = typeof(GlobalScope))]
     public class BattleScope : DependencyScopeProvider
     {
         private static MonoContainer<BattleUiComponent> _ui;
         private static MonoContainer<BattleMapComponent> _map;
-        private  BattleContext _context;
-
-
-        public static BattleContext Context =>
-            Instance._context??=Instance.Get<BattleContext>();
+        private BattleContext _context;
+        public BattleContext Context => _context ??= Get<BattleContext>();
 
         public static BattleScope Instance { get; private set; }
-        
+
         public Battle Battle { get; private set; }
-        
-        public BattleScope( IwcAb ab) 
+
+        public BattleScope(IwcAb ab)
         {
             _ui ??= MonoContainer<BattleUiComponent>.Create(ab);
             _map ??= MonoContainer<BattleMapComponent>.Create(ab, onCanvas: false);

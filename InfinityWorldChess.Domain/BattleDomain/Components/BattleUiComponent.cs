@@ -12,6 +12,6 @@ namespace InfinityWorldChess.BattleDomain
 		public BattlePlayerController BattlePlayerController;
 		public BattleRoleMessage BattleRoleActiveMessage;
 		public BattleChessMessage BattleChessSelectMessage;
-		private float _disabledTime;
+		public BattleFloatingBroadcast BattleFloatingBroadcast;
 	}
 }

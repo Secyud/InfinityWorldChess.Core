@@ -4,7 +4,6 @@ using UnityEngine;
 
 namespace InfinityWorldChess.Ugf
 {
-	[Registry]
 	public interface IFunctionService
 	{
 		RectTransform CreateFloatingForContent(IHasContent content);

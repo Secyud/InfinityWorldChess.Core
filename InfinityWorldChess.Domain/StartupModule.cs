@@ -9,14 +9,8 @@ using Secyud.Ugf.Modularity;
 namespace InfinityWorldChess
 {
 	[DependsOn(typeof(InfinityWorldChessDomainModule))]
-	public class StartupModule : IUgfModule, IPostConfigure
+	public class StartupModule : IUgfModule
 	{
-		public void PostConfigureGame(ConfigurationContext context)
-		{
-			IDependencyManager manager = context.Get<IDependencyManager>();
-			manager.CreateScope<MainMenuScope>();
-		}
-
 		public void ConfigureGame(ConfigurationContext context)
 		{
 		}

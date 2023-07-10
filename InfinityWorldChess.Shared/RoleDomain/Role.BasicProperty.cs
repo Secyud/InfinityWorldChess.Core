@@ -24,10 +24,10 @@ namespace InfinityWorldChess.RoleDomain
             [S(ID = 5)] public bool Female;
 
             // 名
-            [S(ID = 6)] public string FirstName;
+            [S(ID = 6)] public string FirstName = string.Empty;
 
             // 姓
-            [S(ID = 7)] public string LastName;
+            [S(ID = 7)] public string LastName= string.Empty;
             [S(ID = 8)] public string Description;
 
             public string Name

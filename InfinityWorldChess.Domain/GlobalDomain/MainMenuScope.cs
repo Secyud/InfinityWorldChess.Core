@@ -1,5 +1,6 @@
 ﻿using Secyud.Ugf.AssetLoading;
 using Secyud.Ugf.DependencyInjection;
+using UnityEditor;
 
 namespace InfinityWorldChess.GlobalDomain
 {

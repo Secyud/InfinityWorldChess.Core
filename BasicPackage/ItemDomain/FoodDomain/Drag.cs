@@ -51,7 +51,7 @@ namespace InfinityWorldChess.ItemDomain.FoodDomain
 
 		public void EatingInBattle()
 		{
-			RoleBattleChess role =BattleScope.Context.CurrentRole;
+			RoleBattleChess role =BattleScope.Instance.Context.CurrentRole;
 			foreach (IBuff<RoleBattleChess> buff in RoleChessBuffFactories.Select(u => u.Get()))
 				buff.Install(role);
 		}

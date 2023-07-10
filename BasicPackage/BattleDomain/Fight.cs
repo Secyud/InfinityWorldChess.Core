@@ -25,7 +25,7 @@ namespace InfinityWorldChess.BattleDomain
 
         public override void OnBattleInitialize()
         {
-            HexGrid grid = BattleScope.Context.Map.Grid;
+            HexGrid grid = BattleScope.Instance.Context.Map.Grid;
             
             int indexMax = grid.CellCountX * grid.CellCountZ;
 
@@ -45,10 +45,10 @@ namespace InfinityWorldChess.BattleDomain
                 Index = 1,
                 Color = Color.red
             };
-            BattleScope.Context.AutoInitializeRole(
+            BattleScope.Instance.Context.AutoInitializeRole(
                 _self, camp1, grid.GetCell(cellIndex1).Coordinates, true
             );
-            BattleScope.Context.AutoInitializeRole(
+            BattleScope.Instance.Context.AutoInitializeRole(
                 _target, camp2, grid.GetCell(cellIndex2).Coordinates, false
             );
         }

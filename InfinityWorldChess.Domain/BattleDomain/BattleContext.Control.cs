@@ -186,6 +186,8 @@ namespace InfinityWorldChess.BattleDomain
 
             skill.Skill.Cast(role, cell);
 
+            Ui.BattleFloatingBroadcast.AddBroadcast(skill.Skill);
+            
             if (!pa)
                 FinishUnitPlayBroadcast();
         }

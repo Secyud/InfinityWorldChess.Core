@@ -15,7 +15,7 @@ namespace InfinityWorldChess.BasicBundle.CoreSkills
 			protected override void PreInteraction(SkillInteraction interaction)
 			{
 				base.PreInteraction(interaction);
-				SkillContainer skill = BattleScope.Context.CurrentSkill;
+				SkillContainer skill = BattleScope.Instance.Context.CurrentSkill;
 				if ((skill.EquipCode >> skill.EquipLayer - 1 & 1) > 0)
 					AttackRecord.AttackFactor *= 1 + F256;
 			}

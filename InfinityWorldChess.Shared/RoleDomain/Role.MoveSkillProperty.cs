@@ -16,10 +16,6 @@ namespace InfinityWorldChess.RoleDomain
 
 		public void AutoEquipFormSkill()
 		{
-			IRoleAiService ai = U.Get<IRoleAiService>();
-			if (ai is not null)
-				ai.AutoEquipFormSkill(this);
-			else
 				FormSkill.AutoEquip();
 		}
 

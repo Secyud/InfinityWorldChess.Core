@@ -90,7 +90,7 @@ namespace InfinityWorldChess.SkillDomain
 			int startDistance, int endDistance, HexCoordinates startCoordinate,
 			HexDirection startDirection, int coverRange)
 		{
-			HexGrid grid = BattleScope.Context.Map.Grid;
+			HexGrid grid = BattleScope.Instance.Context.Map.Grid;
 			List<HexCell> cells = new();
 			HexCoordinates coordinate = startCoordinate;
 

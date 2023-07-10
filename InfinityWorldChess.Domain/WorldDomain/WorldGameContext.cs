@@ -11,6 +11,7 @@ using Secyud.Ugf.HexMap.Generator;
 using Secyud.Ugf.HexMap.Utilities;
 using System.IO;
 using System.Ugf.Collections.Generic;
+using InfinityWorldChess.PlayerDomain;
 using Secyud.Ugf.Archiving;
 using Secyud.Ugf.DependencyInjection;
 
@@ -23,8 +24,8 @@ namespace InfinityWorldChess.WorldDomain
     {
         public readonly IObjectAccessor<HexUnit> WorldUnitPrefab;
         public WorldChecker[] Checkers { get; private set; }
-        public WorldUiComponent Ui { get; internal set; }
-        public WorldMapComponent Map { get; internal set; }
+        public WorldUiComponent Ui { get; }
+        public WorldMapComponent Map { get; }
 
         private static readonly string SavePath = SharedConsts.SaveFilePath(nameof(WorldGameContext));
 
@@ -33,6 +34,8 @@ namespace InfinityWorldChess.WorldDomain
             WorldUnitPrefab = PrefabContainer<HexUnit>.Create(
                 ab, U.TypeToPath<WorldGameContext>() + "Unit.prefab"
             );
+            Ui = GameScope.UI.Value;
+            Map = GameScope.Map.Value;
         }
 
 

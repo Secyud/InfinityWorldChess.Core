@@ -29,12 +29,12 @@ namespace InfinityWorldChess.BasicBundle.BattleBuffs.Recorders
 		public void Install(RoleBattleChess target)
 		{
 			_target = target;
-			BattleScope.Context.RoundBeginAction += CalculateRemove;
+			BattleScope.Instance.Context.RoundBeginAction += CalculateRemove;
 		}
 
 		public void UnInstall()
 		{
-			BattleScope.Context.RoundBeginAction -= CalculateRemove;
+			BattleScope.Instance.Context.RoundBeginAction -= CalculateRemove;
 		}
 
 		public void Overlay(TurnRecorder recorder)

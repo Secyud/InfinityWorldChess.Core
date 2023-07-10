@@ -4,16 +4,17 @@ using InfinityWorldChess.WorldDomain;
 using Secyud.Ugf;
 using Secyud.Ugf.AssetLoading;
 using Secyud.Ugf.DependencyInjection;
+using UnityEditor;
 
 namespace InfinityWorldChess.PlayerDomain
 {
     [Registry(DependScope = typeof(GlobalScope))]
     public class GameScope : DependencyScopeProvider
     {
-        private static IMonoContainer<SystemMenuComponent> _systemMenu;
-        private static IMonoContainer<RoleMessageComponent> _roleMessage;
-        private static IMonoContainer<WorldMapComponent> _map;
-        private static IMonoContainer<WorldUiComponent> _ui;
+        public static IMonoContainer<SystemMenuComponent> SystemMenu;
+        public static IMonoContainer<RoleMessageComponent> RoleMessage;
+        public static IMonoContainer<WorldMapComponent> Map;
+        public static IMonoContainer<WorldUiComponent> UI;
         private WorldGameContext _worldContext;
         private PlayerGameContext _playerContext;
         private RoleGameContext _roleContext;
@@ -31,65 +32,65 @@ namespace InfinityWorldChess.PlayerDomain
 
         public GameScope(IwcAb ab)
         {
-            _systemMenu ??= MonoContainer<SystemMenuComponent>.Create(ab);
-            _roleMessage ??= MonoContainer<RoleMessageComponent>.Create(ab);
-            _ui ??= MonoContainer<WorldUiComponent>.Create(ab);
-            _map ??= MonoContainer<WorldMapComponent>.Create(ab, onCanvas: false);
+            SystemMenu ??= MonoContainer<SystemMenuComponent>.Create(ab);
+            RoleMessage ??= MonoContainer<RoleMessageComponent>.Create(ab);
+            UI ??= MonoContainer<WorldUiComponent>.Create(ab);
+            Map ??= MonoContainer<WorldMapComponent>.Create(ab, onCanvas: false);
 
-            _ui.Create();
-            _map.Create();
-            _map.Value.Grid.HexMapManager = U.Get<WorldHexMapManager>();
+            UI.Create();
+            Map.Create();
+            Map.Value.Grid.HexMapManager = U.Get<WorldHexMapManager>();
 
             Instance = this;
         }
 
         public override void Dispose()
         {
-            _systemMenu.Destroy();
-            _roleMessage.Destroy();
-            _ui.Destroy();
-            _map.Destroy();
+            SystemMenu.Destroy();
+            RoleMessage.Destroy();
+            UI.Destroy();
+            Map.Destroy();
             Instance = null;
         }
 
         public static void OnSystemMenuCreation()
         {
-            _systemMenu.Create();
+            SystemMenu.Create();
         }
 
         public static void OnSystemMenuShutdown()
         {
-            _systemMenu.Destroy();
+            SystemMenu.Destroy();
         }
 
         public static void OnRoleMessageCreation(Role role, int page)
         {
-            RoleMessageComponent menu = _roleMessage.Create();
-            _roleMessage.Value.OnInitialize(role);
+            RoleMessageComponent menu = RoleMessage.Create();
+            RoleMessage.Value.OnInitialize(role);
             menu.SetPage(page);
         }
 
         public static void OnRoleMessageShutdown()
         {
-            _roleMessage.Destroy();
+            RoleMessage.Destroy();
         }
 
         public static void RefreshRoleMessageMenu()
         {
-            if (_roleMessage.Value)
-                _roleMessage.Value.Refresh();
+            if (RoleMessage.Value)
+                RoleMessage.Value.Refresh();
         }
 
         public static void OnContinue()
         {
-            _map.Value.Show();
-            _ui.Value.gameObject.SetActive(true);
+            Map.Value.Show();
+            UI.Value.gameObject.SetActive(true);
         }
 
         public static void OnInterrupt()
         {
-            _map.Value.Hide();
-            _ui.Value.gameObject.SetActive(false);
+            Map.Value.Hide();
+            UI.Value.gameObject.SetActive(false);
         }
 
         public static void ExitGame()

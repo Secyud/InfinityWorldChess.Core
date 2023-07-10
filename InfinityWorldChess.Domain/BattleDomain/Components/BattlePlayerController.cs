@@ -16,7 +16,7 @@ namespace InfinityWorldChess.BattleDomain
         private CoreSkillContainer[] _nextCoreSkills;
         private FormSkillContainer[] _nextFormSkills;
         private BattleContext _context;
-        private BattleContext Context => _context ??= BattleScope.Context;
+        private BattleContext Context => _context ??= BattleScope.Instance.Context;
 
         private void Awake()
         {

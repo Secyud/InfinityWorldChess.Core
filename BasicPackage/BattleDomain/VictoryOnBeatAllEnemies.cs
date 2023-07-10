@@ -12,7 +12,7 @@ namespace InfinityWorldChess.BattleDomain
 
 		public void OnBattleInitialize()
 		{
-			BattleScope.Context.ChessRemoveAction += CheckVictory;
+			BattleScope.Instance.Context.ChessRemoveAction += CheckVictory;
 		}
 
 		public string Description => "击败所有不同阵营的角色.";
@@ -26,7 +26,7 @@ namespace InfinityWorldChess.BattleDomain
 			bool victory = true;
 			bool defeated = true;
 			
-			foreach (IBattleChess chess in BattleScope.Context.Chesses.Values
+			foreach (IBattleChess chess in BattleScope.Instance.Context.Chesses.Values
 				.Where(chess => chess.Camp is not null))
 			{
 				if (chess.Camp.Index == 0)

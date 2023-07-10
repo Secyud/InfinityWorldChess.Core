@@ -30,14 +30,14 @@ namespace InfinityWorldChess.BasicBundle.BattleBuffs
 
 		public override void Install(RoleBattleChess target)
 		{
-			BattleScope.Context.RoundBeginAction += CalculateEffect;
+			BattleScope.Instance.Context.RoundBeginAction += CalculateEffect;
 			_target = target;
 			TimeRecorder.Install(target);
 		}
 
 		public override void UnInstall(RoleBattleChess target)
 		{
-			BattleScope.Context.RoundBeginAction -= CalculateEffect;
+			BattleScope.Instance.Context.RoundBeginAction -= CalculateEffect;
 			TimeRecorder.UnInstall();
 		}
 
@@ -63,7 +63,7 @@ namespace InfinityWorldChess.BasicBundle.BattleBuffs
 		private void CalculateEffect()
 		{
 			float timeInterval = Math.Min(TimeRecorder.TimeFinished,
-				BattleScope.Context.TotalTime - TimeRecorder.TimeRecord);
+				BattleScope.Instance.Context.TotalTime - TimeRecorder.TimeRecord);
 
 			SkillInteraction interaction =
 				SkillInteraction.Get(Launcher, _target);

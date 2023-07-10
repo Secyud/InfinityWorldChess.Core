@@ -2,10 +2,12 @@
 using Secyud.Ugf.Collections;
 using System;
 using System.Linq;
+using Secyud.Ugf.DependencyInjection;
 
 namespace InfinityWorldChess.InteractionDomain
 {
-	public class IwcInteractionGlobalService:IInteractionGlobalService
+	[Registry]
+	public class InteractionGlobalService:IInteractionGlobalService
 	{
 		public RegistrableDictionary<int, IInteractionUnitHead> TotalInteractions { get; } = new();
 

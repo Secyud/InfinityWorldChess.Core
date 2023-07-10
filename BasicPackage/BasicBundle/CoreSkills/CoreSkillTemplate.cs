@@ -41,9 +41,9 @@ namespace InfinityWorldChess.BasicBundle.CoreSkills
                 float damage = AttackRecord.RunDamage(defend);
                 HexCell cell = interaction.TargetChess.Unit.Location;
                 if (defend.HealthValue < 0)
-                    BattleScope.Context.RemoveBattleChess(interaction.TargetChess);
+                    BattleScope.Instance.Context.RemoveBattleChess(interaction.TargetChess);
 
-                BattleScope.Context.CreateText(cell, (int)damage, Color.red);
+                BattleScope.Instance.Context.CreateText(cell, (int)damage, Color.red);
             }
         }
 

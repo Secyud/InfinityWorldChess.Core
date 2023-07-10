@@ -12,7 +12,7 @@ namespace InfinityWorldChess.BasicBundle.BattleBuffs
 
         public override void Active(SkillInteraction target)
         {
-            if (BattleScope.Context.CurrentSkill.Skill is ICanBeShown shown &&
+            if (BattleScope.Instance.Context.CurrentSkill.Skill is ICanBeShown shown &&
                 shown.ShowName.Contains('龙'))
                 base.Active(target);
         }

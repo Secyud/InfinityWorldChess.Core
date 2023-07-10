@@ -17,10 +17,6 @@ namespace InfinityWorldChess.RoleDomain
 
         public void AutoEquipCoreSkill()
         {
-            IRoleAiService ai = U.Get<IRoleAiService>();
-            if (ai is not null)
-                ai.AutoEquipCoreSkill(this);
-            else
                 CoreSkill.AutoEquip();
         }
 

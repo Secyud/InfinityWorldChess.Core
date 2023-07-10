@@ -13,7 +13,7 @@ namespace InfinityWorldChess.BasicBundle.CoreSkills
         protected override void PreInteraction(SkillInteraction interaction)
         {
             base.PreInteraction(interaction);
-            if (BattleScope.Context.CurrentSkill is CoreSkillContainer core)
+            if (BattleScope.Instance.Context.CurrentSkill is CoreSkillContainer core)
                 AttackRecord.AttackFactor += F256 * core.EquipLayer;
         }
     }
