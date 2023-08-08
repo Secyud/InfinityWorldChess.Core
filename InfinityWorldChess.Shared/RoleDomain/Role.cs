@@ -1,22 +1,24 @@
 #region
 
 using InfinityWorldChess.BattleDomain;
-using InfinityWorldChess.WorldDomain;
 using Secyud.Ugf;
 using System;
 using System.Collections.Generic;
+using InfinityWorldChess.GameDomain;
 using Secyud.Ugf.Archiving;
+using Secyud.Ugf.HexMap;
 using UnityEngine;
 
 #endregion
 
 namespace InfinityWorldChess.RoleDomain
 {
-	public partial class Role : IHasContent,IOnBattleRoleInitialize
+	public partial class Role : IUnitBase,IHasContent,IOnBattleRoleInitialize
 	{
 		public int Id { get; set; }
 
 		private readonly Dictionary<Type, RoleProperty> _extraProperties = new();
+		private HexUnit _unit;
 
 		public int ExtraPropertyCount => _extraProperties.Count;
 
@@ -66,12 +68,12 @@ namespace InfinityWorldChess.RoleDomain
 				writer.Write(extraProperty);
 		}
 
-		public void Load(IArchiveReader reader, WorldChecker position)
+		public void Load(IArchiveReader reader, WorldCell position)
 		{
 			Id = reader.ReadInt32();
 			Basic.Load(reader);
 			Nature.Load(reader);
-			Buffs.Load(reader, this);
+			Buffs.Load(reader);
 			Item.Load(reader);
 			Equipment.Load(reader, this);
 			CoreSkill.Load(reader);
@@ -90,5 +92,15 @@ namespace InfinityWorldChess.RoleDomain
 
 		public string ShowDescription => Basic.Description;
 
+
+		public HexUnit Unit { get; set; }
+
+		public void OnDying()
+		{
+		}
+
+		public void OnEndPlay()
+		{
+		}
 	}
 }

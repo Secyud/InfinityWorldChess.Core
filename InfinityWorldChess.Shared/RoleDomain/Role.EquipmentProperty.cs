@@ -2,7 +2,6 @@
 
 using InfinityWorldChess.ItemDomain;
 using InfinityWorldChess.ItemDomain.EquipmentDomain;
-using Secyud.Ugf;
 using System.Collections.Generic;
 using System.Ugf.Collections.Generic;
 using Secyud.Ugf.Archiving;
@@ -15,10 +14,10 @@ namespace InfinityWorldChess.RoleDomain
     {
         public EquipmentProperty Equipment { get; } = new();
 
-        public void SetEquipment(IEquipment equipment, byte location)
+        public void SetEquipment(IEquipment equipment)
         {
             TryRemoveEquipment(equipment);
-            Equipment[location, this] = equipment;
+            Equipment[equipment.TypeCode, this] = equipment;
         }
 
         public void TryRemoveEquipment(IEquipment equipment)

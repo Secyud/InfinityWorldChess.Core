@@ -5,6 +5,9 @@ using Secyud.Ugf.HexMap;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using InfinityWorldChess.BattleDomain.BattleMapDomain;
+using InfinityWorldChess.BattleDomain.BattleSkillDomain;
+using Secyud.Ugf;
 
 namespace InfinityWorldChess.BattleDomain
 {
@@ -12,36 +15,35 @@ namespace InfinityWorldChess.BattleDomain
 	{
 		private readonly HexCell _cell;
 		private readonly FormSkillContainer _container;
-		private readonly RoleBattleChess _role;
-		private readonly BattleContext _context;
+		private readonly BattleRole _battleRole;
 
 		private FormSkillAiAction(
 			[NotNull] HexCell cell,
 			[NotNull] FormSkillContainer container,
-			[NotNull] RoleBattleChess role,
-			[NotNull] BattleContext context)
+			[NotNull] BattleRole battleRole)
 		{
 			_cell = cell;
 			_container = container;
-			_role = role;
-			_context = context;
+			_battleRole = battleRole;
 		}
 
 		public override void InvokeAction()
 		{
-			_context.CurrentSkill = _container;
-			_context.StartCurrentSkillCast(_cell);
+			SkillRefreshService skill = U.Get<SkillRefreshService>();
+			skill.Skill = _container;
+			BattleMap map = BattleScope.Instance.Map;
+			map.StartCurrentSkillCast(_cell);
 		}
 
 		public override int GetScore()
 		{
-			Role.NatureProperty n = _role.Role.Nature;
+			Role.NatureProperty n = _battleRole.Role.Nature;
 			float minDistance = float.MaxValue;
 			float score = 0;
-			foreach (IBattleChess chess in _context.Chesses.Values)
+			foreach (BattleRole chess in BattleScope.Instance.Context.Roles.Values)
 			{
 				float distance = chess.Unit.Location.Coordinates.DistanceTo(_cell.Coordinates);
-				if (chess.Camp == _role.Camp)
+				if (chess.Camp == _battleRole.Camp)
 					score += n.Gregarious / 512;
 				else
 				{
@@ -53,16 +55,16 @@ namespace InfinityWorldChess.BattleDomain
 		}
 
 
-		public static void AddNodes(List<AiActionNode> nodes, BattleContext context, RoleBattleChess role)
+		public static void AddNodes(List<AiActionNode> nodes,  BattleRole battleRole)
 		{
-			foreach (FormSkillContainer skill in context.CurrentRole.NextFormSkills)
+			foreach (FormSkillContainer skill in battleRole.NextFormSkills)
 			{
 				if (skill is not null &&
-					skill.FormSkill.CheckCastCondition(role) is null)
+					skill.FormSkill.CheckCastCondition(battleRole) is null)
 				{
 					nodes.AddRange(
-						skill.FormSkill.GetCastPositionRange(role).Value
-							.Select(cell => new FormSkillAiAction(cell, skill, role, context))
+						skill.FormSkill.GetCastPositionRange(battleRole).Value
+							.Select(cell => new FormSkillAiAction(cell, skill, battleRole))
 					);
 				}
 			}

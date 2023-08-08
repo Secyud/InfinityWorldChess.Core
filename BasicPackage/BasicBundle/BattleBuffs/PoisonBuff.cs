@@ -10,7 +10,7 @@ namespace InfinityWorldChess.BasicBundle.BattleBuffs
 {
 	public class PoisonBuff : BattleShownBuffBase, IDeBuff
 	{
-		private RoleBattleChess _target;
+		private BattleRole _target;
 		public readonly TimeRecorder TimeRecorder;
 
 		public PoisonBuff()
@@ -28,20 +28,20 @@ namespace InfinityWorldChess.BasicBundle.BattleBuffs
 			$"中毒状态: 每回合持续收到中毒伤害，伤害基值{AttackValue}。{TimeRecorder.Description}";
 
 
-		public override void Install(RoleBattleChess target)
+		public override void Install(BattleRole target)
 		{
 			BattleScope.Instance.Context.RoundBeginAction += CalculateEffect;
 			_target = target;
 			TimeRecorder.Install(target);
 		}
 
-		public override void UnInstall(RoleBattleChess target)
+		public override void UnInstall(BattleRole target)
 		{
 			BattleScope.Instance.Context.RoundBeginAction -= CalculateEffect;
 			TimeRecorder.UnInstall();
 		}
 
-		public override void Overlay(IBuff<RoleBattleChess> finishBuff)
+		public override void Overlay(IBuff<BattleRole> finishBuff)
 		{
 			if (finishBuff is not PoisonBuff buff)
 				return;

@@ -10,9 +10,9 @@ namespace InfinityWorldChess.Ugf
 {
 	public static class BpSkillExtension
 	{
-		public static BattleEventsBuff GetBattleEvents(this RoleBattleChess chess)
+		public static BattleEventsBuff GetBattleEvents(this BattleRole chess)
 		{
-			return chess.Buffs.GetOrInstall<BattleEventsBuff>(chess);
+			return chess.GetOrInstall<BattleEventsBuff>();
 		}
 
 		public static AttackRecordBuff SetAttack(this SkillInteraction interaction)
@@ -40,7 +40,7 @@ namespace InfinityWorldChess.Ugf
 		}
 		
 		
-		public static bool FitWeapon(this ICoreSkill coreSkill, RoleBattleChess chess)
+		public static bool FitWeapon(this ICoreSkill coreSkill, BattleRole chess)
 		{
 			byte tc = chess.Role.Equipment[BodyType.Kiling]?.TypeCode ?? 0;
 			return ((tc ^ coreSkill.ConditionCode) & coreSkill.ConditionMask) == 0;

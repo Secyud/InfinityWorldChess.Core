@@ -2,16 +2,16 @@
 using InfinityWorldChess.BuffDomain;
 using InfinityWorldChess.SkillDomain;
 
-namespace InfinityWorldChess.BasicBundle.CoreSkills
+namespace InfinityWorldChess.BasicBundle.CoreSkills.Abstractions
 {
     public abstract class DeBuffCoreBase : CoreSkillTemplate
     {
-        protected abstract IBuff<RoleBattleChess> ConstructBuff();
+        protected abstract IBuff<BattleRole> ConstructBuff();
 
         protected override void PostInteraction(SkillInteraction interaction)
         {
             base.PostInteraction(interaction);
-            if (interaction.TargetChess is RoleBattleChess chess)
+            if (interaction.TargetChess is BattleRole chess)
                 chess.Install(ConstructBuff());
         }
     }

@@ -3,8 +3,8 @@ using Secyud.Ugf;
 
 namespace InfinityWorldChess.SkillDomain
 {
-	public interface ISkillCastCondition:ICanBeShown,IHasContent
+	public interface ISkillCastCondition
 	{
-		string CheckCastCondition(RoleBattleChess chess);
+		string CheckCastCondition(BattleRole chess);
 	}
 }

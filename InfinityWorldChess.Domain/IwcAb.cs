@@ -4,6 +4,7 @@ using InfinityWorldChess.ItemDomain.EquipmentDomain;
 using InfinityWorldChess.RoleDomain;
 using InfinityWorldChess.Ugf;
 using Secyud.Ugf;
+using Secyud.Ugf.AssetComponents;
 using Secyud.Ugf.AssetLoading;
 using Secyud.Ugf.BasicComponents;
 using Secyud.Ugf.FunctionalComponents;
@@ -20,34 +21,34 @@ namespace InfinityWorldChess
 		public static IwcAb Instance => _instance ??= U.Get<IwcAb>();
 		private static IwcAb _instance;
 
-		public readonly IObjectAccessor<SFloating> AutoCloseFloating;
+		public readonly IObjectAccessor<SPopup> AutoCloseFloating;
 		public readonly IObjectAccessor<SText> BodyFieldText;
-		public readonly IObjectAccessor<ButtonGroup> ButtonGroupInk;
+		public readonly IObjectAccessor<SButtonGroup> ButtonGroupInk;
 		public readonly IObjectAccessor<LoadingPanel> LoadingPanelInk;
 		public readonly IObjectAccessor<LoadingPanel> LoadingPanelCircle;
-		public readonly IObjectAccessor<SFloating> TipFloating;
-		public readonly IObjectAccessor<SFloating> EnsureFloating;
+		public readonly IObjectAccessor<SPopup> TipFloating;
+		public readonly IObjectAccessor<SPopup> EnsureFloating;
 		public readonly IObjectAccessor<SText> TitleText1;
 		public readonly IObjectAccessor<SText> TitleText2;
 		public readonly IObjectAccessor<SText> TitleText3;
-		public readonly IObjectAccessor<NormalCell> VerticalCellInk;
+		public readonly IObjectAccessor<ShownCell> VerticalCellInk;
 		public readonly IObjectAccessor<PropertyRect> PropertyRect;
-		public readonly IObjectAccessor<RoleAvatarCell> RoleAvatarCell;
+		public readonly IObjectAccessor<AvatarEditor> RoleAvatarCell;
 		public readonly IObjectAccessor<SelectOptionCell> SelectOptionCell;
 
 		public IwcAb()
 		{
-			RoleAvatarCell = PrefabContainer<RoleAvatarCell>.Create(this);
+			RoleAvatarCell = PrefabContainer<AvatarEditor>.Create(this);
 			SelectOptionCell = PrefabContainer<SelectOptionCell>.Create(this);
-			AutoCloseFloating = PrefabContainer<SFloating>.Create(this, nameof(AutoCloseFloating));
-			VerticalCellInk = PrefabContainer<NormalCell>.Create(this, nameof(VerticalCellInk));
+			AutoCloseFloating = PrefabContainer<SPopup>.Create(this, nameof(AutoCloseFloating));
+			VerticalCellInk = PrefabContainer<ShownCell>.Create(this, nameof(VerticalCellInk));
 			LoadingPanelInk = PrefabContainer<LoadingPanel>.Create(this, nameof(LoadingPanelInk));
 			LoadingPanelCircle = PrefabContainer<LoadingPanel>.Create(this, nameof(LoadingPanelCircle));
-			ButtonGroupInk = PrefabContainer<ButtonGroup>.Create(this, nameof(ButtonGroupInk));
+			ButtonGroupInk = PrefabContainer<SButtonGroup>.Create(this, nameof(ButtonGroupInk));
 			BodyFieldText = PrefabContainer<SText>.Create(this, nameof(BodyFieldText));
 			PropertyRect = PrefabContainer<PropertyRect>.Create(this);
-			TipFloating = PrefabContainer<SFloating>.Create(this, nameof(TipFloating));
-			EnsureFloating = PrefabContainer<SFloating>.Create(this, nameof(EnsureFloating));
+			TipFloating = PrefabContainer<SPopup>.Create(this, nameof(TipFloating));
+			EnsureFloating = PrefabContainer<SPopup>.Create(this, nameof(EnsureFloating));
 			TitleText1 = PrefabContainer<SText>.Create(this, nameof(TitleText1));
 			TitleText2 = PrefabContainer<SText>.Create(this, nameof(TitleText2));
 			TitleText3 = PrefabContainer<SText>.Create(this, nameof(TitleText3));

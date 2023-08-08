@@ -1,4 +1,5 @@
 ﻿using InfinityWorldChess.BattleDomain;
+using InfinityWorldChess.BattleDomain.BattleSkillDomain;
 using InfinityWorldChess.SkillDomain;
 using Secyud.Ugf.DataManager;
 
@@ -15,7 +16,7 @@ namespace InfinityWorldChess.BasicBundle.CoreSkills
 			protected override void PreInteraction(SkillInteraction interaction)
 			{
 				base.PreInteraction(interaction);
-				SkillContainer skill = BattleScope.Instance.Context.CurrentSkill;
+				SkillContainer skill  = BattleScope.Instance.Get<SkillRefreshService>().Skill;
 				if ((skill.EquipCode >> skill.EquipLayer - 1 & 1) > 0)
 					AttackRecord.AttackFactor *= 1 + F256;
 			}

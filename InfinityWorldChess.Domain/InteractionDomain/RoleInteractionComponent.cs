@@ -1,14 +1,14 @@
 ﻿#region
 
-using InfinityWorldChess.RoleDomain;
 using InfinityWorldChess.Ugf;
 using Secyud.Ugf.BasicComponents;
-using Secyud.Ugf.Layout;
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using InfinityWorldChess.PlayerDomain;
+using InfinityWorldChess.GameDomain;
+using InfinityWorldChess.RoleDomain;
 using Secyud.Ugf;
+using Secyud.Ugf.LayoutComponents;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -20,8 +20,8 @@ namespace InfinityWorldChess.InteractionDomain
 {
     public class RoleInteractionComponent : MonoBehaviour
     {
-        [SerializeField] private RoleAvatarViewer LeftViewer;
-        [SerializeField] private RoleAvatarViewer RightViewer;
+        [SerializeField] private AvatarEditor LeftFull;
+        [SerializeField] private AvatarEditor RightFull;
         [SerializeField] private RectTransform SayingContent;
         [SerializeField] private LayoutGroupTrigger SelectContent;
         [SerializeField] private RawImage BackGround;
@@ -36,9 +36,9 @@ namespace InfinityWorldChess.InteractionDomain
 
             unit.OnStart();
 
-            LeftViewer.OnInitialize(InteractionScope.Instance.LeftRole.Basic);
+            LeftFull.OnInitialize(InteractionScope.Instance.LeftRole.Basic);
 
-            RightViewer.OnInitialize(InteractionScope.Instance.RightRole.Basic);
+            RightFull.OnInitialize(InteractionScope.Instance.RightRole.Basic);
 
             SetSaying(unit.Text, unit.Background?.Value);
 
@@ -78,12 +78,12 @@ namespace InfinityWorldChess.InteractionDomain
 
         public void OnLeftViewClick()
         {
-            GameScope.OnRoleMessageCreation(InteractionScope.Instance.LeftRole, 0);
+            GameScope.OpenGameMenu();
         }
 
         public void OnRightViewClick()
         {
-            GameScope.OnRoleMessageCreation(InteractionScope.Instance.RightRole, 0);
+            GameScope.OpenGameMenu();
         }
 
         private void SetSaying(string text, Sprite sprite = null)

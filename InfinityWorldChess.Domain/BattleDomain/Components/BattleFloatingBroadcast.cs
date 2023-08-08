@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using InfinityWorldChess.SkillDomain;
 using InfinityWorldChess.Ugf;
-using Secyud.Ugf.Layout;
+using Secyud.Ugf.LayoutComponents;
 using UnityEngine;
 
 namespace InfinityWorldChess.BattleDomain

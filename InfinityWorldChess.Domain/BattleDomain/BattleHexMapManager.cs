@@ -1,62 +1,63 @@
 #region
 
-using Secyud.Ugf.AssetLoading;
 using Secyud.Ugf.HexMap;
 using Secyud.Ugf.HexMap.Utilities;
 using System.Collections.Generic;
 using System.Ugf.Collections.Generic;
-using Secyud.Ugf.DependencyInjection;
+using Secyud.Ugf.AssetComponents;
 using UnityEngine;
 
 #endregion
 
 namespace InfinityWorldChess.BattleDomain
 {
-	[Registry(LifeTime = DependencyLifeTime.Scoped,DependScope = typeof(BattleScope))]
-	public class BattleHexMapManager : IBattleHexMapManager
-	{
-		private readonly BattleContext _context;
-		private readonly BattleGlobalService _globalService;
+    public class BattleHexMapManager : IBattleHexMapManager
+    {
+        private readonly BattleGlobalService _globalService;
 
-		public BattleHexMapManager(BattleGlobalService globalService, BattleContext context)
-		{
-			_globalService = globalService;
-			_context = context;
-		}
+        public BattleHexMapManager(BattleGlobalService globalService)
+        {
+            _globalService = globalService;
+        }
 
-		public Transform GetFeature(HexCell cell)
-		{
-			BattleChecker cellMessage = _context.GetChecker(cell);
-			if (cellMessage is null) return null;
+        public Transform GetFeature(HexCell cell)
+        {
+            BattleCell cellMessage = cell.Get<BattleCell>();
+            if (cellMessage is null) return null;
 
-			int type = cellMessage.ResourceType;
-			int level = cellMessage.ResourceLevel;
-			if (level < 0 || type < 0) return null;
+            int type = cellMessage.ResourceType;
+            int level = cellMessage.ResourceLevel;
+            if (level < 0 || type < 0) return null;
 
-			List<PrefabContainer<Transform>> list = _globalService.Features[type, level];
-			return list.RandomPick()?.Value;
-		}
+            List<PrefabContainer<Transform>> list = _globalService.Features[type, level];
+            return list.RandomPick()?.Value;
+        }
 
-		public Transform GetSpecialFeature(HexCell cell)
-		{
-			BattleChecker cellMessage = _context.GetChecker(cell);
-			if (cellMessage is null) return null;
+        public Transform GetSpecial(HexCell cell)
+        {
+            BattleCell cellMessage  = cell.Get<BattleCell>();
+            if (cellMessage is null) return null;
 
-			int index = cellMessage.SpecialIndex;
-			return index < 0 ? null : _globalService.SpecialFeatures[index]?.Value;
-		}
+            int index = cellMessage.SpecialIndex;
+            return index < 0 ? null : _globalService.SpecialFeatures[index]?.Value;
+        }
 
-		public int GetMoveCost(HexUnit unit, HexCell from, HexCell to, HexDirection direction)
-		{
-			return from.CostTo(to, direction);
-		}
+        public int GetMoveCost(HexCell from, HexCell to, HexDirection direction)
+        {
+            return from.CostTo(to, direction);
+        }
 
-		public int GetSpeed(HexUnit unit)
-		{
-			IBattleChess role = _context.GetChess(unit);
-			if (role is null) return 1;
+        public int GetSpeed(HexUnit unit)
+        {
+            BattleRole role = BattleScope.Instance.GetChess(unit);
+            if (role is null) return 1;
 
-			return role.GetSpeed();
-		}
-	}
+            return role.GetSpeed();
+        }
+
+        public CellBase InitMessage(int x, int z, HexGrid grid)
+        {
+            return new BattleCell();
+        }
+    }
 }

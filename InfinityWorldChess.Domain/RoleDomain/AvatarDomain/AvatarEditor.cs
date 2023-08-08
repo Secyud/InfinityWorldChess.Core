@@ -1,194 +1,120 @@
-﻿#region
-
+﻿using Secyud.Ugf;
 using Secyud.Ugf.BasicComponents;
-using System;
-using System.Collections.Generic;
-using System.Ugf.Collections.Generic;
-using Secyud.Ugf;
+using Secyud.Ugf.Collections;
+using Secyud.Ugf.TableComponents;
 using UnityEngine;
-
-#endregion
 
 namespace InfinityWorldChess.RoleDomain
 {
-	public class AvatarEditor : MonoBehaviour
-	{
-		[SerializeField] private RoleAvatarViewer Viewer;
-		[SerializeField] protected SSlider[] Sliders;
+    [RequireComponent(typeof(RectTransform))]
+    public class AvatarEditor : TableCell
+    {
+        [SerializeField] private SText RoleName;
+        [SerializeField] private float Size;
+        [SerializeField] private float BiasY;
 
-		private RoleAvatar _avatar;
-		private AvatarResourceGroup _group;
-		private RoleResourceManager _manager;
+        private AvatarElementImage[] _images;
+        private AvatarElementSlider[] _sliders;
+        private Role.BasicProperty _basic;
 
-		protected void Awake()
-		{
-			_manager = U.Get<RoleResourceManager>();
-		}
+        private RegistrableDictionary<int, AvatarSpriteContainer>[] _group;
+        private RoleResourceManager _manager;
+        private RectTransform _content;
 
-		public void OnInitialize(Role.BasicProperty basic)
-		{
-			_avatar = basic.Avatar;
-			_group = basic.Female ? _manager.Female : _manager.Male;
-			SetSlider(_group.BackItem.KeyList, 0);
-			SetSlider(_group.BackHair.KeyList, 1);
-			SetSlider(_group.Body.KeyList, 2);
-			SetSlider(_group.Head.KeyList, 3);
-			SetSlider(_group.HeadFeature.KeyList, 4);
-			SetSlider(_group.Nose.KeyList, 5);
-			SetSlider(_group.Mouth.KeyList, 6);
-			SetSlider(_group.Eye.KeyList, 7);
-			SetSlider(_group.Brow.KeyList, 8);
-			SetSlider(_group.FrontHair.KeyList, 9);
+        public float Scale => Size;
+        public float Bias => BiasY;
 
-			Viewer.OnInitialize(basic);
-		}
+        protected virtual void Awake()
+        {
+            _manager = U.Get<RoleResourceManager>();
+            _images ??= new AvatarElementImage[SharedConsts.AvatarElementCount];
+            _content = GetComponent<RectTransform>();
+            // Size = Content.rect.width * 0.65f;
+            // Content.pivot = Content.anchorMin = Content.anchorMax = new Vector2(0.5f, 0.5f);
+            // Content.anchoredPosition = Vector2.zero;
+            // Content.sizeDelta = new Vector2(Size, Size * 1.5f);
+            // Size /= 120;
+        }
 
-		private void SetSlider(IReadOnlyList<int> keyList, int index)
-		{
-			Sliders[index].minValue = 0;
-			Sliders[index].maxValue = Math.Max(keyList.Count - 1, 0);
-			Sliders[index].value = 0;
-		}
+        public void Bind(Role.BasicProperty basic)
+        {
+            _group = basic.Female ? _manager.FemaleAvatarResource : _manager.MaleAvatarResource;
 
-		public void SetBackItem(float value)
-		{
-			_avatar.BackItem.Id = _group.BackItem.KeyList.Pick(value);
-			Viewer.SetBackItem(_avatar.BackItem);
-		}
+            if (_sliders is not null)
+            {
+                for (int i = 0; i < SharedConsts.AvatarElementCount; i++)
+                {
+                    if (!_sliders[i]) continue;
+                    int max = _group[i].KeyList.Count;
+                    if (max > 0) max -= 1;
+                    _sliders[i].SetMaxValue(max);
+                }
+            }
 
-		public void SetBackHair(float value)
-		{
-			_avatar.BackHair.Id = _group.BackHair.KeyList.Pick(value);
-			Viewer.SetBackHair(_avatar.BackHair);
-		}
+            for (int i = 0; i < SharedConsts.AvatarElementCount; i++)
+            {
+                AvatarElementImage image = _images[i];
+                AvatarElement avatar = _basic.Avatar[i];
+                AvatarSpriteContainer container = _group[i].Get(avatar.Id);
 
-		public void SetBody(float value)
-		{
-			_avatar.Body.Id = _group.Body.KeyList.Pick(value);
-			Viewer.SetBody(_avatar.Body);
-		}
+                image.SetSprite(container);
+                image.SetScale(avatar.Scale);
+                image.SetPositionX(avatar.PositionX);
+                image.SetPositionY(avatar.PositionY);
+                image.SetRotation(avatar.Rotation);
+                container.SetImage(image);
+            }
 
-		public void SetHead(float value)
-		{
-			_avatar.Head.Id = _group.Head.KeyList.Pick(value);
-			Viewer.SetHead(_avatar.Head);
-		}
+            if (RoleName)
+                RoleName.text = basic.Name;
+        }
 
-		public void SetHeadFeature(float value)
-		{
-			_avatar.HeadFeature.Id = _group.HeadFeature.KeyList.Pick(value);
-			Viewer.SetHeadFeature(_avatar.HeadFeature);
-		}
+        public void SetImage(AvatarElementImage image, AvatarElementType type)
+        {
+            _images[(int)type] = image;
+        }
 
-		public void SetHeadFeaturePosition(Vector2 value)
-		{
-			_avatar.HeadFeature.X = (byte)value.x;
-			_avatar.HeadFeature.Y = (byte)value.y;
-			Viewer.SetHeadFeature(_avatar.HeadFeature);
-		}
+        public void SetSlider(AvatarElementSlider slider, AvatarElementType type)
+        {
+            _sliders ??= new AvatarElementSlider[SharedConsts.AvatarElementCount];
 
-		public void SetHeadFeatureRotation(float value)
-		{
-			_avatar.HeadFeature.W = (byte)value;
-			Viewer.SetHeadFeature(_avatar.HeadFeature);
-		}
+            if (slider is not null)
+            {
+                slider.Image = _images[(int)type];
+                if (slider.Type == AvatarSliderType.Sprite)
+                    _sliders[(int)type] = slider;
+            }
+        }
 
-		public void SetHeadFeatureScale(float value)
-		{
-			_avatar.HeadFeature.Z = (byte)value;
-			Viewer.SetHeadFeature(_avatar.HeadFeature);
-		}
+        public virtual void OnInitialize(Role.BasicProperty basic)
+        {
+            if (basic is null)
+                Clear();
+            else
+                Bind(basic);
+        }
 
-		public void SetNose(float value)
-		{
-			_avatar.NoseMouth.Id1 = _group.Nose.KeyList.Pick(value);
-			Viewer.SetNose(_avatar.NoseMouth);
-		}
+        public virtual void Clear()
+        {
+            foreach (AvatarElementImage image in _images)
+            {
+                if (image)
+                    image.SetSprite(null);
+            }
 
-		public void SetNoseHeight(float value)
-		{
-			_avatar.NoseMouth.Y = (byte)value;
-			Viewer.SetNose(_avatar.NoseMouth);
-		}
+            if (RoleName)
+                RoleName.text = "";
+        }
 
-		public void SetNoseScale(float value)
-		{
-			_avatar.NoseMouth.X = (byte)value;
-			Viewer.SetNose(_avatar.NoseMouth);
-		}
 
-		public void SetMouth(float value)
-		{
-			_avatar.NoseMouth.Id2 = _group.Mouth.KeyList.Pick(value);
-			Viewer.SetMouth(_avatar.NoseMouth);
-		}
+        public static void SetCell(TableCell cell, Role role)
+        {
+            ((AvatarEditor)cell).OnInitialize(role?.Basic);
+        }
 
-		public void SetMouthHeight(float value)
-		{
-			_avatar.NoseMouth.W = (byte)value;
-			Viewer.SetMouth(_avatar.NoseMouth);
-		}
-
-		public void SetMouthScale(float value)
-		{
-			_avatar.NoseMouth.Z = (byte)value;
-			Viewer.SetMouth(_avatar.NoseMouth);
-		}
-
-		public void SetEye(float value)
-		{
-			_avatar.Eye.Id = _group.Eye.KeyList.Pick(value);
-			Viewer.SetEye(_avatar.Eye);
-		}
-
-		public void SetEyePosition(Vector2 value)
-		{
-			_avatar.Eye.X = (byte)value.x;
-			_avatar.Eye.Y = (byte)value.y;
-			Viewer.SetEye(_avatar.Eye);
-		}
-
-		public void SetEyeRotation(float value)
-		{
-			_avatar.Eye.W = (byte)value;
-			Viewer.SetEye(_avatar.Eye);
-		}
-
-		public void SetEyeScale(float value)
-		{
-			_avatar.Eye.Z = (byte)value;
-			Viewer.SetEye(_avatar.Eye);
-		}
-
-		public void SetBrow(float value)
-		{
-			_avatar.Brow.Id = _group.Brow.KeyList.Pick(value);
-			Viewer.SetBrow(_avatar.Brow);
-		}
-
-		public void SetBrowPosition(Vector2 value)
-		{
-			_avatar.Brow.X = (byte)value.x;
-			_avatar.Brow.Y = (byte)value.y;
-			Viewer.SetBrow(_avatar.Brow);
-		}
-
-		public void SetBrowRotation(float value)
-		{
-			_avatar.Brow.W = (byte)value;
-			Viewer.SetBrow(_avatar.Brow);
-		}
-
-		public void SetBrowScale(float value)
-		{
-			_avatar.Brow.Z = (byte)value;
-			Viewer.SetBrow(_avatar.Brow);
-		}
-
-		public void SetFrontHair(float value)
-		{
-			_avatar.FrontHair.Id = _group.FrontHair.KeyList.Pick(value);
-			Viewer.SetFrontHair(_avatar.FrontHair);
-		}
-	}
+        public AvatarSpriteContainer GetElement(int index, AvatarElementType elementType)
+        {
+            return _group[(int)elementType].GetByIndex(index);
+        }
+    }
 }

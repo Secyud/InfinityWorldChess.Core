@@ -7,7 +7,7 @@ using Secyud.Ugf;
 
 namespace InfinityWorldChess.BiographyDomain
 {
-	public interface IBiography : ICanBeShown, IHasContent
+	public interface IBiography : IShowable, IHasContent
 	{
 		void OnGameCreation(Role role);
 	}

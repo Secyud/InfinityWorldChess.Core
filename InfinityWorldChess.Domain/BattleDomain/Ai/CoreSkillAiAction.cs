@@ -6,6 +6,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Ugf.Collections.Generic;
+using InfinityWorldChess.BattleDomain.BattleMapDomain;
+using InfinityWorldChess.BattleDomain.BattleSkillDomain;
+using Secyud.Ugf;
 
 namespace InfinityWorldChess.BattleDomain
 {
@@ -13,42 +16,40 @@ namespace InfinityWorldChess.BattleDomain
 	{
 		private readonly HexCell _cell;
 		private readonly CoreSkillContainer _container;
-		private readonly RoleBattleChess _role;
-		private readonly BattleContext _context;
+		private readonly BattleRole _battleRole;
 
 		private CoreSkillAiAction([NotNull] HexCell cell,
 			[NotNull] CoreSkillContainer container,
-			[NotNull] RoleBattleChess role,
-			[NotNull]BattleContext context)
+			[NotNull] BattleRole battleRole)
 		{
 			_cell = cell;
 			_container = container;
-			_role = role;
-			_context = context;
+			_battleRole = battleRole;
 		}
 
 		public override void InvokeAction()
 		{
-			_context.CurrentSkill = _container;
-			_context.SetHoverRange(_context.GetChecker(_cell) );
-			_context.StartCurrentSkillCast(_cell);
+			var skill = U.Get<SkillRefreshService>();
+			skill.Skill = _container;
+			BattleMap map = BattleScope.Instance.Map;
+			map.StartCurrentSkillCast(_cell);
 		}
 
 		public override int GetScore()
 		{
-			Role.NatureProperty n = _role.Role.Nature;
+			Role.NatureProperty n = _battleRole.Role.Nature;
 			float score = n.Confident * (_container.Skill.Score - 128);
 
-			ISkillRange range = _container.Skill.GetCastResultRange(_role, _cell);
-			ISkillTarget skillTarget = _container.CoreSkill.GetTargetInRange(_role, range);
+			ISkillRange range = _container.Skill.GetCastResultRange(_battleRole, _cell);
+			ISkillTarget skillTarget = _container.CoreSkill.GetTargetInRange(_battleRole, range);
 
 			if (skillTarget.Value.IsNullOrEmpty())
 			{
 				float minDistance = float.MaxValue;
-				IBattleChess chess = null;
-				foreach (IBattleChess c in _context.Chesses.Values)
+				BattleRole chess = null;
+				foreach (BattleRole c in BattleScope.Instance.Context.Roles.Values)
 				{
-					if (c.Camp != _role.Camp)
+					if (c.Camp != _battleRole.Camp)
 					{
 						float distance = c.Unit.Location.Coordinates.DistanceTo(_cell.Coordinates);
 
@@ -62,9 +63,9 @@ namespace InfinityWorldChess.BattleDomain
 				if (chess is null)
 					return 0;
 
-				int origin = (int)_role.Direction;
-				int current = (int)_cell.DirectionTo(_role.Unit.Location);
-				int target = (int)chess.Unit.Location.DirectionTo(_role.Unit.Location);
+				int origin = (int)_battleRole.Direction;
+				int current = (int)_cell.DirectionTo(_battleRole.Unit.Location);
+				int target = (int)chess.Unit.Location.DirectionTo(_battleRole.Unit.Location);
 				if (Math.Abs(target - current) >= Math.Abs(target - origin))
 					return 0;
 				else
@@ -98,16 +99,16 @@ namespace InfinityWorldChess.BattleDomain
 			return Math.Max((int)(score / 512 + 16), 1);
 		}
 
-		public static void AddNodes(List<AiActionNode> nodes, BattleContext context, RoleBattleChess role)
+		public static void AddNodes(List<AiActionNode> nodes, BattleRole battleRole)
 		{
-			foreach (CoreSkillContainer skill in context.CurrentRole.NextCoreSkills)
+			foreach (CoreSkillContainer skill in battleRole.NextCoreSkills)
 			{
 				if (skill is not null &&
-					skill.CoreSkill.CheckCastCondition(role) is null)
+					skill.CoreSkill.CheckCastCondition(battleRole) is null)
 				{
 					nodes.AddRange(
-						skill.CoreSkill.GetCastPositionRange(role).Value
-							.Select(cell => new CoreSkillAiAction(cell, skill, role,context))
+						skill.CoreSkill.GetCastPositionRange(battleRole).Value
+							.Select(cell => new CoreSkillAiAction(cell, skill, battleRole))
 					);
 				}
 			}

@@ -1,6 +1,6 @@
 #region
 
-using InfinityWorldChess.WorldDomain;
+using InfinityWorldChess.GameDomain;
 using Secyud.Ugf.Archiving;
 using Secyud.Ugf.DataManager;
 
@@ -12,7 +12,7 @@ namespace InfinityWorldChess.RoleDomain
 	{
 		public RelationProperty Relation { get; } = new();
 
-		public WorldChecker Position
+		public WorldCell Position
 		{
 			get => Relation.Position;
 			set => Relation.SetPosition(this, value);
@@ -26,9 +26,9 @@ namespace InfinityWorldChess.RoleDomain
 			[S(ID = 2)]public float ValueView;
 			[S(ID = 3)]public float WorldView;
 
-			public WorldChecker Position { get; private set; }
+			public WorldCell Position { get; private set; }
 
-			public void SetPosition(Role role, WorldChecker to)
+			public void SetPosition(Role role, WorldCell to)
 			{
 				if (to == Position || role is null)
 					return;
@@ -47,9 +47,9 @@ namespace InfinityWorldChess.RoleDomain
 				writer.Write(WorldView);
 			}
 
-			public void Load(IArchiveReader reader, Role role, WorldChecker checker)
+			public void Load(IArchiveReader reader, Role role, WorldCell cell)
 			{
-				SetPosition(role, checker);
+				SetPosition(role, cell);
 				AreaView = reader.ReadSingle();
 				LifeView = reader.ReadSingle();
 				ValueView = reader.ReadSingle();

@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace InfinityWorldChess.BattleDomain
 {
-    public class Fight : Battle
+    public class Fight : BattleDescriptor
     {
         [NotNull] private readonly Role _self;
         private readonly Role _target;
@@ -14,18 +14,22 @@ namespace InfinityWorldChess.BattleDomain
         public override int SizeX => 2;
 
         public override int SizeZ => 2;
+        public override IBattleVictoryCondition GenerateVictoryCondition()
+        {
+            return new VictoryOnBeatAllEnemies();
+        }
+
         public Fight(
             [NotNull] Role self,
             [NotNull] Role target)
-            : base(new VictoryOnBeatAllEnemies())
         {
             _self = self;
             _target = target;
         }
 
-        public override void OnBattleInitialize()
+        public override void OnBattleCreated()
         {
-            HexGrid grid = BattleScope.Instance.Context.Map.Grid;
+            HexGrid grid = BattleScope.Instance.Map.Grid;
             
             int indexMax = grid.CellCountX * grid.CellCountZ;
 
@@ -45,10 +49,10 @@ namespace InfinityWorldChess.BattleDomain
                 Index = 1,
                 Color = Color.red
             };
-            BattleScope.Instance.Context.AutoInitializeRole(
+            BattleScope.Instance.AutoInitializeRole(
                 _self, camp1, grid.GetCell(cellIndex1).Coordinates, true
             );
-            BattleScope.Instance.Context.AutoInitializeRole(
+            BattleScope.Instance.AutoInitializeRole(
                 _target, camp2, grid.GetCell(cellIndex2).Coordinates, false
             );
         }

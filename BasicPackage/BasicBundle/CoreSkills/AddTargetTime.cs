@@ -16,7 +16,7 @@ namespace InfinityWorldChess.BasicBundle.CoreSkills
         protected override void PostInteraction(SkillInteraction interaction)
         {
             base.PostInteraction(interaction);
-            RoleBattleChess chess = interaction.TargetChess.Belong;
+            BattleRole chess = interaction.TargetChess;
             chess.Time += chess.GetTimeAdd() * F256;
         }
     }

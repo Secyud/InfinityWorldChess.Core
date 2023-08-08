@@ -1,82 +1,30 @@
 ﻿#region
 
 using InfinityWorldChess.RoleDomain;
-using InfinityWorldChess.Ugf;
-using Secyud.Ugf.TableComponents;
-using System.Diagnostics.CodeAnalysis;
-using InfinityWorldChess.PlayerDomain;
-using Secyud.Ugf;
-using UnityEngine;
+using Secyud.Ugf.EditorComponents;
 
 #endregion
 
 namespace InfinityWorldChess.SkillDomain
 {
-	public class SkillView : MonoBehaviour
-	{
+    public abstract class SkillView<TSkillCell, TSkillView> : EditorBase<Role>
+        where TSkillView : SkillView<TSkillCell, TSkillView>
+        where TSkillCell : SkillCell<TSkillCell, TSkillView>
+    {
+        protected abstract int CellCount { get; }
 
-		[SerializeField] private FunctionalTable Table;
+        protected SkillCell<TSkillCell, TSkillView>[] Cells;
 
-		private Role _role;
-		private GameScope _scope;
+        public SkillCell<TSkillCell, TSkillView>[] SkillCells => Cells;
+        
+        protected virtual void Awake()
+        {
+            Cells = new SkillCell<TSkillCell, TSkillView>[CellCount];
+        }
 
-		private void Awake()
-		{
-			_scope = U.Factory.Application.DependencyManager.GetScope<GameScope>();
-		}
-
-		public void ChangeView(int type)
-		{
-			if (_role is null)
-				return;
-
-			switch (type)
-			{
-			case 0:
-			{
-				IwcTableHelperBh<ICoreSkill, CoreSkillTf,CoreSkillBf> helper = 
-					new(GameScope.RefreshRoleMessageMenu);
-				helper.OnInitialize(
-					Table,
-					IwcAb.Instance.VerticalCellInk.Value,
-					_role.CoreSkill.LearnedSkills
-				);
-				break;
-			}
-			case 1:
-			{
-				IwcTableHelperBh<IFormSkill, FormSkillTf,FormSkillBf> helper =
-					new(GameScope.RefreshRoleMessageMenu);
-				helper.OnInitialize(
-					Table,
-					IwcAb.Instance.VerticalCellInk.Value,
-					_role.FormSkill.LearnedSkills
-				);
-				break;
-			}
-			case 2:
-			{
-				IwcTableHelperBh<IPassiveSkill, PassiveSkillTf,PassiveSkillBf> helper =
-					new(GameScope.RefreshRoleMessageMenu);
-				helper.OnInitialize(
-					Table,
-					IwcAb.Instance.VerticalCellInk.Value,
-					_role.PassiveSkill.LearnedSkills
-				);
-				break;
-			}
-			}
-		}
-
-		public void OnInitialize([NotNull] Role role)
-		{
-			_role = role;
-			ChangeView(0);
-		}
-
-		public void Refresh()
-		{
-			Table.RefreshFilter();
-		}
-	}
+        public virtual void SetCell(SkillCell<TSkillCell, TSkillView> cell)
+        {
+            Cells[cell.CellIndex] = cell;
+        }
+    }
 }

@@ -1,13 +1,16 @@
 ﻿#region
 
 using System.Collections;
-using InfinityWorldChess.ArchivingDomain;
+using InfinityWorldChess.GameCreatorDomain;
+using InfinityWorldChess.GameDomain;
+using InfinityWorldChess.GameDomain.WorldMapDomain;
 using InfinityWorldChess.GlobalDomain;
+using InfinityWorldChess.MapDomain;
 using InfinityWorldChess.PlayerDomain;
 using InfinityWorldChess.RoleDomain;
-using InfinityWorldChess.WorldDomain;
 using Secyud.Ugf;
 using Secyud.Ugf.Archiving;
+using Secyud.Ugf.AssetComponents;
 using Secyud.Ugf.AssetLoading;
 using Secyud.Ugf.DependencyInjection;
 using Secyud.Ugf.HexMap;
@@ -37,7 +40,7 @@ namespace InfinityWorldChess
         {
             RegisterWorldModel(context.Get<WorldGlobalService>(), context.Get<IwcAb>());
 
-            context.Get<WorldHexCellBf>().Register(new TravelButtonRegistration());
+            context.Get<WorldCellButtons>().Register(new TravelButtonDescriptor());
 
             IDependencyManager manager = context.Get<IDependencyManager>();
             manager.CreateScope<GlobalScope>();
@@ -67,7 +70,7 @@ namespace InfinityWorldChess
 
         public IEnumerator OnGamePostInitialization(GameInitializeContext context)
         {
-            U.Factory.Application.DependencyManager.DestroyScope<CreatorScope>();
+            U.Factory.Application.DependencyManager.DestroyScope<GameCreatorScope>();
             SetPlayer(
                 GameScope.Instance.World,
                 GameScope.Instance.Player,
@@ -105,17 +108,16 @@ namespace InfinityWorldChess
             RoleGameContext role)
         {
             Role pr = player.Role;
-            HexUnit pu = world.WorldUnitPrefab.Instantiate(world.Map.Grid.transform);
+            HexUnit pu = world.WorldUnitPrefab.Instantiate(WorldGameContext.Map.Grid.transform);
             HexCell cell = pr.Position.Cell;
-            WorldMapComponent map = world.Map;
+            WorldMap map = WorldGameContext.Map;
             role.Roles[pr.Id] = pr;
             player.Unit = pu;
             pu.Id = pr.Id;
-            map.Grid.AddUnit(pu, cell, 0);
+            map.Grid.AddUnit(pr,pu, cell, 0);
             Vector3 position = pu.transform.position;
             position.y = 0;
             map.MapCamera.transform.position = position;
-            world.Ui.SelectLeftPanel(0);
         }
 
         private static void RegisterWorldModel(WorldGlobalService service, IAssetLoader ab)

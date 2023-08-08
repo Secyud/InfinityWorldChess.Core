@@ -10,7 +10,7 @@ namespace InfinityWorldChess
         public const int TotalCoreSkillCount = 0b11110;
         public const int CoreSkillLayerCount = 4;
         public const int CoreSkillCodeCount = 2;
-        public const int CoreSkillCount = CoreSkillLayerCount * CoreSkillCodeCount;
+        public const int CoreSkillCount = 2+4+8+16;
         public const int FormSkillStateCount = 3;
         public const int FormSkillTypeCount = 3;
         public const int FormSkillCount = FormSkillStateCount * FormSkillTypeCount;
@@ -31,6 +31,7 @@ namespace InfinityWorldChess
         public const int BattleTimeFactor = 256;
 
         public const int NatureCount = 9;
+        public const int AvatarElementCount = 12;
 
         public static readonly string SavePath = InitFolderPath(Application.dataPath, "SaveFiles");
 

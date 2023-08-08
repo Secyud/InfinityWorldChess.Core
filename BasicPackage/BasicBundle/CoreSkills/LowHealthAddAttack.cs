@@ -13,8 +13,8 @@ namespace InfinityWorldChess.BasicBundle.CoreSkills
         protected override void PreInteraction(SkillInteraction interaction)
         {
             base.PreInteraction(interaction);
-            RoleBattleChess role = interaction.LaunchChess.Belong;
-            float value = 1 - role.HealthValue / role.MaxHealthValue;
+            BattleRole battleRole = interaction.LaunchChess;
+            float value = 1 - battleRole.HealthValue / battleRole.MaxHealthValue;
             AttackRecord.AttackFactor += value * F256 * 100;
         }
     }

@@ -1,12 +1,13 @@
 ﻿#region
 
+using Secyud.Ugf.DependencyInjection;
 using UnityEngine;
 
 #endregion
 
 namespace InfinityWorldChess.RoleDomain
 {
-	public interface IRoleService
+	public interface IRoleService:IRegistry
 	{
 		void SetSmallContent(Transform cell,Role role);
 

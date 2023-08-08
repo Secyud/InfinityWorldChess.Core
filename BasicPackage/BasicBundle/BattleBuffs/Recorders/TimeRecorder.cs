@@ -8,7 +8,7 @@ namespace InfinityWorldChess.BasicBundle.BattleBuffs.Recorders
 	{
 		private BattleContext _context;
 		private readonly Type _buffType;
-		private RoleBattleChess _target;
+		private BattleRole _target;
 
 		public float TimeFinished { get; set; }
 		public float TimeRecord { get; private set; }
@@ -31,7 +31,7 @@ namespace InfinityWorldChess.BasicBundle.BattleBuffs.Recorders
 			TimeRecord = BattleScope.Instance.Context.TotalTime;
 		}
 		
-		public  void Install(RoleBattleChess target)
+		public  void Install(BattleRole target)
 		{
 			_target = target;
 			BattleScope.Instance.Context.RoundBeginAction += CalculateRemove;

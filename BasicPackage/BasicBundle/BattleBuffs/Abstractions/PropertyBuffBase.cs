@@ -8,7 +8,7 @@ namespace InfinityWorldChess.BasicBundle.BattleBuffs.Abstractions
 {
     public abstract class PropertyBuffBase : BattleShownBuffBase
     {
-        private RoleBattleChess _target;
+        private BattleRole _target;
         public float Value { get; set; }
         protected abstract BodyType Type { get; }
 
@@ -24,18 +24,18 @@ namespace InfinityWorldChess.BasicBundle.BattleBuffs.Abstractions
             } + "。";
 
 
-        public override void Install(RoleBattleChess target)
+        public override void Install(BattleRole target)
         {
             _target = target;
             _target.Role.BodyPart[Type].RealValue += Value;
         }
 
-        public override void UnInstall(RoleBattleChess target)
+        public override void UnInstall(BattleRole target)
         {
             _target.Role.BodyPart[Type].RealValue -= Value;
         }
 
-        public override void Overlay(IBuff<RoleBattleChess> finishBuff)
+        public override void Overlay(IBuff<BattleRole> finishBuff)
         {
             if (finishBuff is not PropertyBuffBase buff)
                 return;
@@ -57,20 +57,20 @@ namespace InfinityWorldChess.BasicBundle.BattleBuffs.Abstractions
                 TimeRecorder = new TimeRecorder(GetType());
             }
 
-            public override void Install(RoleBattleChess target)
+            public override void Install(BattleRole target)
             {
                 base.Install(target);
                 TimeRecorder.Install(target);
             }
 
 
-            public override void UnInstall(RoleBattleChess target)
+            public override void UnInstall(BattleRole target)
             {
                 base.UnInstall(target);
                 TimeRecorder.UnInstall();
             }
 
-            public override void Overlay(IBuff<RoleBattleChess> finishBuff)
+            public override void Overlay(IBuff<BattleRole> finishBuff)
             {
                 base.Overlay(finishBuff);
 

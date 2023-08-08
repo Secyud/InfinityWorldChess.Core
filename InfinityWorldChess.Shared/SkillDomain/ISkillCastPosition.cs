@@ -3,8 +3,8 @@ using Secyud.Ugf;
 
 namespace InfinityWorldChess.SkillDomain
 {
-	public interface ISkillCastPosition:ICanBeShown,IHasContent
+	public interface ISkillCastPosition
 	{
-		ISkillRange GetCastPositionRange(IBattleChess battleChess);
+		ISkillRange GetCastPositionRange(BattleRole role);
 	}
 }

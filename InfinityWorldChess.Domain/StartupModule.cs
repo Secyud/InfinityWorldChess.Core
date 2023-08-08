@@ -1,7 +1,5 @@
 #region
 
-using InfinityWorldChess.GlobalDomain;
-using Secyud.Ugf.DependencyInjection;
 using Secyud.Ugf.Modularity;
 
 #endregion

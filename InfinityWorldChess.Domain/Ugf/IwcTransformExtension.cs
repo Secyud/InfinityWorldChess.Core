@@ -49,7 +49,7 @@ namespace InfinityWorldChess.Ugf
 			return IwcAb.Instance.BodyFieldText.Value.Create(transform, U.T.Translate(text));
 		}
 
-		public static void AddSimpleShown(this Transform transform, ICanBeShown shown)
+		public static void AddSimpleShown(this Transform transform, IShowable shown)
 		{
 			transform.AddTitle1(shown.ShowName);
 			if (shown.ShowDescription.IsNullOrEmpty())
@@ -60,7 +60,7 @@ namespace InfinityWorldChess.Ugf
 
 		public static void AddListShown<TItem>(this Transform transform, string title, IEnumerable<TItem> items)
 		{
-			List<ICanBeShown> result = items.TryFindCast<TItem, ICanBeShown>();
+			List<IShowable> result = items.TryFindCast<TItem, IShowable>();
 
 			if (result is null || !result.Any())
 				return;
@@ -75,9 +75,9 @@ namespace InfinityWorldChess.Ugf
 			}
 		}
 
-		public static void AddShapeProperty(this Transform transform, int[] property)
+		public static void AddShapeProperty(this Transform transform, int[] property,string title = "形状")
 		{
-			transform.AddTitle3("形状");
+			transform.AddTitle3(title);
 			PropertyRect e = IwcAb.Instance.PropertyRect.Instantiate(transform);
 			e.OnInitialize(property);
 		}

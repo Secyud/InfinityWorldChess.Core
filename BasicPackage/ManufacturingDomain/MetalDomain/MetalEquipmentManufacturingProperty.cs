@@ -1,7 +1,7 @@
-﻿namespace InfinityWorldChess.ManufacturingDomain
+﻿namespace InfinityWorldChess.ManufacturingDomain.MetalDomain
 {
-	public class
-		MetalEquipmentManufacturingProperty : ManufacturingPropertyBase<MetalEquipmentManufacturingProcess>
+	public class MetalEquipmentManufacturingProperty : 
+			ManufacturingPropertyBase<MetalEquipmentProcess>
 	{
 	}
 }

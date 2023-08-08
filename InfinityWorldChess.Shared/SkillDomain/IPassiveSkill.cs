@@ -7,7 +7,7 @@ using Secyud.Ugf;
 
 namespace InfinityWorldChess.SkillDomain
 {
-	public interface IPassiveSkill : ICanBeShown, ICanBeEquipped, IHasContent, ISkill
+	public interface IPassiveSkill : IShowable, ICanBeEquipped, IHasContent, ISkill
 	{
 		// 阴阳
 		public short Yin { get; set; }

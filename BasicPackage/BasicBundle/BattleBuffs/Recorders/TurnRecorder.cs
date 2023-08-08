@@ -1,14 +1,15 @@
 ﻿using System;
 using InfinityWorldChess.BattleDomain;
+using InfinityWorldChess.BattleDomain.BattleRoleDomain;
 using JetBrains.Annotations;
+using Secyud.Ugf;
 
 namespace InfinityWorldChess.BasicBundle.BattleBuffs.Recorders
 {
 	public class TurnRecorder
 	{
-		private BattleContext _context;
 		private readonly Type _buffType;
-		private RoleBattleChess _target;
+		private BattleRole _target;
 
 		public int TurnFinished { get; set; }
 
@@ -22,11 +23,11 @@ namespace InfinityWorldChess.BasicBundle.BattleBuffs.Recorders
 		private void CalculateRemove()
 		{
 			TurnFinished -= 1;
-			if (TurnFinished <= 0 && _target == _context.CurrentRole)
+			if (TurnFinished <= 0 && _target == BattleScope.Instance.Get<RoleRefreshService>().Role)
 				_target.UnInstall(_buffType);
 		}
 
-		public void Install(RoleBattleChess target)
+		public void Install(BattleRole target)
 		{
 			_target = target;
 			BattleScope.Instance.Context.RoundBeginAction += CalculateRemove;

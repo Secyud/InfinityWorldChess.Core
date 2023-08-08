@@ -90,7 +90,7 @@ namespace InfinityWorldChess.SkillDomain
 			int startDistance, int endDistance, HexCoordinates startCoordinate,
 			HexDirection startDirection, int coverRange)
 		{
-			HexGrid grid = BattleScope.Instance.Context.Map.Grid;
+			HexGrid grid = BattleScope.Instance.Map.Grid;
 			List<HexCell> cells = new();
 			HexCoordinates coordinate = startCoordinate;
 
@@ -117,22 +117,6 @@ namespace InfinityWorldChess.SkillDomain
 			}
 
 			return new SkillRange(cells);
-		}
-
-		public static string GetRangeInfo(byte type, byte start, byte end)
-		{
-			return type switch
-			{
-				0 => "中心",
-				1 => $"直线 ({start}-{end})",
-				2 => $"三角 ({start}-{end})",
-				3 => $"半圆 ({start}-{end})",
-				4 => $"圆形 ({start}-{end})",
-				5 => $"自身三角 ({start}-{end})",
-				6 => $"自身半圆 ({start}-{end})",
-				7 => $"自身圆形 ({start}-{end})",
-				_ => "中心"
-			};
 		}
 	}
 }

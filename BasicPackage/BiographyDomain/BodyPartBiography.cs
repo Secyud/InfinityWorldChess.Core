@@ -5,6 +5,7 @@ using InfinityWorldChess.Ugf;
 using Secyud.Ugf;
 using Secyud.Ugf.AssetLoading;
 using System;
+using Secyud.Ugf.AssetComponents;
 using UnityEngine;
 
 #endregion

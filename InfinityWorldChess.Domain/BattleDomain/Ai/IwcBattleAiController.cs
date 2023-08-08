@@ -1,34 +1,28 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using InfinityWorldChess.BattleDomain.BattleRoleDomain;
 using Secyud.Ugf;
 using Secyud.Ugf.DependencyInjection;
 
 namespace InfinityWorldChess.BattleDomain
 {
-    [Registry(LifeTime = DependencyLifeTime.Scoped, DependScope = typeof(BattleScope))]
+    [Registry(DependScope = typeof(BattleScope))]
     public class IwcBattleAiController : IBattleAiController
     {
         public AiActionNode ResultNode { get; private set; }
         public AiControlState State { get; private set; }
 
-        private readonly BattleContext _context;
-
-        public IwcBattleAiController(BattleContext context)
-        {
-            _context = context;
-        }
-
         public IEnumerator StartPondering()
         {
             State = AiControlState.InPondering;
             List<AiActionNode> nodes = new();
-            RoleBattleChess role = _context.CurrentRole;
-            if (role is null)
+            BattleRole battleRole = U.Get<RoleRefreshService>().Role;
+            if (battleRole is null)
                 State = AiControlState.NoActionValid;
             else
             {
-                CoreSkillAiAction.AddNodes(nodes, _context, role);
-                FormSkillAiAction.AddNodes(nodes, _context, role);
+                CoreSkillAiAction.AddNodes(nodes, battleRole);
+                FormSkillAiAction.AddNodes(nodes, battleRole);
                 yield return RandomSelect(nodes);
             }
 

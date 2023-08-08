@@ -6,33 +6,28 @@ using InfinityWorldChess.ItemDomain.FoodDomain;
 using InfinityWorldChess.ManufacturingDomain;
 using Secyud.Ugf;
 using Secyud.Ugf.TableComponents;
+using Secyud.Ugf.TableComponents.SorterComponents;
 using UnityEngine;
 
 #endregion
 
 namespace InfinityWorldChess.ItemDomain
 {
-	public class ItemSorterType : ISorterRegistration<IItem>
+	public class ItemSorterType : SorterToggleDescriptor<IItem>
 	{
-		public int SortValue(IItem target)
+		public override int SortValue(IItem target)
 		{
 			return target switch
 			{
 				IEquipment => 1,
-				IEdible => 2,
-				SkillBookBase => 3,
-				ManufacturingBlueprintBase => 4,
+				Food => 2,
+				Drag => 3,
+				SkillBookBase => 4,
 				Manufacturable => 5,
 				_ => 0
 			};
 		}
 
-		public string ShowName => "物品类型";
-
-		public string ShowDescription => null;
-
-		public IObjectAccessor<Sprite> ShowIcon => null;
-
-		public bool? Enabled { get; set; }
+		public override string ShowName => "物品类型";
 	}
 }

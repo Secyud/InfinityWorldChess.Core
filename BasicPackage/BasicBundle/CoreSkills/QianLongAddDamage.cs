@@ -13,7 +13,7 @@ namespace InfinityWorldChess.BasicBundle.CoreSkills
         protected override void PreInteraction(SkillInteraction interaction)
         {
             base.PreInteraction(interaction);
-            QianLongBuff buff = interaction.LaunchChess.Belong.Get<QianLongBuff>();
+            QianLongBuff buff = interaction.LaunchChess.Get<QianLongBuff>();
             if (buff is not null)
                 AttackRecord.DamageFactor += F256 * buff.TrigRecorder.TrigFinished;
         }

@@ -1,4 +1,5 @@
 ﻿using InfinityWorldChess.BasicBundle.PassiveSkills;
+using InfinityWorldChess.GameDomain;
 using InfinityWorldChess.PlayerDomain;
 using Secyud.Ugf.DataManager;
 

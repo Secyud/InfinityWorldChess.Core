@@ -3,6 +3,7 @@
 using InfinityWorldChess.RoleDomain;
 using InfinityWorldChess.Ugf;
 using InfinityWorldChess.BasicBundle.Items;
+using InfinityWorldChess.GameDomain;
 using InfinityWorldChess.PlayerDomain;
 using Secyud.Ugf.DataManager;
 using UnityEngine;

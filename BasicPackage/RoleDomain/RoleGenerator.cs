@@ -2,7 +2,6 @@
 
 using InfinityWorldChess.ItemDomain;
 using InfinityWorldChess.SkillDomain;
-using InfinityWorldChess.WorldDomain;
 using System;
 using System.Collections.Generic;
 using System.Ugf.Collections.Generic;
@@ -10,20 +9,23 @@ using InfinityWorldChess.BasicBundle.CoreSkills;
 using InfinityWorldChess.BasicBundle.FormSkills;
 using InfinityWorldChess.BasicBundle.Items;
 using InfinityWorldChess.BasicBundle.PassiveSkills;
+using InfinityWorldChess.GameDomain;
+using InfinityWorldChess.GameDomain.WorldMapDomain;
 using Secyud.Ugf;
+using Secyud.Ugf.Collections;
 using Secyud.Ugf.DataManager;
 using Secyud.Ugf.DependencyInjection;
+using Secyud.Ugf.HexMap;
 
 #endregion
 
 namespace InfinityWorldChess.RoleDomain
 {
-    [Registry(LifeTime = DependencyLifeTime.Transient)]
     public class RoleGenerator : IRoleGenerator
     {
         private const int GenerateRoleCount = 500;
         private readonly RoleResourceManager _resourceManager;
-        private readonly List<WorldChecker> _availableWorldCheckers = new();
+        private readonly List<WorldCell> _availableWorldCheckers = new();
         private readonly List<ICoreSkill> _coreSkills = new();
         private readonly List<IFormSkill> _formSkills = new();
         private readonly List<IPassiveSkill> _passiveSkills = new();
@@ -34,14 +36,15 @@ namespace InfinityWorldChess.RoleDomain
         private readonly int _itemCountPerPerson;
 
         public RoleGenerator(
-            RoleResourceManager resourceManager,
-            WorldGameContext worldGameContext
+            RoleResourceManager resourceManager
         )
         {
             _resourceManager = resourceManager;
 
-            foreach (WorldChecker checker in worldGameContext.Checkers)
+            foreach (HexCell cell in GameScope.Map.Value.Grid)
             {
+                WorldCell checker = cell.Get<WorldCell>();
+
                 if (checker.SpecialIndex >= 0)
                 {
                     _availableWorldCheckers.Add(checker);
@@ -140,7 +143,8 @@ namespace InfinityWorldChess.RoleDomain
             for (int i = 0; i < 500; i++)
             {
                 bool female = U.GetRandom(2) > 0;
-                AvatarResourceGroup group = female ? _resourceManager.Female : _resourceManager.Male;
+                RegistrableDictionary<int, AvatarSpriteContainer>[] group =
+                    female ? _resourceManager.FemaleAvatarResource : _resourceManager.MaleAvatarResource;
                 Role role = new()
                 {
                     Basic =
@@ -151,60 +155,7 @@ namespace InfinityWorldChess.RoleDomain
                         BirthMonth = (byte)U.GetRandom(12),
                         BirthDay = (byte)U.GetRandom(30),
                         BirthHour = (byte)U.GetRandom(12),
-                        Female = female,
-                        Avatar =
-                        {
-                            BackItem = new RoleAvatar.AvatarElement { Id = group.BackItem.GetRandomKey() },
-                            BackHair = new RoleAvatar.AvatarElement { Id = group.BackHair.GetRandomKey() },
-                            Body = new RoleAvatar.AvatarElement { Id = group.Body.GetRandomKey() },
-                            Head = new RoleAvatar.AvatarElement { Id = group.Head.GetRandomKey() },
-                            HeadFeature =
-                                new RoleAvatar.AvatarElement4 { Id = group.HeadFeature.GetRandomKey() },
-                            NoseMouth = new RoleAvatar.AvatarElement2X
-                            {
-                                Id1 =
-                                    group.Nose.GetRandomKey(),
-                                Id2 = group.Mouth.GetRandomKey()
-                            },
-                            Eye = new RoleAvatar.AvatarElement4 { Id = group.Eye.GetRandomKey() },
-                            Brow = new RoleAvatar.AvatarElement4 { Id = group.Brow.GetRandomKey() },
-                            FrontHair = new RoleAvatar.AvatarElement { Id = group.FrontHair.GetRandomKey() },
-                        }
-                    },
-                    Nature =
-                    {
-                        Recognize = U.GetRandom(1000) - 500,
-                        Stability = U.GetRandom(1000) - 500,
-                        Confident = U.GetRandom(1000) - 500,
-                        Efficient = U.GetRandom(1000) - 500,
-                        Gregarious = U.GetRandom(1000) - 500,
-                        Altruistic = U.GetRandom(1000) - 500,
-                        Rationality = U.GetRandom(1000) - 500,
-                        Foresighted = U.GetRandom(1000) - 500,
-                        Intelligent = U.GetRandom(1000) - 500,
-                    },
-                    BodyPart =
-                    {
-                        Living =
-                        {
-                            MaxValue = U.GetRandom(100),
-                            RealValue = U.GetRandom(100)
-                        },
-                        Kiling =
-                        {
-                            MaxValue = U.GetRandom(100) + 1,
-                            RealValue = U.GetRandom(100) + 1
-                        },
-                        Nimble =
-                        {
-                            MaxValue = U.GetRandom(100) + 1,
-                            RealValue = U.GetRandom(100) + 1
-                        },
-                        Defend =
-                        {
-                            MaxValue = U.GetRandom(100) + 1,
-                            RealValue = U.GetRandom(100) + 1
-                        },
+                        Female = female
                     },
                     Relation =
                     {
@@ -214,6 +165,31 @@ namespace InfinityWorldChess.RoleDomain
                         WorldView = U.GetRandom(500) - 1000,
                     }
                 };
+
+                for (int j = 0; j < SharedConsts.AvatarElementCount; j++)
+                {
+                    role.Basic.Avatar[j] = new AvatarElement
+                    {
+                        Id = group[j].GetRandomKey(),
+                        PositionX = (byte)(U.GetRandom(127) + 64),
+                        PositionY = (byte)(U.GetRandom(127) + 64),
+                        Scale = (byte)(U.GetRandom(127) + 64),
+                        Rotation = (byte)(U.GetRandom(127) + 64)
+                    };
+                }
+
+                for (int j = 0; j < 9; j++)
+                {
+                    role.Nature.Properties[j] = U.GetRandom(1000) - 500;
+                }
+
+                for (int j = 0; j < 4; j++)
+                {
+                    RoleBodyPart body = role.BodyPart[(BodyType)j];
+                    body.MaxValue = U.GetRandom(100) + 1;
+                    body.RealValue = body.MaxValue;
+                }
+
                 GenerateSkill(role);
                 GenerateItemAndEquipment(role);
                 AddToWorld(role);

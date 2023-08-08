@@ -8,8 +8,7 @@ using UnityEngine;
 
 namespace InfinityWorldChess.InputDomain
 {
-	[Registry()]
-	public class InputKeyMapService 
+	public class InputKeyMapService :IRegistry
 	{
 		private readonly Dictionary<InputKeyWord, KeyCode> _map = new();
 

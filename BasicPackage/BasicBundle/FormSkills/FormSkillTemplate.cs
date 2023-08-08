@@ -27,7 +27,7 @@ namespace InfinityWorldChess.BasicBundle.FormSkills
 			transform.AddFormSkillInfo(this);
 		}
 
-		public override void Cast(IBattleChess battleChess, HexCell releasePosition)
+		public override void Cast(BattleRole battleChess, HexCell releasePosition)
 		{
 			base.Cast(battleChess,releasePosition);
 			HexDirection direction = releasePosition.DirectionTo(battleChess.Unit.Location);

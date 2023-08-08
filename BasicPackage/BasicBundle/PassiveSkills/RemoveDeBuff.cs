@@ -11,13 +11,13 @@ namespace InfinityWorldChess.BasicBundle.PassiveSkills
 
         [field:S(ID=257)] private int Value { get; set; }
 
-        private RoleBattleChess _chess;
+        private BattleRole _chess;
 
         public override string HideDescription =>
             $"每回合移除{DeBuffType switch { 1 => "灼烧", 2 => "冰冻", 3 => "中毒", _ => "未知" }}状态({Value})。";
 
 
-        public void OnBattleInitialize(RoleBattleChess chess)
+        public void OnBattleInitialize(BattleRole chess)
         {
             _chess = chess;
         }

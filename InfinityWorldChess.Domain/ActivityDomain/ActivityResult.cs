@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace InfinityWorldChess.ActivityDomain
 {
-    public class ActivityResult : DataObject, ICanBeShown, IHasContent
+    public class ActivityResult : DataObject, IShowable, IHasContent
     {
         public string ShowName => ObjectName;
         

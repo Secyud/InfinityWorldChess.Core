@@ -1,17 +1,17 @@
 ﻿#region
 
-using InfinityWorldChess.PlayerDomain;
-using Secyud.Ugf.ButtonComponents;
+using InfinityWorldChess.GameDomain;
+using Secyud.Ugf.TableComponents.ButtonComponents;
 
 #endregion
 
 namespace InfinityWorldChess.RoleDomain
 {
-	public class RoleMessageButtonRegistration : ButtonRegistration<Role>
+	public class RoleMessageButtonDescriptor : ButtonDescriptor<Role>
 	{
 		public override void Trigger()
 		{
-			GameScope.OnRoleMessageCreation(Target, 0);
+			GameScope.OpenGameMenu();
 		}
 
 		public override string ShowName => "详情";

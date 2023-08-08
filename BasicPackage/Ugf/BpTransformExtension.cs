@@ -12,21 +12,23 @@ namespace InfinityWorldChess.Ugf
 		public static void AddFlavorInfo(this Transform transform, IHasFlavor flavors)
 		{
 			transform.AddParagraph(
-				"辛: " + flavors.SpicyLevel +
-				"\r\n甘: " + flavors.SweetLevel + "\r\n酸: " + flavors.SourLevel +
-				"\r\n苦: " + flavors.BitterLevel + "\r\n咸: " + flavors.SaltyLevel
+				"辛: " + flavors.FlavorLevel[0] +
+				"\r\n甘: " + flavors.FlavorLevel[1] + 
+				"\r\n酸: " + flavors.FlavorLevel[2] +
+				"\r\n苦: " + flavors.FlavorLevel[3] + 
+				"\r\n咸: " + flavors.FlavorLevel[4]
 			);
 		}
 
 		public static void AddMouthFeelInfo(this Transform transform, IHasMouthfeel mouthfeel)
 		{
 			transform.AddParagraph(
-				"软硬: " + mouthfeel.HardLevel +
-				"\r\n实酥: " + mouthfeel.LimpLevel +
-				"\r\n韧脆: " + mouthfeel.WeakLevel +
-				"\r\n枯滑: " + mouthfeel.OilyLevel +
-				"\r\n糯爽: " + mouthfeel.SlipLevel +
-				"\r\n老嫩: " + mouthfeel.SoftLevel
+				"软硬: " + mouthfeel.MouthFeelLevel[0] +
+				"\r\n实酥: " + mouthfeel.MouthFeelLevel[1] +
+				"\r\n韧脆: " + mouthfeel.MouthFeelLevel[2] +
+				"\r\n枯滑: " + mouthfeel.MouthFeelLevel[3] +
+				"\r\n糯爽: " + mouthfeel.MouthFeelLevel[4] +
+				"\r\n老嫩: " + mouthfeel.MouthFeelLevel[5]
 			);
 		}
 	}

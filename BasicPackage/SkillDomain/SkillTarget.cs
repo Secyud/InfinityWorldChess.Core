@@ -9,18 +9,16 @@ using System.Linq;
 
 namespace InfinityWorldChess.SkillDomain
 {
-	public class SkillTarget : ISkillTarget, IObjectAccessor<IBattleChess[]>
+	public class SkillTarget : ISkillTarget, IObjectAccessor<BattleRole[]>
 	{
-		private static BattleContext Context => BattleScope.Instance.Context;
-
-		private SkillTarget(IEnumerable<IBattleChess> chesses)
+		private SkillTarget(IEnumerable<BattleRole> chesses)
 		{
 			Value = chesses.ToArray();
 		}
 
-		public IBattleChess[] Value { get; }
+		public BattleRole[] Value { get; }
 
-		public static SkillTarget GetFixedTarget(params IBattleChess[] chesses)
+		public static SkillTarget GetFixedTarget(params BattleRole[] chesses)
 		{
 			return new SkillTarget(chesses);
 		}
@@ -30,7 +28,7 @@ namespace InfinityWorldChess.SkillDomain
 			return new SkillTarget(
 				from cell in range.Value
 				where cell.Unit
-				select Context.GetChess(cell.Unit)
+				select cell.Unit.Get<BattleRole>()
 				into chess
 				where chess?.Camp != camp
 				select chess
@@ -42,20 +40,20 @@ namespace InfinityWorldChess.SkillDomain
 			return new SkillTarget(
 				from cell in range.Value
 				where cell.Unit
-				select Context.GetChess(cell.Unit)
+				select cell.Unit.Get<BattleRole>()
 				into c
 				where c?.Camp == camp
 				select c
 			);
 		}
 
-		public static ISkillTarget SelfAndTeammates(RoleBattleChess chess, ISkillRange range)
+		public static ISkillTarget SelfAndTeammates(BattleRole chess, ISkillRange range)
 		{
 			var camp = chess.Camp;
-			List<IBattleChess> r =
+			List<BattleRole> r =
 				(from cell in range.Value
 					where cell.Unit
-					select Context.GetChess(cell.Unit)
+					select cell.Unit.Get<BattleRole>()
 					into c
 					where c?.Camp == camp
 					select c).ToList();
@@ -69,17 +67,17 @@ namespace InfinityWorldChess.SkillDomain
 			return new SkillTarget(
 				from cell in range.Value
 				where cell.Unit
-				select Context.GetChess(cell.Unit)
+				select cell.Unit.Get<BattleRole>()
 			);
 		}
 
-		public static ISkillTarget SelfAndEnemy(RoleBattleChess chess, ISkillRange range)
+		public static ISkillTarget SelfAndEnemy(BattleRole chess, ISkillRange range)
 		{
 			BattleCamp camp = chess.Camp;
-			List<IBattleChess> r =
+			List<BattleRole> r =
 				(from cell in range.Value
 					where cell.Unit
-					select Context.GetChess(cell.Unit)
+					select cell.Unit.Get<BattleRole>()
 					into c
 					where c?.Camp != camp
 					select c).ToList();
@@ -88,12 +86,13 @@ namespace InfinityWorldChess.SkillDomain
 			return new SkillTarget(r);
 		}
 
-		public static ISkillTarget All(RoleBattleChess chess, ISkillRange range)
+		public static ISkillTarget All(BattleRole chess, ISkillRange range)
 		{
-			List<IBattleChess> r =
+			List<BattleRole> r =
 				(from cell in range.Value
 					where cell.Unit
-					select Context.GetChess(cell.Unit)).ToList();
+					select cell.Unit.Get<BattleRole>())
+				.ToList();
 			if (r.All(u => u != chess))
 				r.Add(chess);
 			return new SkillTarget(r);

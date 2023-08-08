@@ -17,8 +17,8 @@ namespace InfinityWorldChess.BasicBundle.CoreSkills
         protected override void PostInteraction(SkillInteraction interaction)
         {
             base.PostInteraction(interaction);
-            RoleBattleChess role = interaction.LaunchChess.Belong;
-            role.HealthValue += AttackRecord.TotalDamage * F256;
+            BattleRole battleRole = interaction.LaunchChess;
+            battleRole.HealthValue += AttackRecord.TotalDamage * F256;
         }
     }
 }

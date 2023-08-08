@@ -1,6 +1,6 @@
 ﻿#region
 
-using Secyud.Ugf.Layout;
+using Secyud.Ugf.LayoutComponents;
 using UnityEngine;
 
 #endregion

@@ -1,5 +1,7 @@
 #region
 
+using System;
+using System.Collections.Generic;
 using Secyud.Ugf.Archiving;
 using System.Globalization;
 using Secyud.Ugf.DataManager;
@@ -12,9 +14,11 @@ namespace InfinityWorldChess.RoleDomain
     {
         public BasicProperty Basic { get; } = new();
 
-        public class BasicProperty : DataObject
+        public class BasicProperty : AutoArchiving
         {
-            [S(ID = 0)] public readonly RoleAvatar Avatar = new();
+            [S(ID = 0, DataType = DataType.Ignored)]
+            public readonly AvatarElement[] Avatar =
+                new AvatarElement[SharedConsts.AvatarElementCount];
 
             [S(ID = 1)] public int BirthYear;
             [S(ID = 2)] public byte BirthMonth;
@@ -27,7 +31,7 @@ namespace InfinityWorldChess.RoleDomain
             [S(ID = 6)] public string FirstName = string.Empty;
 
             // 姓
-            [S(ID = 7)] public string LastName= string.Empty;
+            [S(ID = 7)] public string LastName = string.Empty;
             [S(ID = 8)] public string Description;
 
             public string Name
@@ -42,13 +46,19 @@ namespace InfinityWorldChess.RoleDomain
             public override void Save(IArchiveWriter writer)
             {
                 base.Save(writer);
-                Avatar.Save(writer);
+                foreach (AvatarElement e in Avatar)
+                {
+                    e.Save(writer);
+                }
             }
 
             public override void Load(IArchiveReader reader)
             {
                 base.Load(reader);
-                Avatar.Load(reader);
+                foreach (AvatarElement e in Avatar)
+                {
+                    e.Load(reader);
+                }
             }
         }
     }

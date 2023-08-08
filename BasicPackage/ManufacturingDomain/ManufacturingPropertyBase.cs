@@ -3,6 +3,7 @@
 using InfinityWorldChess.RoleDomain;
 using Secyud.Ugf.Archiving;
 using System.Collections.Generic;
+using InfinityWorldChess.ManufacturingDomain.EquipmentDomain;
 
 #endregion
 

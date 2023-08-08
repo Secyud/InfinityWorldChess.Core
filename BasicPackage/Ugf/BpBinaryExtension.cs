@@ -16,40 +16,34 @@ namespace InfinityWorldChess.Ugf
 	{
 		public static void SaveFlavors(this IHasFlavor flavors, IArchiveWriter writer)
 		{
-			writer.Write(flavors.SpicyLevel);
-			writer.Write(flavors.SweetLevel);
-			writer.Write(flavors.SourLevel);
-			writer.Write(flavors.BitterLevel);
-			writer.Write(flavors.SaltyLevel);
+			for (int i = 0; i < BasicConsts.FlavorCount; i++)
+			{
+				writer.Write(flavors.FlavorLevel[i]);
+			}
 		}
 
 		public static void LoadFlavors(this IHasFlavor flavors, IArchiveReader reader)
 		{
-			flavors.SpicyLevel = reader.ReadInt32();
-			flavors.SweetLevel = reader.ReadInt32();
-			flavors.SourLevel = reader.ReadInt32();
-			flavors.BitterLevel = reader.ReadInt32();
-			flavors.SaltyLevel = reader.ReadInt32();
+			for (int i = 0; i < BasicConsts.FlavorCount; i++)
+			{
+				flavors.FlavorLevel[i] = reader.ReadInt32();
+			}
 		}
 
 		public static void SaveMouthFeel(this IHasMouthfeel mouthfeel, IArchiveWriter writer)
 		{
-			writer.Write(mouthfeel.HardLevel);
-			writer.Write(mouthfeel.LimpLevel);
-			writer.Write(mouthfeel.WeakLevel);
-			writer.Write(mouthfeel.OilyLevel);
-			writer.Write(mouthfeel.SlipLevel);
-			writer.Write(mouthfeel.SoftLevel);
+			for (int i = 0; i < BasicConsts.MouthFeelCount; i++)
+			{
+				writer.Write(mouthfeel.MouthFeelLevel[i]);
+			}
 		}
 
 		public static void LoadMouthFeel(this IHasMouthfeel mouthfeel, IArchiveReader reader)
 		{
-			mouthfeel.HardLevel = reader.ReadInt32();
-			mouthfeel.LimpLevel = reader.ReadInt32();
-			mouthfeel.WeakLevel = reader.ReadInt32();
-			mouthfeel.OilyLevel = reader.ReadInt32();
-			mouthfeel.SlipLevel = reader.ReadInt32();
-			mouthfeel.SoftLevel = reader.ReadInt32();
+			for (int i = 0; i < BasicConsts.MouthFeelCount; i++)
+			{
+				mouthfeel.MouthFeelLevel[i] = reader.ReadInt32();
+			}
 		}
 
 		public static void SaveShown(this IArchivableShown item, IArchiveWriter writer)

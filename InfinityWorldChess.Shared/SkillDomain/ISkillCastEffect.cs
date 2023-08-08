@@ -4,8 +4,8 @@ using Secyud.Ugf.HexMap;
 
 namespace InfinityWorldChess.SkillDomain
 {
-	public interface ISkillCastEffect:ICanBeShown,IHasContent,IReleasable
+	public interface ISkillCastEffect
 	{
-		void Cast(IBattleChess battleChess, HexCell releasePosition);
+		void Cast(BattleRole role, HexCell releasePosition);
 	}
 }

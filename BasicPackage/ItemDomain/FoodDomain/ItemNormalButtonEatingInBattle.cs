@@ -1,18 +1,20 @@
 #region
 
-using Secyud.Ugf.ButtonComponents;
+using InfinityWorldChess.BattleDomain;
+using InfinityWorldChess.BattleDomain.BattleRoleDomain;
+using Secyud.Ugf.TableComponents.ButtonComponents;
 
 #endregion
 
 namespace InfinityWorldChess.ItemDomain.FoodDomain
 {
-	public class ItemNormalButtonEatingInBattle : ButtonRegistration<IItem>
+	public class ItemNormalButtonEatingInBattle : ButtonDescriptor<IItem>
 	{
 		public override string ShowName => "食用";
 
 		public override void Trigger()
 		{
-			(Target as IEdibleInBattle)!.EatingInBattle();
+			(Target as IEdibleInBattle)!.EatingInBattle(BattleScope.Instance.Get<RoleRefreshService>().Role);
 		}
 
 		public override bool Visible(IItem target)

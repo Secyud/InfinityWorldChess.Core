@@ -8,7 +8,7 @@ using InfinityWorldChess.Ugf;
 
 namespace InfinityWorldChess.SkillDomain
 {
-	public sealed class SkillInteraction : FixTargetBuffProperty<SkillInteraction>
+	public sealed class SkillInteraction : BuffProperty<SkillInteraction>
 	{
 		private SkillInteraction()
 		{
@@ -16,12 +16,12 @@ namespace InfinityWorldChess.SkillDomain
 
 		protected override SkillInteraction Target => this;
 
-		public IBattleChess LaunchChess { get; set; }
+		public BattleRole LaunchChess { get; set; }
 
-		public IBattleChess TargetChess { get; set; }
+		public BattleRole TargetChess { get; set; }
 
 
-		public static SkillInteraction Get(IBattleChess launch, IBattleChess target)
+		public static SkillInteraction Get(BattleRole launch, BattleRole target)
 		{
 			return new SkillInteraction
 			{
@@ -35,9 +35,9 @@ namespace InfinityWorldChess.SkillDomain
 
 		public void BeforeHit()
 		{
-			_launchRecord = LaunchChess?.Belong.GetBattleEvents();
+			_launchRecord = LaunchChess?.GetBattleEvents();
 			_launchRecord?.PrepareLaunch.On(this);
-			_targetRecord = TargetChess?.Belong.GetBattleEvents();
+			_targetRecord = TargetChess?.GetBattleEvents();
 			_targetRecord?.PrepareReceive.On(this);
 		}
 

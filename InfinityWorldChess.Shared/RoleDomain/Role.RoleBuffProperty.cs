@@ -10,9 +10,11 @@ namespace InfinityWorldChess.RoleDomain
 {
 	public partial class Role
 	{
-		public RoleBuffProperty Buffs { get; } = new();
+		private RoleBuffProperty _buffs ;
 
-		public void OnBattleInitialize(RoleBattleChess chess)
+		public RoleBuffProperty Buffs => _buffs ??= new RoleBuffProperty(this);
+
+		public void OnBattleInitialize(BattleRole chess)
 		{
 			float maxHealth = PassiveSkill.Living + BodyPart[BodyType.Living].MaxValue;
 			float maxEnergy = maxHealth + PassiveSkill.Yin + PassiveSkill.Yang;
@@ -22,29 +24,16 @@ namespace InfinityWorldChess.RoleDomain
 			chess.ExecutionRecover = execution;
 		}
 
-		public TBuff Get<TBuff>() where TBuff : class, IBuff<Role>
-		{
-			return Buffs.Get<TBuff>();
-		}
-
-		public void Add<TBuff>(TBuff buff) where TBuff : class, IBuff<Role>
-		{
-			Buffs.Install(buff, this);
-		}
-
-		public TBuff GetOrAdd<TBuff>() where TBuff : class, IBuff<Role>
-		{
-			return Buffs.GetOrInstall<TBuff>(this);
-		}
-
-		public void Remove<TBuff>() where TBuff : class, IBuff<Role>
-		{
-			Buffs.UnInstall<TBuff>(this);
-		}
-
 		public class RoleBuffProperty : BuffProperty<Role>
 		{
 			public List<IOnBattleRoleInitialize> BattleInitializes { get; } = new();
+
+			public RoleBuffProperty(Role target) 
+			{
+				Target = target;
+			}
+
+			protected override Role Target { get; }
 		}
 	}
 }

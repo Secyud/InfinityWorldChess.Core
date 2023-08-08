@@ -13,7 +13,7 @@ namespace InfinityWorldChess.BasicBundle.CoreSkills
         protected override void PostInteraction(SkillInteraction interaction)
         {
             base.PostInteraction(interaction);
-            interaction.LaunchChess.Belong.EnergyValue += F256;
+            interaction.LaunchChess.EnergyValue += F256;
         }
     }
 }

@@ -1,26 +1,60 @@
-﻿using InfinityWorldChess.ItemDomain.FoodDomain;
+﻿using System;
+using InfinityWorldChess.ItemDomain;
+using InfinityWorldChess.ItemDomain.FoodDomain;
 using InfinityWorldChess.Ugf;
 using Secyud.Ugf.DataManager;
 using UnityEngine;
 
-namespace InfinityWorldChess.ManufacturingDomain
+namespace InfinityWorldChess.ManufacturingDomain.FlavorDomain
 {
-	public abstract class FlavorRaw:Manufacturable,IHasFlavor
-	{
-		[field:S(ID=256)]public float SpicyLevel { get; set; }
+    public abstract class FlavorRaw : Manufacturable, IHasFlavor
+    {
+        [field: S(ID = 256)] public float[] FlavorLevel { get; } = new float[BasicConsts.FlavorCount];
 
-		[field:S(ID=257)]public float SweetLevel { get; set; }
+        public abstract Color Color { get; }
 
-		[field:S(ID=258)]public float SourLevel { get; set; }
+        public virtual void Manufacturing(Manufacture manufacture, FlavorProcessData processData)
+        {
+            for (int i = 0; i < BasicConsts.FlavorCount; i++)
+            for (int j = 0; j < BasicConsts.FlavorCount; j++)
+            {
+                float di = processData.FlavorLevel[i];
+                float dj = processData.FlavorLevel[j];
+                float oi = FlavorLevel[i];
+                float oj = FlavorLevel[j];
 
-		[field:S(ID=259)]public float BitterLevel { get; set; }
+                switch (i - j)
+                {
+                    case 0:
+                        processData.DragProperty[i, j] += oi + oj + di + dj;
+                        break;
+                    case 1:
+                    case -4:
+                        processData.DragProperty[i, j] += oi + 0.5f * oj + 2 * di + dj;
+                        break;
+                    case 2:
+                    case -3:
+                        processData.DragProperty[i, j] += -oi + oj + di + dj;
+                        break;
+                    case 3:
+                    case -2:
+                        processData.DragProperty[i, j] += 0.5f * oi + oj + di + 2 * dj;
+                        break;
+                    case 4:
+                    case -1:
+                        processData.DragProperty[i, j] += oi - oj + di + dj;
+                        break;
+                }
+            }
+        }
 
-		[field:S(ID=260)]public float SaltyLevel { get; set; }
-		
-		public override void SetContent(Transform transform)
-		{
-			base.SetContent(transform);
-			transform.AddFlavorInfo(this);
-		}
-	}
+
+        public override void SetContent(Transform transform)
+        {
+            base.SetContent(transform);
+            transform.AddFlavorInfo(this);
+        }
+        
+        protected static readonly int[] S = { 3, 4, 0, 1, 2, 3, 4, 0, 1 };
+    }
 }

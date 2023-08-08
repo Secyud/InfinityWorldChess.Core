@@ -2,52 +2,42 @@
 
 using InfinityWorldChess.Ugf;
 using Secyud.Ugf.BasicComponents;
+using Secyud.Ugf.TableComponents;
 using UnityEngine;
 
 #endregion
 
 namespace InfinityWorldChess.SkillDomain
 {
-	public class SkillCell : MonoBehaviour
-	{
-		[SerializeField] private NormalCell Cell;
-		[SerializeField] private SButton Install;
-		[SerializeField] private SButton Remove;
-		[SerializeField] private SkillEquipView View;
-		private int _index;
+    public abstract class SkillCell<TSkillCell, TSkillView> : TableCell
+        where TSkillView : SkillView<TSkillCell, TSkillView>
+        where TSkillCell : SkillCell<TSkillCell, TSkillView>
+    {
+        [SerializeField] private ShownCell Cell;
+        [SerializeField] private SButton Install;
+        [SerializeField] private SButton Remove;
+        [SerializeField] private TSkillView View;
 
-		public NormalCell ViewCell => Cell;
+        public TSkillView SkillView => View;
+        
+        protected virtual void Awake()
+        {
+            View.SetCell(this);
+        }
 
-		private void Awake()
-		{
-			_index = transform.GetSiblingIndex();
-			View.OnPrepare(this, _index);
-		}
+        public void SetInstallable(bool value)
+        {
+            Install.gameObject.SetActive(value);
+            Remove.gameObject.SetActive(value);
+        }
 
-		public void SetInstallable(bool value)
-		{
-			Install.gameObject.SetActive(value);
-			Remove.gameObject.SetActive(value);
-		}
+        public abstract void OnInstall();
 
-		public void OnSelect()
-		{
-			View.OnSelect(_index);
-		}
+        public abstract void OnRemove();
 
-		public void OnHover()
-		{
-			View.OnHover(_index);
-		}
-
-		public void OnInstall()
-		{
-			View.OnInstall(_index);
-		}
-
-		public void OnRemove()
-		{
-			View.OnRemove(_index);
-		}
-	}
+        public void Bind(ISkill skill)
+        {
+            Cell.BindShowable(skill);
+        }
+    }
 }

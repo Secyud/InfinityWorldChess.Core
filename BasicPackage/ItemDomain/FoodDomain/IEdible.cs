@@ -1,7 +1,9 @@
+using InfinityWorldChess.RoleDomain;
+
 namespace InfinityWorldChess.ItemDomain.FoodDomain
 {
 	public interface IEdible
 	{
-		void Eating();
+		void Eating(Role role);
 	}
 }

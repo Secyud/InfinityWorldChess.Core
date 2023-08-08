@@ -5,27 +5,15 @@ using InfinityWorldChess.Ugf;
 using Secyud.Ugf;
 using Secyud.Ugf.Archiving;
 using System.Collections.Generic;
-using System.Linq;
-using InfinityWorldChess.PlayerDomain;
 using UnityEngine;
 
 namespace InfinityWorldChess.ItemDomain.FoodDomain
 {
-	public class Drag: ParasitiferProperty<Drag>,
+	public class Drag: BuffProperty<Drag>,
 		IItem, IEdible, IEdibleInBattle, IHasFlavor, IArchivableShown,IArchivable
 	{
-		public readonly List<IBuffFactory<Role>> RoleBuffFactories = new();
-		public readonly List<IBuffFactory<RoleBattleChess>> RoleChessBuffFactories = new();
-
-		public float SpicyLevel { get; set; }
-
-		public float SweetLevel { get; set; }
-
-		public float SourLevel { get; set; }
-
-		public float BitterLevel { get; set; }
-
-		public float SaltyLevel { get; set; }
+		public readonly List<IBuff<Role>> RoleBuffs = new();
+		public readonly List<IBuff<BattleRole>> BattleRoleBuffs = new();
 
 		public string Name { get; set; }
 
@@ -42,17 +30,19 @@ namespace InfinityWorldChess.ItemDomain.FoodDomain
 
 		public int SaveIndex { get; set; }
 
-		public void Eating()
+		public float[] FlavorLevel { get; } = new float[BasicConsts.FlavorCount];
+
+		protected override Drag Target => this;
+
+		public void Eating(Role role)
 		{
-			Role role = GameScope.Instance.Role.MainOperationRole;
-			foreach (IBuff<Role> buff in RoleBuffFactories.Select(u => u.Get()))
+			foreach (IBuff<Role> buff in RoleBuffs)
 				buff.Install(role);
 		}
 
-		public void EatingInBattle()
+		public void EatingInBattle(BattleRole role)
 		{
-			RoleBattleChess role =BattleScope.Instance.Context.CurrentRole;
-			foreach (IBuff<RoleBattleChess> buff in RoleChessBuffFactories.Select(u => u.Get()))
+			foreach (IBuff<BattleRole> buff in BattleRoleBuffs)
 				buff.Install(role);
 		}
 
@@ -63,11 +53,11 @@ namespace InfinityWorldChess.ItemDomain.FoodDomain
 			base.Save(writer);
 		}
 
-		public void Load(IArchiveReader reader)
+		public override void Load(IArchiveReader reader)
 		{
 			this.LoadShown(reader);
 			this.LoadFlavors(reader);
-			base.Load(reader, this);
+			base.Load(reader);
 		}
 
 		public void SetContent(Transform transform)

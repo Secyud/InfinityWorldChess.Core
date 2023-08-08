@@ -1,9 +1,10 @@
 #region
 
 using InfinityWorldChess.SkillDomain;
-using InfinityWorldChess.WorldDomain;
-using Secyud.Ugf.AssetLoading;
 using System.Collections.Generic;
+using InfinityWorldChess.MapDomain;
+using Secyud.Ugf;
+using Secyud.Ugf.AssetComponents;
 using Secyud.Ugf.DependencyInjection;
 using UnityEngine;
 
@@ -11,8 +12,7 @@ using UnityEngine;
 
 namespace InfinityWorldChess.BattleDomain
 {
-	[Registry()]
-	public class BattleGlobalService
+	public class BattleGlobalService:IRegistry
 	{
 		public readonly List<PrefabContainer<Transform>>[,] Features;
 		public readonly PrefabContainer<Transform>[] SpecialFeatures;
@@ -46,6 +46,17 @@ namespace InfinityWorldChess.BattleDomain
 		public void RegistrarSpecialFeature(int type, PrefabContainer<Transform> feature)
 		{
 			SpecialFeatures[type] = feature;
+		}
+
+		public void CreateBattle(BattleDescriptor battleDescriptor)
+		{
+			U.Factory.Application.DependencyManager.CreateScope<BattleScope>();
+			
+			BattleScope.Instance.CreateBattle(battleDescriptor);
+		}
+		public void DestroyBattle()
+		{
+			U.Factory.Application.DependencyManager.DestroyScope<BattleScope>();
 		}
 	}
 }

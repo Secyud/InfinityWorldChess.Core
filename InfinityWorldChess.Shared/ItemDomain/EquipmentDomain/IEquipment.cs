@@ -12,8 +12,6 @@ namespace InfinityWorldChess.ItemDomain.EquipmentDomain
 
 		public byte TypeCode { get; }
 
-		public byte EquipCode { get; }
-
 		public int[] Property { get; }
 	}
 }

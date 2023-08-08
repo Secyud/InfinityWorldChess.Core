@@ -7,24 +7,24 @@ using UnityEngine;
 
 namespace InfinityWorldChess.BasicBundle.BattleBuffs.Abstractions
 {
-	public abstract class BattleShownBuffBase : DataObject, IBuffCanBeShown<RoleBattleChess>
+	public abstract class BattleShownBuffBase : DataObject, IBuffShowable<BattleRole>
 	{
 		[field: S(ID = 0, DataType = DataType.Initialed)]
 		public IObjectAccessor<Sprite> ShowIcon { get; set; }
 		public virtual bool Visible => true;
 		public abstract string ShowName { get; }
 		public abstract string ShowDescription { get; }
-		public RoleBattleChess Launcher { get; set; }
+		public BattleRole Launcher { get; set; }
 
-		public virtual void Install(RoleBattleChess target)
+		public virtual void Install(BattleRole target)
 		{
 		}
 
-		public virtual void UnInstall(RoleBattleChess target)
+		public virtual void UnInstall(BattleRole target)
 		{
 		}
 
-		public virtual void Overlay(IBuff<RoleBattleChess> finishBuff)
+		public virtual void Overlay(IBuff<BattleRole> finishBuff)
 		{
 		}
 

@@ -1,12 +1,11 @@
 ﻿using System.Ugf;
 using InfinityWorldChess.BattleDomain;
-using InfinityWorldChess.PlayerDomain;
+using InfinityWorldChess.GameDomain;
 using InfinityWorldChess.SkillDomain;
 using InfinityWorldChess.Ugf;
 using Secyud.Ugf;
 using Secyud.Ugf.DataManager;
 using Secyud.Ugf.HexMap;
-using Secyud.Ugf.HexMap.Utilities;
 using UnityEngine;
 
 namespace InfinityWorldChess.BasicBundle
@@ -22,13 +21,9 @@ namespace InfinityWorldChess.BasicBundle
 
         [field: S(ID = 0)] public byte Score { get; set; }
         [field: S(ID = 1)] public byte ExecutionConsume { get; set; }
-        [field: S(ID = 2)] public byte PositionType { get; set; }
-        [field: S(ID = 3)] public byte PositionStart { get; set; }
-        [field: S(ID = 4)] public byte PositionEnd { get; set; }
-        [field: S(ID = 5)] public byte RangeType { get; set; }
-        [field: S(ID = 6)] public byte RangeStart { get; set; }
-        [field: S(ID = 7)] public byte RangeEnd { get; set; }
-        [field: S(ID = 8)] public float EnergyConsume { get; set; }
+        [field: S(ID = 2)] public ISkillCastPosition Position { get; set; }
+        [field: S(ID = 3)] public ISkillCastResult Range { get; set; }
+        [field: S(ID = 4)] public float EnergyConsume { get; set; }
         
         public string ShowName => ObjectName;
         public virtual SkillTargetType TargetType => SkillTargetType.Enemy;
@@ -57,80 +52,42 @@ namespace InfinityWorldChess.BasicBundle
             {
                 transform.AddTitle3("技能信息");
                 transform.AddParagraph(HideDescription);
-
-                transform.AddParagraph(
-                    " · 释放范围：" +
-                    SkillRange.GetRangeInfo(PositionType, PositionStart, PositionEnd)
-                );
-                transform.AddParagraph(
-                    " · 技能范围：" +
-                    SkillRange.GetRangeInfo(RangeType, RangeStart, RangeEnd)
-                );
+                {
+                    if (Position is IHasContent content)
+                        content.SetContent(transform);
+                }
+                {
+                    if (Range is IHasContent content)
+                        content.SetContent(transform);
+                }
             }
         }
 
-        public virtual string CheckCastCondition(RoleBattleChess chess)
+        public virtual string CheckCastCondition(BattleRole chess)
         {
             if (chess.ExecutionValue < ExecutionConsume)
                 return "行动力不足，无法释放技能。";
 
-            if (EnergyConsume > chess.Belong.EnergyValue)
+            if (EnergyConsume > chess.EnergyValue)
                 return "内力不足，无法释放技能。";
 
             return null;
         }
 
-        public virtual ISkillRange GetCastPositionRange(IBattleChess battleChess)
+        public virtual ISkillRange GetCastPositionRange(BattleRole role)
         {
-            return PositionType switch
-            {
-                0 => SkillRange.Point(battleChess.Unit.Location),
-                1 => SkillRange.Line(
-                    PositionStart, PositionEnd, battleChess.Unit.Location, battleChess.Direction
-                ),
-                2 => SkillRange.WideTriangle(
-                    PositionStart, PositionEnd, battleChess.Unit.Location, battleChess.Direction
-                ),
-                3 => SkillRange.WideHalfCircle(
-                    PositionStart, PositionEnd, battleChess.Unit.Location, battleChess.Direction
-                ),
-                4 => SkillRange.Circle(PositionStart, PositionEnd, battleChess.Unit.Location),
-                _ => SkillRange.Circle(PositionStart, PositionEnd, battleChess.Unit.Location)
-            };
+            return Position.GetCastPositionRange(role) ;
         }
 
-        public virtual ISkillRange GetCastResultRange(IBattleChess battleChess, HexCell castPosition)
+        public virtual ISkillRange GetCastResultRange(BattleRole role, HexCell castPosition)
         {
-            HexDirection direction = castPosition.DirectionTo(battleChess.Unit.Location);
-
-            return RangeType switch
-            {
-                0 => SkillRange.Point(castPosition),
-                1 => SkillRange.Line(
-                    RangeStart, RangeEnd, castPosition, direction
-                ),
-                2 => SkillRange.WideTriangle(
-                    RangeStart, RangeEnd, castPosition, direction
-                ),
-                3 => SkillRange.WideHalfCircle(
-                    RangeStart, RangeEnd, castPosition, direction
-                ),
-                4 => SkillRange.Circle(RangeStart, RangeEnd, castPosition),
-                5 => SkillRange.WideTriangle(
-                    RangeStart, RangeEnd, battleChess.Unit.Location, direction
-                ),
-                6 => SkillRange.WideHalfCircle(
-                    RangeStart, RangeEnd, battleChess.Unit.Location, direction
-                ),
-                7 => SkillRange.Circle(RangeStart, RangeEnd, battleChess.Unit.Location),
-                _ => SkillRange.Point(castPosition)
-            };
+            return Range.GetCastResultRange(role,castPosition) ;
         }
 
-        public virtual void Cast(IBattleChess battleChess, HexCell releasePosition)
+        public virtual void Cast(BattleRole role, HexCell releasePosition)
         {
-            battleChess.Belong.EnergyValue -= EnergyConsume;
-            battleChess.Belong.ExecutionValue -= ExecutionConsume;
+            role.EnergyValue -= EnergyConsume;
+            role.ExecutionValue -= ExecutionConsume;
         }
     }
 }

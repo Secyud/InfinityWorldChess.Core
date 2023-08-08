@@ -1,12 +1,12 @@
 #region
 
-using Secyud.Ugf.ButtonComponents;
+using Secyud.Ugf.TableComponents.ButtonComponents;
 
 #endregion
 
 namespace InfinityWorldChess.ItemDomain.BookDomain
 {
-	public class ItemNormalButtonReading : ButtonRegistration<IItem>
+	public class ItemNormalButtonReading : ButtonDescriptor<IItem>
 	{
 		public override string ShowName => "研读";
 

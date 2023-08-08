@@ -14,12 +14,12 @@ namespace InfinityWorldChess.BasicBundle.CoreSkills
         {
             base.PostInteraction(interaction);
 
-            IBuff<RoleBattleChess> buff = interaction.LaunchChess.Belong.Buffs
-                .FirstOrDefault(u => u.Value is IDeBuff).Value;
+            IBuff<BattleRole> buff = interaction.LaunchChess.Values
+                .FirstOrDefault(u => u is IDeBuff);
             if (buff is not null)
             {
-                interaction.LaunchChess.Belong.UnInstall(buff.GetType());
-                interaction.TargetChess.Belong?.Install(buff);
+                interaction.LaunchChess.UnInstall(buff.GetType());
+                interaction.TargetChess?.Install(buff);
             }
         }
     }

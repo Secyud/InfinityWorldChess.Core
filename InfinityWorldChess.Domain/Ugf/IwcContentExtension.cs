@@ -17,39 +17,48 @@ namespace InfinityWorldChess.Ugf
 {
 	public static class IwcContentExtension
 	{
-		private static SFloating _tipFloatingInstance;
-		private static SFloating _ensureFloatingInstance;
+		private static SPopup _tipPopupInstance;
+		private static SPopup _ensurePopupInstance;
+		private static SPopup _autoClosePopupInstance;
 		
 		public static RectTransform CreateAutoCloseFloatingOnMouse(this IHasContent hasContent)
 		{
-			SFloating floating = IwcAb.Instance.AutoCloseFloating.Value.CreateOnMouse();
-			floating.RefreshContent(hasContent);
-			floating.Replace(ref _floatingExist);
-			return floating.SubLayoutGroupTrigger.RectTransform;
+			if(_autoClosePopupInstance)
+				_autoClosePopupInstance.Destroy();
+			_autoClosePopupInstance = IwcAb.Instance.AutoCloseFloating.Value
+				.InstantiateOnCanvas();
+			_autoClosePopupInstance.InitializeOnMouse();
+			_autoClosePopupInstance.RefreshContent(hasContent);
+			_autoClosePopupInstance.Replace(ref _popupExist);
+			return _autoClosePopupInstance.SubLayoutGroupTrigger.RectTransform;
 		}
 
 		public static RectTransform CreateTipFloatingOnCenter(this string tips)
 		{
-			if(_tipFloatingInstance)
-				_tipFloatingInstance.Destroy();
-			_tipFloatingInstance = IwcAb.Instance.TipFloating.Value.CreateOnCenter();
-			RectTransform ret = _tipFloatingInstance.PrepareLayout();
-			ret.AddTitle1(tips);
+			if(_tipPopupInstance)
+				_tipPopupInstance.Destroy();
+			_tipPopupInstance = IwcAb.Instance.TipFloating.Value
+				.InstantiateOnCanvas();
+			_autoClosePopupInstance.InitializeOnCenter();
+			RectTransform ret = _tipPopupInstance.PrepareLayout();
+			ret.AddTitle1(U.T.Translate(tips) );
 			return ret;
 		}
 		
 		public static RectTransform CreateEnsureFloatingOnCenter(this string tips,Action ensureAction)
 		{
-			if(_ensureFloatingInstance)
-				_ensureFloatingInstance.Destroy();
-			_ensureFloatingInstance = IwcAb.Instance.EnsureFloating.Value.CreateOnCenter();
-			_ensureFloatingInstance.GetComponent<Ensure>().EnsureAction += ensureAction;
-			RectTransform ret = _ensureFloatingInstance.PrepareLayout();
+			if(_ensurePopupInstance)
+				_ensurePopupInstance.Destroy();
+			_ensurePopupInstance = IwcAb.Instance.EnsureFloating.Value
+				.InstantiateOnCanvas();
+			_ensurePopupInstance.InitializeOnCenter();
+			_ensurePopupInstance.GetComponent<Ensure>().EnsureAction += ensureAction;
+			RectTransform ret = _ensurePopupInstance.PrepareLayout();
 			ret.AddTitle1(tips);
 			return ret;
 		}
 
-		private static SFloating _floatingExist;
+		private static SPopup _popupExist;
 
 		public static HexMapGeneratorParameter GetGeneratorParameter(this IHexCell cell, int x, int z)
 		{

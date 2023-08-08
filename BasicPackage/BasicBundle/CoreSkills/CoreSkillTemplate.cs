@@ -11,6 +11,7 @@ namespace InfinityWorldChess.BasicBundle.CoreSkills
     {
         [field: S(ID = 9)] public float AttackFactor { get; set; }
         [field: S(ID = 10)] public float FixedAttackValue { get; set; }
+
         [field: S(ID = 11)] public byte FullCode { get; set; }
         [field: S(ID = 12)] public byte MaxLayer { get; set; }
         [field: S(ID = 13)] public byte ConditionCode { get; set; }
@@ -41,9 +42,9 @@ namespace InfinityWorldChess.BasicBundle.CoreSkills
                 float damage = AttackRecord.RunDamage(defend);
                 HexCell cell = interaction.TargetChess.Unit.Location;
                 if (defend.HealthValue < 0)
-                    BattleScope.Instance.Context.RemoveBattleChess(interaction.TargetChess);
+                    interaction.TargetChess.Unit.Die();
 
-                BattleScope.Instance.Context.CreateText(cell, (int)damage, Color.red);
+                BattleScope.Instance.CreateNumberText(cell, (int)damage, Color.red);
             }
         }
 
@@ -53,7 +54,7 @@ namespace InfinityWorldChess.BasicBundle.CoreSkills
             AttackRecord.AttackFactor = AttackFactor;
             AttackRecord.AttackFixedValue = FixedAttackValue;
             AttackRecord.TargetCount = Targets.Value.Length;
-            if (this.FitWeapon(interaction.LaunchChess.Belong))
+            if (this.FitWeapon(interaction.LaunchChess))
                 AttackRecord.DamageFactor += 0.5f;
         }
     }

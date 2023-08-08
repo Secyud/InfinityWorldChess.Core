@@ -7,7 +7,7 @@ namespace InfinityWorldChess.BasicBundle.BattleBuffs
     {
         public override string ShowName => "藏剑";
 
-        public override void Overlay(IBuff<RoleBattleChess> finishBuff)
+        public override void Overlay(IBuff<BattleRole> finishBuff)
         {
         }
     }

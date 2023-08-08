@@ -19,7 +19,7 @@ namespace InfinityWorldChess.BasicBundle
 			Targets = null;
 		}
 
-		public override void Cast(IBattleChess battleChess, HexCell releasePosition)
+		public override void Cast(BattleRole battleChess, HexCell releasePosition)
 		{
 			base.Cast(battleChess,releasePosition);
 			Targets = GetTargetInRange(
@@ -27,10 +27,8 @@ namespace InfinityWorldChess.BasicBundle
 				GetCastResultRange(battleChess, releasePosition)
 			);
 			PreSkill(battleChess, releasePosition);
-			foreach (IBattleChess enemy in Targets.Value)
+			foreach (BattleRole enemy in Targets.Value)
 			{
-				if (enemy is not ICanDefend) continue;
-
 				SkillInteraction interaction =
 					SkillInteraction.Get(battleChess, enemy);
 				PreInteraction(interaction);
@@ -52,11 +50,11 @@ namespace InfinityWorldChess.BasicBundle
 		{
 		}
 
-		protected virtual void PreSkill(IBattleChess battleChess, HexCell releasePosition)
+		protected virtual void PreSkill(BattleRole battleChess, HexCell releasePosition)
 		{
 		}
 
-		protected virtual void PostSkill(IBattleChess battleChess, HexCell releasePosition)
+		protected virtual void PostSkill(BattleRole battleChess, HexCell releasePosition)
 		{
 		}
 
@@ -64,7 +62,7 @@ namespace InfinityWorldChess.BasicBundle
 		{
 		}
 
-		public ISkillTarget GetTargetInRange(IBattleChess battleChess, ISkillRange range)
+		public ISkillTarget GetTargetInRange(BattleRole battleChess, ISkillRange range)
 		{
 			return TargetType switch
 			{
@@ -72,10 +70,10 @@ namespace InfinityWorldChess.BasicBundle
 				SkillTargetType.Self => SkillTarget.GetFixedTarget(battleChess),
 				SkillTargetType.Enemy => SkillTarget.GetEnemies(battleChess.Camp, range),
 				SkillTargetType.Teammate => SkillTarget.GetTeammates(battleChess.Camp, range),
-				SkillTargetType.SelfAndTeammate => SkillTarget.SelfAndTeammates(battleChess.Belong, range),
+				SkillTargetType.SelfAndTeammate => SkillTarget.SelfAndTeammates(battleChess, range),
 				SkillTargetType.ExcludeSelf => SkillTarget.ExcludeSelf(range),
-				SkillTargetType.SelfAndEnemy => SkillTarget.SelfAndEnemy(battleChess.Belong, range),
-				SkillTargetType.All => SkillTarget.All(battleChess.Belong, range),
+				SkillTargetType.SelfAndEnemy => SkillTarget.SelfAndEnemy(battleChess, range),
+				SkillTargetType.All => SkillTarget.All(battleChess, range),
 				_ => throw new ArgumentOutOfRangeException()
 			};
 		}

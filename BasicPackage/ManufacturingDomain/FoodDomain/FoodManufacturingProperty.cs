@@ -1,7 +1,7 @@
-﻿namespace InfinityWorldChess.ManufacturingDomain
+﻿namespace InfinityWorldChess.ManufacturingDomain.FoodDomain
 {
 	public class
-		FoodManufacturingProperty : ManufacturingPropertyBase<FoodManufacturingProcess>
+		FoodManufacturingProperty : ManufacturingPropertyBase<FoodProcessBase>
 	{
 	}
 }

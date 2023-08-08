@@ -1,4 +1,5 @@
 ﻿using InfinityWorldChess.BattleDomain;
+using InfinityWorldChess.BuffDomain;
 using InfinityWorldChess.GlobalDomain;
 using InfinityWorldChess.RoleDomain;
 using InfinityWorldChess.SkillDomain;
@@ -18,7 +19,7 @@ namespace InfinityWorldChess.BasicBundle.PassiveSkills
 			public override string HideDescription =>
 				$"将所有攻击转化为{D256 switch {0 => "无", 1 => "火", 2 => "冰", 3 => "毒", _ => "未知"}}属性。";
 
-			public void OnBattleInitialize(RoleBattleChess chess)
+			public void OnBattleInitialize(BattleRole chess)
 			{
 				var e = chess.GetBattleEvents();
 				e.PrepareLaunch.Add(this);

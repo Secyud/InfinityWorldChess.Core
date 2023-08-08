@@ -1,20 +1,21 @@
 #region
 
 using System.Collections;
-using InfinityWorldChess.PlayerDomain;
-using InfinityWorldChess.WorldDomain;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using InfinityWorldChess.GameDomain;
+using InfinityWorldChess.GameDomain.WorldMapDomain;
 using Secyud.Ugf;
 using Secyud.Ugf.Archiving;
 using Secyud.Ugf.DependencyInjection;
+using Secyud.Ugf.HexMap;
 
 #endregion
 
 namespace InfinityWorldChess.RoleDomain
 {
-	[Registry(LifeTime = DependencyLifeTime.Scoped,DependScope = typeof(GameScope))]
+	[Registry(DependScope = typeof(GameScope))]
 	public class RoleGameContext
 	{
 		private int _maxRoleId;
@@ -49,7 +50,7 @@ namespace InfinityWorldChess.RoleDomain
 		{
 			using FileStream stream = File.OpenRead(SavePath);
 			using DefaultArchiveReader reader = new(stream);
-			WorldGameContext gmCtx = GameScope.Instance.World;
+			var map = GameScope.Map.Value;
 
 			Roles = new Dictionary<int, Role>();
 			int count = reader.ReadInt32();
@@ -57,8 +58,8 @@ namespace InfinityWorldChess.RoleDomain
 			for (int i = 0; i < count; i++)
 			{
 				Role role = new();
-				WorldChecker checker = gmCtx.Checkers[reader.ReadInt32()];
-				role.Load(reader, checker);
+				HexCell cell = map.Grid.GetCell(reader.ReadInt32());
+				role.Load(reader, (WorldCell)cell.Message);
 				Roles[role.Id] = role;
 				if (U.AddStep())
 					yield return null;

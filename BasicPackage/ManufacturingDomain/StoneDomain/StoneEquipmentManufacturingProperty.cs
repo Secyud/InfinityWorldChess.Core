@@ -1,7 +1,9 @@
-﻿namespace InfinityWorldChess.ManufacturingDomain
+﻿
+
+namespace InfinityWorldChess.ManufacturingDomain.StoneDomain
 {
-	public class
-		StoneEquipmentManufacturingProperty : ManufacturingPropertyBase<StoneEquipmentManufacturingProcess>
-	{
-	}
+    public class StoneEquipmentManufacturingProperty :
+        ManufacturingPropertyBase<StoneEquipmentProcess>
+    {
+    }
 }

@@ -9,7 +9,7 @@ namespace InfinityWorldChess.BasicBundle.BattleBuffs
 {
 	public class FiringBuff : BattleShownBuffBase, IActionable<SkillInteraction>, IDeBuff
 	{
-		private RoleBattleChess _target;
+		private BattleRole _target;
 
 		private bool _triggerState;
 
@@ -28,19 +28,19 @@ namespace InfinityWorldChess.BasicBundle.BattleBuffs
 
 		private BattleEventsBuff _record;
 
-		public override void Install(RoleBattleChess target)
+		public override void Install(BattleRole target)
 		{
 			_target = target;
 			_record = _target.GetBattleEvents();
 			_record.LaunchCallback.Add(this);
 		}
 
-		public override void UnInstall(RoleBattleChess target)
+		public override void UnInstall(BattleRole target)
 		{
 			_record.LaunchCallback.Remove(this);
 		}
 
-		public override void Overlay(IBuff<RoleBattleChess> finishBuff)
+		public override void Overlay(IBuff<BattleRole> finishBuff)
 		{
 			if (finishBuff is not FiringBuff buff)
 				return;

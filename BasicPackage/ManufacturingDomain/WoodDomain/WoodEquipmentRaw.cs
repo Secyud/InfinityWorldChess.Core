@@ -1,13 +1,11 @@
-﻿using InfinityWorldChess.Ugf;
+﻿using InfinityWorldChess.ManufacturingDomain.EquipmentDomain;
+using InfinityWorldChess.Ugf;
 using Secyud.Ugf.DataManager;
 using UnityEngine;
 
-namespace InfinityWorldChess.ManufacturingDomain
+namespace InfinityWorldChess.ManufacturingDomain.WoodDomain
 {
-	public class WoodEquipmentRaw : EquipmentManufacturable<
-		WoodEquipmentRaw, WoodEquipmentManufacturingProcess, WoodEquipmentManufacturingBlueprint,
-		WoodEquipmentManufacturingContext, WoodEquipmentManufacturingProcessTf,
-		WoodEquipmentManufacturingProperty>
+	public class WoodEquipmentRaw : EquipmentManufacturable
 	{
 		[field: S(ID=257)] public byte Width { get; set; }
 

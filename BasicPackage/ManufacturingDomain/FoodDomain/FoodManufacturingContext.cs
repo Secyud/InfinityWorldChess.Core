@@ -1,120 +1,25 @@
-﻿using InfinityWorldChess.ItemDomain.FoodDomain;
-using InfinityWorldChess.RoleDomain;
-using InfinityWorldChess.Ugf;
-using System.Linq;
-using InfinityWorldChess.GlobalDomain;
-using UnityEngine;
+﻿using InfinityWorldChess.GameDomain;
+using Secyud.Ugf.AssetComponents;
+using Secyud.Ugf.DependencyInjection;
 
-namespace InfinityWorldChess.ManufacturingDomain
+namespace InfinityWorldChess.ManufacturingDomain.FoodDomain
 {
-	public class FoodManufacturingContext : FlavorManufacturingContextBase
-	<Food, FoodManufacturingComponent, FoodManufacturingProcess, FoodManufacturingContext,
-		FoodManufacturingProcessTf, FoodManufacturingProperty>
+	[Registry(DependScope = typeof(GameScope))]
+	public class FoodManufacturingScope : DependencyScopeProvider
 	{
+		private static MonoContainer<Manufacture> _manufactureContainer;
 
-		public FoodManufacturingData FoodData { get; private set; }
-
-		public class FoodManufacturingData : IHasFlavor, IHasMouthfeel
+		public FoodManufacturingScope(IwcAb ab)
 		{
-			public readonly Role.ItemProperty RoleItem;
-
-			public FoodRaw MainRaw { get; set; }
-
-			public FoodRaw SupportRaw { get; set; }
-
-			public FoodManufacturingData(Role mainRole, FoodManufacturingContext context)
-			{
-				RoleItem = mainRole.Item;
-				FoodManufacturingComponent factory = context.Factory.Value;
-				factory.MainRaw.Icon.gameObject
-					.GetOrAddButton(OnSelectMainRawButtonClick);
-				factory.SupportRaw.Icon.gameObject
-					.GetOrAddButton(OnSelectSupportRawButtonClick);
-			}
-
-
-			public void OnSelectMainRawButtonClick()
-			{
-				GlobalScope.Instance.OnItemSelectionOpen(
-					RoleItem.Where(u => u is FoodRaw).ToList(),
-					i => MainRaw = i as FoodRaw
-				);
-			}
-
-			public void OnSelectSupportRawButtonClick()
-			{
-				GlobalScope.Instance.OnItemSelectionOpen(
-					RoleItem.Where(u => u is FoodRaw).ToList(),
-					i => SupportRaw = i as FoodRaw
-				);
-			}
-
-			public float SpicyLevel { get; set; }
-
-			public float SweetLevel { get; set; }
-
-			public float SourLevel { get; set; }
-
-			public float BitterLevel { get; set; }
-
-			public float SaltyLevel { get; set; }
-
-			public float HardLevel { get; set; }
-
-			public float LimpLevel { get; set; }
-
-			public float WeakLevel { get; set; }
-
-			public float OilyLevel { get; set; }
-
-			public float SlipLevel { get; set; }
-
-			public float SoftLevel { get; set; }
+			_manufactureContainer ??= MonoContainer<Manufacture>
+				.Create(ab,"InfinityWorldChess/Manufacturing/Food.prefab");
+			_manufactureContainer.Create();
 		}
 
-		protected override void RunProcess(Food drag)
+		public override void Dispose()
 		{
-			foreach (FoodManufacturingProcess process in Data.Processes)
-			{
-				process.Flavor?.CopyFlavorTo(drag, 0.1f);
-				process.Process(this,drag);
-				FoodData.MainRaw.ProcessFood(this);
-			}
+			_manufactureContainer.Destroy();
 		}
-
-		protected override Food InitFlavor()
-		{
-			if (FoodData.MainRaw is null)
-				return null;
-
-			Food food = new Food();
-			FoodData.MainRaw.InitFood(this,food);
-			
-			FoodData.MainRaw.CopyFlavorTo(food);
-			FoodData.MainRaw.CopyMouthfeelTo(food);
-
-			if (FoodData.SupportRaw is not null)
-			{
-				FoodData.SupportRaw.CopyFlavorTo(food,0.7f);
-				FoodData.SupportRaw.CopyMouthfeelTo(food,0.7f);
-			}
-			
-			return food;
-		}
-
-		public override bool OnCreation(Role mainRole, Role manufacturingRole = null)
-		{
-			if (base.OnCreation(mainRole, manufacturingRole))
-			{
-				FoodData = new FoodManufacturingData(mainRole, this);
-				return true;
-			}
-			return false;
-		}
-
-
-		public FoodManufacturingContext(IwcAb ab) : base(ab)
-		{
-		}
+		
 	}
 }

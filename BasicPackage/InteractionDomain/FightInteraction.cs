@@ -4,6 +4,7 @@ using Secyud.Ugf;
 using Secyud.Ugf.AssetLoading;
 using System;
 using System.Collections.Generic;
+using Secyud.Ugf.AssetComponents;
 using UnityEngine;
 
 namespace InfinityWorldChess.InteractionDomain
@@ -30,7 +31,9 @@ namespace InfinityWorldChess.InteractionDomain
 			{
 				Cell = InteractionScope.Instance.RightRole.Position.Cell
 			};
-			fight.OnBattleCreate();
+			
+			U.Get<BattleGlobalService>().CreateBattle(fight);
+			
 			U.Factory.Application.DependencyManager.DestroyScope<InteractionScope>();
 		}
 

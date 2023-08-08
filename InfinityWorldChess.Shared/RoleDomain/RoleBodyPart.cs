@@ -10,10 +10,9 @@ namespace InfinityWorldChess.RoleDomain
 {
     public class RoleBodyPart : DataObject
     {
-        [S(ID =0)] private float _realValue;
+        [S(ID = 0)] private float _realValue = 10;
 
-        [field: S(ID =1)]
-        public int MaxValue { get; set; }
+        [field: S(ID = 1)] public int MaxValue { get; set; } = 10;
 
         public float RealValue
         {

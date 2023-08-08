@@ -8,7 +8,7 @@ namespace InfinityWorldChess.BasicBundle.BattleBuffs.Recorders
 	{
 		private BattleContext _context;
 		private readonly Type _buffType;
-		private RoleBattleChess _target;
+		private BattleRole _target;
 
 		public int TrigFinished { get; set; }
 
@@ -26,7 +26,7 @@ namespace InfinityWorldChess.BasicBundle.BattleBuffs.Recorders
 				_target.UnInstall(_buffType);
 		}
 
-		public void Install(RoleBattleChess target)
+		public void Install(BattleRole target)
 		{
 			_target = target;
 		}

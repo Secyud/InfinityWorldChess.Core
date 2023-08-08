@@ -16,7 +16,7 @@ namespace InfinityWorldChess.BasicBundle.BattleBuffs
 	{
 		private BattleEventsBuff _recordBuff;
 		private BattleContext _context;
-		private RoleBattleChess _target;
+		private BattleRole _target;
 
 		public float Factor { get; set; }
 
@@ -26,18 +26,18 @@ namespace InfinityWorldChess.BasicBundle.BattleBuffs
 
 		public int Priority => 1;
 
-		public override void Install(RoleBattleChess target)
+		public override void Install(BattleRole target)
 		{
 			_recordBuff = target.GetBattleEvents();
 			_recordBuff.PrepareReceive.Add(this);
 		}
 
-		public override void UnInstall(RoleBattleChess target)
+		public override void UnInstall(BattleRole target)
 		{
 			_recordBuff.PrepareReceive.Remove(this);
 		}
 
-		public override void Overlay(IBuff<RoleBattleChess> finishBuff)
+		public override void Overlay(IBuff<BattleRole> finishBuff)
 		{
 			if (finishBuff is not VulnerBuff buff)
 				return;
@@ -65,20 +65,20 @@ namespace InfinityWorldChess.BasicBundle.BattleBuffs
 				TimeRecorder = new TimeRecorder(GetType());
 			}
 
-			public override void Install(RoleBattleChess target)
+			public override void Install(BattleRole target)
 			{
 				base.Install(target);
 				TimeRecorder.Install(target);
 			}
 
 
-			public override void UnInstall(RoleBattleChess target)
+			public override void UnInstall(BattleRole target)
 			{
 				base.UnInstall(target);
 				TimeRecorder.UnInstall();
 			}
 
-			public override void Overlay(IBuff<RoleBattleChess> finishBuff)
+			public override void Overlay(IBuff<BattleRole> finishBuff)
 			{
 				base.Overlay(finishBuff);
 

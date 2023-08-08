@@ -9,7 +9,7 @@ using Secyud.Ugf;
 
 namespace InfinityWorldChess.BattleDomain
 {
-	public sealed class BattleEventsBuff : IBuff<RoleBattleChess>
+	public sealed class BattleEventsBuff : IBuff<BattleRole>
 	{
 		public ActionableContainer<SkillInteraction> PrepareLaunch { get; } = new();
 
@@ -19,7 +19,7 @@ namespace InfinityWorldChess.BattleDomain
 
 		public ActionableContainer<SkillInteraction> ReceiveCallback { get; } = new();
 
-		public void Install(RoleBattleChess target)
+		public void Install(BattleRole target)
 		{
 			PrepareLaunch.Clear();
 			PrepareReceive.Clear();
@@ -27,11 +27,11 @@ namespace InfinityWorldChess.BattleDomain
 			ReceiveCallback.Clear();
 		}
 
-		public void UnInstall(RoleBattleChess target)
+		public void UnInstall(BattleRole target)
 		{
 		}
 
-		public void Overlay(IBuff<RoleBattleChess> finishBuff)
+		public void Overlay(IBuff<BattleRole> finishBuff)
 		{
 			throw new UgfException($"{nameof(BattleEventsBuff)} cannot be overlapped!");
 		}

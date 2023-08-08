@@ -67,15 +67,17 @@ namespace InfinityWorldChess
 
         private static void RegisterItem(ConfigurationContext context)
         {
-            ItemTf tf = context.Get<ItemTf>();
+            ItemFilters filters = context.Get<ItemFilters>();
 
-            tf.RegisterFilterGroup(ItemFilterType.GetGroup());
+            filters.RegisterList(ItemFilterToggleType.GetGroup());
+            
+            ItemSorters sorters = context.Get<ItemSorters>();
 
-            tf.RegisterSorter(new ItemSorterType());
+            sorters.RegisterList(new ItemSorterType());
 
-            context.Get<ItemGameBf>().RegisterList(
+            context.Get<PlayerItemButtons>().RegisterList(
                 new ItemNormalButtonEating(),
-                new EquipmentButtonRegistration(),
+                new EquipmentButtonDescriptor(),
                 new ItemNormalButtonReading()
             );
         }

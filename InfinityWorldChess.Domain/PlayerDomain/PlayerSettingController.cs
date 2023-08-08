@@ -1,6 +1,7 @@
 ﻿#region
 
-using Secyud.Ugf.Layout;
+using InfinityWorldChess.GameDomain;
+using Secyud.Ugf.LayoutComponents;
 using UnityEngine;
 
 #endregion

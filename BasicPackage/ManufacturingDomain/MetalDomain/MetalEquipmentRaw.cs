@@ -1,15 +1,11 @@
+using InfinityWorldChess.ManufacturingDomain.EquipmentDomain;
 using InfinityWorldChess.Ugf;
 using Secyud.Ugf.DataManager;
 using UnityEngine;
 
-namespace InfinityWorldChess.ManufacturingDomain
+namespace InfinityWorldChess.ManufacturingDomain.MetalDomain
 {
-	public class MetalEquipmentRaw :
-		EquipmentManufacturable<
-			MetalEquipmentRaw, MetalEquipmentManufacturingProcess, MetalEquipmentManufacturingBlueprint,
-			MetalEquipmentManufacturingContext, MetalEquipmentManufacturingProcessTf,
-			MetalEquipmentManufacturingProperty>,
-		IHasMeltingPoint
+	public class MetalEquipmentRaw : EquipmentManufacturable
 	{
 		[field: S(ID=257)]public short MeltingPoint { get; set; }
 

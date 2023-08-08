@@ -3,16 +3,16 @@
 using System.Collections;
 using InfinityWorldChess.BiographyDomain;
 using InfinityWorldChess.BundleDomain;
-using InfinityWorldChess.GlobalDomain;
-using InfinityWorldChess.ItemDomain;
 using InfinityWorldChess.RoleDomain;
-using InfinityWorldChess.WorldDomain;
 using Secyud.Ugf.HexMap;
 using Secyud.Ugf.HexMap.Utilities;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using InfinityWorldChess.ActivityDomain;
+using InfinityWorldChess.GameCreatorDomain;
+using InfinityWorldChess.GameDomain;
+using InfinityWorldChess.GameDomain.WorldMapDomain;
 using Secyud.Ugf;
 using Secyud.Ugf.Archiving;
 using Secyud.Ugf.DataManager;
@@ -22,8 +22,8 @@ using Secyud.Ugf.DependencyInjection;
 
 namespace InfinityWorldChess.PlayerDomain
 {
-    [Registry(LifeTime = DependencyLifeTime.Scoped,DependScope = typeof(GameScope))]
-    public class PlayerGameContext 
+    [Registry(DependScope = typeof(GameScope))]
+    public class PlayerGameContext :IRegistry
     {
         private readonly WorldGameContext _worldGameContext;
         private HexUnit _unit;
@@ -63,7 +63,7 @@ namespace InfinityWorldChess.PlayerDomain
 
             int index = reader.ReadInt32();
             Role = new Role();
-            Role.Load(reader, _worldGameContext.Checkers[index]);
+            Role.Load(reader, GameScope.Map.Value.Grid.GetCell(index).Get<WorldCell>());
 
             int count = reader.ReadInt32();
             for (int i = 0; i < count; i++)
@@ -123,70 +123,7 @@ namespace InfinityWorldChess.PlayerDomain
 
         public virtual IEnumerator OnGameCreation()
         {
-            CreatorScope cs = CreatorScope.Instance;
-
-            Role = new Role
-            {
-                Basic =
-                {
-                    FirstName = cs.Basic.FirstName,
-                    LastName = cs.Basic.LastName,
-                    BirthHour = cs.Basic.BirthHour,
-                    BirthDay = cs.Basic.BirthDay,
-                    BirthMonth = cs.Basic.BirthMonth,
-                    BirthYear = cs.Basic.BirthYear,
-                    Avatar =
-                    {
-                        BackItem = cs.Basic.Avatar.BackItem,
-                        BackHair = cs.Basic.Avatar.BackHair,
-                        Body = cs.Basic.Avatar.Body,
-                        Head = cs.Basic.Avatar.Head,
-                        HeadFeature = cs.Basic.Avatar.HeadFeature,
-                        NoseMouth = cs.Basic.Avatar.NoseMouth,
-                        Eye = cs.Basic.Avatar.Eye,
-                        Brow = cs.Basic.Avatar.Brow,
-                        FrontHair = cs.Basic.Avatar.FrontHair,
-                    },
-                },
-                Nature =
-                {
-                    Recognize = cs.Nature.Recognize,
-                    Stability = cs.Nature.Stability,
-                    Confident = cs.Nature.Confident,
-                    Efficient = cs.Nature.Efficient,
-                    Gregarious = cs.Nature.Gregarious,
-                    Altruistic = cs.Nature.Altruistic,
-                    Rationality = cs.Nature.Rationality,
-                    Foresighted = cs.Nature.Foresighted,
-                    Intelligent = cs.Nature.Intelligent,
-                },
-                BodyPart =
-                {
-                    Living =
-                    {
-                        MaxValue = 10,
-                        RealValue = 10
-                    },
-                    Kiling =
-                    {
-                        MaxValue = 10,
-                        RealValue = 10
-                    },
-                    Nimble =
-                    {
-                        MaxValue = 10,
-                        RealValue = 10
-                    },
-                    Defend =
-                    {
-                        MaxValue = 10,
-                        RealValue = 10
-                    }
-                }
-            };
-
-            foreach (IItem item in cs.Item)
-                Role.Item.Add(item);
+            GameCreatorScope cs = GameCreatorScope.Instance;
 
             HexMetrics.InitializeHashGrid(cs.WorldSetting.Seed);
 
@@ -194,8 +131,8 @@ namespace InfinityWorldChess.PlayerDomain
 
             foreach (IBiography biography in cs.Biography)
                 biography.OnGameCreation(Role);
-
-            Role.Position = _worldGameContext.Checkers.First(u => u.SpecialIndex == 1);
+            
+            Role.Position = GameScope.Map.Value.Grid.First(u => u.Get<WorldCell>().SpecialIndex == 1).Get<WorldCell>();
 
             foreach (IBundle bundle in cs.Bundles)
             {

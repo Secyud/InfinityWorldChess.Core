@@ -4,8 +4,8 @@ using Secyud.Ugf.HexMap;
 
 namespace InfinityWorldChess.SkillDomain
 {
-	public interface ISkillCastResult:ICanBeShown,IHasContent
+	public interface ISkillCastResult
 	{
-		ISkillRange GetCastResultRange(IBattleChess battleChess, HexCell castPosition);
+		ISkillRange GetCastResultRange(BattleRole role, HexCell castPosition);
 	}
 }

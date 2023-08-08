@@ -7,89 +7,75 @@ using InfinityWorldChess.Ugf;
 using Secyud.Ugf;
 using Secyud.Ugf.Archiving;
 using System.Collections.Generic;
-using System.Linq;
-using InfinityWorldChess.PlayerDomain;
 using UnityEngine;
 
 #endregion
 
 namespace InfinityWorldChess.ItemDomain.FoodDomain
 {
-	public sealed class Food : ParasitiferProperty<Food>,
-		IItem, IEdible, IEdibleInBattle, IHasFlavor, IHasMouthfeel, IArchivableShown,IArchivable
-	{
-		public readonly List<IBuffFactory<Role>> RoleBuffFactories = new();
-		public readonly List<IBuffFactory<RoleBattleChess>> RoleChessBuffFactories = new();
+    public sealed class Food : BuffProperty<Food>,
+        IItem, IEdible, IEdibleInBattle, IHasFlavor, IHasMouthfeel, IArchivableShown, IArchivable
+    {
+        public readonly List<IBuff<Role>> RoleBuffs = new();
+        public readonly List<IBuff<BattleRole>> BattleRoleBuffs = new();
 
-		public float SpicyLevel { get; set; }
 
-		public float SweetLevel { get; set; }
+        public string Name { get; set; }
 
-		public float SourLevel { get; set; }
+        public string Description { get; set; }
 
-		public float BitterLevel { get; set; }
+        public IObjectAccessor<Sprite> Icon { get; set; }
 
-		public float SaltyLevel { get; set; }
+        public string ShowName => "菜肴 " + Name;
 
-		public float HardLevel { get; set; }
-		public float LimpLevel { get; set; }
-		public float WeakLevel { get; set; }
-		public float OilyLevel { get; set; }
-		public float SlipLevel { get; set; }
-		public float SoftLevel { get; set; }
+        public string ShowDescription => Description;
 
-		public string Name { get; set; }
+        public IObjectAccessor<Sprite> ShowIcon => Icon;
 
-		public string Description { get; set; }
+        public byte Score { get; set; }
 
-		public IObjectAccessor<Sprite> Icon { get; set; }
+        public int SaveIndex { get; set; }
 
-		public string ShowName => "菜肴 " + Name;
+        protected override Food Target => this;
 
-		public string ShowDescription => Description;
+        public float[] FlavorLevel { get; } = new float[BasicConsts.FlavorCount];
+        public float[] MouthFeelLevel { get; }= new float[BasicConsts.MouthFeelCount];
 
-		public IObjectAccessor<Sprite> ShowIcon => Icon;
+        public void Eating(Role role)
+        {
+            foreach (IBuff<Role> buff in RoleBuffs)
+                buff.Install(role);
+        }
 
-		public byte Score { get; set; }
+        public void EatingInBattle(BattleRole role)
+        {
+            foreach (IBuff<BattleRole> buff in BattleRoleBuffs)
+                buff.Install(role);
+        }
 
-		public int SaveIndex { get; set; }
+        public override void Save(IArchiveWriter writer)
+        {
+            this.SaveShown(writer);
+            this.SaveMouthFeel(writer);
+            this.SaveFlavors(writer);
+            base.Save(writer);
+        }
 
-		public void Eating()
-		{
-			Role role = GameScope.Instance.Role.MainOperationRole;
-			foreach (IBuff<Role> buff in RoleBuffFactories.Select(u => u.Get()))
-				buff.Install(role);
-		}
+        public override void Load(IArchiveReader reader)
+        {
+            this.LoadShown(reader);
+            this.LoadMouthFeel(reader);
+            this.LoadFlavors(reader);
+            base.Load(reader);
+        }
 
-		public void EatingInBattle()
-		{
-			RoleBattleChess role =BattleScope.Instance.Context.CurrentRole;
-			foreach (IBuff<RoleBattleChess> buff in RoleChessBuffFactories.Select(u => u.Get()))
-				buff.Install(role);
-		}
+        public void SetContent(Transform transform)
+        {
+            transform.AddItemHeader(this);
+            transform.AddFlavorInfo(this);
+            transform.AddMouthFeelInfo(this);
+            transform.AddListShown("效果", Values);
+        }
 
-		public override void Save(IArchiveWriter writer)
-		{
-			this.SaveShown(writer);
-			this.SaveMouthFeel(writer);
-			this.SaveFlavors(writer);
-			base.Save(writer);
-		}
-
-		public void Load(IArchiveReader reader)
-		{
-			this.LoadShown(reader);
-			this.LoadMouthFeel(reader);
-			this.LoadFlavors(reader);
-			base.Load(reader, this);
-		}
-
-		public void SetContent(Transform transform)
-		{
-			transform.AddItemHeader(this);
-			transform.AddFlavorInfo(this);
-			transform.AddMouthFeelInfo(this);
-			transform.AddListShown( "效果",Values);
-		}
-	}
+    }
 }

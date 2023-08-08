@@ -1,18 +1,18 @@
 ﻿#region
 
 using InfinityWorldChess.InteractionDomain;
-using Secyud.Ugf.ButtonComponents;
+using Secyud.Ugf.TableComponents.ButtonComponents;
 
 #endregion
 
 namespace InfinityWorldChess.RoleDomain
 {
-	public class RoleWorldCheckerBf : ButtonFunctionBase<Role>
+	public class RoleWorldCheckerBf : ButtonRegeditBase<Role>
 	{
 		public RoleWorldCheckerBf()
 		{
-			RegisterList(new RoleMessageButtonRegistration(),
-				new RoleInteractionButtonRegistration());
+			RegisterList(new RoleMessageButtonDescriptor(),
+				new RoleInteractionButtonDescriptor());
 		}
 	}
 }

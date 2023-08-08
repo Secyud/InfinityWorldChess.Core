@@ -26,8 +26,8 @@ namespace InfinityWorldChess.BattleDomain
 			bool victory = true;
 			bool defeated = true;
 			
-			foreach (IBattleChess chess in BattleScope.Instance.Context.Chesses.Values
-				.Where(chess => chess.Camp is not null))
+			foreach (BattleRole chess in BattleScope.Instance.Context.Roles.Values
+				.Where(chess => chess.Camp is not null && !chess.Dead))
 			{
 				if (chess.Camp.Index == 0)
 					defeated = false;

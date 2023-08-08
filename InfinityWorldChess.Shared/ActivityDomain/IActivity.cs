@@ -8,7 +8,7 @@ using Secyud.Ugf.Archiving;
 
 namespace InfinityWorldChess.ActivityDomain
 {
-	public interface IActivity : ICanBeShown, IHasContent,IArchivable,IHasSaveIndex
+	public interface IActivity : IShowable, IHasContent,IArchivable,IHasSaveIndex
 	{
 		void OnReceive();
 	
