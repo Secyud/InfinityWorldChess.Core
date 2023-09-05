@@ -11,26 +11,32 @@ namespace InfinityWorldChess.PlayerDomain
     public class PlayerSetting : IArchivable
     {
         // 洞察人心
-        [field: S] public bool DongChaRenXin { get; set; } = true;
+        public bool DongChaRenXin { get; set; } = true;
 
         // 巧夺天工
-        [field: S] public bool QiaoDuoTianGong { get; set; } = true;
+        public bool QiaoDuoTianGong { get; set; } = true;
 
         // 武学奇才
-        [field: S] public bool WuXueQiCai { get; set; } = true;
+        public bool WuXueQiCai { get; set; } = true;
 
         // 运筹帷幄
-        [field: S] public bool YunChouWeiWo { get; set; } = true;
+        public bool YunChouWeiWo { get; set; } = true;
 
 
         public void Save(IArchiveWriter writer)
         {
-            U.AutoSaveObject(this, writer);
+            writer.Write(DongChaRenXin);
+            writer.Write(QiaoDuoTianGong);
+            writer.Write(WuXueQiCai);
+            writer.Write(YunChouWeiWo);
         }
 
         public void Load(IArchiveReader reader)
         {
-            U.AutoLoadObject(this, reader);
+            DongChaRenXin = reader.ReadBoolean();
+            QiaoDuoTianGong = reader.ReadBoolean();
+            WuXueQiCai = reader.ReadBoolean();
+            YunChouWeiWo = reader.ReadBoolean();
         }
     }
 }

@@ -2,7 +2,6 @@
 
 using Secyud.Ugf.Archiving;
 using System.Globalization;
-using Secyud.Ugf;
 using Secyud.Ugf.DataManager;
 
 #endregion
@@ -13,9 +12,9 @@ namespace InfinityWorldChess.RoleDomain
     {
         public BasicProperty Basic { get; } = new();
 
-        public class BasicProperty :IArchivable
+        public class BasicProperty : IArchivable
         {
-            public readonly AvatarElement[] Avatar =
+            [S] public readonly AvatarElement[] Avatar =
                 new AvatarElement[SharedConsts.AvatarElementCount];
 
             [S] public int BirthYear;
@@ -39,7 +38,7 @@ namespace InfinityWorldChess.RoleDomain
                     Avatar[i] = new AvatarElement();
                 }
             }
-            
+
             public string Name
             {
                 get =>
@@ -49,18 +48,33 @@ namespace InfinityWorldChess.RoleDomain
                 set => LastName = value;
             }
 
-            public  void Save(IArchiveWriter writer)
+            public void Save(IArchiveWriter writer)
             {
-                U.AutoSaveObject(this,writer);
+                writer.Write(BirthYear);
+                writer.Write(BirthMonth);
+                writer.Write(BirthDay);
+                writer.Write(BirthHour);
+                writer.Write(Female);
+                writer.Write(FirstName);
+                writer.Write(LastName);
+                writer.Write(Description);
+
                 foreach (AvatarElement e in Avatar)
                 {
                     e.Save(writer);
                 }
             }
 
-            public  void Load(IArchiveReader reader)
+            public void Load(IArchiveReader reader)
             {
-                U.AutoLoadObject(this,reader);
+                BirthYear = reader.ReadInt32();
+                BirthMonth = reader.ReadByte();
+                BirthDay = reader.ReadByte();
+                BirthHour = reader.ReadByte();
+                Female = reader.ReadBoolean();
+                FirstName = reader.ReadString();
+                LastName = reader.ReadString();
+                Description = reader.ReadString();
                 foreach (AvatarElement e in Avatar)
                 {
                     e.Load(reader);
