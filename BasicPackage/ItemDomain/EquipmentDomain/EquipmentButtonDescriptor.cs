@@ -1,11 +1,7 @@
 ﻿#region
 
-using System.Ugf;
 using InfinityWorldChess.GameDomain;
 using InfinityWorldChess.GameDomain.GameMenuDomain;
-using InfinityWorldChess.GlobalDomain;
-using InfinityWorldChess.MainMenuDomain;
-using InfinityWorldChess.PlayerDomain;
 using InfinityWorldChess.RoleDomain;
 using Secyud.Ugf;
 using Secyud.Ugf.TableComponents.ButtonComponents;
@@ -19,13 +15,13 @@ namespace InfinityWorldChess.ItemDomain.EquipmentDomain
 		public override void Trigger()
 		{
 			IEquipment equipment = Target as IEquipment;
-			GameScope scope = U.Factory.Application.DependencyManager.GetScope<GameScope>();
+			GameScope scope = U.M.GetScope<GameScope>();
 			Role role = scope.Get<RoleGameContext>().MainOperationRole;
 			
 			
 			
 			role.SetEquipment(equipment);
-			U.Get<GameMenuTabService>().Refresh();
+			U.Get<GameMenuTabService>().RefreshCurrentTab();
 		}
 
 		public override string ShowName => "装备";

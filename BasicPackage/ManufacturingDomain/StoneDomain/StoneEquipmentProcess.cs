@@ -14,9 +14,9 @@ namespace InfinityWorldChess.ManufacturingDomain.StoneDomain
         EquipmentProcessBase
     {
         public short Position { get; set; }
-        [field: S(ID = 3, DataType = DataType.Initialed)]
+        [field: S ]
         public byte RangeStart { get;set; }
-        [field: S(ID = 4, DataType = DataType.Initialed)]
+        [field: S ]
         public byte RangeEnd { get; set;}
 
         public override void SetContent(Transform transform)

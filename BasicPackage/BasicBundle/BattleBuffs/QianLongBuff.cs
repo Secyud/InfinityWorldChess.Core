@@ -1,6 +1,7 @@
 using InfinityWorldChess.BattleDomain;
 using InfinityWorldChess.BattleDomain.BattleSkillDomain;
 using InfinityWorldChess.SkillDomain;
+using InfinityWorldChess.SkillDomain.SkillInteractionDomain;
 using Secyud.Ugf;
 
 namespace InfinityWorldChess.BasicBundle.BattleBuffs
@@ -13,7 +14,7 @@ namespace InfinityWorldChess.BasicBundle.BattleBuffs
 
         public override void Active(SkillInteraction target)
         {
-            if (BattleScope.Instance.Get<SkillRefreshService>().Skill.Skill is IShowable shown &&
+            if (BattleScope.Instance.Get<SkillObservedService>().Skill.Skill is IShowable shown &&
                 shown.ShowName.Contains('龙'))
                 base.Active(target);
         }

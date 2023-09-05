@@ -23,7 +23,7 @@ namespace InfinityWorldChess.BasicBundle.BattleBuffs.Recorders
 		private void CalculateRemove()
 		{
 			TurnFinished -= 1;
-			if (TurnFinished <= 0 && _target == BattleScope.Instance.Get<RoleRefreshService>().Role)
+			if (TurnFinished <= 0 && _target == BattleScope.Instance.Get<RoleObservedService>().Role)
 				_target.UnInstall(_buffType);
 		}
 

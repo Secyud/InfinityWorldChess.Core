@@ -26,7 +26,7 @@ namespace InfinityWorldChess.ManufacturingDomain
 
             ActivityButtons = new List<ManufacturingButtonDescriptor>();
             int count = reader.ReadInt32();
-            var wc = GameScope.Map.Value.Grid;
+            var wc = GameScope.Instance.Map.Value.Grid;
             for (int i = 0; i < count; i++)
             {
                 ManufacturingButtonDescriptor tmp = new();
@@ -51,7 +51,7 @@ namespace InfinityWorldChess.ManufacturingDomain
         {
             ActivityButtons = new List<ManufacturingButtonDescriptor>();
 
-            var worldContext = GameScope.Map.Value;
+            var worldContext = GameScope.Instance.Map.Value;
 
             int i = 0;
 

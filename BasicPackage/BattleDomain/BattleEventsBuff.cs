@@ -3,12 +3,18 @@
 using InfinityWorldChess.BuffDomain;
 using InfinityWorldChess.GlobalDomain;
 using InfinityWorldChess.SkillDomain;
+using InfinityWorldChess.SkillDomain.SkillInteractionDomain;
 using Secyud.Ugf;
 
 #endregion
 
 namespace InfinityWorldChess.BattleDomain
 {
+	/// <summary>
+	/// battle events buff record all events for battle role.
+	/// buff can effect by add event to this and loss effect by remove event.
+	/// </summary>
+	/// TODO: Maybe time effect will be added.
 	public sealed class BattleEventsBuff : IBuff<BattleRole>
 	{
 		public ActionableContainer<SkillInteraction> PrepareLaunch { get; } = new();

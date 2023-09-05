@@ -6,6 +6,8 @@ using InfinityWorldChess.BattleDomain;
 using InfinityWorldChess.BuffDomain;
 using InfinityWorldChess.GlobalDomain;
 using InfinityWorldChess.SkillDomain;
+using InfinityWorldChess.SkillDomain.AttackDomain;
+using InfinityWorldChess.SkillDomain.SkillInteractionDomain;
 using InfinityWorldChess.Ugf;
 
 #endregion

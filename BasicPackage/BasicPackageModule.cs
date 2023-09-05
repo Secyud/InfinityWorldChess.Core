@@ -1,7 +1,6 @@
 #region
 
 using System.Collections;
-using InfinityWorldChess.InteractionDomain;
 using InfinityWorldChess.ItemDomain;
 using InfinityWorldChess.ItemDomain.BookDomain;
 using InfinityWorldChess.ItemDomain.EquipmentDomain;
@@ -10,8 +9,6 @@ using InfinityWorldChess.RoleDomain;
 using Secyud.Ugf.DependencyInjection;
 using Secyud.Ugf.Modularity;
 using System.IO;
-using InfinityWorldChess.BasicBundle.Interactions;
-using Secyud.Ugf.DataManager;
 using UnityEngine;
 
 #endregion
@@ -19,7 +16,7 @@ using UnityEngine;
 namespace InfinityWorldChess
 {
     [DependsOn(
-        typeof(InfinityWorldChessDomainModule)
+        typeof(InfinityWorldChessModule)
     )]
     public class BasicPackageModule : IUgfModule, IPostConfigure,IOnInitialization
     {
@@ -31,27 +28,13 @@ namespace InfinityWorldChess
 
         public void PostConfigureGame(ConfigurationContext context)
         {
-            context.Get<IInteractionGlobalService>().FreeInteractions.RegisterList(
-                new ChatInteraction(),
-                new FightInteraction()
-            );
+            // context.Get<InteractionGlobalService>().FreeInteractions.RegisterList(
+            //     new ChatInteraction(),
+            //     new FightInteraction()
+            // );
             RegisterItem(context);
             RegisterAvatar(context);
-            RegisterInitialize(context.Get<InitializeManager>());
 
-        }
-
-        private void RegisterInitialize(InitializeManager manager)
-        {
-
-            string prefix = Path.Combine(Application.dataPath,"Data","ResourceManager");
-            
-            //manager.RegisterFromBinary(Path.Combine(prefix,"CoreSkillTemplate-BasicBundle.binary"),typeof(CoreSkillTemplate));
-            // List<string> list = im.GetResourceList(typeof(CoreSkillTemplate));
-            // RoleResourceManager rm = context.Get<RoleResourceManager>();
-            // rm.CoreSkills.AddRange(list);
-
-            InteractionAction.Register(manager);
         }
 
         private void RegisterAvatar(ConfigurationContext context)

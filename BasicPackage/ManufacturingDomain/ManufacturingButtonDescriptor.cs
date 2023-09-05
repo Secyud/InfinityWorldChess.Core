@@ -27,7 +27,7 @@ namespace InfinityWorldChess.ManufacturingDomain
 
 		public override void Trigger()
 		{
-			IDependencyManager dm = U.Factory.Application.DependencyManager;
+			IDependencyManager dm = U.M;
 			switch (Type)
 			{
 			case 0:

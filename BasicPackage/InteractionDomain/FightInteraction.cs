@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace InfinityWorldChess.InteractionDomain
 {
-	public class FightInteraction:IFreeInteractionUnit
+	public class FightInteraction
 	{
 		public string Text => "是吗？就让我领教一下你的武功。";
 
@@ -17,7 +17,7 @@ namespace InfinityWorldChess.InteractionDomain
 			SpriteContainer.Create<IwcAb>("00086-4232632013",prefix:SpritePrefix.Art);
 
 
-		public IList<Tuple<string, IInteractionUnit>> Selections => null;
+		public IList<Tuple<string, IDialogueUnit>> Selections => null;
 
 		public void OnStart()
 		{
@@ -25,16 +25,16 @@ namespace InfinityWorldChess.InteractionDomain
 
 		public void OnEnd()
 		{
-			Fight fight = new(
-				InteractionScope.Instance.LeftRole,
-				InteractionScope.Instance.RightRole)
-			{
-				Cell = InteractionScope.Instance.RightRole.Position.Cell
-			};
+			// Fight fight = new(
+			// 	DialogueService.Instance.LeftRole,
+			// 	DialogueService.Instance.RightRole)
+			// {
+			// 	Cell = DialogueService.Instance.RightRole.Position.Cell
+			// };
 			
-			U.Get<BattleGlobalService>().CreateBattle(fight);
-			
-			U.Factory.Application.DependencyManager.DestroyScope<InteractionScope>();
+			// U.Get<BattleGlobalService>().CreateBattle(fight);
+			//
+			// U.M.DestroyScope<DialogueService>();
 		}
 
 		public int Id => 0;

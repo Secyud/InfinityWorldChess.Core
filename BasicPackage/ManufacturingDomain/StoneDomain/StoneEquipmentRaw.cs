@@ -7,7 +7,7 @@ namespace InfinityWorldChess.ManufacturingDomain.StoneDomain
 {
     public class StoneEquipmentRaw : EquipmentManufacturable
     {
-        [field: S(ID = 257)] public byte Volume { get; set; }
+        [field: S] public byte Volume { get; set; }
 
         public override void SetContent(Transform transform)
         {

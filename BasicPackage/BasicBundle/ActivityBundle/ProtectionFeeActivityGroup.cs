@@ -1,6 +1,8 @@
-﻿namespace InfinityWorldChess.BasicBundle.ActivityBundle
+﻿using InfinityWorldChess.ActivityDomain;
+
+namespace InfinityWorldChess.BasicBundle.ActivityBundle
 {
-    public class ProtectionFeeActivityGroup:ActivityTemplate
+    public class ProtectionFeeActivityGroup:Activity
     {
         
         

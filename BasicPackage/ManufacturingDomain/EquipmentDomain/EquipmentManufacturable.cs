@@ -12,8 +12,8 @@ namespace InfinityWorldChess.ManufacturingDomain.EquipmentDomain
 {
     public class EquipmentManufacturable : Manufacturable
     {
-        [S(ID = 1)] public readonly int[] Property = new int[SharedConsts.EquipmentPropertyCount];
-        [S(ID = 2)] public readonly int[] Shape = new int[SharedConsts.EquipmentPropertyCount];
+        [S ] public readonly int[] Property = new int[SharedConsts.EquipmentPropertyCount];
+        [S ] public readonly int[] Shape = new int[SharedConsts.EquipmentPropertyCount];
         
         public virtual void BeforeManufacturing(Manufacture manufacture,EquipmentProcessData processData)
         {

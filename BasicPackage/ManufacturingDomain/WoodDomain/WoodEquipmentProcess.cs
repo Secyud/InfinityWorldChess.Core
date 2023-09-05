@@ -12,11 +12,11 @@ namespace InfinityWorldChess.ManufacturingDomain.WoodDomain
     {
         public short Position { get; set; }
 
-        [field: S(ID = 3, DataType = DataType.Initialed)]
+        [field: S ]
 
         public byte RangeX { get; protected set; }
 
-        [field: S(ID = 4, DataType = DataType.Initialed)]
+        [field: S ]
         public byte RangeY { get; protected set; }
     }
 }

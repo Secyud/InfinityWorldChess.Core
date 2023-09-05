@@ -7,9 +7,9 @@ namespace InfinityWorldChess.ManufacturingDomain.WoodDomain
 {
 	public class WoodEquipmentRaw : EquipmentManufacturable
 	{
-		[field: S(ID=257)] public byte Width { get; set; }
+		[field: S ] public byte Width { get; set; }
 
-		[field: S(ID=258)] public byte Height { get; set; }
+		[field: S ] public byte Height { get; set; }
 		
 		public override void SetContent(Transform transform)
 		{

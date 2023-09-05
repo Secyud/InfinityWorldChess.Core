@@ -3,6 +3,8 @@
 using InfinityWorldChess.BattleDomain;
 using InfinityWorldChess.RoleDomain;
 using InfinityWorldChess.SkillDomain;
+using InfinityWorldChess.SkillDomain.AttackDomain;
+using InfinityWorldChess.SkillDomain.SkillInteractionDomain;
 
 #endregion
 

@@ -7,7 +7,7 @@ namespace InfinityWorldChess.ManufacturingDomain.MetalDomain
 {
 	public class MetalEquipmentRaw : EquipmentManufacturable
 	{
-		[field: S(ID=257)]public short MeltingPoint { get; set; }
+		[field: S ]public short MeltingPoint { get; set; }
 
 		public override void SetContent(Transform transform)
 		{

@@ -1,8 +1,8 @@
 ﻿using InfinityWorldChess.BasicBundle.BattleBuffs.Abstractions;
 using InfinityWorldChess.BattleDomain;
 using InfinityWorldChess.BuffDomain;
-using InfinityWorldChess.GlobalDomain;
-using InfinityWorldChess.SkillDomain;
+using InfinityWorldChess.SkillDomain.AttackDomain;
+using InfinityWorldChess.SkillDomain.SkillInteractionDomain;
 using InfinityWorldChess.Ugf;
 
 namespace InfinityWorldChess.BasicBundle.BattleBuffs
@@ -62,7 +62,7 @@ namespace InfinityWorldChess.BasicBundle.BattleBuffs
 			SkillInteraction interaction =
 				SkillInteraction.Get(Launcher, _target);
 			AttackRecordBuff attack = interaction.SetAttack();
-			attack.AttackType = AttackType.Poison;
+			attack.AttackType = AttackType.Magical;
 			attack.Attack = AttackValue;
 			interaction.RunAttack();
 

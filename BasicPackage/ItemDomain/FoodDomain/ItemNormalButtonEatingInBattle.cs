@@ -14,7 +14,7 @@ namespace InfinityWorldChess.ItemDomain.FoodDomain
 
 		public override void Trigger()
 		{
-			(Target as IEdibleInBattle)!.EatingInBattle(BattleScope.Instance.Get<RoleRefreshService>().Role);
+			(Target as IEdibleInBattle)!.EatingInBattle(BattleScope.Instance.Get<RoleObservedService>().Role);
 		}
 
 		public override bool Visible(IItem target)

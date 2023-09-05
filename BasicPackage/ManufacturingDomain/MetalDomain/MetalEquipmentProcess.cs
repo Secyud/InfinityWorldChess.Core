@@ -12,8 +12,7 @@ namespace InfinityWorldChess.ManufacturingDomain.MetalDomain
 {
     public abstract class MetalEquipmentProcess : EquipmentProcessBase
     {
-        [field: S(ID = 3, DataType = DataType.Initialed)]
-        public byte Length { get; set; }
+        [field: S ] public byte Length { get; set; }
         public byte StartPosition { get; set; }
         public override void SetContent(Transform transform)
         {

@@ -8,14 +8,16 @@ using UnityEngine;
 
 namespace InfinityWorldChess.InteractionDomain
 {
-	public class ChatInteraction:IFreeInteractionUnit
+	public class ChatDialogue:IDialogueUnit
 	{
+		public List<IDialogueAction> ActionList { get; }
+		public IDialogueAction DefaultAction { get; }
 		public string Text => "今天天气真好啊。";
 
 		public IObjectAccessor<Sprite> Background => 
 			SpriteContainer.Create<IwcAb>("00015-3099803928",prefix:SpritePrefix.Art);
 
-		public IList<Tuple<string, IInteractionUnit>> Selections => null;
+		public IList<Tuple<string, IDialogueUnit>> Selections => null;
 
 		public void OnStart()
 		{

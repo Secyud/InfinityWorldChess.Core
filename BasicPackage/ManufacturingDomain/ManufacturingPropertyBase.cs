@@ -18,14 +18,14 @@ namespace InfinityWorldChess.ManufacturingDomain
 		{
 			writer.Write(LearnedProcesses.Count);
 			foreach (TProcess process in LearnedProcesses)
-				writer.Write(process);
+				writer.WriteObject(process);
 		}
 
 		public virtual void Load(IArchiveReader reader)
 		{
 			int count = reader.ReadInt32();
 			for (int i = 0; i < count; i++)
-				LearnedProcesses.Add(reader.Read<TProcess>());
+				LearnedProcesses.Add(reader.ReadObject<TProcess>());
 		}
 	}
 }

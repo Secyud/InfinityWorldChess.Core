@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using InfinityWorldChess.GlobalDomain;
 using InfinityWorldChess.Ugf;
-using JetBrains.Annotations;
 using Secyud.Ugf;
 using Secyud.Ugf.TableComponents.FilterComponents;
 using Secyud.Ugf.TableComponents.SorterComponents;
@@ -21,7 +20,6 @@ namespace InfinityWorldChess.ManufacturingDomain.Components
         where TFilter : FilterRegeditBase<TItem>
     {
         [SerializeField] private ShownCell ShownCell;
-        [SerializeField] [CanBeNull] private ShownCell CellTemplate;
 
         public ShownCell Cell => ShownCell;
         public TItem SelectedItem { get; private set; }
@@ -30,9 +28,7 @@ namespace InfinityWorldChess.ManufacturingDomain.Components
         {
             GlobalScope.Instance.OpenSelect()
                 .AutoSetSingleSelectTable<TItem, TSorter, TFilter>(
-                    GetSelectList(),
-                    CellTemplate,
-                    ChangeSelect);
+                    GetSelectList(), ChangeSelect);
         }
 
         protected virtual void ChangeSelect(TItem select)

@@ -9,7 +9,7 @@ namespace InfinityWorldChess.ManufacturingDomain.FlavorDomain
 {
     public abstract class FlavorRaw : Manufacturable, IHasFlavor
     {
-        [field: S(ID = 256)] public float[] FlavorLevel { get; } = new float[BasicConsts.FlavorCount];
+        [field: S] public float[] FlavorLevel { get; } = new float[BasicConsts.FlavorCount];
 
         public abstract Color Color { get; }
 
