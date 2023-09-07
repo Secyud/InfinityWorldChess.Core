@@ -4,7 +4,7 @@ using Secyud.Ugf.HexMap;
 
 namespace InfinityWorldChess.SkillDomain
 {
-    public interface ISkill:IHasSaveIndex,IShowable
+    public interface ISkill:IShowable
     {
         byte Score { get; set; }
 		

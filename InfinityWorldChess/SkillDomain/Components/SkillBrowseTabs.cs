@@ -1,6 +1,7 @@
 ﻿#region
 
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using InfinityWorldChess.RoleDomain;
 using InfinityWorldChess.Ugf;
 using Secyud.Ugf.TableComponents;
@@ -28,21 +29,21 @@ namespace InfinityWorldChess.SkillDomain
 			{
 				SkillTable.AutoSetButtonTable
 					<ICoreSkill, CoreSkillSorters,CoreSkillFilters,CoreSkillButtons>(
-						_role.CoreSkill.LearnedSkills);
+						_role.CoreSkill.LearnedSkills.Values.ToList());
 				break;
 			}
 			case 1:
 			{
 				SkillTable.AutoSetButtonTable
 					<IFormSkill, FormSkillSorters,FormSkillFilters,FormSkillButtons>(
-						_role.FormSkill.LearnedSkills);
+						_role.FormSkill.LearnedSkills.Values.ToList());
 				break;
 			}
 			case 2:
 			{
 				SkillTable.AutoSetButtonTable
 					<IPassiveSkill, PassiveSkillSorters,PassiveSkillFilters,PassiveSkillButtons>(
-						_role.PassiveSkill.LearnedSkills);
+						_role.PassiveSkill.LearnedSkills.Values.ToList());
 				break;
 			}
 			}

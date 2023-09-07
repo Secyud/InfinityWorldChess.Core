@@ -1,7 +1,9 @@
 #region
 
 using InfinityWorldChess.GameDomain;
+using InfinityWorldChess.GameDomain.GameMenuDomain;
 using InfinityWorldChess.PlayerDomain;
+using Secyud.Ugf;
 using Secyud.Ugf.TableComponents.ButtonComponents;
 
 #endregion
@@ -14,7 +16,9 @@ namespace InfinityWorldChess.ItemDomain.FoodDomain
 
 		public override void Trigger()
 		{
-			(Target as IEdible)!.Eating(GameScope.Instance.Player.Role);
+			IEdible edible = Target as IEdible;
+			edible?.Eating(GameScope.Instance.Role.MainOperationRole);
+			U.Get<GameMenuTabService>().RefreshCurrentTab();
 		}
 
 		public override bool Visible(IItem target)

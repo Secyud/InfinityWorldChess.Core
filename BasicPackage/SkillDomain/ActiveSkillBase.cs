@@ -50,15 +50,6 @@ namespace InfinityWorldChess.SkillDomain
             transform.AddParagraph($"效果：{SkillEffect.ShowDescription}。");
         }
 
-        public int SaveIndex { get; set; }
-
-        public virtual void Release()
-        {
-            if (Icon is IReleasable releasable)
-                releasable.Release();
-        }
-
-
         public string CheckCastCondition(BattleRole chess)
         {
             return Condition?.CheckCastCondition(chess);
@@ -89,18 +80,14 @@ namespace InfinityWorldChess.SkillDomain
 
         public virtual void Save(IArchiveWriter writer)
         {
-            writer.Write(Living);
-            writer.Write(Kiling);
-            writer.Write(Nimble);
-            writer.Write(Defend);
+            this.SaveSkill(writer);
+            this.SaveByName(writer);
         }
 
         public virtual void Load(IArchiveReader reader)
         {
-            Living = reader.ReadByte();
-            Kiling = reader.ReadByte();
-            Nimble = reader.ReadByte();
-            Defend = reader.ReadByte();
+            this.LoadSkill(reader);
+            this.LoadByName(reader);
         }
     }
 }

@@ -15,11 +15,7 @@ namespace InfinityWorldChess.ItemDomain.EquipmentDomain
 		public override void Trigger()
 		{
 			IEquipment equipment = Target as IEquipment;
-			GameScope scope = U.M.GetScope<GameScope>();
-			Role role = scope.Get<RoleGameContext>().MainOperationRole;
-			
-			
-			
+			Role role = GameScope.Instance.Role.MainOperationRole;
 			role.SetEquipment(equipment);
 			U.Get<GameMenuTabService>().RefreshCurrentTab();
 		}

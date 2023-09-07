@@ -1,4 +1,5 @@
-﻿using InfinityWorldChess.SkillDomain;
+﻿using System.Collections.Generic;
+using InfinityWorldChess.SkillDomain;
 using Secyud.Ugf;
 
 namespace InfinityWorldChess.RoleDomain
@@ -7,12 +8,15 @@ namespace InfinityWorldChess.RoleDomain
     {
         public override string Description => $"可习得阵势{Name}。";
 
-        public override void Invoke(Role role)
+        public override bool Invoke(Role role)
         {
-            if (U.Tm.Create(ClassId, Name) is IFormSkill item)
-            {
-                role.FormSkill.LearnedSkills.Add(item);
-            }
+            SortedDictionary<string, IFormSkill> learnedSkills = role.FormSkill.LearnedSkills;
+            if (learnedSkills.ContainsKey(Name) ||
+                U.Tm.ConstructFromResource(ClassId, Name) is not IFormSkill item) 
+                return false;
+            learnedSkills[item.ShowName] = item;
+            return true;
+
         }
     }
 }

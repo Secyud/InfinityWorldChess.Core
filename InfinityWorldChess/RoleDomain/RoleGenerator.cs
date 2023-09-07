@@ -79,7 +79,7 @@ namespace InfinityWorldChess.RoleDomain
             {
                 foreach ((string name , Guid id) in resourceManager.CoreSkills)
                 {
-                    if (U.Tm.Create(id,name) is ICoreSkill skill)
+                    if (U.Tm.ConstructFromResource(id,name) is ICoreSkill skill)
                     {
                         int count = GetGenerateCount(skill.Score, 16, resourceManager.CoreSkills.Count);
                         _coreSkills.Add(skill);
@@ -97,7 +97,7 @@ namespace InfinityWorldChess.RoleDomain
             {
                 foreach ((string name , Guid id) in resourceManager.FormSkills)
                 {
-                    if (U.Tm.Create(id, name) is IFormSkill skill)
+                    if (U.Tm.ConstructFromResource(id, name) is IFormSkill skill)
                     {
                         int count = GetGenerateCount(skill.Score, 9, resourceManager.FormSkills.Count);
                         _formSkills.Add(skill);
@@ -115,7 +115,7 @@ namespace InfinityWorldChess.RoleDomain
             {
                 foreach ((string name , Guid id) in resourceManager.PassiveSkills)
                 {
-                    if (U.Tm.Create(id, name) is IPassiveSkill skill)
+                    if (U.Tm.ConstructFromResource(id, name) is IPassiveSkill skill)
                     {
                         int count = GetGenerateCount(skill.Score, 3, resourceManager.PassiveSkills.Count);
                         _passiveSkills.Add(skill);
@@ -133,7 +133,7 @@ namespace InfinityWorldChess.RoleDomain
             {
                 foreach ((string name , Guid id) in resourceManager.Items)
                 {
-                    if (U.Tm.Create(id, name) is IItem item)
+                    if (U.Tm.ConstructFromResource(id, name) is IItem item)
                     {
                         int count = GetGenerateCount(item.Score, 8, resourceManager.Items.Count);
                         _items.Add(item);
@@ -219,7 +219,8 @@ namespace InfinityWorldChess.RoleDomain
             int min = Math.Max(total - _coreSkillCountPerPerson, 0);
             for (int i = total - 1; i >= min; i--)
             {
-                role.CoreSkill.LearnedSkills.Add(_coreSkills[i]);
+                ICoreSkill skill = _coreSkills[i];
+                role.CoreSkill.LearnedSkills[skill.ShowName] = skill;
                 _coreSkills.RemoveAt(i);
             }
 
@@ -227,7 +228,8 @@ namespace InfinityWorldChess.RoleDomain
             min = Math.Max(total - _formSkillCountPerPerson, 0);
             for (int i = total - 1; i >= min; i--)
             {
-                role.FormSkill.LearnedSkills.Add(_formSkills[i]);
+                IFormSkill skill = _formSkills[i];
+                role.FormSkill.LearnedSkills[skill.ShowName] = skill;
                 _formSkills.RemoveAt(i);
             }
 
@@ -235,7 +237,8 @@ namespace InfinityWorldChess.RoleDomain
             min = Math.Max(total - _passiveSkillCountPerPerson, 0);
             for (int i = total - 1; i >= min; i--)
             {
-                role.PassiveSkill.LearnedSkills.Add(_passiveSkills[i]);
+                IPassiveSkill skill = _passiveSkills[i];
+                role.PassiveSkill.LearnedSkills[skill.ShowName] = skill;
                 _passiveSkills.RemoveAt(i);
             }
 

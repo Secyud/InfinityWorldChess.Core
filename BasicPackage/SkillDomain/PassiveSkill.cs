@@ -1,32 +1,35 @@
 ﻿using InfinityWorldChess.GameDomain;
+using InfinityWorldChess.ItemDomain;
 using InfinityWorldChess.RoleDomain;
 using InfinityWorldChess.Ugf;
 using Secyud.Ugf;
+using Secyud.Ugf.Archiving;
 using Secyud.Ugf.DataManager;
 using Secyud.Ugf.HexMap;
 using UnityEngine;
 
 namespace InfinityWorldChess.SkillDomain
 {
-    public class PassiveSkill:IPassiveSkill
+    public class PassiveSkill : IPassiveSkill, IArchivable, IArchivableShown
     {
-        [field: S] public string ShowDescription { get; set; }
-        [field: S] public string ShowName { get; set;}
-        [field: S] public IObjectAccessor<Sprite> ShowIcon { get;set; }
+        public string ShowName => Name;
+        public string ShowDescription => Description;
+        public IObjectAccessor<Sprite> ShowIcon => Icon;
         [field: S] public byte Score { get; set; }
         [field: S] public IPassiveSkillEffect Effect { get; set; }
         [field: S] public IObjectAccessor<HexUnitPlay> UnitPlay { get; set; }
+        [field: S] public string Name { get; set; }
+        [field: S] public string Description { get; set; }
+        [field: S] public IObjectAccessor<Sprite> Icon { get; set; }
 
-        public int SaveIndex { get; set; }
-        
         public void Equip(Role role)
         {
-            Effect.Equip(this,role);
+            Effect?.Equip(this, role);
         }
 
         public void UnEquip(Role role)
         {
-            Effect.UnEquip(this,role);
+            Effect?.UnEquip(this, role);
         }
 
         public void SetContent(Transform transform)
@@ -43,10 +46,23 @@ namespace InfinityWorldChess.SkillDomain
         {
             transform.AddParagraph($"效果：{Effect.ShowDescription}。");
         }
-        
+
         public byte Living { get; set; }
         public byte Kiling { get; set; }
         public byte Nimble { get; set; }
         public byte Defend { get; set; }
+
+
+        public virtual void Save(IArchiveWriter writer)
+        {
+            this.SaveSkill(writer);
+            this.SaveByName(writer);
+        }
+
+        public virtual void Load(IArchiveReader reader)
+        {
+            this.LoadSkill(reader);
+            this.LoadByName(reader);
+        }
     }
 }

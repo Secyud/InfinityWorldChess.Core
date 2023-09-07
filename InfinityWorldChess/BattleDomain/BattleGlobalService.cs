@@ -57,6 +57,8 @@ namespace InfinityWorldChess.BattleDomain
 		public void DestroyBattle()
 		{
 			U.M.DestroyScope<BattleScope>();
+			
+			BattleScope.Instance.Battle.OnBattleFinished();
 		}
 	}
 }

@@ -1,7 +1,9 @@
-﻿namespace InfinityWorldChess.ItemDomain.BookDomain
+﻿using InfinityWorldChess.RoleDomain;
+
+namespace InfinityWorldChess.ItemDomain.BookDomain
 {
 	public interface IReadable
 	{
-		void Reading();
+		void Reading(Role role);
 	}
 }

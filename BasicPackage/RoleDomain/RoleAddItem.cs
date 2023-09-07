@@ -1,6 +1,4 @@
-﻿using InfinityWorldChess.BasicBundle.Items;
-using InfinityWorldChess.GameDomain;
-using InfinityWorldChess.ItemDomain;
+﻿using InfinityWorldChess.ItemDomain;
 using Secyud.Ugf;
 
 namespace InfinityWorldChess.RoleDomain
@@ -9,12 +7,12 @@ namespace InfinityWorldChess.RoleDomain
     {
         public override string Description => $"可获得{Name}。";
 
-        public override void Invoke(Role role)
+        public override bool Invoke(Role role)
         {
-            if (U.Tm.Create(ClassId, Name) is IItem item)
-            {
-                role.Item.Add(item);
-            }
+            if (U.Tm.ConstructFromResource(ClassId, Name) is not IItem item)
+                return false;
+            role.Item.Add(item);
+            return true;
         }
     }
 }

@@ -9,7 +9,8 @@ namespace InfinityWorldChess.SkillDomain.SkillInteractionDomain
 {
     public abstract class SkillInteractionEffectBase : IActiveSkillEffect
     {
-        public const string p = "\r\n · ";
+        // ReSharper disable once InconsistentNaming
+        protected const string p = "\r\n · ";
         
         protected ISkillTarget Targets { get; set; }
         protected abstract ISkillTargetInRange TargetGetter { get; }

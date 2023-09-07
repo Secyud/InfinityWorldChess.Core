@@ -1,5 +1,9 @@
 #region
 
+using InfinityWorldChess.GameDomain;
+using InfinityWorldChess.GameDomain.GameMenuDomain;
+using InfinityWorldChess.RoleDomain;
+using Secyud.Ugf;
 using Secyud.Ugf.TableComponents.ButtonComponents;
 
 #endregion
@@ -12,7 +16,10 @@ namespace InfinityWorldChess.ItemDomain.BookDomain
 
 		public override void Trigger()
 		{
-			(Target as IReadable)!.Reading();
+			IReadable readable = Target as IReadable;
+			Role role = GameScope.Instance.Role.MainOperationRole;
+			readable?.Reading(role);
+			U.Get<GameMenuTabService>().RefreshCurrentTab();
 		}
 
 		public override bool Visible(IItem target)

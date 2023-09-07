@@ -17,10 +17,8 @@ namespace InfinityWorldChess.ItemDomain.BookDomain
     {
         [field: S] public RoleItemFunctionBase Function { get; set; }
 
-        public void Reading()
+        public void Reading(Role role)
         {
-            RoleGameContext roleContext = GameScope.Instance.Role;
-            Role role = roleContext.MainOperationRole;
             Function?.Invoke(role);
             role.Item.Remove(this);
         }

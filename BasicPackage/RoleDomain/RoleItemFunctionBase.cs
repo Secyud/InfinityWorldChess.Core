@@ -9,6 +9,6 @@ namespace InfinityWorldChess.RoleDomain
         [field: S] public Guid ClassId { get; set; }
 
         public abstract string Description { get; }
-        public abstract void Invoke(Role role);
+        public abstract bool Invoke(Role role);
     }
 }

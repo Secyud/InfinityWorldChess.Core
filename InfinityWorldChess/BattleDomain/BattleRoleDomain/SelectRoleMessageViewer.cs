@@ -1,4 +1,5 @@
 ﻿using InfinityWorldChess.BattleDomain.BattleCellDomain;
+using Secyud.Ugf;
 using Secyud.Ugf.HexMap;
 
 namespace InfinityWorldChess.BattleDomain.BattleRoleDomain
@@ -8,7 +9,7 @@ namespace InfinityWorldChess.BattleDomain.BattleRoleDomain
         private SelectObservedService _selectObservedService;
         private void Awake()
         {
-            _selectObservedService = BattleScope.Instance.Get<SelectObservedService>();
+            _selectObservedService = U.Get<SelectObservedService>();
             _selectObservedService.AddObserverObject(nameof(SelectRoleMessageViewer), Refresh,gameObject);
             _selectObservedService.State.AddObserverObject(nameof(SelectRoleMessageViewer), RefreshState,gameObject);
         }

@@ -1,4 +1,5 @@
-﻿using InfinityWorldChess.GlobalDomain;
+﻿using System.Linq;
+using InfinityWorldChess.GlobalDomain;
 using InfinityWorldChess.RoleDomain;
 using InfinityWorldChess.Ugf;
 
@@ -32,8 +33,9 @@ namespace InfinityWorldChess.SkillDomain
         {
             GlobalScope.Instance.OpenSelect().AutoSetSingleSelectTable
                 <ICoreSkill, CoreSkillSorters, CoreSkillFilters>(
-                    SkillView.Property.CoreSkill.LearnedSkills
-                        .FindAll(u=>Role.CoreSkillProperty.CanSet(u,Layer,Code)),
+                    SkillView.Property.CoreSkill.LearnedSkills.Values
+                        .Where(u=>Role.CoreSkillProperty.CanSet(u,Layer,Code))
+                        .ToList(),
                     EnsureSkill);
         }
 

@@ -17,12 +17,12 @@ namespace InfinityWorldChess.RoleDomain
 
         public void AutoEquipCoreSkill()
         {
-                CoreSkill.AutoEquip();
+            CoreSkill.AutoEquip();
         }
 
         public class CoreSkillProperty : IArchivable
         {
-            public List<ICoreSkill> LearnedSkills { get; } = new();
+            public SortedDictionary<string, ICoreSkill> LearnedSkills { get; } = new();
 
             private readonly CoreSkillContainer[][] _layers;
 
@@ -107,14 +107,35 @@ namespace InfinityWorldChess.RoleDomain
             {
                 List<ICoreSkill> tmp = new();
 
-                foreach (ICoreSkill skill in LearnedSkills)
+                foreach (ICoreSkill skill in LearnedSkills.Values)
                 {
                     if (Get(skill.MaxLayer, skill.FullCode) is null)
+                    {
                         Set(skill, skill.MaxLayer, skill.FullCode);
+                    }
+
                     if (skill.MaxLayer < 2)
+                    {
                         tmp.Add(skill);
+                    }
                 }
 
+
+                const int count = SharedConsts.CoreSkillCodeCount * SharedConsts.CoreSkillCodeCount;
+
+                for (byte i = 0; i < count; i++)
+                {
+                    TrySetFromList(1, i);
+                }
+
+                foreach (byte i in _layers[3]
+                             .Where(c => c is not null)
+                             .Select(c => (byte)(c.EquipCode & 0b111)))
+                {
+                    TrySetFromList(2, i);
+                }
+
+                return;
 
                 void TrySetFromList(byte layer, byte code)
                 {
@@ -123,27 +144,17 @@ namespace InfinityWorldChess.RoleDomain
 
                     ICoreSkill skill = tmp.FirstOrDefault(u => CanSet(u, layer, code));
                     if (skill is not null)
+                    {
                         Set(skill, layer, code);
+                    }
                 }
-
-                const int count = SharedConsts.CoreSkillCodeCount * SharedConsts.CoreSkillCodeCount;
-
-                for (byte i = 0; i < count; i++)
-                    TrySetFromList(1, i);
-
-                foreach (byte i in _layers[3]
-                             .Where(c => c is not null)
-                             .Select(c => (byte)(c.EquipCode & 0b111)))
-                    TrySetFromList(2, i);
             }
 
             public void Save(IArchiveWriter writer)
             {
                 writer.Write(LearnedSkills.Count);
-                for (int i = 0; i < LearnedSkills.Count; i++)
+                foreach (ICoreSkill skill in LearnedSkills.Values)
                 {
-                    ICoreSkill skill = LearnedSkills[i];
-                    skill.SaveIndex = i;
                     writer.WriteObject(skill);
                 }
 
@@ -154,13 +165,7 @@ namespace InfinityWorldChess.RoleDomain
                     count <<= 1;
                     for (int j = 0; j < count; j++)
                     {
-                        if (layer[i] is null)
-                            writer.Write(false);
-                        else
-                        {
-                            writer.Write(true);
-                            writer.Write(layer[i].Skill.SaveIndex);
-                        }
+                        writer.Write(layer[i]?.Skill.ShowName ?? string.Empty);
                     }
                 }
             }
@@ -173,8 +178,7 @@ namespace InfinityWorldChess.RoleDomain
                 for (int i = 0; i < skillCount; i++)
                 {
                     ICoreSkill skill = reader.ReadObject<ICoreSkill>();
-                    skill!.SaveIndex = i;
-                    LearnedSkills.AddLast(skill);
+                    LearnedSkills[skill.ShowName] = skill;
                 }
 
                 uint count = 1;
@@ -184,17 +188,13 @@ namespace InfinityWorldChess.RoleDomain
                     count <<= 1;
                     for (byte j = 0; j < count; j++)
                     {
-                        if (reader.ReadBoolean())
-                        {
-                            layer[i] = new CoreSkillContainer(
-                                LearnedSkills[reader.ReadInt32()],
-                                i, j
-                            );
-                        }
-                        else
-                        {
-                            layer[i] = null;
-                        }
+                        string str = reader.ReadString();
+
+                        layer[j] = str.Length == 0
+                            ? null
+                            : new CoreSkillContainer(
+                                LearnedSkills[str],
+                                i, j);
                     }
                 }
             }
