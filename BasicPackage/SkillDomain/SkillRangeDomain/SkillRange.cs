@@ -14,14 +14,14 @@ namespace InfinityWorldChess.SkillDomain.SkillRangeDomain
 {
 	public class SkillRange : ISkillRange, IObjectAccessor<HexCell[]>
 	{
-		public SkillRange(IEnumerable<HexCell> cells)
+		public SkillRange(params HexCell[] cells)
 		{
 			Value = cells.ToArray();
 		}
 
 		public HexCell[] Value { get; }
 
-		public static SkillRange GetFixedRange(IEnumerable<HexCell> cells)
+		public static SkillRange GetFixedRange(params HexCell[] cells)
 		{
 			return new SkillRange(cells);
 		}
@@ -108,7 +108,7 @@ namespace InfinityWorldChess.SkillDomain.SkillRangeDomain
 				coordinate += startDirection;
 			}
 
-			return new SkillRange(cells);
+			return new SkillRange(cells.ToArray());
 		}
 	}
 }
