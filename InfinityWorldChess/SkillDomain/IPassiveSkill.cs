@@ -7,7 +7,7 @@ using Secyud.Ugf;
 
 namespace InfinityWorldChess.SkillDomain
 {
-	public interface IPassiveSkill : ICanBeEquipped, IHasContent, ISkill
+	public interface IPassiveSkill :  IHasContent, ISkill,IPassiveSkillEffect
 	{
 	}
 }

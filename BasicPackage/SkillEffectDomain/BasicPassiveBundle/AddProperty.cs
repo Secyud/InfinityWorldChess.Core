@@ -4,7 +4,7 @@ using InfinityWorldChess.SkillDomain;
 
 namespace InfinityWorldChess.SkillEffectDomain.BasicPassiveBundle
 {
-    public class AddProperty:IPassiveSkillEffect,IOnBattleRoleInitialize
+    public class AddProperty:BattlePassive
     {
         private Role _role;
         private IPassiveSkill _skill;
@@ -12,22 +12,22 @@ namespace InfinityWorldChess.SkillEffectDomain.BasicPassiveBundle
         private byte _kiling;
         private byte _nimble;
         private byte _defend;
-        public string ShowDescription => "战斗时提供四维属性加成。";
-        public void Equip(IPassiveSkill skill, Role role)
+        public override string ShowDescription => "战斗时提供四维属性加成。";
+        public override void Equip( Role role,IPassiveSkill skill)
         {
+            base.Equip(role,skill);
             _skill = skill;
             _role = role;
-            role.Buffs.BattleInitializes.Add(this);
         }
 
-        public void UnEquip(IPassiveSkill skill, Role role)
+        public override void UnEquip( Role role,IPassiveSkill skill)
         {
+            base.UnEquip(role,skill);
             _skill = skill;
             _role = null;
-            role.Buffs.BattleInitializes.Remove(this);
         }
 
-        public void OnBattleInitialize(BattleRole chess)
+        public override void OnBattleInitialize(BattleRole chess)
         {
             Add();
             BattleScope.Instance.Battle.BattleFinishAction += Remove;

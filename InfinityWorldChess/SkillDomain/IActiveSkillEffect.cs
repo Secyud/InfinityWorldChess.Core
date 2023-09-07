@@ -6,6 +6,6 @@ namespace InfinityWorldChess.SkillDomain
 {
     public interface IActiveSkillEffect:IHasDescription
     {
-        void Cast(IActiveSkill skill,BattleRole role, HexCell releasePosition, ISkillRange range);
+        void Cast(BattleRole role, HexCell releasePosition, ISkillRange range,IActiveSkill skill = null);
     }
 }

@@ -5,7 +5,7 @@ namespace InfinityWorldChess.SkillDomain
 {
     public interface IPassiveSkillEffect:IHasDescription
     {
-        void Equip(IPassiveSkill skill,Role role);
-        void UnEquip(IPassiveSkill skill,Role role);
+        void Equip(Role role,IPassiveSkill skill = null);
+        void UnEquip(Role role,IPassiveSkill skill = null);
     }
 }

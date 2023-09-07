@@ -15,8 +15,9 @@ namespace InfinityWorldChess.SkillDomain.SkillInteractionDomain
         protected ISkillTarget Targets { get; set; }
         protected abstract ISkillTargetInRange TargetGetter { get; }
         public abstract string ShowDescription { get; }
+
         protected IActiveSkill Skill { get; set; }
-        public void Cast(IActiveSkill skill, BattleRole role, HexCell releasePosition, ISkillRange range)
+        public void Cast(BattleRole role, HexCell releasePosition, ISkillRange range,IActiveSkill skill)
         {
             Skill = skill;
             Cast(role, releasePosition, range);

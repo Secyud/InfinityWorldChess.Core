@@ -22,14 +22,14 @@ namespace InfinityWorldChess.SkillDomain
         [field: S] public string Description { get; set; }
         [field: S] public IObjectAccessor<Sprite> Icon { get; set; }
 
-        public void Equip(Role role)
+        public void Equip(Role role,IPassiveSkill skill)
         {
-            Effect?.Equip(this, role);
+            Effect?.Equip( role,this);
         }
 
-        public void UnEquip(Role role)
+        public void UnEquip(Role role,IPassiveSkill skill)
         {
-            Effect?.UnEquip(this, role);
+            Effect?.UnEquip(role,this);
         }
 
         public void SetContent(Transform transform)

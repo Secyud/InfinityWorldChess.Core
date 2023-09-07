@@ -1,19 +1,13 @@
-﻿using System;
-using InfinityWorldChess.BattleDomain;
-using InfinityWorldChess.Ugf;
-using Secyud.Ugf;
-using Secyud.Ugf.DataManager;
+﻿using InfinityWorldChess.BattleDomain;
 using Secyud.Ugf.HexMap;
-using Secyud.Ugf.HexMap.Utilities;
-using UnityEngine;
 
 namespace InfinityWorldChess.SkillDomain.SkillRangeDomain.Target
 {
-    public class AcuteTriangleTargetRange : TargetWithoutTetragonalSymmetry,   ISkillCastResult,IHasContent
+    public class AcuteTriangleTargetRange : TargetWithoutTetragonalSymmetry,   ISkillCastResult
     {
         public override string ShowDescription => "锐角";
         
-        public ISkillRange GetCastResultRange(BattleRole role, HexCell castPosition)
+        public ISkillRange GetCastResultRange(BattleRole role, HexCell castPosition,IActiveSkill skill)
         {
             var center = GetCenter(role, castPosition);
             

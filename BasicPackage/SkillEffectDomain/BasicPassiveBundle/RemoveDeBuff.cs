@@ -1,11 +1,13 @@
 ﻿using InfinityWorldChess.BasicBundle.BattleBuffs;
 using InfinityWorldChess.BasicBundle.BattleBuffs.Recorders;
 using InfinityWorldChess.BattleDomain;
+using InfinityWorldChess.RoleDomain;
+using InfinityWorldChess.SkillDomain;
 using Secyud.Ugf.DataManager;
 
-namespace InfinityWorldChess.BasicBundle.PassiveSkills
+namespace InfinityWorldChess.SkillEffectDomain.BasicPassiveBundle
 {
-    public class RemoveDeBuff : PassiveSkillTemplate, IOnBattleRoleInitialize
+    public class RemoveDeBuff :BattlePassive
     {
         [field:S] private byte DeBuffType { get; set; }
 
@@ -13,16 +15,15 @@ namespace InfinityWorldChess.BasicBundle.PassiveSkills
 
         private BattleRole _chess;
 
-        public override string HideDescription =>
+        public override string ShowDescription =>
             $"每回合移除{DeBuffType switch { 1 => "灼烧", 2 => "冰冻", 3 => "中毒", _ => "未知" }}状态({Value})。";
-
-
-        public void OnBattleInitialize(BattleRole chess)
+        
+        public override void OnBattleInitialize(BattleRole chess)
         {
-            _chess = chess;
+            BattleScope.Instance.Battle.RoundBeginAction += Active;
         }
 
-        public void Active()
+        private void Active()
         {
             switch (DeBuffType)
             {

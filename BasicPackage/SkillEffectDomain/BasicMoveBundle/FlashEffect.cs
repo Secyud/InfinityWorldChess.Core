@@ -8,7 +8,7 @@ namespace InfinityWorldChess.SkillEffectDomain.BasicMoveBundle
 	public class FlashEffect : IActiveSkillEffect
 	{
 		public string ShowDescription => "闪现至目标点";
-		public void Cast(IActiveSkill skill, BattleRole role, HexCell releasePosition, ISkillRange range)
+		public void Cast( BattleRole role, HexCell releasePosition, ISkillRange range,IActiveSkill skill)
 		{
 			HexDirection direction = releasePosition.DirectionTo(role.Unit.Location);
 			role.Unit.Location = releasePosition;

@@ -6,7 +6,7 @@ namespace InfinityWorldChess.SkillDomain
 {
 	public interface ISkillCastCondition:IHasDescription
 	{
-		string CheckCastCondition(BattleRole chess);
-		void SkillCastInvoke(BattleRole chess);
+		string CheckCastCondition(BattleRole chess,IActiveSkill skill = null);
+		void SkillCastInvoke(BattleRole chess,IActiveSkill skill = null);
 	}
 }

@@ -50,32 +50,33 @@ namespace InfinityWorldChess.SkillDomain
             transform.AddParagraph($"效果：{SkillEffect.ShowDescription}。");
         }
 
-        public string CheckCastCondition(BattleRole chess)
+        public string CheckCastCondition(BattleRole chess,IActiveSkill skill)
         {
-            return Condition?.CheckCastCondition(chess);
+            return Condition?.CheckCastCondition(chess,skill);
         }
 
-        public void SkillCastInvoke(BattleRole chess)
+        public void SkillCastInvoke(BattleRole chess,IActiveSkill skill)
         {
+            Condition?.SkillCastInvoke(chess,skill);
         }
 
-        public ISkillRange GetCastPositionRange(BattleRole role)
+        public ISkillRange GetCastPositionRange(BattleRole role,IActiveSkill skill)
         {
             if (Position is null)
                 return new SkillRange(Array.Empty<HexCell>());
-            return Position.GetCastPositionRange(role);
+            return Position.GetCastPositionRange(role,skill);
         }
 
-        public ISkillRange GetCastResultRange(BattleRole role, HexCell castPosition)
+        public ISkillRange GetCastResultRange(BattleRole role, HexCell castPosition,IActiveSkill skill)
         {
             if (Result is null)
                 return new SkillRange(Array.Empty<HexCell>());
-            return Result.GetCastResultRange(role, castPosition);
+            return Result.GetCastResultRange(role, castPosition,skill);
         }
 
-        public  void Cast(BattleRole role, HexCell releasePosition, ISkillRange range)
+        public  void Cast(BattleRole role, HexCell releasePosition, ISkillRange range,IActiveSkill skill)
         {
-            SkillEffect?.Cast(this, role, releasePosition, range);
+            SkillEffect?.Cast(role, releasePosition, range,this);
         }
 
         public virtual void Save(IArchiveWriter writer)

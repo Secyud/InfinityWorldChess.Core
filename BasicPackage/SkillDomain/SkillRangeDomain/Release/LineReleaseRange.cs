@@ -6,12 +6,12 @@ using UnityEngine;
 
 namespace InfinityWorldChess.SkillDomain.SkillRangeDomain.Release
 {
-    public class LineReleaseRange : StartEndRange, ISkillCastPosition,IHasContent
+    public class LineReleaseRange : StartEndRange, ISkillCastPosition
     {
 
         public override string ShowDescription => "直线";
 
-        public ISkillRange GetCastPositionRange(BattleRole role)
+        public ISkillRange GetCastPositionRange(BattleRole role,IActiveSkill skill)
         {
             return SkillRange.Line(
                 Start, End, role.Unit.Location.Coordinates, role.Direction);

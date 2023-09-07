@@ -5,6 +5,6 @@ namespace InfinityWorldChess.SkillDomain
 {
 	public interface ISkillCastPosition:IHasDescription
 	{
-		ISkillRange GetCastPositionRange(BattleRole role);
+		ISkillRange GetCastPositionRange(BattleRole role,IActiveSkill skill = null);
 	}
 }

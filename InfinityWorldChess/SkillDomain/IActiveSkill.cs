@@ -9,9 +9,8 @@ using Secyud.Ugf.HexMap;
 namespace InfinityWorldChess.SkillDomain
 {
 	public interface IActiveSkill : IHasContent,
-		ISkillCastCondition,  ISkillCastEffect,ISkill
+		ISkillCastCondition,  IActiveSkillEffect,ISkillCastPosition,ISkillCastResult,ISkill
 	{
-		ISkillRange GetCastPositionRange(BattleRole role);
-		ISkillRange GetCastResultRange(BattleRole role, HexCell castPosition);
+		
 	}
 }
