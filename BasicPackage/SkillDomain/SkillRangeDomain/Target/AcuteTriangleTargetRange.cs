@@ -11,11 +11,13 @@ namespace InfinityWorldChess.SkillDomain.SkillRangeDomain.Target
     {
         [field: S ] public int Start { get; set; }
         [field: S ] public int End { get; set; }
+        [field: S ] public bool Direction { get; set; }
 
         public string ShowDescription => $"锐角({Start},{End})";
         public ISkillRange GetCastResultRange(BattleRole role, HexCell castPosition)
         {
-            return SkillRange.Triangle(Start, End, castPosition, 
+            return SkillRange.Triangle(Start, End,
+                Direction?role.Unit.Location: castPosition, 
                 castPosition.DirectionTo(role.Unit.Location));
         }
         
