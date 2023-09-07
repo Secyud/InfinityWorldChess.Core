@@ -26,15 +26,15 @@ namespace InfinityWorldChess.SkillDomain.SkillRangeDomain
 			return new SkillRange(cells);
 		}
 
-		public static SkillRange Circle(int start, int end, HexCell center)
+		public static SkillRange Circle(byte start, byte end, HexCoordinates center)
 		{
-			return GetArcRange(start, end, center.Coordinates, HexDirection.Ne, 5);
+			return GetArcRange(start, end, center, HexDirection.Ne, 5);
 		}
 
-		public static SkillRange WideHalfCircle(int start, int end, HexCell center, HexDirection direction)
+		public static SkillRange WideHalfCircle(byte start, byte end, HexCoordinates center, HexDirection direction)
 		{
 			return GetArcRange(
-				start, end, center.Coordinates,
+				start, end, center,
 				(HexDirection)(((int)direction + 4) % 6), 4
 			);
 		}
@@ -47,18 +47,16 @@ namespace InfinityWorldChess.SkillDomain.SkillRangeDomain
 		/// <param name="center"></param>
 		/// <param name="direction"></param>
 		/// <returns></returns>
-		public static SkillRange HalfCircle(int start, int end, HexCell center, HexDirection direction)
+		public static SkillRange HalfCircle(byte start, byte end, HexCoordinates center, HexDirection direction)
 		{
-			return GetArcRange(
-				start, end, center.Coordinates,
+			return GetArcRange(start, end, center,
 				(HexDirection)(((int)direction + 5) % 6), 3
 			);
 		}
 
-		public static SkillRange WideTriangle(int start, int end, HexCell center, HexDirection direction)
+		public static SkillRange WideTriangle(byte start, byte end, HexCoordinates center, HexDirection direction)
 		{
-			return GetArcRange(
-				start, end, center.Coordinates,
+			return GetArcRange(start, end, center,
 				(HexDirection)(((int)direction + 5) % 6), 2
 			);
 		}
@@ -71,24 +69,18 @@ namespace InfinityWorldChess.SkillDomain.SkillRangeDomain
 		/// <param name="center"></param>
 		/// <param name="direction"></param>
 		/// <returns></returns>
-		public static SkillRange Triangle(int start, int end, HexCell center, HexDirection direction)
+		public static SkillRange Triangle(byte start, byte end, HexCoordinates center, HexDirection direction)
 		{
-			return GetArcRange(start, end, center.Coordinates, direction, 1);
+			return GetArcRange(start, end, center, direction, 1);
 		}
 
-		public static SkillRange Line(int start, int end, HexCell center, HexDirection direction)
+		public static SkillRange Line(byte start, byte end, HexCoordinates center, HexDirection direction)
 		{
-			return GetArcRange(start, end, center.Coordinates, direction, 0);
+			return GetArcRange(start, end, center, direction, 0);
 		}
-
-		public static SkillRange Point(HexCell center)
-		{
-			return new SkillRange(new[] {center});
-		}
-
 		public static SkillRange GetArcRange(
-			int startDistance, int endDistance, HexCoordinates startCoordinate,
-			HexDirection startDirection, int coverRange)
+			byte startDistance, byte endDistance, HexCoordinates startCoordinate,
+			HexDirection startDirection, byte coverRange)
 		{
 			HexGrid grid = BattleScope.Instance.Map.Grid;
 			List<HexCell> cells = new();

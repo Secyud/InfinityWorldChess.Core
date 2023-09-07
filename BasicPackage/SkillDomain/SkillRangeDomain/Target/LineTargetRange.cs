@@ -7,22 +7,13 @@ using UnityEngine;
 
 namespace InfinityWorldChess.SkillDomain.SkillRangeDomain.Target
 {
-    public class LineTargetRange :  ISkillCastResult,IHasContent
+    public class LineTargetRange : StartEndRange, ISkillCastResult,IHasContent
     {
-        [field: S] public int Start { get; set; }
-        [field: S ] public int End { get; set; }
-
-        public string ShowDescription => $"直线({Start},{End})";
+        public override string ShowDescription => "直线";
         public ISkillRange GetCastResultRange(BattleRole role, HexCell castPosition)
         {
-            return SkillRange.Line(Start, End, castPosition, 
+            return SkillRange.Line(Start, End, castPosition.Coordinates, 
                 castPosition.DirectionTo(role.Unit.Location));
-        }
-        
-        
-        public void SetContent(Transform transform)
-        {
-            transform.AddParagraph($"直线 ({Start}-{End})");
         }
     }
 }

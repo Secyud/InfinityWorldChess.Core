@@ -6,21 +6,14 @@ using UnityEngine;
 
 namespace InfinityWorldChess.SkillDomain.SkillRangeDomain.Release
 {
-    public class CircleReleaseRange :  ISkillCastPosition,IHasContent
+    public class CircleReleaseRange :StartEndRange,  ISkillCastPosition,IHasContent
     {
-        [field: S] public int Start { get; set; }
-        [field: S] public int End { get; set; }
-
-        public string ShowDescription => $"圆形({Start},{End})";
+        public override string ShowDescription => "圆形";
 
         public ISkillRange GetCastPositionRange(BattleRole role)
         {
-            return SkillRange.Circle(Start, End, role.Unit.Location);
-        }
-
-        public void SetContent(Transform transform)
-        {
-            transform.AddParagraph($"自身圆形 ({Start}-{End})");
+            return SkillRange.Circle(
+                Start, End, role.Unit.Location.Coordinates);
         }
     }
 }

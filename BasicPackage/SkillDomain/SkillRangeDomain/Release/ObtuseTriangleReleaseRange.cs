@@ -6,21 +6,14 @@ using UnityEngine;
 
 namespace InfinityWorldChess.SkillDomain.SkillRangeDomain.Release
 {
-    public class ObtuseTriangleReleaseRange :  ISkillCastPosition,IHasContent
+    public class ObtuseTriangleReleaseRange : StartEndRange, ISkillCastPosition,IHasContent
     {
-        [field: S ] public int Start { get; set; }
-        [field: S ] public int End { get; set; }
-
-        public string ShowDescription => $"钝角({Start},{End})";
+        public override string ShowDescription => "钝角";
 
         public ISkillRange GetCastPositionRange(BattleRole role)
         {
-            return SkillRange.WideTriangle(Start, End, role.Unit.Location, role.Direction);
-        }
-        
-        public void SetContent(Transform transform)
-        {
-            transform.AddParagraph($"大三角 ({Start}-{End})");
+            return SkillRange.WideTriangle(
+                Start, End, role.Unit.Location.Coordinates, role.Direction);
         }
     }
 }
