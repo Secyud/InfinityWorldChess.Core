@@ -9,9 +9,8 @@ namespace InfinityWorldChess.InteractionDomain
     public class InteractionScope : DependencyScopeProvider
     {
         private readonly MonoContainer<InteractionPanel> _interactionPanel;
-        private  DialogueService _dialogueService;
-
-        public DialogueService DialogueService => _dialogueService??=Get<DialogueService>();
+        
+        public DialogueService DialogueService => Get<DialogueService>();
 
         public static InteractionScope Instance { get; private set; }
         

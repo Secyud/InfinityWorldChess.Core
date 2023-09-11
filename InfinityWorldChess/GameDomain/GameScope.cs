@@ -26,9 +26,9 @@ namespace InfinityWorldChess.GameDomain
         private PlayerGameContext _player;
         private RoleGameContext _role;
 
-        public WorldGameContext World => _world ??= Get<WorldGameContext>();
-        public PlayerGameContext Player => _player ??= Get<PlayerGameContext>();
-        public RoleGameContext Role => _role ??= Get<RoleGameContext>();
+        public WorldGameContext World =>  Get<WorldGameContext>();
+        public PlayerGameContext Player => Get<PlayerGameContext>();
+        public RoleGameContext Role => Get<RoleGameContext>();
 
         public static GameScope Instance { get; private set; }
 
@@ -71,6 +71,8 @@ namespace InfinityWorldChess.GameDomain
         public void OpenGameMenu()
         {
             GameMenu.Create();
+            Role role = Player.Role;
+            Role.MainOperationRole = role;
         }
 
         public void CloseGameMenu()

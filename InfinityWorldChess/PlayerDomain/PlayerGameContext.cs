@@ -9,13 +9,10 @@ using Secyud.Ugf.HexMap.Utilities;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using InfinityWorldChess.ActivityDomain;
 using InfinityWorldChess.GameCreatorDomain;
 using InfinityWorldChess.GameDomain;
-using InfinityWorldChess.GameDomain.WorldMapDomain;
 using Secyud.Ugf;
 using Secyud.Ugf.Archiving;
-using Secyud.Ugf.DataManager;
 using Secyud.Ugf.DependencyInjection;
 
 #endregion
@@ -55,7 +52,7 @@ namespace InfinityWorldChess.PlayerDomain
             using DefaultArchiveReader reader = new(stream);
 
             int index = reader.ReadInt32();
-            Role = new Role();
+            Role = new Role(true);
             Role.Load(reader, GameScope.Instance.Map.Value.Grid.GetCell(index).Get<WorldCell>());
 
             int count = reader.ReadInt32();

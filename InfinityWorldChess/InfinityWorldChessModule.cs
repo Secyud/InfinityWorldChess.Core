@@ -1,8 +1,10 @@
 ﻿#region
 
 using System.Collections;
+using System.IO;
 using InfinityWorldChess.GameCreatorDomain;
 using InfinityWorldChess.GameDomain;
+using InfinityWorldChess.GameDomain.WorldCellDomain;
 using InfinityWorldChess.GameDomain.WorldMapDomain;
 using InfinityWorldChess.InteractionDomain;
 using InfinityWorldChess.MapDomain;
@@ -12,6 +14,7 @@ using Secyud.Ugf;
 using Secyud.Ugf.Archiving;
 using Secyud.Ugf.AssetComponents;
 using Secyud.Ugf.AssetLoading;
+using Secyud.Ugf.DataManager;
 using Secyud.Ugf.HexMap;
 using Secyud.Ugf.Modularity;
 using UnityEngine;
@@ -40,6 +43,10 @@ namespace InfinityWorldChess
             RegisterWorldModel(context.Get<WorldGlobalService>(), context.Get<IwcAb>());
 
             context.Get<WorldCellButtons>().Register(new TravelButtonDescriptor());
+
+            TypeManager tm = context.Get<TypeManager>();
+            string path = Path.Combine(Application.dataPath, "Data/ResourceManager/te.binary");
+            tm.ReadResource(path);
         }
 
 
@@ -108,9 +115,9 @@ namespace InfinityWorldChess
             HexUnit pu = world.WorldUnitPrefab.Instantiate(WorldGameContext.Map.Grid.transform);
             HexCell cell = pr.Position.Cell;
             WorldMap map = WorldGameContext.Map;
-            role.Roles[pr.Id] = pr;
             player.Unit = pu;
             pu.Id = pr.Id;
+            GameScope.Instance.Get<CurrentTabService>().Cell = cell.Get<WorldCell>(); 
             map.Grid.AddUnit(pr,pu, cell, 0);
             Vector3 position = pu.transform.position;
             position.y = 0;

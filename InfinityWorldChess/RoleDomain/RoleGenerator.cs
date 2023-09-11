@@ -6,9 +6,9 @@ using System;
 using System.Collections.Generic;
 using System.Ugf.Collections.Generic;
 using InfinityWorldChess.GameDomain;
+using InfinityWorldChess.GlobalDomain;
 using Secyud.Ugf;
 using Secyud.Ugf.Collections;
-using Secyud.Ugf.DataManager;
 using Secyud.Ugf.DependencyInjection;
 using Secyud.Ugf.HexMap;
 
@@ -153,7 +153,7 @@ namespace InfinityWorldChess.RoleDomain
         public IEnumerable<Role> GenerateRole()
         {
             List<Role> roles = new();
-
+            GlobalScope.Instance.RoleContext.CheckMax = true;
             for (int i = 0; i < 500; i++)
             {
                 bool female = U.GetRandom(2) > 0;
@@ -185,10 +185,11 @@ namespace InfinityWorldChess.RoleDomain
                     role.Basic.Avatar[j] = new AvatarElement
                     {
                         Id = group[j].GetRandomKey(),
-                        PositionX = (byte)(U.GetRandom(127) + 64),
-                        PositionY = (byte)(U.GetRandom(127) + 64),
-                        Scale = (byte)(U.GetRandom(127) + 64),
-                        Rotation = (byte)(U.GetRandom(127) + 64)
+                        // TODO: logic change
+                        // PositionX = (byte)(U.GetRandom(127) + 64),
+                        // PositionY = (byte)(U.GetRandom(127) + 64),
+                        // Scale = (byte)(U.GetRandom(127) + 64),
+                        // Rotation = (byte)(U.GetRandom(127) + 64)
                     };
                 }
 

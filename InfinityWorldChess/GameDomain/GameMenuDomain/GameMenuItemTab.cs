@@ -1,6 +1,8 @@
-﻿using InfinityWorldChess.ItemDomain;
+﻿using InfinityWorldChess.BuffDomain;
+using InfinityWorldChess.ItemDomain;
 using InfinityWorldChess.ItemDomain.EquipmentDomain;
 using InfinityWorldChess.PlayerDomain;
+using InfinityWorldChess.RoleDomain;
 using InfinityWorldChess.Ugf;
 using Secyud.Ugf.TabComponents;
 using Secyud.Ugf.TableComponents;
@@ -22,15 +24,16 @@ namespace InfinityWorldChess.GameDomain.GameMenuDomain
         {
             _service = GameScope.Instance.Get<GameMenuTabService>();
             base.Awake();
+            PlayerGameContext player = GameScope.Instance.Player;
+            
         }
 
         public override void RefreshTab()
         {
             PlayerGameContext player = GameScope.Instance.Player;
-            
             TableButtonDelegate<IItem> itd = ItemTable
                 .AutoSetButtonTable<IItem,ItemSorters,ItemFilters,PlayerItemButtons>(
-                player.Role.Item);
+                    player.Role.Item);
             ItemQuantityComponent.SetItem(itd.TableDelegate);
 
             BuffTable.AutoSetTable(

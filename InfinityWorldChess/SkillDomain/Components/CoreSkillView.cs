@@ -8,5 +8,13 @@ namespace InfinityWorldChess.SkillDomain
             base.BindCell(cell);
             cell.Bind(Property?.CoreSkill.Get(cell.Layer, cell.Code).CoreSkill);
         }
+        protected override void InitData()
+        {
+            for (int i = 0; i < SharedConsts.CoreSkillCount; i++)
+            {
+                CoreSkillCell cell = Cells[i];
+                cell.Bind(Property.CoreSkill.Get(cell.Layer,cell.Code)?.CoreSkill);
+            }
+        }
     }
 }

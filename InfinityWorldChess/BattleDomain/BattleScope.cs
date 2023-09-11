@@ -19,16 +19,13 @@ namespace InfinityWorldChess.BattleDomain
         private readonly MonoContainer<BattleMap> _map;
         private readonly PrefabContainer<HexUnit> _battleUnitPrefab;
         private readonly PrefabContainer<TextMeshPro> _simpleTextMesh;
-        private BattleContext _battle;
-        private BattleContext _action;
 
         public static BattleScope Instance { get; private set; }
         public BattleMap Map => _map.Value;
         public BattleDescriptor BattleDescriptor { get; private set; }
         public IBattleVictoryCondition VictoryCondition { get; private set; }
-        public BattleContext Battle => _battle ??= Get<BattleContext>();
-        public BattleContext Context => _action ??= Get<BattleContext>();
-
+        public BattleContext Battle => Get<BattleContext>();
+        public BattleContext Context =>  Get<BattleContext>();
 
         public BattleScope(IwcAb ab)
         {

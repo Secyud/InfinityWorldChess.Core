@@ -5,6 +5,7 @@ using Secyud.Ugf;
 using System;
 using System.Collections.Generic;
 using InfinityWorldChess.GameDomain;
+using InfinityWorldChess.GlobalDomain;
 using InfinityWorldChess.Ugf;
 using Secyud.Ugf.Archiving;
 using Secyud.Ugf.HexMap;
@@ -16,11 +17,19 @@ namespace InfinityWorldChess.RoleDomain
 {
 	public partial class Role : IUnitBase,IHasContent,IOnBattleRoleInitialize
 	{
-		public int Id { get; set; }
+		public int Id { get; private set; }
 
 		private readonly Dictionary<Type, RoleProperty> _extraProperties = new();
 		private HexUnit _unit;
 
+		public Role(bool load = false)
+		{
+			if (!load)
+			{
+				Id = GlobalScope.Instance.RoleContext.GetNewId();
+			}
+		}
+		
 		public int ExtraPropertyCount => _extraProperties.Count;
 
 		public void SetContent(Transform transform)

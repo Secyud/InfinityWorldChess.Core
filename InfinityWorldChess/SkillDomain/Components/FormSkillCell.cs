@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using InfinityWorldChess.GlobalDomain;
+using InfinityWorldChess.RoleDomain;
 using InfinityWorldChess.Ugf;
 
 namespace InfinityWorldChess.SkillDomain
@@ -10,7 +11,9 @@ namespace InfinityWorldChess.SkillDomain
         {
             GlobalScope.Instance.OpenSelect().AutoSetSingleSelectTable
                 <IFormSkill, FormSkillSorters, FormSkillFilters>(
-                    SkillView.Property.FormSkill.LearnedSkills.Values.ToList(), EnsureSkill);
+                    SkillView.Property.FormSkill.LearnedSkills.Values
+                        .Where(u=>Role.FormSkillProperty.CanSet(u,CellIndex))
+                            .ToList(), EnsureSkill);
         }
 
         public override void OnRemove()

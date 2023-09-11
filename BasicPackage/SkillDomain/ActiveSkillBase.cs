@@ -44,7 +44,8 @@ namespace InfinityWorldChess.SkillDomain
 
         protected virtual void SetHideContent(Transform transform)
         {
-            transform.AddParagraph($"释放要求：{Condition.ShowDescription}。");
+            if (Condition is not null)
+                transform.AddParagraph($"释放要求：{Condition.ShowDescription}。");
             transform.AddParagraph($"释放范围：{Position.ShowDescription}。");
             transform.AddParagraph($"目标范围：{Result.ShowDescription}。");
             transform.AddParagraph($"效果：{SkillEffect.ShowDescription}。");

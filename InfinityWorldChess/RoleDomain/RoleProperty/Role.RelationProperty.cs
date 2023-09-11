@@ -1,6 +1,7 @@
 #region
 
 using InfinityWorldChess.GameDomain;
+using InfinityWorldChess.GlobalDomain;
 using Secyud.Ugf.Archiving;
 using Secyud.Ugf.DataManager;
 
@@ -36,6 +37,15 @@ namespace InfinityWorldChess.RoleDomain
 				Position?.InRoles.Remove(role);
 				to?.InRoles.Add(role);
 				Position = to;
+
+				if (Position is not null)
+				{
+					GlobalScope.Instance.RoleContext.AddRole(role);
+				}
+				else
+				{
+					GlobalScope.Instance.RoleContext.RemoveRole(role);
+				}
 			}
 
 

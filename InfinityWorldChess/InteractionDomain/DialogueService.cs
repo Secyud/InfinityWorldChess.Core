@@ -1,6 +1,4 @@
-﻿using InfinityWorldChess.GameDomain;
-using InfinityWorldChess.RoleDomain;
-using Secyud.Ugf.AssetComponents;
+﻿using Secyud.Ugf.AssetComponents;
 using Secyud.Ugf.DependencyInjection;
 
 namespace InfinityWorldChess.InteractionDomain

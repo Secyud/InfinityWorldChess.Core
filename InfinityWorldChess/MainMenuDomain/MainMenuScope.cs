@@ -1,4 +1,6 @@
-﻿using InfinityWorldChess.GlobalDomain;
+﻿using InfinityWorldChess.GameDomain;
+using InfinityWorldChess.GlobalDomain;
+using InfinityWorldChess.RoleDomain;
 using Secyud.Ugf.AssetComponents;
 using Secyud.Ugf.DependencyInjection;
 using UnityEditor;

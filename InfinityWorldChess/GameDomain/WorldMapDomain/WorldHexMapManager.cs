@@ -2,7 +2,7 @@
 
 using System.Collections.Generic;
 using System.Ugf.Collections.Generic;
-using InfinityWorldChess.BattleDomain;
+using InfinityWorldChess.GlobalDomain;
 using InfinityWorldChess.RoleDomain;
 using Secyud.Ugf.AssetComponents;
 using Secyud.Ugf.DependencyInjection;
@@ -55,7 +55,7 @@ namespace InfinityWorldChess.GameDomain.WorldMapDomain
 
 		public int GetSpeed(HexUnit unit)
 		{
-			Role role = GameScope.Instance.Role.Get(unit.Id);
+			Role role = GlobalScope.Instance.RoleContext.Get(unit.Id);
 			return role?.GetSpeed() ?? 1;
 		}
 

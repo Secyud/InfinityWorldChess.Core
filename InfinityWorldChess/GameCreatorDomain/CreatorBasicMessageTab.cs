@@ -20,6 +20,7 @@ namespace InfinityWorldChess.GameCreatorDomain
             base.Awake();
             GameCreatorScope.Instance.Get<CreatorValidateService>().AddObject(
                 Name, NameEditor.Check, gameObject);
+            RefreshTab();
         }
 
         public override void RefreshTab()

@@ -13,5 +13,12 @@ namespace InfinityWorldChess.SkillDomain
 			base.BindCell(cell);
 			cell.Bind(Property?.FormSkill[cell.CellIndex]?.FormSkill);
 		}
+		protected override void InitData()
+		{
+			for (int i = 0; i < SharedConsts.FormSkillCount; i++)
+			{
+				Cells[i].Bind(Property.FormSkill[i]?.FormSkill);
+			}
+		}
 	}
 }

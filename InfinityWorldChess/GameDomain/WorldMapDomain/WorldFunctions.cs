@@ -1,5 +1,7 @@
 #region
 
+using System;
+using Secyud.Ugf;
 using UnityEngine;
 
 #endregion
@@ -8,6 +10,12 @@ namespace InfinityWorldChess.GameDomain.WorldMapDomain
 {
 	public class WorldFunctions : MonoBehaviour
 	{
+		private void Awake()
+		{
+			Canvas canvas = GetComponent<Canvas>();
+			canvas.worldCamera = U.Camera;
+		}
+
 		public void CallGameMenu()
 		{
 			GameScope.Instance.OpenGameMenu();
