@@ -80,7 +80,7 @@ namespace InfinityWorldChess.InteractionDomain
                 for (int index = 0; index < actions.Count; index++)
                 {
                     IDialogueAction action = actions[index];
-                    SelectOptionCell cell = IwcAb.Instance.SelectOptionCell.Value.Instantiate(content);
+                    SelectOptionCell cell = IwcAssets.Instance.SelectOptionCell.Value.Instantiate(content);
                     cell.OnInitialize(index,action.Invoke , action.ActionText);
                 }
             }

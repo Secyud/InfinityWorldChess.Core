@@ -4,7 +4,7 @@ using InfinityWorldChess.BattleDomain.BattleRoleDomain;
 using Secyud.Ugf;
 using Secyud.Ugf.DependencyInjection;
 
-namespace InfinityWorldChess.BattleDomain
+namespace InfinityWorldChess.BattleDomain.AiDomain
 {
     [Registry(DependScope = typeof(BattleScope))]
     public class IwcBattleAiController : IBattleAiController
@@ -21,8 +21,8 @@ namespace InfinityWorldChess.BattleDomain
                 State = AiControlState.NoActionValid;
             else
             {
-                CoreSkillAiAction.AddNodes(nodes, battleRole);
-                FormSkillAiAction.AddNodes(nodes, battleRole);
+                //CoreSkillAiAction.AddNodes(nodes, battleRole);
+                //FormSkillAiAction.AddNodes(nodes, battleRole);
                 yield return RandomSelect(nodes);
             }
 

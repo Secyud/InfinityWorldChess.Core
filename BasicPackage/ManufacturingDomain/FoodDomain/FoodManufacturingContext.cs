@@ -9,10 +9,10 @@ namespace InfinityWorldChess.ManufacturingDomain.FoodDomain
 	{
 		private static MonoContainer<Manufacture> _manufactureContainer;
 
-		public FoodManufacturingScope(IwcAb ab)
+		public FoodManufacturingScope(IwcAssets assets)
 		{
 			_manufactureContainer ??= MonoContainer<Manufacture>
-				.Create(ab,"InfinityWorldChess/Manufacturing/Food.prefab");
+				.Create(assets,"InfinityWorldChess/Manufacturing/Food.prefab");
 			_manufactureContainer.Create();
 		}
 

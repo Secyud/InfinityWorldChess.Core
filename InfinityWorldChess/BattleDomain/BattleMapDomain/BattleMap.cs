@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using InfinityWorldChess.BattleDomain.AiDomain;
 using InfinityWorldChess.BattleDomain.BattleCellDomain;
 using InfinityWorldChess.BattleDomain.BattleRoleDomain;
 using InfinityWorldChess.BattleDomain.BattleSkillDomain;
@@ -12,6 +13,7 @@ using Secyud.Ugf.HexMap;
 using UnityEngine;
 using UnityEngine.Animations;
 using UnityEngine.EventSystems;
+using UnityEngine.Serialization;
 
 #endregion
 
@@ -21,7 +23,12 @@ namespace InfinityWorldChess.BattleDomain.BattleMapDomain
     {
         [SerializeField] private LookAtConstraint BillBoardPrefab;
 
-        private BattleFlowState _state;
+        private static BattleFlowState State
+        {
+            get => BattleScope.Instance.State;
+            set => BattleScope.Instance.State = value;
+        }
+
         private HoverObservedService _hoverObservedService;
         private SelectObservedService _selectObservedService;
         private RoleObservedService _roleObservedService;
@@ -30,6 +37,11 @@ namespace InfinityWorldChess.BattleDomain.BattleMapDomain
 
         private void Awake()
         {
+            _hoverObservedService = U.Get<HoverObservedService>();
+            _selectObservedService = U.Get<SelectObservedService>();
+            _roleObservedService = U.Get<RoleObservedService>();
+            _skillObservedService = U.Get<SkillObservedService>();
+            _aiController = U.Get<IBattleAiController>();
             _hoverObservedService.AddObserverObject(nameof(BattleMap), HoverCellRefresh, gameObject);
             _selectObservedService.AddObserverObject(nameof(BattleMap), SelectCellRefresh, gameObject);
             _roleObservedService.AddObserverObject(nameof(BattleMap), CurrentRoleRefresh, gameObject);
@@ -39,6 +51,9 @@ namespace InfinityWorldChess.BattleDomain.BattleMapDomain
 
         private void Update()
         {
+            if (BattleScope.Instance.Battle is null)
+                return;
+
             if (BattleScope.Instance.VictoryCondition.Victory ||
                 BattleScope.Instance.VictoryCondition.Defeated)
                 U.Get<BattleGlobalService>().DestroyBattle();
@@ -47,13 +62,13 @@ namespace InfinityWorldChess.BattleDomain.BattleMapDomain
                 if (!EventSystem.current.IsPointerOverGameObject())
                 {
                     HexCell cell = GetCellUnderCursor();
-                    BattleCell message = cell.Get<BattleCell>();
+                    BattleCell message = cell ? cell.Get<BattleCell>() : null;
                     _hoverObservedService.HoverCell = message;
                     if (Input.GetMouseButtonDown(1))
                         _selectObservedService.SelectedCell = message;
                 }
 
-                switch (_state)
+                switch (State)
                 {
                     case BattleFlowState.Interval:
                         break;
@@ -62,6 +77,9 @@ namespace InfinityWorldChess.BattleDomain.BattleMapDomain
                         break;
                     case BattleFlowState.Control:
                         OnControlUpdate();
+                        break;
+                    case BattleFlowState.SkillCast:
+                        CalculateSkillEffect();
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();
@@ -119,13 +137,17 @@ namespace InfinityWorldChess.BattleDomain.BattleMapDomain
             }
         }
 
-        private SkillContainer _selectedSkill;
 
         private readonly List<BattleCell> _skillPositionCheckers = new();
         private readonly List<BattleCell> _skillResultCheckers = new();
 
         private void SelectSkillRefresh()
         {
+            foreach (BattleCell checker in _skillPositionCheckers)
+            {
+                checker.Releasable = false;
+            }
+
             _skillPositionCheckers.Clear();
             SkillContainer skill = _skillObservedService.Skill;
 
@@ -138,7 +160,14 @@ namespace InfinityWorldChess.BattleDomain.BattleMapDomain
             BattleRole chess = _roleObservedService.Role;
             ISkillRange positions = skill.Skill.GetCastPositionRange(chess);
 
-            _skillPositionCheckers.AddRange(positions.Value.Select(u => u.Get<BattleCell>()));
+            foreach (HexCell area in positions.Value)
+            {
+                BattleCell cell = area.Get<BattleCell>();
+                if (cell is null) continue;
+
+                cell.Releasable = true;
+                _skillPositionCheckers.Add(cell);
+            }
         }
 
 
@@ -147,14 +176,16 @@ namespace InfinityWorldChess.BattleDomain.BattleMapDomain
             if (!_skillPositionCheckers.Any()) return;
 
             foreach (BattleCell checker in _skillResultCheckers)
+            {
                 checker.InRange = false;
+            }
 
             _skillResultCheckers.Clear();
 
             if (_hoverCell is null ||
                 !_skillPositionCheckers.Contains(_hoverCell)) return;
 
-            ISkillRange range = _selectedSkill.Skill
+            ISkillRange range = _skillObservedService.Skill.Skill
                 .GetCastResultRange(_currentRole, _hoverCell.Cell);
 
             foreach (HexCell area in range.Value)
@@ -170,18 +201,20 @@ namespace InfinityWorldChess.BattleDomain.BattleMapDomain
 
         private void OnRoundUpdate()
         {
-            _state = BattleFlowState.Interval;
+            State = BattleFlowState.Interval;
 
             BattleScope.Instance.Context.OnRoundEnd();
-            List<BattleRole> roles = BattleScope.Instance.Context.Roles.Values.ToList();
+            List<BattleRole> roles = BattleScope.Instance.Context.Roles;
             BattleRole battleRole = roles.First(u => !u.Dead);
             float min = float.MaxValue;
             foreach (BattleRole r in roles)
+            {
                 if (!r.Dead && r.Time < min)
                 {
                     battleRole = r;
                     min = r.Time;
                 }
+            }
 
             battleRole.Time += battleRole.GetTimeAdd();
             battleRole.ExecutionValue += battleRole.ExecutionRecoverValue;
@@ -192,7 +225,7 @@ namespace InfinityWorldChess.BattleDomain.BattleMapDomain
             _selectObservedService.RefreshState();
 
             BattleScope.Instance.Context.OnRoundBegin();
-            
+
             EnterControl();
         }
 
@@ -200,30 +233,36 @@ namespace InfinityWorldChess.BattleDomain.BattleMapDomain
         {
             if (_currentRole.PlayerControl)
             {
+                BattleScope.Instance.OpenPlayerControlPanel();
             }
             else
             {
+                BattleScope.Instance.ClosePlayerControlPanel();
                 StartCoroutine(_aiController.StartPondering());
             }
 
-            _state = BattleFlowState.Control;
+            State = BattleFlowState.Control;
         }
 
         public void ExitControl()
         {
-            _state = BattleFlowState.OnRound;
+            State = BattleFlowState.OnRound;
         }
 
+        private HexCell _skillCastCell;
+        
         private void OnControlUpdate()
         {
             if (_currentRole.PlayerControl)
             {
-                BattleCell cell = GetCellUnderCursor().Get<BattleCell>();
+                BattleCell cell = GetCellUnderCursor()?.Get<BattleCell>();
                 if (cell is null)
                     return;
                 if (Input.GetMouseButtonDown(0) &&
                     _skillPositionCheckers.Contains(cell))
+                {
                     StartCurrentSkillCast(cell.Cell);
+                }
                 SelectResultRefresh();
             }
             else
@@ -253,37 +292,58 @@ namespace InfinityWorldChess.BattleDomain.BattleMapDomain
             asset.Play(chess.Unit, target);
         }
 
+        public void CalculateSkillEffect()
+        {
+            BattleRole role = _currentRole;
+            SkillContainer skill = _skillObservedService.Skill;
+            
+            switch (skill)
+            {
+                case CoreSkillContainer coreSkillContainer:
+                    role.SetCoreSkillCall((byte)(coreSkillContainer.EquipCode / 4));
+                    break;
+                case FormSkillContainer formSkillContainer:
+                    role.SetFormSkillCall(formSkillContainer.EquipCode);
+                    break;
+            }
 
+            HexCell cell = _skillCastCell;
+            HexCell selfCell = role.Unit.Location;
+            if (selfCell != cell)
+                role.Direction = cell.DirectionTo(selfCell);
+            skill.Skill.ConditionCast(role);
+            ISkillRange skillRange =
+                skill.Skill.GetCastResultRange(role, cell);
+            skill.Skill.Cast(role, cell,skillRange);
+
+            _roleObservedService.RefreshState();
+            _selectObservedService.RefreshState();
+            _skillObservedService.AutoReselectSkill();
+            
+            BattleScope.Instance.Context.OnActionFinished();
+            
+            EnterControl();
+        }
+
+        // TODO: Skill HexUnitPlay should give middle state to effect
         public void StartCurrentSkillCast(HexCell cell)
         {
+            State = BattleFlowState.Interval;
+            _skillCastCell = cell;
+            
             BattleRole battleRole = _currentRole;
-            SkillContainer skill = _selectedSkill;
+            SkillContainer skill = _skillObservedService.Skill;
 
             HexUnitPlay pa = skill.Skill.UnitPlay?.Value;
             if (pa)
             {
                 HexUnitPlay play = pa.Instantiate(battleRole.Unit.transform);
-                StartUnitPlayBroadcast(battleRole, play, cell);
+                StartUnitPlayBroadcast(battleRole, play, _skillCastCell);
             }
-
-            switch (skill)
+            else
             {
-                case CoreSkillContainer coreSkillContainer:
-                    battleRole.SetCoreSkillCall((byte)(coreSkillContainer.EquipCode / 4));
-                    break;
-                case FormSkillContainer formSkillContainer:
-                    battleRole.SetFormSkillCall(formSkillContainer.EquipCode);
-                    break;
+                State = BattleFlowState.SkillCast;
             }
-
-            HexCell selfCell = battleRole.Unit.Location;
-            if (selfCell != cell)
-                battleRole.Direction = cell.DirectionTo(selfCell);
-            skill.Skill.SkillCastInvoke(battleRole);
-            skill.Skill.Cast(battleRole, cell, skill.Skill.GetCastResultRange(battleRole, cell));
-
-            _roleObservedService.RefreshState();
-            _selectObservedService.RefreshState();
         }
     }
 }

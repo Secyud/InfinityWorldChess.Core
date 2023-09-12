@@ -19,8 +19,6 @@ namespace InfinityWorldChess.GameDomain
         public readonly IMonoContainer<SystemMenuPanel> SystemMenu;
         public readonly IMonoContainer<GameMenuPanel> GameMenu;
         public readonly IMonoContainer<WorldMap> Map;
-        public readonly List<WorldUi> WorldUis = new();
-        public bool Operability { get; private set; }
 
         private WorldGameContext _world;
         private PlayerGameContext _player;
@@ -32,11 +30,11 @@ namespace InfinityWorldChess.GameDomain
 
         public static GameScope Instance { get; private set; }
 
-        public GameScope(IwcAb ab)
+        public GameScope(IwcAssets assets)
         {
-            SystemMenu = MonoContainer<SystemMenuPanel>.Create(ab);
-            GameMenu = MonoContainer<GameMenuPanel>.Create(ab);
-            Map = MonoContainer<WorldMap>.Create(ab, onCanvas: false);
+            SystemMenu = MonoContainer<SystemMenuPanel>.Create(assets);
+            GameMenu = MonoContainer<GameMenuPanel>.Create(assets);
+            Map = MonoContainer<WorldMap>.Create(assets, onCanvas: false);
         }
 
         public override void OnInitialize()
@@ -49,11 +47,7 @@ namespace InfinityWorldChess.GameDomain
 
         public override void Dispose()
         {
-            SystemMenu.Destroy();
-            GameMenu.Destroy();
             Map.Destroy();
-            foreach (WorldUi ui in WorldUis)
-                Object.Destroy(ui.gameObject);
             
             Instance = null;
         }
@@ -83,31 +77,16 @@ namespace InfinityWorldChess.GameDomain
         public void OnContinue()
         {
             Map.Value.Show();
-            Operability = false;
-            foreach (WorldUi ui in WorldUis)
-                ui.gameObject.SetActive(true);
-            Operability = true;
         }
 
         public void OnInterrupt()
         {
             Map.Value.Hide();
-            Operability = false;
-            for (int i = 0; i < WorldUis.Count; )
+            Transform transform = U.Canvas.transform;
+            for (int i = 0; i < transform.childCount; i++)
             {
-                WorldUi ui = WorldUis[i];
-                if (ui.Destroyable)
-                {
-                    Object.Destroy(ui);
-                    WorldUis.RemoveAt(i);
-                }
-                else
-                {
-                    ui.gameObject.SetActive(false);
-                    i++;
-                }
+                transform.GetChild(i).Destroy();
             }
-            Operability = true;
         }
 
         public void ExitGame()

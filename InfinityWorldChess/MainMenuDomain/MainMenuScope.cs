@@ -12,9 +12,9 @@ namespace InfinityWorldChess.MainMenuDomain
     {
         public readonly IMonoContainer<MainMenuPanel> MainMenu;
         
-        public MainMenuScope(IwcAb ab) 
+        public MainMenuScope(IwcAssets assets) 
         {
-            MainMenu = MonoContainer<MainMenuPanel>.Create(ab);
+            MainMenu = MonoContainer<MainMenuPanel>.Create(assets);
         }
 
         public override void OnInitialize()

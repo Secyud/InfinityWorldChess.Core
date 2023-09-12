@@ -15,7 +15,7 @@ using UnityEngine;
 
 namespace InfinityWorldChess.RoleDomain
 {
-	public partial class Role : IUnitBase,IHasContent,IOnBattleRoleInitialize
+	public partial class Role : IUnitBase,IHasContent
 	{
 		public int Id { get; private set; }
 

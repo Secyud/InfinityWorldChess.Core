@@ -14,10 +14,10 @@ namespace InfinityWorldChess.GlobalDomain
         public static GlobalScope Instance { get; private set; }
 
         public RoleContext RoleContext => Get<RoleContext>();
-        public GlobalScope(IwcAb ab)
+        public GlobalScope(IwcAssets assets)
         {
-            _selectTable = MonoContainer<Table>.Create(ab,"SelectableTable");
-            _bodyPartSelect = MonoContainer<BodyPartSelectComponent>.Create(ab);
+            _selectTable = MonoContainer<Table>.Create(assets,"SelectableTable");
+            _bodyPartSelect = MonoContainer<BodyPartSelectComponent>.Create(assets);
         }
 
         public override void OnInitialize()

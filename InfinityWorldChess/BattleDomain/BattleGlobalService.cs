@@ -2,6 +2,7 @@
 
 using InfinityWorldChess.SkillDomain;
 using System.Collections.Generic;
+using InfinityWorldChess.GameDomain;
 using InfinityWorldChess.MapDomain;
 using Secyud.Ugf;
 using Secyud.Ugf.AssetComponents;
@@ -50,15 +51,19 @@ namespace InfinityWorldChess.BattleDomain
 
 		public void CreateBattle(BattleDescriptor battleDescriptor)
 		{
+			GameScope.Instance.OnInterrupt();
+			
 			U.M.CreateScope<BattleScope>();
 			
 			BattleScope.Instance.CreateBattle(battleDescriptor);
 		}
 		public void DestroyBattle()
 		{
+			BattleScope.Instance.Battle.OnBattleFinished();
+			
 			U.M.DestroyScope<BattleScope>();
 			
-			BattleScope.Instance.Battle.OnBattleFinished();
+			GameScope.Instance.OnContinue();
 		}
 	}
 }

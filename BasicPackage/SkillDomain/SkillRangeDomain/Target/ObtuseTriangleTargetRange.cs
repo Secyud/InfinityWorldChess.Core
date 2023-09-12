@@ -10,7 +10,7 @@ namespace InfinityWorldChess.SkillDomain.SkillRangeDomain.Target
         {
             var center = GetCenter(role, castPosition);
 
-            return SkillRange.WideTriangle(Start, End, center.Item1, center.Item2);
+            return SkillRange.ObtuseTriangle(Start, End, center.Item1, center.Item2);
         }
     }
 }

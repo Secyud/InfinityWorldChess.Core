@@ -14,7 +14,7 @@ namespace InfinityWorldChess.InteractionDomain
 		public string Text => "是吗？就让我领教一下你的武功。";
 
 		public IObjectAccessor<Sprite> Background => 
-			SpriteContainer.Create<IwcAb>("00086-4232632013",prefix:SpritePrefix.Art);
+			SpriteContainer.Create<IwcAssets>("00086-4232632013",prefix:SpritePrefix.Art);
 
 
 		public IList<Tuple<string, IDialogueUnit>> Selections => null;

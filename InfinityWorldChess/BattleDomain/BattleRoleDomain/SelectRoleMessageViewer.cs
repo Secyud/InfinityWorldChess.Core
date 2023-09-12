@@ -12,6 +12,7 @@ namespace InfinityWorldChess.BattleDomain.BattleRoleDomain
             _selectObservedService = U.Get<SelectObservedService>();
             _selectObservedService.AddObserverObject(nameof(SelectRoleMessageViewer), Refresh,gameObject);
             _selectObservedService.State.AddObserverObject(nameof(SelectRoleMessageViewer), RefreshState,gameObject);
+            Refresh();
         }
 
         private void Refresh()

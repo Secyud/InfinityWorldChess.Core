@@ -16,6 +16,8 @@ namespace InfinityWorldChess.GameDomain.WorldMapDomain
 {
     public class WorldMap : HexMapRootBase
     {
+        public Transform WorldUI;
+        
         private UniversalAdditionalCameraData _uac;
 
         private SelectObservedService _selectObservedService;
@@ -86,9 +88,21 @@ namespace InfinityWorldChess.GameDomain.WorldMapDomain
 
             Path = Grid.GetPath();
 
-            IwcAb.Instance.ButtonGroupInk.Value.Create(
+            IwcAssets.Instance.ButtonGroupInk.Value.Create(
                 cell, U.Get<WorldCellButtons>().Items.SelectVisibleFor(cell)
             );
+        }
+
+        public override void Hide()
+        {
+            base.Hide();
+            WorldUI.gameObject.SetActive(false);
+        }
+
+        public override void Show()
+        {
+            base.Show();
+            WorldUI.gameObject.SetActive(true);
         }
     }
 }

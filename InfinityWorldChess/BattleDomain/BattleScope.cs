@@ -1,4 +1,7 @@
-﻿using InfinityWorldChess.BattleDomain.BattleMapDomain;
+﻿using System.Linq;
+using System.Ugf.Collections.Generic;
+using InfinityWorldChess.BattleDomain.BattleMapDomain;
+using InfinityWorldChess.BattleDomain.BattleRoleDomain;
 using InfinityWorldChess.GlobalDomain;
 using InfinityWorldChess.RoleDomain;
 using InfinityWorldChess.Ugf;
@@ -17,6 +20,7 @@ namespace InfinityWorldChess.BattleDomain
     public class BattleScope : DependencyScopeProvider
     {
         private readonly MonoContainer<BattleMap> _map;
+        private readonly MonoContainer<BattlePlayerController> _controller;
         private readonly PrefabContainer<HexUnit> _battleUnitPrefab;
         private readonly PrefabContainer<TextMeshPro> _simpleTextMesh;
 
@@ -25,21 +29,24 @@ namespace InfinityWorldChess.BattleDomain
         public BattleDescriptor BattleDescriptor { get; private set; }
         public IBattleVictoryCondition VictoryCondition { get; private set; }
         public BattleContext Battle => Get<BattleContext>();
-        public BattleContext Context =>  Get<BattleContext>();
+        public BattleContext Context => Get<BattleContext>();
+        public BattleFlowState State { get; set; } = BattleFlowState.OnRound;
 
-        public BattleScope(IwcAb ab)
+        public BattleScope(IwcAssets assets)
         {
-            _map = MonoContainer<BattleMap>.Create(ab, onCanvas: false);
+            _map = MonoContainer<BattleMap>.Create(assets, onCanvas: false);
+            _controller = MonoContainer<BattlePlayerController>.Create(assets);
             _battleUnitPrefab = PrefabContainer<HexUnit>.Create(
-                ab, U.TypeToPath<BattleContext>() + "Unit.prefab"
+                assets, U.TypeToPath<BattleContext>() + "Unit.prefab"
             );
             _simpleTextMesh = PrefabContainer<TextMeshPro>.Create(
-                ab, "InfinityWorldChess/BattleDomain/DamageText.prefab"
+                assets, "InfinityWorldChess/BattleDomain/DamageText.prefab"
             );
         }
 
         public override void OnInitialize()
         {
+            Instance = this;
             _map.Create();
             _map.Value.Grid.HexMapManager = U.Get<BattleHexMapManager>();
         }
@@ -48,7 +55,7 @@ namespace InfinityWorldChess.BattleDomain
         {
             BattleDescriptor = descriptor;
             VictoryCondition = descriptor.GenerateVictoryCondition();
-            
+
             int width = descriptor.SizeX * HexMetrics.ChunkSizeX;
             int height = descriptor.SizeZ * HexMetrics.ChunkSizeZ;
             HexGrid grid = Map.Grid;
@@ -63,48 +70,53 @@ namespace InfinityWorldChess.BattleDomain
                 grid.CreateMap(width, height);
 
             descriptor.OnBattleCreated();
-            
+
             VictoryCondition.OnBattleInitialize();
         }
 
         public override void Dispose()
         {
-            foreach (BattleRole chess in Context.Roles.Values)
+            foreach (BattleRole chess in Context.Roles)
                 chess.Release();
             Instance = null;
             _map.Destroy();
         }
-        
-        
 
         public BattleRole GetChess(HexUnit unit)
         {
-            if (!unit) return null;
-
-            Context.Roles.TryGetValue(unit.Id, out BattleRole chess);
-            return chess;
+            return !unit ? null : Context.Roles.FirstOrDefault(u => u.Unit == unit);
         }
-        
+
         public void AddRoleBattleChess(BattleRole chess, HexCell cell)
         {
+            if (chess.Unit)
+                chess.Unit.Destroy();
             HexUnit unit = Object.Instantiate(_battleUnitPrefab.Value, Map.transform);
-            unit.Id = Context.GetNextId;
+            Map.Grid.AddUnit(chess, unit, cell, 0);
+            Context.Roles.AddIfNotContains(chess);
             chess.Unit = unit;
             chess.SetHighlight();
-            Map.Grid.AddUnit(chess,unit, cell, 0);
-            Context.Roles[unit.Id] = chess;
-            chess.Role.OnBattleInitialize(chess);
-            foreach (IOnBattleRoleInitialize b in chess.Role.Buffs.BattleInitializes)
-                b.OnBattleInitialize(chess);
-
+            chess.OnBattleInitialize();
+            chess.Dead = false;
             if (chess.UnitPlay?.Value)
             {
                 HexUnitPlay play = Object.Instantiate(chess.UnitPlay?.Value, unit.transform);
                 unit.SetLoopPlay(play);
                 Map.StartUnitPlayBroadcast(chess, play, chess.Unit.Location);
             }
+
+            Context.OnChessAdded();
         }
-        
+
+        public void RemoveRoleBattleChess(BattleRole chess)
+        {
+            if (chess.Unit)
+                chess.Unit.Destroy();
+            chess.Dead = true;
+            Context.Roles.Remove(chess);
+            Context.OnChessRemoved();
+        }
+
         public void CreateNumberText(HexCell cell, int value, Color color)
         {
             TextMeshPro t = _simpleTextMesh.Value.Instantiate();
@@ -130,9 +142,7 @@ namespace InfinityWorldChess.BattleDomain
                         coordinate += j;
                         if (cell && !cell.Unit)
                         {
-                            IObjectAccessor<HexUnitPlay> play = role.PassiveSkill[0]?.UnitPlay;
-
-                            BattleRole battleRole = new(role, play)
+                            BattleRole battleRole = new(role)
                             {
                                 Camp = camp,
                                 PlayerControl = playerControl
@@ -150,6 +160,15 @@ namespace InfinityWorldChess.BattleDomain
             }
 
             End: ;
+        }
+
+        public void OpenPlayerControlPanel()
+        {
+            _controller.Create();
+        }
+        public void ClosePlayerControlPanel()
+        {
+            _controller.Destroy();
         }
     }
 }

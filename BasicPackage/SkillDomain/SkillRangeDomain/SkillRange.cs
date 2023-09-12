@@ -28,7 +28,7 @@ namespace InfinityWorldChess.SkillDomain.SkillRangeDomain
 
 		public static SkillRange Circle(byte start, byte end, HexCoordinates center)
 		{
-			return GetArcRange(start, end, center, HexDirection.Ne, 5);
+			return GetArcRange(start, end, center, HexDirection.Ne, 6);
 		}
 
 		public static SkillRange WideHalfCircle(byte start, byte end, HexCoordinates center, HexDirection direction)
@@ -54,7 +54,7 @@ namespace InfinityWorldChess.SkillDomain.SkillRangeDomain
 			);
 		}
 
-		public static SkillRange WideTriangle(byte start, byte end, HexCoordinates center, HexDirection direction)
+		public static SkillRange ObtuseTriangle(byte start, byte end, HexCoordinates center, HexDirection direction)
 		{
 			return GetArcRange(start, end, center,
 				(HexDirection)(((int)direction + 5) % 6), 2
@@ -69,7 +69,7 @@ namespace InfinityWorldChess.SkillDomain.SkillRangeDomain
 		/// <param name="center"></param>
 		/// <param name="direction"></param>
 		/// <returns></returns>
-		public static SkillRange Triangle(byte start, byte end, HexCoordinates center, HexDirection direction)
+		public static SkillRange AcuteTriangle(byte start, byte end, HexCoordinates center, HexDirection direction)
 		{
 			return GetArcRange(start, end, center, direction, 1);
 		}

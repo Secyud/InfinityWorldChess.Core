@@ -16,10 +16,10 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace InfinityWorldChess
 {
-	public class IwcAb : IAssetLoader
+	public class IwcAssets : IAssetLoader
 	{
-		public static IwcAb Instance => _instance ??= U.Get<IwcAb>();
-		private static IwcAb _instance;
+		public static IwcAssets Instance => _instance ??= U.Get<IwcAssets>();
+		private static IwcAssets _instance;
 
 		public readonly IObjectAccessor<SPopup> AutoCloseFloating;
 		public readonly IObjectAccessor<SText> BodyFieldText;
@@ -35,7 +35,7 @@ namespace InfinityWorldChess
 		public readonly IObjectAccessor<AvatarEditor> RoleAvatarCell;
 		public readonly IObjectAccessor<SelectOptionCell> SelectOptionCell;
 
-		public IwcAb()
+		public IwcAssets()
 		{
 			RoleAvatarCell = PrefabContainer<AvatarEditor>.Create(this);
 			SelectOptionCell = PrefabContainer<SelectOptionCell>.Create(this);

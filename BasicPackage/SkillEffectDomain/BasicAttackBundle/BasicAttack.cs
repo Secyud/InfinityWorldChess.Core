@@ -23,15 +23,13 @@ namespace InfinityWorldChess.SkillEffectDomain.BasicAttackBundle
 
         protected override void OnInteraction(SkillInteraction interaction)
         {
-            if (interaction.TargetChess is ICanDefend defend)
-            {
-                float damage = AttackRecord.RunDamage(defend);
-                HexCell cell = interaction.TargetChess.Unit.Location;
-                if (defend.HealthValue < 0)
-                    interaction.TargetChess.Unit.Die();
+            BattleRole target = interaction.TargetChess;
+            float damage = AttackRecord.RunDamage(target);
+            HexCell cell = target.Unit.Location;
+            if (target.HealthValue < 0)
+                target.Unit.Die();
 
-                BattleScope.Instance.CreateNumberText(cell, (int)damage, Color.red);
-            }
+            BattleScope.Instance.CreateNumberText(cell, (int)damage, Color.red);
         }
 
         protected override void PreInteraction(SkillInteraction interaction)

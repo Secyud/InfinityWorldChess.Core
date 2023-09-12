@@ -40,8 +40,8 @@ namespace InfinityWorldChess
 
         public void PostConfigureGame(ConfigurationContext context)
         {
-            RegisterWorldModel(context.Get<WorldGlobalService>(), context.Get<IwcAb>());
-
+            RegisterWorldModel(context.Get<WorldGlobalService>(), context.Get<IwcAssets>());
+            WorldCellRoleDefaultButtons.RegistrarButtons(context.Get<InteractionButtons>());
             context.Get<WorldCellButtons>().Register(new TravelButtonDescriptor());
 
             TypeManager tm = context.Get<TypeManager>();

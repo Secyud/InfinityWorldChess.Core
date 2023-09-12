@@ -50,9 +50,9 @@ namespace InfinityWorldChess.GameCreatorDomain
 
        
         
-        public GameCreatorScope(IwcAb ab)
+        public GameCreatorScope(IwcAssets assets)
         {
-            _gameCreator = MonoContainer<GameCreatorPanel>.Create(ab);
+            _gameCreator = MonoContainer<GameCreatorPanel>.Create(assets);
         }
 
         public override void OnInitialize()

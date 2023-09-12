@@ -9,10 +9,10 @@ namespace InfinityWorldChess.ManufacturingDomain.DragDomain
 	{
 		private static MonoContainer<Manufacture> _manufactureContainer;
 
-		public DragManufacturingScope(IwcAb ab)
+		public DragManufacturingScope(IwcAssets assets)
 		{
 			_manufactureContainer ??= MonoContainer<Manufacture>
-				.Create(ab,"InfinityWorldChess/Manufacturing/Drag.prefab");
+				.Create(assets,"InfinityWorldChess/Manufacturing/Drag.prefab");
 			_manufactureContainer.Create();
 		}
 

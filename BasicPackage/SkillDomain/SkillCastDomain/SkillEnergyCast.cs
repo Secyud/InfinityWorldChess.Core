@@ -20,7 +20,7 @@ namespace InfinityWorldChess.SkillDomain.SkillCastDomain
             return null;
         }
 
-        public void SkillCastInvoke(BattleRole chess,IActiveSkill skill)
+        public void ConditionCast(BattleRole chess,IActiveSkill skill)
         {
             chess.ExecutionValue -= ExecutionConsume;
             chess.EnergyValue -= GetEnergyConsume(skill);

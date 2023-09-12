@@ -15,9 +15,9 @@ namespace InfinityWorldChess.ArchivingDomain
         public static ArchivingScope Instance { get; private set; }
 
 
-        public ArchivingScope(IwcAb ab)
+        public ArchivingScope(IwcAssets assets)
         {
-            GameLoadPanel = MonoContainer<GameLoadPanel>.Create(ab);
+            GameLoadPanel = MonoContainer<GameLoadPanel>.Create(assets);
         }
 
         public override void OnInitialize()

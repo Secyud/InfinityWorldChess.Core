@@ -10,9 +10,9 @@ namespace InfinityWorldChess.InteractionDomain
 
         public DialoguePanel Panel => _dialoguePanel.Value;
 
-        public DialogueService(IwcAb ab)
+        public DialogueService(IwcAssets assets)
         {
-            _dialoguePanel = MonoContainer<DialoguePanel>.Create(ab);
+            _dialoguePanel = MonoContainer<DialoguePanel>.Create(assets);
         }
 
         public  void OpenDialoguePanel()

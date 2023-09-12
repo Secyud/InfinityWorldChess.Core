@@ -31,22 +31,22 @@ namespace InfinityWorldChess.Ugf
 
 		public static SText AddTitle1(this Transform transform, string text)
 		{
-			return IwcAb.Instance.TitleText1.Value.Create(transform, U.T[text]);
+			return IwcAssets.Instance.TitleText1.Value.Create(transform, U.T[text]);
 		}
 
 		public static SText AddTitle2(this Transform transform, string text)
 		{
-			return IwcAb.Instance.TitleText2.Value.Create(transform, " " + U.T[text]);
+			return IwcAssets.Instance.TitleText2.Value.Create(transform, " " + U.T[text]);
 		}
 
 		public static SText AddTitle3(this Transform transform, string text)
 		{
-			return IwcAb.Instance.TitleText3.Value.Create(transform, "  " + U.T[text]);
+			return IwcAssets.Instance.TitleText3.Value.Create(transform, "  " + U.T[text]);
 		}
 
 		public static SText AddParagraph(this Transform transform, string text)
 		{
-			return IwcAb.Instance.BodyFieldText.Value.Create(transform, U.T.Translate(text));
+			return IwcAssets.Instance.BodyFieldText.Value.Create(transform, U.T.Translate(text));
 		}
 
 		public static void AddSimpleShown(this Transform transform, IShowable shown)
@@ -71,14 +71,14 @@ namespace InfinityWorldChess.Ugf
 					$"<size=18><color=#202000ff><b>【{U.T.Translate(item.ShowName)}】</b> {U.T.Translate(item.ShowDescription)}</color></size>"
 			))
 			{
-				IwcAb.Instance.BodyFieldText.Value.Create(transform, str.Point());
+				IwcAssets.Instance.BodyFieldText.Value.Create(transform, str.Point());
 			}
 		}
 
 		public static void AddShapeProperty(this Transform transform, int[] property,string title = "形状")
 		{
 			transform.AddTitle3(title);
-			PropertyRect e = IwcAb.Instance.PropertyRect.Instantiate(transform);
+			PropertyRect e = IwcAssets.Instance.PropertyRect.Instantiate(transform);
 			e.OnInitialize(property);
 		}
 

@@ -25,7 +25,7 @@ namespace InfinityWorldChess.Ugf
 		{
 			if(_autoClosePopupInstance)
 				_autoClosePopupInstance.Destroy();
-			_autoClosePopupInstance = IwcAb.Instance.AutoCloseFloating.Value
+			_autoClosePopupInstance = IwcAssets.Instance.AutoCloseFloating.Value
 				.InstantiateOnCanvas();
 			_autoClosePopupInstance.InitializeOnMouse();
 			_autoClosePopupInstance.RefreshContent(hasContent);
@@ -37,7 +37,7 @@ namespace InfinityWorldChess.Ugf
 		{
 			if(_tipPopupInstance)
 				_tipPopupInstance.Destroy();
-			_tipPopupInstance = IwcAb.Instance.TipFloating.Value
+			_tipPopupInstance = IwcAssets.Instance.TipFloating.Value
 				.InstantiateOnCanvas();
 			_autoClosePopupInstance.InitializeOnCenter();
 			RectTransform ret = _tipPopupInstance.PrepareLayout();
@@ -49,7 +49,7 @@ namespace InfinityWorldChess.Ugf
 		{
 			if(_ensurePopupInstance)
 				_ensurePopupInstance.Destroy();
-			_ensurePopupInstance = IwcAb.Instance.EnsureFloating.Value
+			_ensurePopupInstance = IwcAssets.Instance.EnsureFloating.Value
 				.InstantiateOnCanvas();
 			_ensurePopupInstance.InitializeOnCenter();
 			_ensurePopupInstance.GetComponent<Ensure>().EnsureAction += ensureAction;

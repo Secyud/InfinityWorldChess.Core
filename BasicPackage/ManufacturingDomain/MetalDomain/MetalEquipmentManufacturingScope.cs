@@ -13,10 +13,10 @@ namespace InfinityWorldChess.ManufacturingDomain.MetalDomain
 	{
 		private static MonoContainer<Manufacture> _manufactureContainer;
 
-		public MetalEquipmentManufacturingScope(IwcAb ab)
+		public MetalEquipmentManufacturingScope(IwcAssets assets)
 		{
 			_manufactureContainer ??= MonoContainer<Manufacture>
-				.Create(ab,"InfinityWorldChess/Manufacturing/MetalEquipment.prefab");
+				.Create(assets,"InfinityWorldChess/Manufacturing/MetalEquipment.prefab");
 			_manufactureContainer.Create();
 		}
 

@@ -14,9 +14,9 @@ namespace InfinityWorldChess.InteractionDomain
 
         public static InteractionScope Instance { get; private set; }
         
-        public InteractionScope(IwcAb iwcAb)
+        public InteractionScope(IwcAssets iwcAssets)
         {
-            _interactionPanel = MonoContainer<InteractionPanel>.Create(iwcAb);
+            _interactionPanel = MonoContainer<InteractionPanel>.Create(iwcAssets);
         }
 
         public override void OnInitialize()

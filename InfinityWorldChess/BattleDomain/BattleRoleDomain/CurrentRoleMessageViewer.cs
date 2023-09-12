@@ -8,6 +8,7 @@
             _roleObservedService = BattleScope.Instance.Get<RoleObservedService>();
             _roleObservedService.AddObserverObject(nameof(CurrentRoleMessageViewer), Refresh,gameObject);
             _roleObservedService.State.AddObserverObject(nameof(CurrentRoleMessageViewer), RefreshState,gameObject);
+            Refresh();
         }
 
         private void Refresh()

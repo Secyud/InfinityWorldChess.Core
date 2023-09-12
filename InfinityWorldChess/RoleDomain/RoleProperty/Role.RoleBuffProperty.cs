@@ -12,15 +12,6 @@ namespace InfinityWorldChess.RoleDomain
 	{
 		private RoleBuffProperty _buffs ;
 		public RoleBuffProperty Buffs => _buffs ??= new RoleBuffProperty(this);
-		public void OnBattleInitialize(BattleRole chess)
-		{
-			float maxHealth = PassiveSkill.Living + BodyPart[BodyType.Living].MaxValue;
-			float maxEnergy = maxHealth;
-			float execution = maxHealth / 128 + 1;
-			chess.InitValue(maxHealth, maxEnergy, (int)execution * 2);
-			chess.EnergyRecover = maxEnergy / 16;
-			chess.ExecutionRecover = execution;
-		}
 
 		public class RoleBuffProperty : BuffProperty<Role>
 		{

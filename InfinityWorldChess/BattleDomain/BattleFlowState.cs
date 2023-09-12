@@ -5,5 +5,6 @@
         Interval,
         OnRound,
         Control,
+        SkillCast,
     }
 }

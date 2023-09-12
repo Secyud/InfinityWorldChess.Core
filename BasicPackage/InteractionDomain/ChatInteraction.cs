@@ -15,7 +15,7 @@ namespace InfinityWorldChess.InteractionDomain
 		public string Text => "今天天气真好啊。";
 
 		public IObjectAccessor<Sprite> Background => 
-			SpriteContainer.Create<IwcAb>("00015-3099803928",prefix:SpritePrefix.Art);
+			SpriteContainer.Create<IwcAssets>("00015-3099803928",prefix:SpritePrefix.Art);
 
 		public IList<Tuple<string, IDialogueUnit>> Selections => null;
 

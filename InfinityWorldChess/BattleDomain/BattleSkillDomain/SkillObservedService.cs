@@ -22,8 +22,6 @@ namespace InfinityWorldChess.BattleDomain.BattleSkillDomain
             get => _skill;
             set
             {
-                if (_skill == value)
-                    return;
                 _skill = value;
                 Refresh();
             }

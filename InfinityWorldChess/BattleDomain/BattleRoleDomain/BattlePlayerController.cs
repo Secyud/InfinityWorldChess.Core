@@ -13,8 +13,8 @@ namespace InfinityWorldChess.BattleDomain.BattleRoleDomain
 {
     public class BattlePlayerController : MonoBehaviour
     {
-        [SerializeField] private ShownCell[] CoreSkillCells;
-        [SerializeField] private ShownCell[] FormSkillCells;
+        [SerializeField] private BattleSkillCell[] CoreSkillCells;
+        [SerializeField] private BattleSkillCell[] FormSkillCells;
         private CoreSkillContainer[] _nextCoreSkills;
         private FormSkillContainer[] _nextFormSkills;
         private RoleObservedService _roleObservedService;
@@ -24,6 +24,7 @@ namespace InfinityWorldChess.BattleDomain.BattleRoleDomain
             _roleObservedService = U.Get<RoleObservedService>();
             _skillObservedService = U.Get<SkillObservedService>();
             _skillObservedService.AddObserverObject(nameof(BattlePlayerController), RefreshUi,gameObject);
+            RefreshUi();
         }
 
         public void OnHoverFormSkill(int index)
@@ -83,14 +84,6 @@ namespace InfinityWorldChess.BattleDomain.BattleRoleDomain
             else
                 "行动力不足。无法执行操作。".CreateTipFloatingOnCenter();
         }
-
-        public void OpenPlayerControl()
-        {
-            gameObject.SetActive(true);
-            RefreshUi();
-        }
-        
-
         public void ExitPlayerControl()
         {
             BattleScope.Instance.Map.ExitControl();
@@ -110,31 +103,12 @@ namespace InfinityWorldChess.BattleDomain.BattleRoleDomain
             for (int i = 0; i < SharedConsts.CoreSkillCodeCount; i++)
             {
                 CoreSkillContainer skill = _nextCoreSkills[i];
-                if (skill is null)
-                    CoreSkillCells[i].gameObject.SetActive(false);
-                else
-                {
-                    CoreSkillCells[i].gameObject.SetActive(true);
-                    CoreSkillCells[i].BindShowable(skill.Skill);
-                    SButton button = CoreSkillCells[i].GetComponent<SButton>();
-                    button.interactable =
-                        skill.Skill.CheckCastCondition(battleRole) is null;
-                }
+                CoreSkillCells[i].RefreshSkill(skill,battleRole);
             }
             for (int i = 0; i < SharedConsts.FormSkillTypeCount; i++)
             {
                 FormSkillContainer skill = _nextFormSkills[i];
-
-                if (skill?.Skill is null)
-                    FormSkillCells[i].gameObject.SetActive(false);
-                else
-                {
-                    FormSkillCells[i].gameObject.SetActive(true);
-                    FormSkillCells[i].BindShowable(skill.Skill);
-                    SButton button = FormSkillCells[i].GetComponent<SButton>();
-                    button.interactable =
-                        skill.Skill.CheckCastCondition(battleRole) is null;
-                }
+                FormSkillCells[i].RefreshSkill(skill,battleRole);
             }
         }
     }

@@ -13,10 +13,10 @@ namespace InfinityWorldChess.ManufacturingDomain.WoodDomain
 	{
 		private static MonoContainer<Manufacture> _manufactureContainer;
 
-		public WoodEquipmentManufacturingScope(IwcAb ab)
+		public WoodEquipmentManufacturingScope(IwcAssets assets)
 		{
 			_manufactureContainer ??= MonoContainer<Manufacture>
-				.Create(ab,"InfinityWorldChess/Manufacturing/WoodEquipment.prefab");
+				.Create(assets,"InfinityWorldChess/Manufacturing/WoodEquipment.prefab");
 			_manufactureContainer.Create();
 		}
 

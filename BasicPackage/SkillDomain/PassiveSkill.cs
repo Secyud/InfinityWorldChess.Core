@@ -17,7 +17,7 @@ namespace InfinityWorldChess.SkillDomain
         public IObjectAccessor<Sprite> ShowIcon => Icon;
         [field: S] public byte Score { get; set; }
         [field: S] public IPassiveSkillEffect Effect { get; set; }
-        [field: S] public IObjectAccessor<HexUnitPlay> UnitPlay { get; set; }
+        [field: S] public IObjectAccessor<SkillPlay> UnitPlay { get; set; }
         [field: S] public string Name { get; set; }
         [field: S] public string Description { get; set; }
         [field: S] public IObjectAccessor<Sprite> Icon { get; set; }

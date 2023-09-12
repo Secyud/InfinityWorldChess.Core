@@ -15,7 +15,7 @@ using UnityEngine;
 namespace InfinityWorldChess.BattleDomain
 {
     public class BattleRole : BuffProperty<BattleRole>,
-         ICanAttack, ICanDefend, IHasContent, IReleasable,IUnitBase
+        ICanAttack, ICanDefend, IHasContent, IReleasable, IUnitBase
     {
         private float _health, _energy;
         private int _execution;
@@ -41,9 +41,9 @@ namespace InfinityWorldChess.BattleDomain
         public BattleCamp Camp { get; set; }
 
         public HexUnit Unit { get; set; }
+
         public void OnDying()
         {
-            
         }
 
         public void OnEndPlay()
@@ -118,7 +118,7 @@ namespace InfinityWorldChess.BattleDomain
             }
         }
 
-        public IObjectAccessor<HexUnitPlay> UnitPlay { get; }
+        public IObjectAccessor<HexUnitPlay> UnitPlay { get; set; }
         public bool Dead { get; set; }
 
         private bool _active;
@@ -126,12 +126,12 @@ namespace InfinityWorldChess.BattleDomain
         public float EnergyRecover;
         public float ExecutionRecover;
 
-        public BattleRole(Role role, IObjectAccessor<HexUnitPlay> unitPlay)
+        public BattleRole(Role role)
         {
             Role = role;
             Role.CoreSkill.GetGroup(CurrentLayer, 0, NextCoreSkills);
             Role.FormSkill.GetGroup(CurrentState, NextFormSkills);
-            UnitPlay = unitPlay;
+            UnitPlay = role.PassiveSkill[0]?.UnitPlay ?? null;
         }
 
         public void InitValue(float health, float energy, int execution)
@@ -227,5 +227,18 @@ namespace InfinityWorldChess.BattleDomain
         }
 
         protected override BattleRole Target => this;
+
+        public void OnBattleInitialize()
+        {
+            float maxHealth = Role.PassiveSkill.Living + Role.BodyPart[BodyType.Living].MaxValue;
+            float maxEnergy = maxHealth;
+            float execution = maxHealth / 128 + 1;
+            InitValue(maxHealth, maxEnergy, (int)execution * 2);
+            EnergyRecover = maxEnergy / 16;
+            ExecutionRecover = execution;
+
+            foreach (IOnBattleRoleInitialize b in Role.Buffs.BattleInitializes)
+                b.OnBattleInitialize(this);
+        }
     }
 }

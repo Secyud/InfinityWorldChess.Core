@@ -8,7 +8,7 @@ namespace InfinityWorldChess.SkillDomain
     {
         byte Score { get; set; }
 		
-        IObjectAccessor<HexUnitPlay> UnitPlay { get; set; }
+        IObjectAccessor<SkillPlay> UnitPlay { get; set; }
         
         // 生杀灵御
         public byte Living { get; set; }

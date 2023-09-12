@@ -20,7 +20,7 @@ namespace InfinityWorldChess.SkillDomain
         [field: S] public string Name { get; set; }
         [field: S] public string Description { get; set; }
         [field: S] public byte Score { get; set; }
-        [field: S] public IObjectAccessor<HexUnitPlay> UnitPlay { get; set; }
+        [field: S] public IObjectAccessor<SkillPlay> UnitPlay { get; set; }
         [field: S] public IObjectAccessor<Sprite> Icon { get; set; }
         [field: S] public ISkillCastCondition Condition { get; set; }
         [field: S] public ISkillCastPosition Position { get; set; }
@@ -56,9 +56,9 @@ namespace InfinityWorldChess.SkillDomain
             return Condition?.CheckCastCondition(chess,skill);
         }
 
-        public void SkillCastInvoke(BattleRole chess,IActiveSkill skill)
+        public void ConditionCast(BattleRole chess,IActiveSkill skill)
         {
-            Condition?.SkillCastInvoke(chess,skill);
+            Condition?.ConditionCast(chess,skill);
         }
 
         public ISkillRange GetCastPositionRange(BattleRole role,IActiveSkill skill)

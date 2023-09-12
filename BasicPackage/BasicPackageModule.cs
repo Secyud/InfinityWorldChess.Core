@@ -41,10 +41,10 @@ namespace InfinityWorldChess
         {
             RoleResourceManager resource = context.Get<RoleResourceManager>();
 
-            IwcAb ab = context.Get<IwcAb>();
+            IwcAssets assets = context.Get<IwcAssets>();
 
             resource.RegisterAvatarResourceFromPath(
-                Path.Combine(Application.dataPath, "Data", "Portrait", "portrait.binary"), "basic_portrait", ab
+                Path.Combine(Application.dataPath, "Data", "Portrait", "portrait.binary"), "basic_portrait", assets
             );
         }
 

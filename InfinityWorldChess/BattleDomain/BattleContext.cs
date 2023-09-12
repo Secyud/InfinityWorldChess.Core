@@ -8,17 +8,21 @@ namespace InfinityWorldChess.BattleDomain
     public class BattleContext:IRegistry
     {
         public float TotalTime { get; set; }
+
+        public IReadOnlyList<BattleRole> BattleRoles => Roles;
         
-        
-        private int _idRecord;
-        public readonly Dictionary<int, BattleRole> Roles = new();
-        public int GetNextId => _idRecord++;
+        internal readonly List<BattleRole> Roles = new();
         
         public event Action BattleFinishAction;
-
         public void OnBattleFinished()
         {
             BattleFinishAction?.Invoke();
+        }
+        
+        public event Action ActionFinishedAction;
+        public void OnActionFinished()
+        {
+            ActionFinishedAction?.Invoke();
         }
 
         public event Action RoundEndAction;
@@ -33,10 +37,15 @@ namespace InfinityWorldChess.BattleDomain
             RoundBeginAction?.Invoke();
         }
 
-        public event Action ChessRemoveAction;
-        public void OnChessRemove()
+        public event Action ChessRemovedAction;
+        public void OnChessRemoved()
         {
-            ChessRemoveAction?.Invoke();
+            ChessRemovedAction?.Invoke();
+        }
+        public event Action ChessAddedAction;
+        public void OnChessAdded()
+        {
+            ChessAddedAction?.Invoke();
         }
     }
 }

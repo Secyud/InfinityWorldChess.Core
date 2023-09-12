@@ -26,10 +26,10 @@ namespace InfinityWorldChess.GameDomain.WorldMapDomain
 
         private static readonly string SavePath = SharedConsts.SaveFilePath(nameof(WorldGameContext));
 
-        public WorldGameContext(IwcAb ab)
+        public WorldGameContext(IwcAssets assets)
         {
             WorldUnitPrefab = PrefabContainer<HexUnit>.Create(
-                ab, U.TypeToPath<WorldGameContext>() + "Unit.prefab"
+                assets, U.TypeToPath<WorldGameContext>() + "Unit.prefab"
             );
         }
 

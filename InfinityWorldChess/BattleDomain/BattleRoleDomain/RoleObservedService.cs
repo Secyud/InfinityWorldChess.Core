@@ -11,7 +11,7 @@ namespace InfinityWorldChess.BattleDomain.BattleRoleDomain
         public  ObservedService State { get; } = new();
         
         private readonly MonoContainer<BattlePlayerController>  _playerController = 
-            MonoContainer<BattlePlayerController>.Create<IwcAb>();
+            MonoContainer<BattlePlayerController>.Create<IwcAssets>();
         
         private BattleRole _role;
 

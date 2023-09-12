@@ -1,15 +1,15 @@
-﻿using InfinityWorldChess.RoleDomain;
-using InfinityWorldChess.SkillDomain;
-using JetBrains.Annotations;
-using Secyud.Ugf.HexMap;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using InfinityWorldChess.BattleDomain.BattleMapDomain;
 using InfinityWorldChess.BattleDomain.BattleSkillDomain;
+using InfinityWorldChess.RoleDomain;
+using InfinityWorldChess.SkillDomain;
+using JetBrains.Annotations;
 using Secyud.Ugf;
+using Secyud.Ugf.HexMap;
 
-namespace InfinityWorldChess.BattleDomain
+namespace InfinityWorldChess.BattleDomain.AiDomain
 {
 	public class FormSkillAiAction : AiActionNode
 	{
@@ -40,7 +40,7 @@ namespace InfinityWorldChess.BattleDomain
 			Role.NatureProperty n = _battleRole.Role.Nature;
 			float minDistance = float.MaxValue;
 			float score = 0;
-			foreach (BattleRole chess in BattleScope.Instance.Context.Roles.Values)
+			foreach (BattleRole chess in BattleScope.Instance.Context.Roles)
 			{
 				float distance = chess.Unit.Location.Coordinates.DistanceTo(_cell.Coordinates);
 				if (chess.Camp == _battleRole.Camp)
