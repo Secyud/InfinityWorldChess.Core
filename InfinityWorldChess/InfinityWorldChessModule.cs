@@ -83,6 +83,13 @@ namespace InfinityWorldChess
             yield return null;
         }
 
+
+        public void OnGameShutdown()
+        {
+            U.M.DestroyScope<GameScope>();
+            U.M.DestroyScope<InteractionScope>();
+        }
+
         public int GameInitializeStep { get; } = 30;
 
 
@@ -98,12 +105,6 @@ namespace InfinityWorldChess
             yield return GameScope.Instance.World.OnGameLoading();
             yield return GameScope.Instance.Role.OnGameLoading();
             yield return GameScope.Instance.Player.OnGameLoading();
-        }
-
-
-        public void OnGameShutdown()
-        {
-            U.M.DestroyScope<GameScope>();
         }
 
         private void SetPlayer(
