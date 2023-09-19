@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using Secyud.Ugf.DependencyInjection;
 
-namespace InfinityWorldChess.BattleDomain
+namespace InfinityWorldChess.BattleDomain.AiDomain
 {
 	public interface IBattleAiController:IRegistry
 	{

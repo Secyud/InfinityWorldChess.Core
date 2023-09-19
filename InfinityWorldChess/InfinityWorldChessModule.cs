@@ -134,8 +134,7 @@ namespace InfinityWorldChess
             }
 
             service.RegistrarResourceFeature(
-                new FeatureDescriptor(0, 0,
-                    GetPrefab("Ore", "Low", "1")),
+                new FeatureDescriptor(0, 0, GetPrefab("Ore", "Low", "1")),
                 new FeatureDescriptor(0, 0, GetPrefab("Ore", "Low", "2")),
                 new FeatureDescriptor(0, 1, GetPrefab("Ore", "Medium", "1")),
                 new FeatureDescriptor(0, 1, GetPrefab("Ore", "Medium", "2")),

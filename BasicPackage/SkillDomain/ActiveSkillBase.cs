@@ -51,31 +51,31 @@ namespace InfinityWorldChess.SkillDomain
             transform.AddParagraph($"效果：{SkillEffect.ShowDescription}。");
         }
 
-        public string CheckCastCondition(BattleRole chess,IActiveSkill skill)
+        public virtual string CheckCastCondition(BattleRole chess,IActiveSkill skill)
         {
             return Condition?.CheckCastCondition(chess,skill);
         }
 
-        public void ConditionCast(BattleRole chess,IActiveSkill skill)
+        public virtual void ConditionCast(BattleRole chess,IActiveSkill skill)
         {
             Condition?.ConditionCast(chess,skill);
         }
 
-        public ISkillRange GetCastPositionRange(BattleRole role,IActiveSkill skill)
+        public virtual ISkillRange GetCastPositionRange(BattleRole role,IActiveSkill skill)
         {
             if (Position is null)
                 return new SkillRange(Array.Empty<HexCell>());
             return Position.GetCastPositionRange(role,skill);
         }
 
-        public ISkillRange GetCastResultRange(BattleRole role, HexCell castPosition,IActiveSkill skill)
+        public virtual ISkillRange GetCastResultRange(BattleRole role, HexCell castPosition,IActiveSkill skill)
         {
             if (Result is null)
                 return new SkillRange(Array.Empty<HexCell>());
             return Result.GetCastResultRange(role, castPosition,skill);
         }
 
-        public  void Cast(BattleRole role, HexCell releasePosition, ISkillRange range,IActiveSkill skill)
+        public virtual void Cast(BattleRole role, HexCell releasePosition, ISkillRange range,IActiveSkill skill)
         {
             SkillEffect?.Cast(role, releasePosition, range,this);
         }

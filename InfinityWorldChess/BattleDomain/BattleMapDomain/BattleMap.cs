@@ -23,11 +23,7 @@ namespace InfinityWorldChess.BattleDomain.BattleMapDomain
     {
         [SerializeField] private LookAtConstraint BillBoardPrefab;
 
-        private static BattleFlowState State
-        {
-            get => BattleScope.Instance.State;
-            set => BattleScope.Instance.State = value;
-        }
+        public BattleFlowState State { get; set; } = BattleFlowState.OnRound;
 
         private HoverObservedService _hoverObservedService;
         private SelectObservedService _selectObservedService;
@@ -133,7 +129,6 @@ namespace InfinityWorldChess.BattleDomain.BattleMapDomain
             if (_currentRole is not null)
             {
                 _currentRole.Active = true;
-                MapCamera.SetTargetPosition(_currentRole.Unit.Location.Position);
             }
         }
 
@@ -240,6 +235,8 @@ namespace InfinityWorldChess.BattleDomain.BattleMapDomain
                 BattleScope.Instance.ClosePlayerControlPanel();
                 StartCoroutine(_aiController.StartPondering());
             }
+            
+            MapCamera.SetTargetPosition(_currentRole.Unit.Location.Position);
 
             State = BattleFlowState.Control;
         }
@@ -250,7 +247,7 @@ namespace InfinityWorldChess.BattleDomain.BattleMapDomain
         }
 
         private HexCell _skillCastCell;
-        
+
         private void OnControlUpdate()
         {
             if (_currentRole.PlayerControl)
@@ -263,6 +260,7 @@ namespace InfinityWorldChess.BattleDomain.BattleMapDomain
                 {
                     StartCurrentSkillCast(cell.Cell);
                 }
+
                 SelectResultRefresh();
             }
             else
@@ -296,7 +294,7 @@ namespace InfinityWorldChess.BattleDomain.BattleMapDomain
         {
             BattleRole role = _currentRole;
             SkillContainer skill = _skillObservedService.Skill;
-            
+
             switch (skill)
             {
                 case CoreSkillContainer coreSkillContainer:
@@ -314,14 +312,14 @@ namespace InfinityWorldChess.BattleDomain.BattleMapDomain
             skill.Skill.ConditionCast(role);
             ISkillRange skillRange =
                 skill.Skill.GetCastResultRange(role, cell);
-            skill.Skill.Cast(role, cell,skillRange);
+            skill.Skill.Cast(role, cell, skillRange);
 
             _roleObservedService.RefreshState();
             _selectObservedService.RefreshState();
             _skillObservedService.AutoReselectSkill();
-            
+
             BattleScope.Instance.Context.OnActionFinished();
-            
+
             EnterControl();
         }
 
@@ -330,7 +328,7 @@ namespace InfinityWorldChess.BattleDomain.BattleMapDomain
         {
             State = BattleFlowState.Interval;
             _skillCastCell = cell;
-            
+
             BattleRole battleRole = _currentRole;
             SkillContainer skill = _skillObservedService.Skill;
 

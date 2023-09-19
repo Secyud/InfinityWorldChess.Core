@@ -46,7 +46,7 @@ namespace InfinityWorldChess.BattleDomain.LightBattle
             HexCell cell2 = scope.Map.Grid.GetCell(width - 3, height - 3);
             BattleTarget = new BattleRole(Target)
             {
-                PlayerControl = true,
+                PlayerControl = false,
                 Camp = new BattleCamp()
                 {
                     Color = Color.green,

@@ -30,6 +30,8 @@ namespace InfinityWorldChess.PlayerDomain
 
         public Role Role { get; private set; }
 
+        public int SkillPoints { get; set; }
+
         private static readonly string SavePath = SharedConsts.SaveFilePath(nameof(PlayerGameContext));
 
         public virtual HexUnit Unit
@@ -55,9 +57,13 @@ namespace InfinityWorldChess.PlayerDomain
             Role = new Role(true);
             Role.Load(reader, GameScope.Instance.Map.Value.Grid.GetCell(index).Get<WorldCell>());
 
+            SkillPoints = reader.ReadInt32();
+            
             int count = reader.ReadInt32();
             for (int i = 0; i < count; i++)
+            {
                 GlobalRecord[reader.ReadString()] = reader.ReadInt32();
+            }
 
             PlayerSetting.Load(reader);
 
@@ -69,7 +75,9 @@ namespace InfinityWorldChess.PlayerDomain
                 bundle.OnGameLoading();
                 Bundles.Add(bundle);
                 if (U.AddStep())
+                {
                     yield return null;
+                }
             }
         }
 
@@ -79,9 +87,9 @@ namespace InfinityWorldChess.PlayerDomain
             using DefaultArchiveWriter writer = new(stream);
             writer.Write(Role.Position.Cell.Index);
             Role.Save(writer);
-
+            writer.Write(SkillPoints);
+            
             writer.Write(GlobalRecord.Count);
-
             foreach (KeyValuePair<string, int> i in GlobalRecord)
             {
                 writer.Write(i.Key);
@@ -92,9 +100,13 @@ namespace InfinityWorldChess.PlayerDomain
 
             writer.Write(Bundles.Count);
             foreach (IBundle t in Bundles)
+            {
                 writer.WriteObject(t);
+            }
             if (U.AddStep())
+            {
                 yield return null;
+            }
         }
 
         public virtual IEnumerator OnGameCreation()
@@ -108,7 +120,9 @@ namespace InfinityWorldChess.PlayerDomain
             Bundles.AddRange(cs.Bundles);
 
             foreach (IBiography biography in cs.Biography)
+            {
                 biography.OnGameCreation(Role);
+            }
             
             Role.Position = GameScope.Instance.Map.Value.Grid
                 .First(u => u.Get<WorldCell>().SpecialIndex == 1)
@@ -119,7 +133,9 @@ namespace InfinityWorldChess.PlayerDomain
                 bundle.OnGameCreation();
                 
                 if (U.AddStep())
+                {
                     yield return null;
+                }
             }
         }
     }

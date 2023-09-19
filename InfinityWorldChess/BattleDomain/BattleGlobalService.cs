@@ -1,6 +1,5 @@
 #region
 
-using InfinityWorldChess.SkillDomain;
 using System.Collections.Generic;
 using InfinityWorldChess.GameDomain;
 using InfinityWorldChess.MapDomain;
@@ -29,10 +28,6 @@ namespace InfinityWorldChess.BattleDomain
 				Features[i, j] = new List<PrefabContainer<Transform>>();
 		}
 
-		public ICoreSkill DefaultCoreSkill { get; set; }
-
-		public IFormSkill DefaultFormSkill { get; set; }
-
 		public void RegistrarResourceFeatures(int type, int level, params PrefabContainer<Transform>[] features)
 		{
 			Features[type, level].AddRange(features);
@@ -57,9 +52,11 @@ namespace InfinityWorldChess.BattleDomain
 			
 			BattleScope.Instance.CreateBattle(battleDescriptor);
 		}
+		
 		public void DestroyBattle()
 		{
-			BattleScope.Instance.Battle.OnBattleFinished();
+			
+			BattleScope.Instance.DestroyBattle();
 			
 			U.M.DestroyScope<BattleScope>();
 			

@@ -4,7 +4,7 @@ using Secyud.Ugf.DependencyInjection;
 namespace InfinityWorldChess.InteractionDomain
 {
     [Registry(DependScope = typeof(InteractionScope))]
-    public class DialogueService 
+    public class DialogueService : IRegistry
     {
         private readonly IMonoContainer<DialoguePanel> _dialoguePanel;
 
@@ -15,11 +15,11 @@ namespace InfinityWorldChess.InteractionDomain
             _dialoguePanel = MonoContainer<DialoguePanel>.Create(assets);
         }
 
-        public  void OpenDialoguePanel()
+        public void OpenDialoguePanel()
         {
             _dialoguePanel.Create();
         }
-        
+
         public void CloseDialoguePanel()
         {
             _dialoguePanel.Destroy();

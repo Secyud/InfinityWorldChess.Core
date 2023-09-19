@@ -24,13 +24,19 @@ namespace InfinityWorldChess.BattleDomain
         private readonly PrefabContainer<HexUnit> _battleUnitPrefab;
         private readonly PrefabContainer<TextMeshPro> _simpleTextMesh;
 
+        public MonoContainer<BattleFinishedPanel> BattleFinishPanel { get; }
+
         public static BattleScope Instance { get; private set; }
         public BattleMap Map => _map.Value;
         public BattleDescriptor BattleDescriptor { get; private set; }
         public IBattleVictoryCondition VictoryCondition { get; private set; }
         public BattleContext Battle => Get<BattleContext>();
         public BattleContext Context => Get<BattleContext>();
-        public BattleFlowState State { get; set; } = BattleFlowState.OnRound;
+        public BattleFlowState State 
+        {
+            get => Map.State;
+            set => Map.State = value;
+        }
 
         public BattleScope(IwcAssets assets)
         {
@@ -42,6 +48,9 @@ namespace InfinityWorldChess.BattleDomain
             _simpleTextMesh = PrefabContainer<TextMeshPro>.Create(
                 assets, "InfinityWorldChess/BattleDomain/DamageText.prefab"
             );
+            
+            BattleFinishPanel
+                = MonoContainer<BattleFinishedPanel>.Create(assets);
         }
 
         public override void OnInitialize()
@@ -74,12 +83,25 @@ namespace InfinityWorldChess.BattleDomain
             VictoryCondition.OnBattleInitialize();
         }
 
+
+        public void DestroyBattle()
+        {
+            Transform transform = U.Canvas.transform;
+            for (int i = 0; i < transform.childCount; i++)
+            {
+                transform.GetChild(i).Destroy();
+            }
+            
+            BattleFinishPanel.Create();
+            Battle.OnBattleFinished();
+            BattleDescriptor.OnBattleFinished();
+        }
         public override void Dispose()
         {
             foreach (BattleRole chess in Context.Roles)
                 chess.Release();
-            Instance = null;
             _map.Destroy();
+            Instance = null;
         }
 
         public BattleRole GetChess(HexUnit unit)

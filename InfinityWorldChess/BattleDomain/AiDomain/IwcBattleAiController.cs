@@ -1,8 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using InfinityWorldChess.BattleDomain.BattleRoleDomain;
+using InfinityWorldChess.SkillDomain;
 using Secyud.Ugf;
 using Secyud.Ugf.DependencyInjection;
+using Secyud.Ugf.HexMap;
 
 namespace InfinityWorldChess.BattleDomain.AiDomain
 {
@@ -15,14 +17,15 @@ namespace InfinityWorldChess.BattleDomain.AiDomain
         public IEnumerator StartPondering()
         {
             State = AiControlState.InPondering;
-            List<AiActionNode> nodes = new();
             BattleRole battleRole = U.Get<RoleObservedService>().Role;
+            List<AiActionNode> nodes = new();
             if (battleRole is null)
                 State = AiControlState.NoActionValid;
             else
             {
-                //CoreSkillAiAction.AddNodes(nodes, battleRole);
-                //FormSkillAiAction.AddNodes(nodes, battleRole);
+                CoreSkillAiActionNode.AddNodes(nodes, battleRole);
+                FormSkillAiActionNode.AddNodes(nodes, battleRole);
+                nodes.Add(new StopActionNode());
                 yield return RandomSelect(nodes);
             }
 
@@ -71,5 +74,7 @@ namespace InfinityWorldChess.BattleDomain.AiDomain
                 }
             }
         }
+
+
     }
 }

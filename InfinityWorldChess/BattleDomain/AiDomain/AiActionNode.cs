@@ -1,4 +1,4 @@
-﻿namespace InfinityWorldChess.BattleDomain
+﻿namespace InfinityWorldChess.BattleDomain.AiDomain
 {
 	public abstract class AiActionNode
 	{

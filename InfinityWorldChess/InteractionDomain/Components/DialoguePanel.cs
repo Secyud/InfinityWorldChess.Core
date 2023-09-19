@@ -9,6 +9,7 @@ using InfinityWorldChess.RoleDomain;
 using Secyud.Ugf.LayoutComponents;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 
 #endregion
 
@@ -19,6 +20,7 @@ namespace InfinityWorldChess.InteractionDomain
         [SerializeField] private AvatarEditor LeftRoleAvatar;
         [SerializeField] private AvatarEditor RightRoleAvatar;
         [SerializeField] private UnityEvent<string> SayingText;
+        [SerializeField] private SelectOptionCell SelectPrefab;
         [SerializeField] private SButton NextButton;
         [SerializeField] private LayoutGroupTrigger SelectActionContent;
         [SerializeField] private SImage BackGround;
@@ -80,7 +82,7 @@ namespace InfinityWorldChess.InteractionDomain
                 for (int index = 0; index < actions.Count; index++)
                 {
                     IDialogueAction action = actions[index];
-                    SelectOptionCell cell = IwcAssets.Instance.SelectOptionCell.Value.Instantiate(content);
+                    SelectOptionCell cell = SelectPrefab.Instantiate(content);
                     cell.OnInitialize(index,action.Invoke , action.ActionText);
                 }
             }

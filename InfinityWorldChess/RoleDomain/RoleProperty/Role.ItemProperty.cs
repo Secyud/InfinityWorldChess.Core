@@ -19,6 +19,7 @@ namespace InfinityWorldChess.RoleDomain
         public class ItemProperty : IList<IItem>, IArchivable
         {
             private readonly List<IItem> _items = new();
+            public int Award { get; set; }
 
             public void Save(IArchiveWriter writer)
             {
@@ -29,6 +30,8 @@ namespace InfinityWorldChess.RoleDomain
                     writer.WriteObject(item);
                     item.SaveIndex = i;
                 }
+
+                writer.Write(Award);
             }
 
             public void Load(IArchiveReader reader)
@@ -42,26 +45,39 @@ namespace InfinityWorldChess.RoleDomain
                     item!.SaveIndex = i;
                     this.AddLast(item);
                 }
+
+                Award = reader.ReadInt32();
             }
 
             public IEnumerator<IItem> GetEnumerator() => _items.GetEnumerator();
 
             IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable)_items).GetEnumerator();
 
-            public void Add(IItem item, int count)
+            public void Add(IItem item)
             {
-                if (item is IOverloadedItem)
+                if (item is IOverloadedItem oItem)
                 {
-                    Type itemType = item.GetType();
-                    IItem temp = _items.FirstOrDefault(u => u.GetType() == itemType);
-
-                    if (temp is IOverloadedItem oiTmp)
+                    Type type = item.GetType();
+                    string name = item.ShowName;
+                    IOverloadedItem min = _items
+                        .Where(u => u.GetType() == type && u.ShowName == name)
+                        .Cast<IOverloadedItem>()
+                        .OrderBy(u=>u.Quantity)
+                        .FirstOrDefault();
+                    
+                    if (min is not null)
                     {
-                        oiTmp.Quantity += count;
+                        min.Quantity +=  oItem.Quantity;
+                        if (min.Quantity > SharedConsts.MaxOverloadedCount)
+                        {
+                            oItem.Quantity = min.Quantity - SharedConsts.MaxOverloadedCount;
+                            min.Quantity = SharedConsts.MaxOverloadedCount;
+                            _items.AddLast(oItem);
+                        }
                     }
                     else
                     {
-                        _items.AddFirst(item);
+                        _items.AddLast(oItem);
                     }
                 }
                 else
@@ -70,33 +86,37 @@ namespace InfinityWorldChess.RoleDomain
                 }
             }
 
-            public bool Remove(IItem item, int count)
+            public bool Remove(IItem item)
             {
-                if (item is IOverloadedItem)
+                if (item is IOverloadedItem oItem)
                 {
-                    Type itemType = item.GetType();
-                    int index = -1;
-                    IItem temp = null;
+                    Type type = item.GetType();
+                    string name = item.ShowName;
+                    List<IOverloadedItem> items = _items
+                        .Where(u => u.GetType() == type && u.ShowName == name)
+                        .Cast<IOverloadedItem>()
+                        .OrderByDescending(u=>u.Quantity)
+                        .ToList();
+                    int count = oItem.Quantity;
 
-                    for (int i = 0; i < _items.Count; i++)
+                    while (count!=0)
                     {
-                        if (_items[i].GetType() == itemType)
+                        if (!items.Any())
                         {
-                            temp = _items[i];
-                            index = i;
-                            break;
+                            return false;
                         }
-                    }
-
-                    if (temp is IOverloadedItem oiTmp)
-                    {
-                        oiTmp.Quantity -= count;
-                        if (oiTmp.Quantity <= 0)
-                            _items.RemoveAt(index);
-                    }
-                    else
-                    {
-                        return false;
+                        IOverloadedItem min = items.Last();
+                        items.RemoveAt(items.Count - 1);
+                        min.Quantity -=  count;
+                        if (min.Quantity <= 0)
+                        {
+                            count = - min.Quantity;
+                            _items.Remove(min);
+                        }
+                        else
+                        {
+                            count = 0;
+                        }
                     }
                 }
                 else
@@ -106,17 +126,7 @@ namespace InfinityWorldChess.RoleDomain
 
                 return true;
             }
-
-            public void Add(IItem item)
-            {
-                Add(item, 1);
-            }
-
-            public bool Remove(IItem item)
-            {
-                return Remove(item, 1);
-            }
-
+            
             public void Clear()
             {
                 _items.Clear();

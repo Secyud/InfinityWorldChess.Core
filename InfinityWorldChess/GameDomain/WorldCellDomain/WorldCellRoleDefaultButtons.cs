@@ -1,5 +1,6 @@
 using InfinityWorldChess.BattleDomain.LightBattle;
 using InfinityWorldChess.InteractionDomain;
+using InfinityWorldChess.InteractionDomain.ChatDomain;
 using Secyud.Ugf;
 
 namespace InfinityWorldChess.GameDomain.WorldCellDomain
@@ -8,7 +9,9 @@ namespace InfinityWorldChess.GameDomain.WorldCellDomain
     {
         public static void RegistrarButtons(InteractionButtons buttons)
         {
-            buttons.Register(new LightBattleButton());
+            buttons.RegisterList(
+                new ChatButtonDescriptor(),
+                new LightBattleButton());
         }
     }
 }
