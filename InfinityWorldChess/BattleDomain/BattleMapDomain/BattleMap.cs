@@ -22,13 +22,15 @@ namespace InfinityWorldChess.BattleDomain.BattleMapDomain
     public class BattleMap : HexMapRootBase
     {
         [SerializeField] private LookAtConstraint BillBoardPrefab;
-
+        [SerializeField] private Canvas Canvas;
+        public Canvas Ui => Canvas;
         public BattleFlowState State { get; set; } = BattleFlowState.OnRound;
 
         private HoverObservedService _hoverObservedService;
         private SelectObservedService _selectObservedService;
         private RoleObservedService _roleObservedService;
         private SkillObservedService _skillObservedService;
+        private StateObservedService _stateObservedService;
         private IBattleAiController _aiController;
 
         private void Awake()
@@ -37,6 +39,7 @@ namespace InfinityWorldChess.BattleDomain.BattleMapDomain
             _selectObservedService = U.Get<SelectObservedService>();
             _roleObservedService = U.Get<RoleObservedService>();
             _skillObservedService = U.Get<SkillObservedService>();
+            _stateObservedService = U.Get<StateObservedService>();
             _aiController = U.Get<IBattleAiController>();
             _hoverObservedService.AddObserverObject(nameof(BattleMap), HoverCellRefresh, gameObject);
             _selectObservedService.AddObserverObject(nameof(BattleMap), SelectCellRefresh, gameObject);
@@ -217,7 +220,7 @@ namespace InfinityWorldChess.BattleDomain.BattleMapDomain
             BattleScope.Instance.Context.TotalTime = min;
 
             _roleObservedService.Role = battleRole;
-            _selectObservedService.RefreshState();
+            _stateObservedService.Refresh();
 
             BattleScope.Instance.Context.OnRoundBegin();
 
@@ -314,8 +317,7 @@ namespace InfinityWorldChess.BattleDomain.BattleMapDomain
                 skill.Skill.GetCastResultRange(role, cell);
             skill.Skill.Cast(role, cell, skillRange);
 
-            _roleObservedService.RefreshState();
-            _selectObservedService.RefreshState();
+            _stateObservedService.Refresh();
             _skillObservedService.AutoReselectSkill();
 
             BattleScope.Instance.Context.OnActionFinished();

@@ -11,9 +11,15 @@ namespace InfinityWorldChess.BattleDomain.BattleRoleDomain
 
         public void SetValue(float value, float maxValue)
         {
-            Slider.maxValue = maxValue;
-            Slider.value = value;
-            Text.text = $"{value:F0}/{maxValue:F0}";
+            if (Slider)
+            {
+                Slider.maxValue = maxValue;
+                Slider.value = value;
+            }
+            if (Text)
+            {
+                Text.text = $"{value:F0}/{maxValue:F0}";
+            }
         }
     }
 }

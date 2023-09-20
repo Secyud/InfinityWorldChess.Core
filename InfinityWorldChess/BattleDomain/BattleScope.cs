@@ -23,6 +23,7 @@ namespace InfinityWorldChess.BattleDomain
         private readonly MonoContainer<BattlePlayerController> _controller;
         private readonly PrefabContainer<HexUnit> _battleUnitPrefab;
         private readonly PrefabContainer<TextMeshPro> _simpleTextMesh;
+        private readonly PrefabContainer<BattleRoleStateViewer> _stateViewer;
 
         public MonoContainer<BattleFinishedPanel> BattleFinishPanel { get; }
 
@@ -32,7 +33,8 @@ namespace InfinityWorldChess.BattleDomain
         public IBattleVictoryCondition VictoryCondition { get; private set; }
         public BattleContext Battle => Get<BattleContext>();
         public BattleContext Context => Get<BattleContext>();
-        public BattleFlowState State 
+
+        public BattleFlowState State
         {
             get => Map.State;
             set => Map.State = value;
@@ -48,7 +50,8 @@ namespace InfinityWorldChess.BattleDomain
             _simpleTextMesh = PrefabContainer<TextMeshPro>.Create(
                 assets, "InfinityWorldChess/BattleDomain/DamageText.prefab"
             );
-            
+            _stateViewer = PrefabContainer<BattleRoleStateViewer>.Create(
+                assets,"InfinityWorldChess/BattleDomain/BattleRoleDomain/BattleRoleStateViewer.prefab");
             BattleFinishPanel
                 = MonoContainer<BattleFinishedPanel>.Create(assets);
         }
@@ -91,11 +94,12 @@ namespace InfinityWorldChess.BattleDomain
             {
                 transform.GetChild(i).Destroy();
             }
-            
+
             BattleFinishPanel.Create();
             Battle.OnBattleFinished();
             BattleDescriptor.OnBattleFinished();
         }
+
         public override void Dispose()
         {
             foreach (BattleRole chess in Context.Roles)
@@ -114,6 +118,11 @@ namespace InfinityWorldChess.BattleDomain
             if (chess.Unit)
                 chess.Unit.Destroy();
             HexUnit unit = Object.Instantiate(_battleUnitPrefab.Value, Map.transform);
+
+            BattleRoleStateViewer viewer = _stateViewer.Instantiate(Map.Ui.transform);
+            viewer.Bind(chess);
+            viewer.TargetTrans = unit.transform;
+
             Map.Grid.AddUnit(chess, unit, cell, 0);
             Context.Roles.AddIfNotContains(chess);
             chess.Unit = unit;
@@ -188,6 +197,7 @@ namespace InfinityWorldChess.BattleDomain
         {
             _controller.Create();
         }
+
         public void ClosePlayerControlPanel()
         {
             _controller.Destroy();

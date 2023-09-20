@@ -6,18 +6,18 @@ namespace InfinityWorldChess.BattleDomain.BattleRoleDomain
 {
     public class SelectRoleMessageViewer : RoleMessageViewerBase
     {
-        private SelectObservedService _selectObservedService;
+        private SelectObservedService _select;
+        private StateObservedService _state;
         private void Awake()
         {
-            _selectObservedService = U.Get<SelectObservedService>();
-            _selectObservedService.AddObserverObject(nameof(SelectRoleMessageViewer), Refresh,gameObject);
-            _selectObservedService.State.AddObserverObject(nameof(SelectRoleMessageViewer), RefreshState,gameObject);
+            _select = U.Get<SelectObservedService>();
+            _select.AddObserverObject(nameof(SelectRoleMessageViewer), Refresh,gameObject);
             Refresh();
         }
 
         private void Refresh()
         {
-            BattleCell cell = _selectObservedService.SelectedCell;
+            BattleCell cell = _select.SelectedCell;
             BattleRole chess = null;
             
             if (cell is not null && cell.Cell.Unit)

@@ -8,8 +8,6 @@ namespace InfinityWorldChess.BattleDomain.BattleRoleDomain
     [Registry(DependScope = typeof(BattleScope))]
     public class RoleObservedService: ObservedService
     {
-        public  ObservedService State { get; } = new();
-        
         private readonly MonoContainer<BattlePlayerController>  _playerController = 
             MonoContainer<BattlePlayerController>.Create<IwcAssets>();
         
@@ -34,13 +32,7 @@ namespace InfinityWorldChess.BattleDomain.BattleRoleDomain
                 }
                 
                 Refresh();
-                RefreshState();
             }
-        }
-
-        public void RefreshState()
-        {
-            State.Refresh();
         }
     }
 }

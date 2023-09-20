@@ -6,8 +6,6 @@ namespace InfinityWorldChess.BattleDomain.BattleCellDomain
     [Registry(DependScope = typeof(BattleScope))]
     public class SelectObservedService : ObservedService
     {
-        public  ObservedService State { get; } = new();
-        
         private BattleCell _selectedCell;
 
         public BattleCell SelectedCell
@@ -19,13 +17,7 @@ namespace InfinityWorldChess.BattleDomain.BattleCellDomain
                     return;
                 _selectedCell = value;
                 Refresh();
-                State.Refresh();
             }
-        }
-
-        public void RefreshState()
-        {
-            State.Refresh();
         }
     }
 }
