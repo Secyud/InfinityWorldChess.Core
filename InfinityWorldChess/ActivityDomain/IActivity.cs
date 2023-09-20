@@ -1,4 +1,5 @@
 using Secyud.Ugf;
+using Secyud.Ugf.Archiving;
 
 namespace InfinityWorldChess.ActivityDomain
 {
@@ -6,6 +7,6 @@ namespace InfinityWorldChess.ActivityDomain
     {
         ActivityState State { get; set; }
 
-        void SetActivity(IActivityGroup group);
+        void SetActivity(ActivityGroup group);
     }
 }

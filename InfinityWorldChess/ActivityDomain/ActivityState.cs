@@ -1,5 +1,8 @@
-﻿namespace InfinityWorldChess.ActivityDomain
+﻿using System;
+
+namespace InfinityWorldChess.ActivityDomain
 {
+    [Serializable]
     public enum ActivityState
     {
         NotReceived,

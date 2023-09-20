@@ -20,13 +20,14 @@ using Secyud.Ugf.DependencyInjection;
 namespace InfinityWorldChess.PlayerDomain
 {
     [Registry(DependScope = typeof(GameScope))]
-    public class PlayerGameContext :IRegistry
+    public class PlayerGameContext : IRegistry
     {
         private HexUnit _unit;
 
-        public readonly Dictionary<string, int> GlobalRecord = new();
-        public readonly PlayerSetting PlayerSetting= new();
-        public readonly List<IBundle> Bundles= new();
+        public Dictionary<string, int> GlobalRecord { get; } = new();
+        public PlayerSetting PlayerSetting { get; } = new();
+        public List<IBundle> Bundles { get; } = new();
+        public ActivityProperty Activity { get; } = new();
 
         public Role Role { get; private set; }
 
@@ -58,7 +59,7 @@ namespace InfinityWorldChess.PlayerDomain
             Role.Load(reader, GameScope.Instance.Map.Value.Grid.GetCell(index).Get<WorldCell>());
 
             SkillPoints = reader.ReadInt32();
-            
+
             int count = reader.ReadInt32();
             for (int i = 0; i < count; i++)
             {
@@ -79,6 +80,8 @@ namespace InfinityWorldChess.PlayerDomain
                     yield return null;
                 }
             }
+
+            Activity.Load(reader);
         }
 
         public virtual IEnumerator OnGameSaving()
@@ -88,7 +91,7 @@ namespace InfinityWorldChess.PlayerDomain
             writer.Write(Role.Position.Cell.Index);
             Role.Save(writer);
             writer.Write(SkillPoints);
-            
+
             writer.Write(GlobalRecord.Count);
             foreach (KeyValuePair<string, int> i in GlobalRecord)
             {
@@ -102,11 +105,13 @@ namespace InfinityWorldChess.PlayerDomain
             foreach (IBundle t in Bundles)
             {
                 writer.WriteObject(t);
+                if (U.AddStep())
+                {
+                    yield return null;
+                }
             }
-            if (U.AddStep())
-            {
-                yield return null;
-            }
+
+            Activity.Save(writer);
         }
 
         public virtual IEnumerator OnGameCreation()
@@ -114,7 +119,7 @@ namespace InfinityWorldChess.PlayerDomain
             GameCreatorScope cs = GameCreatorScope.Instance;
 
             HexMetrics.InitializeHashGrid(cs.WorldSetting.Seed);
-            
+
             Role = GameCreatorScope.Instance.Role;
 
             Bundles.AddRange(cs.Bundles);
@@ -123,7 +128,7 @@ namespace InfinityWorldChess.PlayerDomain
             {
                 biography.OnGameCreation(Role);
             }
-            
+
             Role.Position = GameScope.Instance.Map.Value.Grid
                 .First(u => u.Get<WorldCell>().SpecialIndex == 1)
                 .Get<WorldCell>();
@@ -131,7 +136,7 @@ namespace InfinityWorldChess.PlayerDomain
             foreach (IBundle bundle in cs.Bundles)
             {
                 bundle.OnGameCreation();
-                
+
                 if (U.AddStep())
                 {
                     yield return null;
