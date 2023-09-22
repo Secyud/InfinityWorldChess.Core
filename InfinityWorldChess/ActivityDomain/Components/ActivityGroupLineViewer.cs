@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using Secyud.Ugf.EditorComponents;
 using Secyud.Ugf.LayoutComponents;
@@ -14,7 +15,7 @@ namespace InfinityWorldChess.ActivityDomain
         [SerializeField] private ActivityLineViewer Prefab;
 
         public ActivityPanel  Panel { get; set; }
-        
+
         public bool Collapsed
         {
             get => Property?.Collapsed == true;
@@ -24,7 +25,7 @@ namespace InfinityWorldChess.ActivityDomain
                 {
                     Property.Collapsed = value;
                     RectTransform content = Content.PrepareLayout();
-                    Panel.ListContent.PrepareLayout();
+                    Panel.ListContent.enabled = true;
                     Panel.ListContent.Record = 4;
                     if (value)
                     {

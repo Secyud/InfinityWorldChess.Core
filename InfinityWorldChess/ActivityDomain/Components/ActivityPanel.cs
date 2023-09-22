@@ -15,7 +15,7 @@ namespace InfinityWorldChess.ActivityDomain
 
         public void SelectActivity(IActivity activity)
         {
-            activity.SetContent(Content.PrepareLayout());
+            Content.RefreshContent(activity);
         }
 
         protected override void InitData()

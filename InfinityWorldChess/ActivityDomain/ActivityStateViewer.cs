@@ -8,16 +8,17 @@ namespace InfinityWorldChess.ActivityDomain
         [SerializeField] private SImage Graph;
         [SerializeField] private Sprite Finished;
         [SerializeField] private Sprite Received;
+        [SerializeField] private Sprite NotReceived;
         [SerializeField] private Sprite Failed;
 
         public void SetState(ActivityState state)
         {
             Graph.Sprite = state switch
             {
-                ActivityState.NotReceived => null,
+                ActivityState.NotReceived => NotReceived,
                 ActivityState.Failed      => Failed,
-                ActivityState.Received    => Finished,
-                ActivityState.Finished    => Received,
+                ActivityState.Received    => Received,
+                ActivityState.Finished    => Finished,
                 _                         => null
             };
         }
