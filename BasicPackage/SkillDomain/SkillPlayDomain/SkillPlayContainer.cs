@@ -17,7 +17,7 @@ namespace InfinityWorldChess.SkillDomain.SkillPlayDomain
                 : new SkillPlayContainer
                 {
                     Loader = loader,
-                    AssetName = "SkillPlay/" + assetName + ".prefab"
+                    AssetName = assetName
                 };
         }
 
@@ -31,6 +31,11 @@ namespace InfinityWorldChess.SkillDomain.SkillPlayDomain
             string assetName) where TAssetLoader : class, IAssetLoader
         {
             return Create(U.Get<TAssetLoader>(), assetName);
+        }
+
+        protected override SkillPlay GetObject()
+        {
+            return Loader.LoadAsset<SkillPlay>("SkillPlay/" + AssetName + ".prefab");
         }
 
 
