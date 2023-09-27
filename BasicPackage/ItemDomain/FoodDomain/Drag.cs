@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace InfinityWorldChess.ItemDomain.FoodDomain
 {
-	public class Drag: BuffProperty<Drag>,
+	public class Drag: IdBuffProperty<Drag>,
 		IItem, IEdible, IEdibleInBattle, IHasFlavor, IArchivableShown,IArchivable
 	{
 		public readonly List<IBuff<Role>> RoleBuffs = new();

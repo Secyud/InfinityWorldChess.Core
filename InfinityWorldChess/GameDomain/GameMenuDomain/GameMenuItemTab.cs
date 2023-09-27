@@ -37,7 +37,7 @@ namespace InfinityWorldChess.GameDomain.GameMenuDomain
             ItemQuantityComponent.SetItem(itd.TableDelegate);
 
             BuffTable.AutoSetTable(
-                player.Role.Buffs.GetVisibleBuff());
+                player.Role.IdBuffs.GetVisibleBuff());
 
             EquipmentEditor.Bind(player.Role);
         }

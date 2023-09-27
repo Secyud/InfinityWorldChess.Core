@@ -12,10 +12,13 @@ namespace InfinityWorldChess.SkillDomain.SkillInteractionDomain
 	/// SkillInteraction handle the skill with target.
 	/// It inherit buff property so that the interaction can be handled like object.
 	/// </summary>
-	public sealed class SkillInteraction : BuffProperty<SkillInteraction>
+	public sealed class SkillInteraction : IdBuffProperty<SkillInteraction>
 	{
+		public TypeBuffProperty<SkillInteraction> TypeBuff { get; }
+		
 		private SkillInteraction()
 		{
+			TypeBuff = new TypeBuffProperty<SkillInteraction>(this);
 		}
 
 		protected override SkillInteraction Target => this;

@@ -19,5 +19,7 @@ namespace InfinityWorldChess.SkillDomain.SkillInteractionDomain
 		public virtual void Overlay(IBuff<SkillInteraction> finishBuff)
 		{
 		}
+
+		public abstract int Id { get; }
 	}
 }

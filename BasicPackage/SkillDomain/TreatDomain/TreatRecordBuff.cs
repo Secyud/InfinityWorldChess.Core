@@ -6,7 +6,7 @@ namespace InfinityWorldChess.SkillDomain.TreatDomain
 {
 	public sealed class TreatRecordBuff : SkillInteractionBuffBase
 	{
-		
+		public override int Id => -1;
 		public float Treat { get; set; }
 		
 		public float TreatFixedValue { get; set; }

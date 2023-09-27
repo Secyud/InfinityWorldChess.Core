@@ -12,14 +12,15 @@ namespace InfinityWorldChess.Ugf
 {
 	public static class BpSkillExtension
 	{
-		public static BattleEventsBuff GetBattleEvents(this BattleRole chess)
+		public static BattleEventsBuff GetBattleEvents(this BattleRole role)
 		{
-			return chess.GetOrInstall<BattleEventsBuff>();
+			return role.GetProperty<BattleEventsBuff>();
 		}
 
 		public static AttackRecordBuff SetAttack(this SkillInteraction interaction)
 		{
-			AttackRecordBuff attackRecord = interaction.GetOrInstall<AttackRecordBuff>();
+			AttackRecordBuff attackRecord =
+				interaction.TypeBuff.GetOrInstall<AttackRecordBuff>();
 			if (interaction.LaunchChess is ICanAttack attacker)
 				attackRecord.Attack = attacker.AttackValue;
 			if (interaction.TargetChess is ICanDefend defender)
@@ -29,7 +30,7 @@ namespace InfinityWorldChess.Ugf
 		
 		public static float RunAttack(this SkillInteraction interaction)
 		{
-			AttackRecordBuff attack = interaction.Get<AttackRecordBuff>();
+			AttackRecordBuff attack = interaction.TypeBuff.Get<AttackRecordBuff>();
 			float ret = 0;
 			if (attack is not null)
 			{

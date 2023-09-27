@@ -17,6 +17,8 @@ namespace InfinityWorldChess.BattleDomain
 	/// TODO: Maybe time effect will be added.
 	public sealed class BattleEventsBuff : IBuff<BattleRole>
 	{
+		public int Id => -1;
+		
 		public ActionableContainer<SkillInteraction> PrepareLaunch { get; } = new();
 
 		public ActionableContainer<SkillInteraction> PrepareReceive { get; } = new();
@@ -41,5 +43,6 @@ namespace InfinityWorldChess.BattleDomain
 		{
 			throw new UgfException($"{nameof(BattleEventsBuff)} cannot be overlapped!");
 		}
+
 	}
 }

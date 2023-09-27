@@ -13,6 +13,7 @@ namespace InfinityWorldChess.SkillDomain.AttackDomain
     /// </summary>
     public sealed class AttackRecordBuff : SkillInteractionBuffBase
     {
+        public override int Id => -1;
         public float Attack { get; set; }
         public AttackType AttackType { get; set; }
         public float Penetration { get; set; } = 10;
@@ -62,5 +63,6 @@ namespace InfinityWorldChess.SkillDomain.AttackDomain
             TotalDamage += realDamage;
             return realDamage;
         }
+
     }
 }

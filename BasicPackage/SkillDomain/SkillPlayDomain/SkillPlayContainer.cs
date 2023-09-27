@@ -4,10 +4,11 @@ using Secyud.Ugf;
 using Secyud.Ugf.Archiving;
 using Secyud.Ugf.AssetComponents;
 using Secyud.Ugf.AssetLoading;
+using UnityEngine;
 
 namespace InfinityWorldChess.SkillDomain.SkillPlayDomain
 {
-    public class SkillPlayContainer : AssetContainer<SkillPlay>
+    public class SkillPlayContainer : PrefabContainer<SkillPlay>
     {
         public new static AssetContainer<SkillPlay> Create(
             IAssetLoader loader, string assetName)
@@ -35,7 +36,9 @@ namespace InfinityWorldChess.SkillDomain.SkillPlayDomain
 
         protected override SkillPlay GetObject()
         {
-            return Loader.LoadAsset<SkillPlay>("SkillPlay/" + AssetName + ".prefab");
+            return Loader
+                .LoadAsset<GameObject>("SkillPlay/" + AssetName + ".prefab")
+                .GetComponent<SkillPlay>();
         }
 
 

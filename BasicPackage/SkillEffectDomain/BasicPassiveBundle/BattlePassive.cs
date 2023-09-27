@@ -10,12 +10,12 @@ namespace InfinityWorldChess.SkillEffectDomain.BasicPassiveBundle
         
         public virtual void Equip( Role role,IPassiveSkill skill)
         {
-            role.Buffs.BattleInitializes.Add(this);
+            role.IdBuffs.BattleInitializes.Add(this);
         }
 
         public virtual void UnEquip( Role role,IPassiveSkill skill)
         {
-            role.Buffs.BattleInitializes.Remove(this);
+            role.IdBuffs.BattleInitializes.Remove(this);
         }
 
         public abstract void OnBattleInitialize(BattleRole chess);

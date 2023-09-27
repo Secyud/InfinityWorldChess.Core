@@ -13,7 +13,7 @@ namespace InfinityWorldChess.SkillDomain
         {
             LastTime -= Time.deltaTime;
 
-            if (!_effected && MidTime < LastTime)
+            if (!_effected && MidTime > LastTime)
             {
                 BattleScope.Instance.State = BattleFlowState.SkillCast;
                 _effected = true;

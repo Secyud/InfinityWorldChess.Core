@@ -14,11 +14,13 @@ using UnityEngine;
 
 namespace InfinityWorldChess.BattleDomain
 {
-    public class BattleRole : BuffProperty<BattleRole>,
+    public class BattleRole : IdBuffProperty<BattleRole>,
         ICanAttack, ICanDefend, IHasContent, IReleasable, IUnitBase
     {
         private float _health, _energy;
         private int _execution;
+
+        public TypeBuffProperty<BattleRole> TypeBuff;
 
         public CoreSkillContainer[] NextCoreSkills { get; } =
             new CoreSkillContainer[SharedConsts.CoreSkillCodeCount];
@@ -132,6 +134,7 @@ namespace InfinityWorldChess.BattleDomain
             Role.CoreSkill.GetGroup(CurrentLayer, 0, NextCoreSkills);
             Role.FormSkill.GetGroup(CurrentState, NextFormSkills);
             UnitPlay = role.PassiveSkill[0]?.UnitPlay ?? null;
+            TypeBuff = new TypeBuffProperty<BattleRole>(this);
         }
 
         public void InitValue(float health, float energy, int execution)
@@ -237,8 +240,19 @@ namespace InfinityWorldChess.BattleDomain
             EnergyRecover = maxEnergy / 16;
             ExecutionRecover = execution;
 
-            foreach (IOnBattleRoleInitialize b in Role.Buffs.BattleInitializes)
+            foreach (IOnBattleRoleInitialize b in Role.IdBuffs.BattleInitializes)
                 b.OnBattleInitialize(this);
+        }
+
+        public TPropertyBuff GetProperty<TPropertyBuff>() 
+            where TPropertyBuff : class, IBuff<BattleRole>
+        {
+            return TypeBuff.GetOrInstall<TPropertyBuff>();
+        }
+        public TPropertyBuff TryGetProperty<TPropertyBuff>() 
+            where TPropertyBuff : class, IBuff<BattleRole>
+        {
+            return TypeBuff.Get<TPropertyBuff>();
         }
     }
 }

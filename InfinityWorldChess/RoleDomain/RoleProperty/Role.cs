@@ -67,7 +67,7 @@ namespace InfinityWorldChess.RoleDomain
 			writer.Write(Id);
 			Basic.Save(writer);
 			Nature.Save(writer);
-			Buffs.Save(writer);
+			IdBuffs.Save(writer);
 			Item.Save(writer);
 			Equipment.Save(writer);
 			CoreSkill.Save(writer);
@@ -84,7 +84,7 @@ namespace InfinityWorldChess.RoleDomain
 			Id = reader.ReadInt32();
 			Basic.Load(reader);
 			Nature.Load(reader);
-			Buffs.Load(reader);
+			IdBuffs.Load(reader);
 			Item.Load(reader);
 			Equipment.Load(reader, this);
 			CoreSkill.Load(reader);

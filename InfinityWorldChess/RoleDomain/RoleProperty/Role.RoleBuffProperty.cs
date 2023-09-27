@@ -10,14 +10,14 @@ namespace InfinityWorldChess.RoleDomain
 {
 	public partial class Role
 	{
-		private RoleBuffProperty _buffs ;
-		public RoleBuffProperty Buffs => _buffs ??= new RoleBuffProperty(this);
+		private RoleIdBuffProperty _idBuffs ;
+		public RoleIdBuffProperty IdBuffs => _idBuffs ??= new RoleIdBuffProperty(this);
 
-		public class RoleBuffProperty : BuffProperty<Role>
+		public class RoleIdBuffProperty : IdBuffProperty<Role>
 		{
 			public List<IOnBattleRoleInitialize> BattleInitializes { get; } = new();
 
-			public RoleBuffProperty(Role target) 
+			public RoleIdBuffProperty(Role target) 
 			{
 				Target = target;
 			}

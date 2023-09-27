@@ -24,7 +24,7 @@ namespace InfinityWorldChess.SkillEffectDomain.BasicPassiveBundle
 
         public void Active(SkillInteraction target)
         {
-            AttackRecordBuff attack = target.Get<AttackRecordBuff>();
+            AttackRecordBuff attack = target.TypeBuff.Get<AttackRecordBuff>();
             if (attack is not null)
                 attack.AttackType = (AttackType)AttackType;
         }

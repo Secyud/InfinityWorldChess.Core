@@ -13,7 +13,7 @@ using UnityEngine;
 
 namespace InfinityWorldChess.ItemDomain.EquipmentDomain
 {
-	public class Equipment : BuffProperty<Equipment>, IEquipment, IArchivableShown,IArchivable
+	public class Equipment : IdBuffProperty<Equipment>, IEquipment, IArchivableShown,IArchivable
 	{
 		public readonly List<IBuff<Role>> RoleBuff = new();
 		public readonly List<IBuff<BattleRole>> BattleRoleBuff = new();

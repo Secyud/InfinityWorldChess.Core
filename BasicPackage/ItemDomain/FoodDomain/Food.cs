@@ -13,7 +13,7 @@ using UnityEngine;
 
 namespace InfinityWorldChess.ItemDomain.FoodDomain
 {
-    public sealed class Food : BuffProperty<Food>,
+    public sealed class Food : IdBuffProperty<Food>,
         IItem, IEdible, IEdibleInBattle, IHasFlavor, IHasMouthfeel, IArchivableShown, IArchivable
     {
         public readonly List<IBuff<Role>> RoleBuffs = new();

@@ -1,12 +1,13 @@
 #region
 
 using JetBrains.Annotations;
+using Secyud.Ugf;
 
 #endregion
 
 namespace InfinityWorldChess.BuffDomain
 {
-    public interface IBuff<TTarget>
+    public interface IBuff<TTarget> : IHasId<int>
     {
         void Install([NotNull] TTarget target);
 

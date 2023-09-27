@@ -24,7 +24,7 @@ namespace InfinityWorldChess.InteractionDomain
         {
             Role role = _service.InteractionRole;
 
-            BuffTable.AutoSetTable(role.Buffs.GetVisibleBuff());
+            BuffTable.AutoSetTable(role.IdBuffs.GetVisibleBuff());
             BodyPartEditor.Bind(role.BodyPart);
         }
     }
