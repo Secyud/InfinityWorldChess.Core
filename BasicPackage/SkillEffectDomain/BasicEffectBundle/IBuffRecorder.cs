@@ -2,8 +2,11 @@ using InfinityWorldChess.BattleDomain;
 using InfinityWorldChess.BuffDomain;
 using Secyud.Ugf;
 
-namespace InfinityWorldChess.SkillEffectDomain.BattleBuffs
+namespace InfinityWorldChess.SkillEffectDomain.BasicEffectBundle
 {
+    /// <summary>
+    /// buff with uninstall while recorder trig.
+    /// </summary>
     public interface  IBuffRecorder:IHasDescription,IBuffFunction
     {
         void Overlay(IBuffRecorder thisRecorder, IBuff<BattleRole> buff);

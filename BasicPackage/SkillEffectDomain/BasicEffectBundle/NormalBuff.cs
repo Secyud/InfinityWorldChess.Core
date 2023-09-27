@@ -3,27 +3,28 @@ using InfinityWorldChess.BuffDomain;
 using Secyud.Ugf;
 using Secyud.Ugf.DataManager;
 
-namespace InfinityWorldChess.SkillEffectDomain.BattleBuffs
+namespace InfinityWorldChess.SkillEffectDomain.BasicEffectBundle
 {
-    public class RecorderBuff : IBuff<BattleRole>, IHasDescription
+    /// <summary>
+    /// no recorder buff, it will not remove from character.
+    /// </summary>
+    public class NormalBuff : IBuff<BattleRole>, IHasDescription
     {
         [field: S] public int Id { get; set; }
-        [field: S] public IBuffRecorder BuffRecorder { get; set; }
         [field: S] public IBuffEffect BuffEffect { get; set; }
+        [S] private string _description;
 
-        public string ShowDescription => BuffEffect?.ShowDescription +
-                                         BuffRecorder?.ShowDescription;
+        public string ShowDescription => _description
+                                         + BuffEffect?.ShowDescription;
 
         public void Install(BattleRole target)
         {
             BuffEffect?.Install(target, this);
-            BuffRecorder?.Install(target, this);
         }
 
         public void UnInstall(BattleRole target)
         {
             BuffEffect?.UnInstall(target, this);
-            BuffRecorder?.UnInstall(target, this);
         }
 
         public void Overlay(IBuff<BattleRole> finishBuff)
@@ -34,7 +35,6 @@ namespace InfinityWorldChess.SkillEffectDomain.BattleBuffs
             }
 
             BuffEffect?.Overlay(buff.BuffEffect, this);
-            BuffRecorder?.Overlay(buff.BuffRecorder, this);
         }
     }
 }

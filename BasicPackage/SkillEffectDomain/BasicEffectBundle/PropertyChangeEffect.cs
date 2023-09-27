@@ -4,7 +4,7 @@ using InfinityWorldChess.BuffDomain;
 using InfinityWorldChess.RoleDomain;
 using Secyud.Ugf.DataManager;
 
-namespace InfinityWorldChess.SkillEffectDomain.BattleBuffs
+namespace InfinityWorldChess.SkillEffectDomain.BasicEffectBundle
 {
     public class PropertyChangeEffect : IBuffEffect
     {

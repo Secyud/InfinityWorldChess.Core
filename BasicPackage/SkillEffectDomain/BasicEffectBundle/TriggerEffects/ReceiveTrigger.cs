@@ -3,12 +3,12 @@ using InfinityWorldChess.BuffDomain;
 using InfinityWorldChess.SkillDomain.SkillInteractionDomain;
 using InfinityWorldChess.Ugf;
 
-namespace InfinityWorldChess.SkillEffectDomain.BattleBuffs
+namespace InfinityWorldChess.SkillEffectDomain.BasicEffectBundle
 {
     public class ReceiveTrigger : BuffTriggerBase, IActionable<SkillInteraction>
     {
         private BattleEventsBuff _record;
-        public override string ShowDescription => "每次受到技能触发," + Effect.ShowDescription;
+        public override string ShowDescription => "每次受到技能触发," + base.ShowDescription;
         public int Priority => 65535;
 
         public override void Install(BattleRole target, IBuff<BattleRole> buff)
@@ -26,7 +26,10 @@ namespace InfinityWorldChess.SkillEffectDomain.BattleBuffs
 
         public void Active(SkillInteraction target)
         {
-            Effect.Active();
+            foreach (ITriggerEffect e in Effects)
+            {
+                e.Active();
+            }
         }
     }
 }

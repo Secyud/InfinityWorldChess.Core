@@ -2,7 +2,7 @@
 using InfinityWorldChess.BattleDomain.BattleRoleDomain;
 using InfinityWorldChess.BuffDomain;
 
-namespace InfinityWorldChess.SkillEffectDomain.BattleBuffs
+namespace InfinityWorldChess.SkillEffectDomain.BasicEffectBundle
 {
     public class TurnRecorder : IBuffRecorder
     {

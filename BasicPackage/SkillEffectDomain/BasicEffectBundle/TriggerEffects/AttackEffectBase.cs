@@ -2,11 +2,10 @@ using InfinityWorldChess.BattleDomain;
 using InfinityWorldChess.BuffDomain;
 using InfinityWorldChess.SkillDomain.SkillInteractionDomain;
 using InfinityWorldChess.Ugf;
-using Secyud.Ugf.DataManager;
 
-namespace InfinityWorldChess.SkillEffectDomain.BattleBuffs
+namespace InfinityWorldChess.SkillEffectDomain.BasicEffectBundle
 {
-    public abstract class AttackEffectBase : IActionableEffect
+    public abstract class AttackEffectBase : ITriggerEffect
     {
         private BattleRole _target;
 

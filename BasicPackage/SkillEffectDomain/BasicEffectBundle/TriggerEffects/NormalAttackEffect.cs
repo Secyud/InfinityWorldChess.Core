@@ -5,7 +5,7 @@ using InfinityWorldChess.SkillDomain.SkillInteractionDomain;
 using InfinityWorldChess.Ugf;
 using Secyud.Ugf.DataManager;
 
-namespace InfinityWorldChess.SkillEffectDomain.BattleBuffs
+namespace InfinityWorldChess.SkillEffectDomain.BasicEffectBundle
 {
     public class NormalAttackEffect : AttackEffectBase
     {
@@ -15,7 +15,6 @@ namespace InfinityWorldChess.SkillEffectDomain.BattleBuffs
 
         public override string ShowDescription =>
             $"触发{AttackValue}伤害。({LayerCount})";
-
 
         public override void Overlay(IBuffEffect thisEffect, IBuff<BattleRole> buff)
         {

@@ -1,7 +1,7 @@
 using InfinityWorldChess.BattleDomain;
 using InfinityWorldChess.BuffDomain;
 
-namespace InfinityWorldChess.SkillEffectDomain.BattleBuffs
+namespace InfinityWorldChess.SkillEffectDomain.BasicEffectBundle
 {
     public interface IBuffFunction
     {
