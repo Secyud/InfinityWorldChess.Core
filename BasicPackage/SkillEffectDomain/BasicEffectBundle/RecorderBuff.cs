@@ -1,5 +1,6 @@
 using InfinityWorldChess.BattleDomain;
 using InfinityWorldChess.BuffDomain;
+using InfinityWorldChess.SkillDomain;
 using Secyud.Ugf;
 using Secyud.Ugf.DataManager;
 
@@ -9,36 +10,31 @@ namespace InfinityWorldChess.SkillEffectDomain.BasicEffectBundle
     /// recorder buff, it will remove from character while recorder trig.
     /// unless recorder is null.
     /// </summary>
-    public class RecorderBuff : IBuff<BattleRole>, IHasDescription
+    public class RecorderBuff : SkillBuffBase
     {
-        [field: S] public int Id { get; set; }
         [field: S] public IBuffRecorder BuffRecorder { get; set; }
-        [field: S] public IBuffEffect BuffEffect { get; set; }
-        [S] private string _description;
-        public string ShowDescription => _description
-                                         +BuffEffect?.ShowDescription +
+        public override string ShowDescription => base.ShowDescription +
                                          BuffRecorder?.ShowDescription;
 
-        public void Install(BattleRole target)
+        public override void Install(BattleRole target)
         {
-            BuffEffect?.Install(target, this);
+            base.Install(target);
             BuffRecorder?.Install(target, this);
         }
 
-        public void UnInstall(BattleRole target)
+        public override void UnInstall(BattleRole target)
         {
-            BuffEffect?.UnInstall(target, this);
+            base.UnInstall(target);
             BuffRecorder?.UnInstall(target, this);
         }
 
-        public void Overlay(IBuff<BattleRole> finishBuff)
+        public override void Overlay(IBuff<BattleRole> finishBuff)
         {
+            base.Overlay(finishBuff);
             if (finishBuff is not RecorderBuff buff)
             {
                 return;
             }
-
-            BuffEffect?.Overlay(buff.BuffEffect, this);
             BuffRecorder?.Overlay(buff.BuffRecorder, this);
         }
     }

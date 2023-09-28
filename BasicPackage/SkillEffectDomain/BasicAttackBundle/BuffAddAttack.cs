@@ -1,6 +1,7 @@
 using System;
 using InfinityWorldChess.BattleDomain;
 using InfinityWorldChess.BuffDomain;
+using InfinityWorldChess.SkillEffectDomain.BasicEffectBundle;
 using Secyud.Ugf;
 using Secyud.Ugf.DataManager;
 using Secyud.Ugf.HexMap;
@@ -12,8 +13,9 @@ namespace InfinityWorldChess.SkillEffectDomain.BasicAttackBundle
         [field: S] public Guid BuffTypeId { get; set; }
         [field: S] public string BuffName { get; set; }
         private object _template;
+
         private object Template => _template
-            ??=U.Tm.ConstructFromResource(BuffTypeId, BuffName);
+            ??= U.Tm.ConstructFromResource(BuffTypeId, BuffName);
 
         public override string ShowDescription
         {
@@ -21,7 +23,6 @@ namespace InfinityWorldChess.SkillEffectDomain.BasicAttackBundle
             {
                 if (Template is IHasDescription description)
                 {
-                
                     return base.ShowDescription + description.ShowDescription;
                 }
                 else
@@ -37,9 +38,12 @@ namespace InfinityWorldChess.SkillEffectDomain.BasicAttackBundle
         {
             base.PostSkill(battleChess, releasePosition);
 
-            object buff = U.Tm.ConstructFromResource(BuffTypeId, BuffName);
-
-            battleChess.Install(buff as IBuff<BattleRole>);
+            object o = U.Tm.ConstructFromResource(BuffTypeId, BuffName);
+            if (o is SkillBuffBase buff)
+            {
+                buff.SetSkill(Skill);
+                battleChess.Install(buff);
+            }
         }
     }
 }

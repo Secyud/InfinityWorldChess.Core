@@ -14,13 +14,24 @@ namespace InfinityWorldChess.BattleDomain
         [SerializeField] private Table ItemTable;
         [SerializeField] private UnityEvent<string> Award;
         [SerializeField] private UnityEvent<string> SkillPoints;
-        
-        //TODO: A panel to show finish archive
-        public void SetBattleFinished(List<IItem> items,int award,int skillPoints)
+
+        private List<IItem> _items;
+        private int _award;
+        private int _skillPoints;
+        private void Awake()
         {
-            ItemTable.AutoSetTable(items);
-            Award.Invoke(award.ToString());
-            SkillPoints.Invoke(skillPoints.ToString());
+            _items = new List<IItem>();
+            ItemTable.AutoSetTable(_items);
+        }
+
+        public void AddBattleFinished(List<IItem> items,int award,int skillPoints)
+        {
+            _items.AddRange(items);
+            ItemTable.Refresh();
+            _skillPoints += skillPoints;
+            _award += award;
+            Award.Invoke(_award.ToString());
+            SkillPoints.Invoke(_skillPoints.ToString());
 
             PlayerGameContext player = GameScope.Instance.Player;
             player.Role.Item.Award += award;

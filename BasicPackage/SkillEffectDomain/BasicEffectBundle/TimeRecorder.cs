@@ -45,7 +45,7 @@ namespace InfinityWorldChess.SkillEffectDomain.BasicEffectBundle
             BattleScope.Instance.Context.RoundBeginAction -= CalculateRemove;
         }
 
-        public void Overlay(IBuffRecorder thisRecorder, IBuff<BattleRole> buff)
+        public void Overlay(IBuffRecorder sameRecorder, IBuff<BattleRole> buff)
         {
         }
     }

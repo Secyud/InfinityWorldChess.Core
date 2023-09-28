@@ -9,6 +9,6 @@ namespace InfinityWorldChess.SkillEffectDomain.BasicEffectBundle
     /// </summary>
     public interface  IBuffRecorder:IHasDescription,IBuffFunction
     {
-        void Overlay(IBuffRecorder thisRecorder, IBuff<BattleRole> buff);
+        void Overlay(IBuffRecorder sameRecorder, IBuff<BattleRole> buff);
     }
 }

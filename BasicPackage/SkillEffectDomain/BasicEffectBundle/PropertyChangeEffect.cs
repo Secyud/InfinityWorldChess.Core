@@ -2,6 +2,7 @@
 using InfinityWorldChess.BattleDomain;
 using InfinityWorldChess.BuffDomain;
 using InfinityWorldChess.RoleDomain;
+using InfinityWorldChess.SkillDomain;
 using Secyud.Ugf.DataManager;
 
 namespace InfinityWorldChess.SkillEffectDomain.BasicEffectBundle
@@ -37,14 +38,20 @@ namespace InfinityWorldChess.SkillEffectDomain.BasicEffectBundle
             _target.Role.BodyPart[BodyType].RealValue -= Value;
         }
 
-        public void Overlay(IBuffEffect thisEffect, IBuff<BattleRole> buff)
+        public void Overlay(IBuffEffect sameEffect, IBuff<BattleRole> buff)
         {
-            if (thisEffect is not PropertyChangeEffect effect)
+            if (sameEffect is not PropertyChangeEffect effect)
                 return;
 
             _target.Role.BodyPart[BodyType].RealValue += Value - effect.Value;
 
             effect.Value = Value;
+        }
+
+        public void SetSkill(IActiveSkill skill)
+        {
+            
+            
         }
     }
 }

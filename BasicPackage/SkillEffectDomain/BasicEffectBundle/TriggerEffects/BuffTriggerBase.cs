@@ -4,6 +4,7 @@ using System.Linq;
 using System.Ugf.Collections.Generic;
 using InfinityWorldChess.BattleDomain;
 using InfinityWorldChess.BuffDomain;
+using InfinityWorldChess.SkillDomain;
 using Secyud.Ugf.DataManager;
 
 namespace InfinityWorldChess.SkillEffectDomain.BasicEffectBundle
@@ -36,9 +37,9 @@ namespace InfinityWorldChess.SkillEffectDomain.BasicEffectBundle
             }
         }
 
-        public virtual void Overlay(IBuffEffect thisEffect, IBuff<BattleRole> buff)
+        public virtual void Overlay(IBuffEffect sameEffect, IBuff<BattleRole> buff)
         {
-            if (thisEffect is not BuffTriggerBase trigger)
+            if (sameEffect is not BuffTriggerBase trigger)
             {
                 return;
             }
@@ -52,6 +53,15 @@ namespace InfinityWorldChess.SkillEffectDomain.BasicEffectBundle
                 {
                     effect.Overlay(te, buff);
                 }
+            }
+        }
+
+        public virtual void SetSkill(IActiveSkill skill)
+        {
+            
+            foreach (ITriggerEffect effect in Effects)
+            {
+                effect.SetSkill(skill);
             }
         }
     }

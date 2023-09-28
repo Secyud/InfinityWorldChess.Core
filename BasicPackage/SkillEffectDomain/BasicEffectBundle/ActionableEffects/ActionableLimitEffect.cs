@@ -1,5 +1,6 @@
 using InfinityWorldChess.BattleDomain;
 using InfinityWorldChess.BuffDomain;
+using InfinityWorldChess.SkillDomain;
 using InfinityWorldChess.SkillDomain.SkillInteractionDomain;
 using Secyud.Ugf.DataManager;
 
@@ -26,9 +27,9 @@ namespace InfinityWorldChess.SkillEffectDomain.BasicEffectBundle
             Effect.UnInstall(target, buff);
         }
 
-        public void Overlay(IBuffEffect thisEffect, IBuff<BattleRole> buff)
+        public void Overlay(IBuffEffect sameEffect, IBuff<BattleRole> buff)
         {
-            if (thisEffect is ActionableLimitEffect effect)
+            if (sameEffect is ActionableLimitEffect effect)
             {
                 Effect.Overlay(effect.Effect, buff);
             }
@@ -38,6 +39,11 @@ namespace InfinityWorldChess.SkillEffectDomain.BasicEffectBundle
         {
             if (Limit.CheckLimit(target))
                 Effect.Active(target);
+        }
+
+        public void SetSkill(IActiveSkill skill)
+        {
+            Effect.SetSkill(skill);
         }
     }
 }

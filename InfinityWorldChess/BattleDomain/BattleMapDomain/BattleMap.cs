@@ -325,7 +325,6 @@ namespace InfinityWorldChess.BattleDomain.BattleMapDomain
             EnterControl();
         }
 
-        // TODO: Skill HexUnitPlay should give middle state to effect
         public void StartCurrentSkillCast(HexCell cell)
         {
             State = BattleFlowState.Interval;

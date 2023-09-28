@@ -2,6 +2,7 @@
 
 using InfinityWorldChess.BattleDomain;
 using InfinityWorldChess.BuffDomain;
+using InfinityWorldChess.SkillDomain;
 using InfinityWorldChess.SkillDomain.AttackDomain;
 using InfinityWorldChess.SkillDomain.SkillInteractionDomain;
 using InfinityWorldChess.Ugf;
@@ -33,8 +34,13 @@ namespace InfinityWorldChess.SkillEffectDomain.BasicEffectBundle
 		{
 		}
 
-		public void Overlay(IBuffEffect thisEffect, IBuff<BattleRole> buff)
+		public void Overlay(IBuffEffect sameEffect, IBuff<BattleRole> buff)
 		{
+		}
+
+		public void SetSkill(IActiveSkill skill)
+		{
+			
 		}
 	}
 }

@@ -4,8 +4,8 @@ using Secyud.Ugf;
 
 namespace InfinityWorldChess.SkillEffectDomain.BasicEffectBundle
 {
-    public interface IBuffEffect : IHasDescription,IBuffFunction
+    public interface IBuffEffect : IHasDescription,IBuffFunction,ISkillBuff
     {
-        void Overlay(IBuffEffect thisEffect, IBuff<BattleRole> buff);
+        void Overlay(IBuffEffect sameEffect, IBuff<BattleRole> buff);
     }
 }

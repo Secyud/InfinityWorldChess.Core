@@ -1,5 +1,6 @@
 using InfinityWorldChess.BattleDomain;
 using InfinityWorldChess.BuffDomain;
+using InfinityWorldChess.SkillDomain;
 using Secyud.Ugf.DataManager;
 
 namespace InfinityWorldChess.SkillEffectDomain.BasicEffectBundle
@@ -20,7 +21,7 @@ namespace InfinityWorldChess.SkillEffectDomain.BasicEffectBundle
         {
         }
 
-        public void Overlay(IBuffEffect thisEffect, IBuff<BattleRole> buff)
+        public void Overlay(IBuffEffect sameEffect, IBuff<BattleRole> buff)
         {
         }
 
@@ -31,6 +32,11 @@ namespace InfinityWorldChess.SkillEffectDomain.BasicEffectBundle
             {
                 _target.Remove(_buff.Id);
             }
+        }
+
+        public void SetSkill(IActiveSkill skill)
+        {
+            
         }
     }
 }

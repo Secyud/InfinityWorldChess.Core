@@ -14,7 +14,6 @@ namespace InfinityWorldChess.BattleDomain
 	/// battle events buff record all events for battle role.
 	/// buff can effect by add event to this and loss effect by remove event.
 	/// </summary>
-	/// TODO: Maybe time effect will be added.
 	public sealed class BattleEventsBuff : IBuff<BattleRole>
 	{
 		public int Id => -1;

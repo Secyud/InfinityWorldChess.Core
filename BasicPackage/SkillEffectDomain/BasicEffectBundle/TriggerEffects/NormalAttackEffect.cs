@@ -16,14 +16,13 @@ namespace InfinityWorldChess.SkillEffectDomain.BasicEffectBundle
         public override string ShowDescription =>
             $"触发{AttackValue}伤害。({LayerCount})";
 
-        public override void Overlay(IBuffEffect thisEffect, IBuff<BattleRole> buff)
+        public override void Overlay(IBuffEffect sameEffect, IBuff<BattleRole> buff)
         {
-            if (thisEffect is not NormalAttackEffect effect)
+            if (sameEffect is not NormalAttackEffect effect)
                 return;
 
-            int layerCount = LayerCount + effect.LayerCount - 1;
             effect.AttackValue = AttackValue;
-            effect.LayerCount = layerCount;
+            effect.LayerCount += LayerCount;
         }
 
         private BattleEventsBuff _record;

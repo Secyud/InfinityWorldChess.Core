@@ -4,6 +4,9 @@ using Secyud.Ugf.DataManager;
 
 namespace InfinityWorldChess.SkillEffectDomain.BasicEffectBundle
 {
+    /// <summary>
+    /// be careful, time should be a large number.
+    /// </summary>
     public class RoundTrigger : BuffTriggerBase
     {
         [field:S] private int Time { get; set; }
