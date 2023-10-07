@@ -15,7 +15,7 @@ namespace InfinityWorldChess.SkillDomain
 
             if (!_effected && MidTime > LastTime)
             {
-                BattleScope.Instance.State = BattleFlowState.SkillCast;
+                BattleScope.Instance.State = BattleFlowState.OnEffectTrig;
                 _effected = true;
             }
             

@@ -1,10 +1,12 @@
+using Secyud.Ugf;
+
 namespace InfinityWorldChess.BattleDomain.AiDomain
 {
     public class StopActionNode:AiActionNode
     {
         public override void InvokeAction()
         {
-            BattleScope.Instance.Map.ExitControl();
+            U.Get<BattleControlService>().ExitControl();
         }
 
         public override int GetScore()

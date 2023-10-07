@@ -26,9 +26,10 @@ namespace InfinityWorldChess.SkillDomain.SkillRangeDomain
 			return new SkillRange(cells);
 		}
 
-		public static SkillRange Circle(byte start, byte end, HexCoordinates center)
+		public static SkillRange Circle(byte start, byte end,
+			HexCoordinates center,bool includeUnit = true)
 		{
-			return GetArcRange(start, end, center, HexDirection.Ne, 6);
+			return GetArcRange(start, end, center, HexDirection.Ne, 6,includeUnit);
 		}
 
 		public static SkillRange WideHalfCircle(byte start, byte end, HexCoordinates center, HexDirection direction)
@@ -80,7 +81,7 @@ namespace InfinityWorldChess.SkillDomain.SkillRangeDomain
 		}
 		public static SkillRange GetArcRange(
 			byte startDistance, byte endDistance, HexCoordinates startCoordinate,
-			HexDirection startDirection, byte coverRange)
+			HexDirection startDirection, byte coverRange,bool includeUnit = true)
 		{
 			HexGrid grid = BattleScope.Instance.Map.Grid;
 			List<HexCell> cells = new();
@@ -108,6 +109,21 @@ namespace InfinityWorldChess.SkillDomain.SkillRangeDomain
 				coordinate += startDirection;
 			}
 
+			if (!includeUnit)
+			{
+				for (int i = 0; i < cells.Count; )
+				{
+					if (cells[i].Unit)
+					{
+						cells.RemoveAt(i);
+					}
+					else
+					{
+						i++;
+					}
+				}
+			}
+			
 			return new SkillRange(cells.ToArray());
 		}
 	}

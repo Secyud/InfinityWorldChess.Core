@@ -1,10 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using InfinityWorldChess.BattleDomain.BattleRoleDomain;
-using InfinityWorldChess.SkillDomain;
 using Secyud.Ugf;
 using Secyud.Ugf.DependencyInjection;
-using Secyud.Ugf.HexMap;
 
 namespace InfinityWorldChess.BattleDomain.AiDomain
 {
@@ -17,7 +14,7 @@ namespace InfinityWorldChess.BattleDomain.AiDomain
         public IEnumerator StartPondering()
         {
             State = AiControlState.InPondering;
-            BattleRole battleRole = U.Get<RoleObservedService>().Role;
+            BattleRole battleRole = BattleScope.Instance.Context.Role;
             List<AiActionNode> nodes = new();
             if (battleRole is null)
                 State = AiControlState.NoActionValid;

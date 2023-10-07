@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using InfinityWorldChess.BattleDomain.BattleMapDomain;
-using InfinityWorldChess.BattleDomain.BattleSkillDomain;
-using InfinityWorldChess.RoleDomain;
 using InfinityWorldChess.SkillDomain;
 using JetBrains.Annotations;
 using Secyud.Ugf;
@@ -29,10 +27,9 @@ namespace InfinityWorldChess.BattleDomain.AiDomain
 
         public override void InvokeAction()
         {
-            SkillObservedService skill = U.Get<SkillObservedService>();
-            skill.Skill = _container;
-            BattleMap map = BattleScope.Instance.Map;
-            map.StartCurrentSkillCast(_cell);
+            CoreSkillActionService skill = U.Get<CoreSkillActionService>();
+            skill.CoreSkill = _container;
+            skill.OnPress(_cell);
         }
 
         public override int GetScore()

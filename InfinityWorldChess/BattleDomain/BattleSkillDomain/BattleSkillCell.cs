@@ -6,28 +6,33 @@ using UnityEngine;
 
 namespace InfinityWorldChess.BattleDomain.BattleSkillDomain
 {
-    public class BattleSkillCell:ShownCell
+    public abstract class BattleSkillCell:ShownCell
     {
-        [SerializeField] private SButton Button;
-        public SkillContainer Skill { get; private set; }
-
-        public void OnClick()
+        [SerializeField] protected SButton Button;
+        protected BattleContext Context { get; set; }
+        protected string TipText { get; set; }
+        
+        protected virtual void Awake()
         {
-            U.Get<SkillObservedService>().Skill = Skill;
+            Context = BattleScope.Instance.Context;
         }
 
-        public void RefreshSkill(SkillContainer skill,BattleRole role)
+        protected void SetSkill(IActiveSkill skill)
         {
-            Skill = skill;
-            if (skill?.Skill is null)
+            BindShowable(skill);
+            TipText = skill?.CheckCastCondition(Context.Role);
+            Button.interactable = TipText is null;
+        }
+
+        protected override void CreateFloating()
+        {
+            FormSkillContainer formSkill = 
+                Context.Role.NextFormSkills[CellIndex];
+            RectTransform content = formSkill.FormSkill.CreateAutoCloseFloatingOnMouse();
+            if (TipText is not null)
             {
-                gameObject.SetActive(false);
-            }
-            else
-            {
-                gameObject.SetActive(true);
-                BindShowable(skill.Skill);
-                Button.interactable = skill.Skill.CheckCastCondition(role) is null;
+                SText t = content.AddParagraph(TipText);
+                t.color = Color.blue;
             }
         }
     }

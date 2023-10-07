@@ -14,7 +14,7 @@ namespace InfinityWorldChess.SkillEffectDomain.BasicEffectBundle
         private void CalculateRemove()
         {
             TurnFinished -= 1;
-            if (TurnFinished <= 0 && _target == BattleScope.Instance.Get<RoleObservedService>().Role)
+            if (TurnFinished <= 0 && _target == BattleScope.Instance.Context.Role)
                 _target.UnInstall(_buff.Id);
         }
         

@@ -1,4 +1,5 @@
 ﻿using InfinityWorldChess.BattleDomain;
+using InfinityWorldChess.BattleDomain.BattleMapDomain;
 using InfinityWorldChess.BattleDomain.BattleSkillDomain;
 using InfinityWorldChess.SkillDomain;
 using InfinityWorldChess.SkillDomain.SkillInteractionDomain;
@@ -15,9 +16,13 @@ namespace InfinityWorldChess.SkillEffectDomain.BasicAttackBundle
         protected override void PreInteraction(SkillInteraction interaction)
         {
             base.PreInteraction(interaction);
-            SkillContainer skill = BattleScope.Instance.Get<SkillObservedService>().Skill;
-            if ((skill.EquipCode >> skill.EquipLayer - 1 & 1) == 0)
+            CoreSkillContainer skill = 
+                BattleScope.Instance.Get<CoreSkillActionService>().CoreSkill;
+            if (skill is not null &&
+                (skill.EquipCode >> skill.EquipLayer - 1 & 1) == 0)
+            {
                 AttackRecord.AttackFactor *= 1 + F256;
+            }
         }
     }
 }

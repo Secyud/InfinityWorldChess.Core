@@ -20,7 +20,6 @@ namespace InfinityWorldChess.BattleDomain
     public class BattleScope : DependencyScopeProvider
     {
         private readonly MonoContainer<BattleMap> _map;
-        private readonly MonoContainer<BattlePlayerController> _controller;
         private readonly PrefabContainer<HexUnit> _battleUnitPrefab;
         private readonly PrefabContainer<TextMeshPro> _simpleTextMesh;
         private readonly PrefabContainer<BattleRoleStateViewer> _stateViewer;
@@ -36,14 +35,13 @@ namespace InfinityWorldChess.BattleDomain
 
         public BattleFlowState State
         {
-            get => Map.State;
-            set => Map.State = value;
+            get => Context.State;
+            set => Context.State = value;
         }
 
         public BattleScope(IwcAssets assets)
         {
             _map = MonoContainer<BattleMap>.Create(assets, onCanvas: false);
-            _controller = MonoContainer<BattlePlayerController>.Create(assets);
             _battleUnitPrefab = PrefabContainer<HexUnit>.Create(
                 assets, U.TypeToPath<BattleContext>() + "Unit.prefab"
             );
@@ -133,7 +131,7 @@ namespace InfinityWorldChess.BattleDomain
             {
                 HexUnitPlay play = Object.Instantiate(chess.UnitPlay?.Value, unit.transform);
                 unit.SetLoopPlay(play);
-                Map.StartUnitPlayBroadcast(chess, play, chess.Unit.Location);
+                play.Play(chess.Unit, chess.Unit.Location);
             }
 
             Context.OnChessAdded();
@@ -191,16 +189,6 @@ namespace InfinityWorldChess.BattleDomain
             }
 
             End: ;
-        }
-
-        public void OpenPlayerControlPanel()
-        {
-            _controller.Create();
-        }
-
-        public void ClosePlayerControlPanel()
-        {
-            _controller.Destroy();
         }
     }
 }

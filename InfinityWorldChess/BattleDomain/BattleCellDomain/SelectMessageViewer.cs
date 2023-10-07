@@ -12,16 +12,16 @@ namespace InfinityWorldChess.BattleDomain.BattleCellDomain
 	{
 		[SerializeField] private SText Position;
 		
-		private SelectObservedService _selectObservedService;
 		private void Awake()
 		{
-			_selectObservedService = BattleScope.Instance.Get<SelectObservedService>();
-			_selectObservedService.AddObserverObject(nameof(SelectMessageViewer),Refresh,gameObject);
+			BattleScope.Instance.Context.SelectedCellService
+				.AddObserverObject(nameof(SelectMessageViewer),Refresh,gameObject);
 		}
 
 		public void Refresh()
 		{
-			Position.Set(_selectObservedService.SelectedCell.Cell.Coordinates.ToString()??"");
+			Position.Set(
+				BattleScope.Instance.Context.SelectedCell.Coordinates.ToString()??"");
 		}
 	}
 }

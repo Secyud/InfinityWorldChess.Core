@@ -2,9 +2,9 @@
 {
     public enum BattleFlowState
     {
-        Interval,
-        OnRound,
-        Control,
-        SkillCast,
+        AnimationPlay,
+        OnCalculation,
+        OnUnitControl,
+        OnEffectTrig,
     }
 }

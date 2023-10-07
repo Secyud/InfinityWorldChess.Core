@@ -42,7 +42,7 @@ namespace InfinityWorldChess.Ugf
             }
         }
 
-        private void CreateFloating()
+        protected virtual void CreateFloating()
         {
             _withContent.CreateAutoCloseFloatingOnMouse();
         }

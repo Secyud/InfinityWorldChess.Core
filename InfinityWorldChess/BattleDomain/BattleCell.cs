@@ -1,5 +1,6 @@
 #region
 
+using System;
 using InfinityWorldChess.BuffDomain;
 using Secyud.Ugf.HexMap;
 using System.Collections.Generic;
@@ -11,44 +12,43 @@ namespace InfinityWorldChess.BattleDomain
 {
     public sealed class BattleCell : CellBase
     {
-        private bool _inRange;
+        [Flags]
+        public enum State
+        {
+            Releasable = 0x08,
+            InRange = 0x04,
+            Selected = 0x02,
+            Hovered = 0x01
+        }
 
-        private bool _releasable;
-
-        private bool _selected;
+        private State _state;
 
         public List<BattleRole> Roles { get; } = new();
 
         public Dictionary<int, IBuff<BattleCell>> CheckerBuffs { get; } = new();
 
-        public bool Releasable
+        internal bool Releasable
         {
-            get => _releasable;
-            set
-            {
-                _releasable = value;
-                SetHighlight();
-            }
+            get => _state.HasFlag(State.Releasable);
+            set => SetState(State.Releasable, value);
         }
 
-        public bool InRange
+        internal bool InRange
         {
-            get => _inRange;
-            set
-            {
-                _inRange = value;
-                SetHighlight();
-            }
+            get => _state.HasFlag(State.InRange);
+            set => SetState(State.InRange, value);
         }
 
-        public bool Selected
+        internal bool Selected
         {
-            get => _selected;
-            set
-            {
-                _selected = value;
-                SetHighlight();
-            }
+            get => _state.HasFlag(State.Selected);
+            set => SetState(State.Selected, value);
+        }
+
+        internal bool Hovered
+        {
+            get => _state.HasFlag(State.Hovered);
+            set => SetState(State.Hovered, value);
         }
 
         public int SpecialIndex { get; set; } = -1;
@@ -57,16 +57,34 @@ namespace InfinityWorldChess.BattleDomain
 
         public int ResourceLevel { get; set; } = -1;
 
+        private void SetState(State state,bool value)
+        {
+            if (value)
+            {
+                _state |= state;
+            }
+            else
+            {
+                _state &= ~state;
+            }
+
+            SetHighlight();
+        }
         public override void SetHighlight()
         {
-            if (_inRange)
-                Cell.EnableHighlight(Color.red);
-            else if (_selected)
-                Cell.EnableHighlight(Color.green);
-            else if (_releasable)
-                Cell.EnableHighlight(Color.yellow);
-            else
+            if (_state == 0)
+            {
                 Cell.DisableHighlight();
+                return;
+            }
+
+            Cell.EnableHighlight((int)_state switch
+            {
+                < 2      => Color.red,
+                < 2 << 1 => Color.green,
+                < 2 << 2 => Color.yellow,
+                _        => Color.yellow
+            });
         }
     }
 }

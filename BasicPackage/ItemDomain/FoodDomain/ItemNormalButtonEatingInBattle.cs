@@ -1,7 +1,6 @@
 #region
 
 using InfinityWorldChess.BattleDomain;
-using InfinityWorldChess.BattleDomain.BattleRoleDomain;
 using Secyud.Ugf.TableComponents.ButtonComponents;
 
 #endregion
@@ -14,7 +13,7 @@ namespace InfinityWorldChess.ItemDomain.FoodDomain
 
 		public override void Trigger()
 		{
-			(Target as IEdibleInBattle)!.EatingInBattle(BattleScope.Instance.Get<RoleObservedService>().Role);
+			(Target as IEdibleInBattle)!.EatingInBattle(BattleScope.Instance.Context.Role);
 		}
 
 		public override bool Visible(IItem target)

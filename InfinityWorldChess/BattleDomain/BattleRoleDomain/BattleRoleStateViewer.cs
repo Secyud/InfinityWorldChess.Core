@@ -13,14 +13,14 @@ namespace InfinityWorldChess.BattleDomain.BattleRoleDomain
         [SerializeField] private ValueViewer Energy;
         [SerializeField] private ValueViewer Execution;
 
-        private StateObservedService _state;
+        private BattleContext _context;
         
         public Transform TargetTrans { get; set; }
 
         private void Awake()
         {
-            _state = BattleScope.Instance.Get<StateObservedService>();
-            _state.AddObserverObject(nameof(BattleRoleStateViewer) + State, RefreshState, gameObject);
+            _context = BattleScope.Instance.Context;
+            _context.StateService.AddObserverObject(nameof(BattleRoleStateViewer) + State, RefreshState, gameObject);
         }
 
         private void Update()
