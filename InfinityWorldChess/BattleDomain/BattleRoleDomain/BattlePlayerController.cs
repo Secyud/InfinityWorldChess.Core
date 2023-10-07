@@ -44,6 +44,11 @@ namespace InfinityWorldChess.BattleDomain.BattleRoleDomain
             }
         }
 
+        public void SelectMoveButton()
+        {
+            _context.MapAction = U.Get<MoveActionService>();
+        }
+
         public void ExitPlayerControl()
         {
             U.Get<BattleControlService>().ExitControl();

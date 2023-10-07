@@ -1,6 +1,5 @@
 using System;
 using System.Linq;
-using InfinityWorldChess.RoleDomain;
 using InfinityWorldChess.SkillDomain;
 using Secyud.Ugf.DependencyInjection;
 using Secyud.Ugf.HexMap;
@@ -10,8 +9,31 @@ namespace InfinityWorldChess.BattleDomain.BattleMapDomain
     [Registry(DependScope = typeof(BattleScope))]
     public class CoreSkillActionService : IBattleMapActionService,IRegistry
     {
-        public CoreSkillContainer CoreSkill { get; set; }
         private HexCell _skillCastCell;
+        private CoreSkillContainer _coreSkill;
+        private bool _apply;
+
+        public CoreSkillContainer CoreSkill
+        {
+            get => _coreSkill;
+            set
+            {
+                _coreSkill = value;
+                if (_apply)
+                {
+                    BattleContext context = BattleScope.Instance.Context;
+                    BattleRole role = context.Role;
+                    context.ReleasableCells = value?.CoreSkill.GetCastPositionRange(role).Value;
+                    context.InRangeCells = Array.Empty<HexCell>();
+                }
+            }
+        }
+
+        public void OnApply()
+        {
+            _apply = true;
+            CoreSkill = CoreSkill;
+        }
 
         public void OnHover(HexCell cell)
         {
@@ -64,14 +86,15 @@ namespace InfinityWorldChess.BattleDomain.BattleMapDomain
             BattleScope.Instance.Context.OnActionFinished();
         }
 
-        public void OnClear()
-        {
-            CoreSkill = null;
-        }
-
         public void AutoReselectSkill(BattleRole role)
         {
             CoreSkill = role.NextCoreSkills.FirstOrDefault(u => u is not null);
+        }
+        
+        public void OnClear()
+        {
+            CoreSkill = null;
+            _apply = false;
         }
     }
 }

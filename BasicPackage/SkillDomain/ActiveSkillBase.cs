@@ -3,6 +3,7 @@ using InfinityWorldChess.BattleDomain;
 using InfinityWorldChess.GameDomain;
 using InfinityWorldChess.ItemDomain;
 using InfinityWorldChess.SkillDomain.SkillRangeDomain;
+using InfinityWorldChess.SkillDomain.SkillRangeDomain.Target;
 using InfinityWorldChess.Ugf;
 using Secyud.Ugf;
 using Secyud.Ugf.Archiving;

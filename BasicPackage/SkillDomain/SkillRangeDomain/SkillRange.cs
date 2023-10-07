@@ -79,6 +79,7 @@ namespace InfinityWorldChess.SkillDomain.SkillRangeDomain
 		{
 			return GetArcRange(start, end, center, direction, 0);
 		}
+		
 		public static SkillRange GetArcRange(
 			byte startDistance, byte endDistance, HexCoordinates startCoordinate,
 			HexDirection startDirection, byte coverRange,bool includeUnit = true)

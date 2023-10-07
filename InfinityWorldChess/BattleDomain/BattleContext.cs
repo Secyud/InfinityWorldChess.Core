@@ -38,11 +38,13 @@ namespace InfinityWorldChess.BattleDomain
                 }
 
                 _hoverCell = value;
+
                 if (_hoverCell)
                 {
                     _hoverCell.Get<BattleCell>().Hovered = true;
                 }
 
+                MapAction.OnHover(_hoverCell);
                 HoverCellService.Refresh();
             }
         }
@@ -139,6 +141,7 @@ namespace InfinityWorldChess.BattleDomain
 
                 _mapAction?.OnClear();
                 _mapAction = value;
+                _mapAction?.OnApply();
             }
         }
 
@@ -165,7 +168,7 @@ namespace InfinityWorldChess.BattleDomain
                 {
                     _role.Active = true;
                 }
-                
+
                 RoleService.Refresh();
             }
         }
@@ -180,7 +183,10 @@ namespace InfinityWorldChess.BattleDomain
 
         public virtual void TriggerCell(HexCell cell)
         {
-            MapAction?.OnPress(cell);
+            if (_releasableCells.Contains(cell))
+            {
+                MapAction?.OnPress(cell);
+            }
         }
 
         #endregion

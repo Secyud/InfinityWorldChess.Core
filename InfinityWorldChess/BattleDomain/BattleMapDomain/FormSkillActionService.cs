@@ -9,9 +9,32 @@ namespace InfinityWorldChess.BattleDomain.BattleMapDomain
     [Registry(DependScope = typeof(BattleScope))]
     public class FormSkillActionService: IBattleMapActionService,IRegistry
     {
-        public FormSkillContainer FormSkill { get; set; }
         private HexCell _skillCastCell;
+        private FormSkillContainer _formSkill;
+        private bool _apply;
 
+        public FormSkillContainer FormSkill
+        {
+            get => _formSkill;
+            set
+            {
+                _formSkill = value;
+                if (_apply)
+                {
+                    BattleContext context = BattleScope.Instance.Context;
+                    BattleRole role = context.Role;
+                    context.ReleasableCells = value?.FormSkill.GetCastPositionRange(role).Value;
+                    context.InRangeCells = Array.Empty<HexCell>();
+                }
+            }
+        }
+
+        public void OnApply()
+        {
+            _apply = true;
+            FormSkill = FormSkill;
+        }
+        
         public void OnHover(HexCell cell)
         {
             if (FormSkill is not null)
@@ -70,6 +93,7 @@ namespace InfinityWorldChess.BattleDomain.BattleMapDomain
         public void OnClear()
         {
             FormSkill = null;
+            _apply = false;
         }
     }
 }

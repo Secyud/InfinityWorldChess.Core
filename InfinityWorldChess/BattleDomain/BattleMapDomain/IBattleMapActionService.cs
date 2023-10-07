@@ -4,6 +4,8 @@ namespace InfinityWorldChess.BattleDomain.BattleMapDomain
 {
     public interface IBattleMapActionService
     {
+        void OnApply();
+        
         void OnHover(HexCell cell);
 
         void OnPress(HexCell cell);
