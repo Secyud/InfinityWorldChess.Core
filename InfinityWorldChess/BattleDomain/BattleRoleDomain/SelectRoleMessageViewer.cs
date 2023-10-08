@@ -8,6 +8,7 @@ namespace InfinityWorldChess.BattleDomain.BattleRoleDomain
 
         private void Awake()
         {
+            _context = BattleScope.Instance.Context;
             _context.SelectedCellService.AddObserverObject(
                 nameof(SelectRoleMessageViewer), Refresh, gameObject);
             _context.StateService.AddObserverObject(
