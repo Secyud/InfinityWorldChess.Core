@@ -18,7 +18,7 @@ namespace InfinityWorldChess.ActivityDomain
                 ActivityState.NotReceived => NotReceived,
                 ActivityState.Failed      => Failed,
                 ActivityState.Received    => Received,
-                ActivityState.Finished    => Finished,
+                ActivityState.Success    => Finished,
                 _                         => null
             };
         }

@@ -3,13 +3,11 @@
 using InfinityWorldChess.Ugf;
 using Secyud.Ugf.BasicComponents;
 using System.Collections.Generic;
-using System.Linq;
 using System.Ugf.Collections.Generic;
 using InfinityWorldChess.RoleDomain;
 using Secyud.Ugf.LayoutComponents;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.Serialization;
 
 #endregion
 
@@ -77,8 +75,7 @@ namespace InfinityWorldChess.InteractionDomain
             {
                 SelectActionContent.gameObject.SetActive(true);
                 RectTransform content = SelectActionContent.PrepareLayout();
-                actions = actions.Where(u => u.Visible()).ToList();
-
+                
                 for (int index = 0; index < actions.Count; index++)
                 {
                     IDialogueAction action = actions[index];

@@ -32,7 +32,7 @@ namespace InfinityWorldChess.ItemDomain.EquipmentDomain
 
 		public int Antique { get; set; }
 
-		public byte Score { get; set; }
+		public int Score { get; set; }
 
 		public byte TypeCode { get; set; }
 

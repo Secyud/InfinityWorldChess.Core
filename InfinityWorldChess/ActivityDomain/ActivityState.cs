@@ -8,6 +8,6 @@ namespace InfinityWorldChess.ActivityDomain
         NotReceived,
         Failed,
         Received,
-        Finished,
+        Success,
     }
 }

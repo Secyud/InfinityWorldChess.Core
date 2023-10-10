@@ -32,7 +32,7 @@ namespace InfinityWorldChess.ItemDomain.FoodDomain
 
         public IObjectAccessor<Sprite> ShowIcon => Icon;
 
-        public byte Score { get; set; }
+        public int Score { get; set; }
 
         public int SaveIndex { get; set; }
 

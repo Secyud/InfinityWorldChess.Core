@@ -9,6 +9,6 @@ namespace InfinityWorldChess.ItemDomain
 {
 	public interface IItem : IShowable, IHasContent, IHasSaveIndex
 	{
-		byte Score { get; }
+		int Score { get; }
 	}
 }

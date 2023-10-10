@@ -103,7 +103,7 @@ namespace InfinityWorldChess.Ugf
 		public static void AddItemHeader(this Transform content, IItem item)
 		{
 			content.AddSimpleShown(item);
-			string s = (item.Score >> 5) switch
+			string s = (item.Score >> 28) switch
 			{
 				0 => "<color=#808080ff>[无用]</color>",
 				1 => "<color=#ffffffff>[常见]</color>",

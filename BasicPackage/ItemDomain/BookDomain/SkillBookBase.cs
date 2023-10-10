@@ -3,7 +3,6 @@
 using System;
 using InfinityWorldChess.RoleDomain;
 using InfinityWorldChess.Ugf;
-using InfinityWorldChess.BasicBundle.Items;
 using InfinityWorldChess.GameDomain;
 using InfinityWorldChess.PlayerDomain;
 using Secyud.Ugf.DataManager;
@@ -13,7 +12,7 @@ using UnityEngine;
 
 namespace InfinityWorldChess.ItemDomain.BookDomain
 {
-    public abstract class SkillBookBase : ItemTemplate, IReadable
+    public abstract class SkillBookBase : Item, IReadable
     {
         [field: S] public RoleItemFunctionBase Function { get; set; }
 

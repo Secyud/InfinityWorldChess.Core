@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using InfinityWorldChess.BasicBundle.Items;
 using InfinityWorldChess.GameDomain;
 using InfinityWorldChess.ItemDomain;
 using InfinityWorldChess.SkillDomain;

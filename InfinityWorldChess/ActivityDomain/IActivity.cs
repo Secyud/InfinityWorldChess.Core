@@ -7,6 +7,7 @@ namespace InfinityWorldChess.ActivityDomain
     {
         ActivityState State { get; set; }
 
-        void SetActivity(ActivityGroup group);
+        void StartActivity(ActivityGroup group);
+        void FinishActivity(ActivityGroup group);
     }
 }

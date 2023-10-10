@@ -1,12 +1,13 @@
 using Secyud.Ugf;
+using Secyud.Ugf.DataManager;
 
 namespace InfinityWorldChess.InteractionDomain
 {
     public class CloseDialogueAction:IDialogueAction
     {
-        public string ActionText { get; set; } = "结束对话";
+        [field: S]public string ActionText { get; set; } = "结束对话";
         
-        public bool Visible()
+        public bool VisibleFor()
         {
             return true;
         }

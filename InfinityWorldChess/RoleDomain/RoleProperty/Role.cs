@@ -1,6 +1,5 @@
 #region
 
-using InfinityWorldChess.BattleDomain;
 using Secyud.Ugf;
 using System;
 using System.Collections.Generic;

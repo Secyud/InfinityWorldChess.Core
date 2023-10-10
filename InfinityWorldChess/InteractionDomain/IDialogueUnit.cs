@@ -1,7 +1,4 @@
-﻿using Secyud.Ugf;
-using System;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using System.Collections.Generic;
 
 namespace InfinityWorldChess.InteractionDomain
 {

@@ -25,7 +25,8 @@ namespace InfinityWorldChess.InteractionDomain
         public override void RefreshTab()
         {
             Role role = _service.InteractionRole;
-            List<ButtonDescriptor<Role>> buttons = U.Get<InteractionButtons>().Items;
+            List<ButtonDescriptor<Role>> buttons = 
+                U.Get<InteractionButtons>().Items;
             ButtonGroup.OnInitialize(role, buttons);
             AvatarEditor.OnInitialize(role.Basic);
         }

@@ -1,12 +1,12 @@
 ﻿#region
 
-using InfinityWorldChess.BasicBundle.Items;
+using InfinityWorldChess.ItemDomain;
 
 #endregion
 
 namespace InfinityWorldChess.ManufacturingDomain
 {
-	public class Manufacturable : ItemTemplate
+	public class Manufacturable : Item
 	{
 
 	}

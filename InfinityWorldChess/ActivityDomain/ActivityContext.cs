@@ -1,6 +1,16 @@
-﻿namespace InfinityWorldChess.ActivityDomain
+﻿using System.Collections.Generic;
+using InfinityWorldChess.GameDomain;
+using InfinityWorldChess.InteractionDomain;
+using Secyud.Ugf.DependencyInjection;
+
+namespace InfinityWorldChess.ActivityDomain
 {
-    public class ActivityContext
+    [Registry(DependScope = typeof(GameScope))]
+    public class ActivityContext:IRegistry
     {
+        public List<IDialogueAction> DialogueActions { get; } = new();
+        
+        
+
     }
 }
