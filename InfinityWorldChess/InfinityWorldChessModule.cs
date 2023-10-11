@@ -2,11 +2,13 @@
 
 using System.Collections;
 using System.IO;
+using InfinityWorldChess.ActivityDomain;
 using InfinityWorldChess.GameCreatorDomain;
 using InfinityWorldChess.GameDomain;
 using InfinityWorldChess.GameDomain.WorldCellDomain;
 using InfinityWorldChess.GameDomain.WorldMapDomain;
 using InfinityWorldChess.InteractionDomain;
+using InfinityWorldChess.InteractionDomain.ChatDomain;
 using InfinityWorldChess.MapDomain;
 using InfinityWorldChess.PlayerDomain;
 using InfinityWorldChess.RoleDomain;
@@ -47,6 +49,10 @@ namespace InfinityWorldChess
             TypeManager tm = context.Get<TypeManager>();
             string path = Path.Combine(Application.dataPath, "Data/ResourceManager/te.binary");
             tm.ReadResource(path);
+            
+            
+            ChatRegister chat = context.Get<ChatRegister>() ;
+            chat.Register(new ActivityListDialogueAction());
         }
 
 

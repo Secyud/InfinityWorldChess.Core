@@ -23,9 +23,7 @@ namespace InfinityWorldChess.PlayerDomain
     public class PlayerGameContext : IRegistry
     {
         private HexUnit _unit;
-
-        public Dictionary<string, int> GlobalRecord { get; } = new();
-        public PlayerSetting PlayerSetting { get; } = new();
+         public PlayerSetting PlayerSetting { get; } = new();
         public List<IBundle> Bundles { get; } = new();
         public ActivityProperty Activity { get; } = new();
 
@@ -60,15 +58,9 @@ namespace InfinityWorldChess.PlayerDomain
 
             SkillPoints = reader.ReadInt32();
 
-            int count = reader.ReadInt32();
-            for (int i = 0; i < count; i++)
-            {
-                GlobalRecord[reader.ReadString()] = reader.ReadInt32();
-            }
-
             PlayerSetting.Load(reader);
 
-            count = reader.ReadInt32();
+            int count = reader.ReadInt32();
             Bundles.Capacity = count;
             for (int i = 0; i < count; i++)
             {
@@ -91,13 +83,6 @@ namespace InfinityWorldChess.PlayerDomain
             writer.Write(Role.Position.Cell.Index);
             Role.Save(writer);
             writer.Write(SkillPoints);
-
-            writer.Write(GlobalRecord.Count);
-            foreach (KeyValuePair<string, int> i in GlobalRecord)
-            {
-                writer.Write(i.Key);
-                writer.Write(i.Value);
-            }
 
             PlayerSetting.Save(writer);
 

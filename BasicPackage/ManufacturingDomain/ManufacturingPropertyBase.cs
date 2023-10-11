@@ -3,7 +3,7 @@
 using InfinityWorldChess.RoleDomain;
 using Secyud.Ugf.Archiving;
 using System.Collections.Generic;
-using InfinityWorldChess.ManufacturingDomain.EquipmentDomain;
+using System.Linq;
 
 #endregion
 
@@ -26,6 +26,11 @@ namespace InfinityWorldChess.ManufacturingDomain
 			int count = reader.ReadInt32();
 			for (int i = 0; i < count; i++)
 				LearnedProcesses.Add(reader.ReadObject<TProcess>());
+		}
+
+		public override bool CheckNeeded()
+		{
+			return LearnedProcesses.Any();
 		}
 	}
 }

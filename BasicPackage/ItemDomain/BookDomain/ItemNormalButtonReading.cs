@@ -14,7 +14,7 @@ namespace InfinityWorldChess.ItemDomain.BookDomain
 	{
 		public override string ShowName => "研读";
 
-		public override void Trigger()
+		public override void Invoke()
 		{
 			IReadable readable = Target as IReadable;
 			Role role = GameScope.Instance.Role.MainOperationRole;

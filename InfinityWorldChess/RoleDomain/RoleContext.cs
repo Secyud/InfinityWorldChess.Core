@@ -18,8 +18,6 @@ namespace InfinityWorldChess.RoleDomain
         private int _max;
         public bool CheckMax { get; set; } = true;
         
-        
-        
         public int GetNewId()
         {
             int id = _max++;

@@ -9,7 +9,7 @@ namespace InfinityWorldChess.RoleDomain
 {
 	public class RoleMessageButtonDescriptor : ButtonDescriptor<Role>
 	{
-		public override void Trigger()
+		public override void Invoke()
 		{
 			GameScope.Instance.OpenGameMenu();
 		}

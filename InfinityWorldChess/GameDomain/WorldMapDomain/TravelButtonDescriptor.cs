@@ -16,7 +16,7 @@ namespace InfinityWorldChess.GameDomain.WorldMapDomain
         public override bool Visible(HexCell target) =>
             !WorldGameContext.Map.Path.IsNullOrEmpty();
 
-        public override void Trigger()
+        public override void Invoke()
         {
             HexUnit player = GameScope.Instance.Player.Unit;
             List<HexCell> path = WorldGameContext.Map.Path;

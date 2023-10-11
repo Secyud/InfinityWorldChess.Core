@@ -2,6 +2,7 @@
 
 using InfinityWorldChess.ActivityDomain;
 using System.Collections.Generic;
+using System.Linq;
 using Secyud.Ugf.Archiving;
 
 #endregion
@@ -28,6 +29,15 @@ namespace InfinityWorldChess.PlayerDomain
 			{
 				Add(reader.ReadObject<ActivityGroup>());
 			}
+		}
+
+		public void AddReceivedActivity(ActivityGroup group,int startIndex = 0)
+		{
+			group.State = ActivityState.Received;
+			IActivity activity = group.Activities[startIndex];
+			group.CurrentActivity = activity;
+			activity.State = ActivityState.Received;
+			activity.StartActivity(group);
 		}
 	}
 }

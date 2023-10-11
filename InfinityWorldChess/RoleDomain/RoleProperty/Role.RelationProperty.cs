@@ -19,7 +19,7 @@ namespace InfinityWorldChess.RoleDomain
 			set => Relation.SetPosition(this, value);
 		}
 
-		public class RelationProperty : RoleProperty
+		public class RelationProperty 
 		{
 			[S]public float AreaView;
 			[S]public float LifeView;

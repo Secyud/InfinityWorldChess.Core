@@ -16,53 +16,28 @@ namespace InfinityWorldChess.ActivityDomain
 
         public ActivityState State { get; set; }
         public bool Collapsed { get; set; }
-        public int CurrentIndex { get; set; }
-        public IActivity GetCurrentActivity() => Activities[CurrentIndex];
-
+        public IActivity CurrentActivity { get; set; }
         public virtual void Save(IArchiveWriter writer)
         {
             writer.Write((byte)State);
-            writer.Write(CurrentIndex);
             writer.Write(ShowName);
+            writer.Write(Activities.IndexOf(CurrentActivity));
         }
 
         public virtual void Load(IArchiveReader reader)
         {
             State = (ActivityState)reader.ReadByte();
-            CurrentIndex = reader.ReadInt32();
             ShowName = reader.ReadString();
             U.Tm.TryWriteObject(this, ShowName);
-
+            int index = reader.ReadInt32();
+            if (index >= 0 && index < Activities.Count)
+            {
+                CurrentActivity = Activities[index];
+            }
             if (State == ActivityState.Received)
             {
-                Activities[CurrentIndex].StartActivity(this);
+                CurrentActivity.StartActivity(this);
             }
-        }
-
-        /// <summary>
-        /// default activity change method.
-        /// maybe not useful for some special activity.
-        /// </summary>
-        /// <param name="success"></param>
-        public virtual void SetCurrentActivityFinished(bool success)
-        {
-            IActivity activity = GetCurrentActivity();
-            activity.FinishActivity(this);
-            activity.State = success ? ActivityState.Success : ActivityState.Failed;
-            if (success)
-            {
-                CurrentIndex++;
-                activity = GetCurrentActivity();
-
-                if (activity is not null)
-                {
-                    activity.StartActivity(this);
-                    activity.State = ActivityState.Received;
-                    return;
-                }
-            }
-
-            State = ActivityState.Failed;
         }
     }
 }

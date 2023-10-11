@@ -11,7 +11,7 @@ namespace InfinityWorldChess.ItemDomain.FoodDomain
 	{
 		public override string ShowName => "食用";
 
-		public override void Trigger()
+		public override void Invoke()
 		{
 			(Target as IEdibleInBattle)!.EatingInBattle(BattleScope.Instance.Context.Role);
 		}

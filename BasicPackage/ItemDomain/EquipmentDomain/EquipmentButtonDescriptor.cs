@@ -12,7 +12,7 @@ namespace InfinityWorldChess.ItemDomain.EquipmentDomain
 {
 	public class EquipmentButtonDescriptor : ButtonDescriptor<IItem>
 	{
-		public override void Trigger()
+		public override void Invoke()
 		{
 			IEquipment equipment = Target as IEquipment;
 			Role role = GameScope.Instance.Role.MainOperationRole;

@@ -8,7 +8,7 @@ namespace InfinityWorldChess.InteractionDomain.ChatDomain
 {
     public class ChatButtonDescriptor : ButtonDescriptor<Role>
     {
-        public override void Trigger()
+        public override void Invoke()
         {
             DialogueService service = U.Get<DialogueService>();
             service.OpenDialoguePanel();
@@ -16,10 +16,10 @@ namespace InfinityWorldChess.InteractionDomain.ChatDomain
             ChatDialogueUnit unit = new();
             Role player = GameScope.Instance.Player.Role;
             Role target = Target;
-            foreach (IDialogueActionGenerator item in register.Items
+            foreach (IDialogueAction item in register.Items
                          .Where(item => item.VisibleFor(target)))
             {
-                unit.ActionList.Add(item.GenerateInteraction(target));
+                unit.ActionList.Add(item);
             }
             service.Panel.SetInteraction(unit);
             service.Panel.SetLeftRole(player);

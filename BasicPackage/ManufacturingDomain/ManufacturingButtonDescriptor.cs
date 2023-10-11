@@ -25,7 +25,7 @@ namespace InfinityWorldChess.ManufacturingDomain
 
 		public override bool Visible(WorldCell target) => true;
 
-		public override void Trigger()
+		public override void Invoke()
 		{
 			IDependencyManager dm = U.M;
 			switch (Type)

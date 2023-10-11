@@ -7,7 +7,7 @@ namespace InfinityWorldChess.BattleDomain.LightBattle
 {
     public class LightBattleButton : ButtonDescriptor<Role>
     {
-        public override void Trigger()
+        public override void Invoke()
         {
             LightBattleDescriptor battle = new(GameScope.Instance.Player.Role, Target);
 
