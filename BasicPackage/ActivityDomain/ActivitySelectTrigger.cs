@@ -6,19 +6,22 @@ using UnityEngine;
 
 namespace InfinityWorldChess.ActivityDomain
 {
-    public class ActivitySelectTrigger:ITrigger
+    /// <summary>
+    /// always exist when you need to trigger
+    /// next activity in a group.
+    /// </summary>
+    public class ActivitySelectTrigger : ITrigger
     {
         [field: S] private string GroupName { get; set; }
         [field: S] private string ActivityName { get; set; }
         [field: S] private bool CurrentSuccess { get; set; }
-        
-        
+
         public void Invoke()
         {
             PlayerGameContext context = U.Get<PlayerGameContext>();
             ActivityGroup group = context.Activity
                 .Find(u => u.ShowName == GroupName);
-            if (group is  null)
+            if (group is null)
             {
                 Debug.LogError($"Cannot find activity group: {GroupName}");
                 return;

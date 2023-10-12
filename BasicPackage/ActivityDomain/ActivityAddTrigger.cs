@@ -5,6 +5,10 @@ using Secyud.Ugf.DataManager;
 
 namespace InfinityWorldChess.ActivityDomain
 {
+    /// <summary>
+    /// if you want to add activity to role,
+    /// use this trigger.
+    /// </summary>
     public class ActivityAddTrigger:ITrigger
     {
         [field: S] private string ActivityGroupName { get; set; }
