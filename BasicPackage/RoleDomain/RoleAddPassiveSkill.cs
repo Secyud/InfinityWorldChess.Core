@@ -1,23 +1,26 @@
-﻿using System.Collections.Generic;
-using InfinityWorldChess.GameDomain;
-using InfinityWorldChess.ItemDomain;
-using InfinityWorldChess.SkillDomain;
+﻿using InfinityWorldChess.SkillDomain;
 using Secyud.Ugf;
+using UnityEngine;
 
 namespace InfinityWorldChess.RoleDomain
 {
-    public class RoleAddPassiveSkill:RoleItemFunctionBase
+    public class RoleAddPassiveSkill:RoleItemFunctionBase<IPassiveSkill>,IHasDescription
     {
-        public override string Description  => $"可习得内功{Name}。";
+        public  string ShowDescription  => $"可习得内功{Name}。";
 
-        public override bool Invoke(Role role)
+        public override void Invoke(Role role)
         {
-            SortedDictionary<string, IPassiveSkill> learnedSkills = role.PassiveSkill.LearnedSkills;
-            if (learnedSkills.ContainsKey(Name) ||
-                U.Tm.ConstructFromResource(ClassId, Name) is not IPassiveSkill item) 
-                return false;
-            learnedSkills[item.ShowName] = item;
-            return true;
+            if (role.PassiveSkill.LearnedSkills.ContainsKey(Name))
+            {
+                Debug.LogWarning($"{Name} is already exist;");
+                return;
+            }
+            base.Invoke(role);
+        }
+
+        protected override void Invoke(Role role, IPassiveSkill item)
+        {
+            role.PassiveSkill.LearnedSkills[item.ShowName] = item;
         }
     }
 }

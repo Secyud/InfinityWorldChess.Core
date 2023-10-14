@@ -4,4 +4,8 @@ namespace InfinityWorldChess.Ugf
     {
         void Invoke();
     }
+    public interface ITrigger<in TTarget>
+    {
+        void Invoke(TTarget target);
+    }
 }

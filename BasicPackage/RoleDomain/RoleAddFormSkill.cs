@@ -1,22 +1,26 @@
-﻿using System.Collections.Generic;
-using InfinityWorldChess.SkillDomain;
+﻿using InfinityWorldChess.SkillDomain;
 using Secyud.Ugf;
+using UnityEngine;
 
 namespace InfinityWorldChess.RoleDomain
 {
-    public class RoleAddFormSkill:RoleItemFunctionBase
+    public class RoleAddFormSkill:RoleItemFunctionBase<IFormSkill>,IHasDescription
     {
-        public override string Description => $"可习得阵势{Name}。";
+        public  string ShowDescription => $"可习得阵势{Name}。";
 
-        public override bool Invoke(Role role)
+        public override void Invoke(Role role)
         {
-            SortedDictionary<string, IFormSkill> learnedSkills = role.FormSkill.LearnedSkills;
-            if (learnedSkills.ContainsKey(Name) ||
-                U.Tm.ConstructFromResource(ClassId, Name) is not IFormSkill item) 
-                return false;
-            learnedSkills[item.ShowName] = item;
-            return true;
+            if (role.FormSkill.LearnedSkills.ContainsKey(Name))
+            {
+                Debug.LogWarning($"{Name} is already exist;");
+                return;
+            }
+            base.Invoke(role);
+        }
 
+        protected override void Invoke(Role role, IFormSkill item)
+        {
+            role.FormSkill.LearnedSkills[item.ShowName] = item;
         }
     }
 }

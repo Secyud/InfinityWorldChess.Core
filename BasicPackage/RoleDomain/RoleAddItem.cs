@@ -3,16 +3,13 @@ using Secyud.Ugf;
 
 namespace InfinityWorldChess.RoleDomain
 {
-    public class RoleAddItem:RoleItemFunctionBase
+    public class RoleAddItem:RoleItemFunctionBase<IItem>,IHasDescription
     {
-        public override string Description => $"可获得{Name}。";
+        public  string ShowDescription => $"可获得{Name}。";
 
-        public override bool Invoke(Role role)
+        protected override void Invoke(Role role, IItem item)
         {
-            if (U.Tm.ConstructFromResource(ClassId, Name) is not IItem item)
-                return false;
             role.Item.Add(item);
-            return true;
         }
     }
 }

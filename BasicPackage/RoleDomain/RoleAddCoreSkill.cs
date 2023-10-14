@@ -1,21 +1,26 @@
-﻿using System.Collections.Generic;
-using InfinityWorldChess.SkillDomain;
+﻿using InfinityWorldChess.SkillDomain;
 using Secyud.Ugf;
+using UnityEngine;
 
 namespace InfinityWorldChess.RoleDomain
 {
-    public class RoleAddCoreSkill : RoleItemFunctionBase
+    public class RoleAddCoreSkill : RoleItemFunctionBase<ICoreSkill>,IHasDescription
     {
-        public override string Description => $"可习得招式{Name}。";
+        public  string ShowDescription => $"可习得招式{Name}。";
 
-        public override bool Invoke(Role role)
+        public override void Invoke(Role role)
         {
-            var learnedSkills = role.CoreSkill.LearnedSkills;
-            if (learnedSkills.ContainsKey(Name) ||
-                U.Tm.ConstructFromResource(ClassId, Name) is not CoreSkill item) 
-                return false;
-            learnedSkills[item.ShowName] = item;
-            return true;
+            if (role.CoreSkill.LearnedSkills.ContainsKey(Name))
+            {
+                Debug.LogWarning($"{Name} is already exist;");
+                return;
+            }
+            base.Invoke(role);
+        }
+
+        protected override void Invoke(Role role, ICoreSkill item)
+        {
+            role.CoreSkill.LearnedSkills[item.ShowName] = item;
         }
     }
 }
