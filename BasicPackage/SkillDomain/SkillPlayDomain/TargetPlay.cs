@@ -1,4 +1,4 @@
-using Secyud.Ugf.HexMap;
+using Secyud.Ugf.UgfHexMap;
 using UnityEngine;
 
 namespace InfinityWorldChess.SkillDomain.SkillPlayDomain
@@ -10,20 +10,20 @@ namespace InfinityWorldChess.SkillDomain.SkillPlayDomain
         private GameObject _instance;
 
 
-        public override void Play(HexUnit unit, HexCell targetCell)
+        public override void Play(UgfUnit unit, UgfCell targetCell)
         {
             base.Play(unit, targetCell);
              
             if(_instance)
                 Destroy(_instance);
             Transform parent;
-            if (Role && targetCell.Unit)
+            if (Role && targetCell.Cell.Unit)
             {
-                parent = targetCell.Unit.transform;
+                parent = targetCell.Cell.Unit.transform;
             }
             else
             {
-                parent = targetCell.transform;
+                parent = targetCell.Cell.transform;
             }
 
             _instance = Instantiate(TargetObject, parent);

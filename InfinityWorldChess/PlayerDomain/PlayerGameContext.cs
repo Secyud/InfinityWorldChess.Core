@@ -5,7 +5,6 @@ using InfinityWorldChess.BiographyDomain;
 using InfinityWorldChess.BundleDomain;
 using InfinityWorldChess.RoleDomain;
 using Secyud.Ugf.HexMap;
-using Secyud.Ugf.HexMap.Utilities;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -54,7 +53,7 @@ namespace InfinityWorldChess.PlayerDomain
 
             int index = reader.ReadInt32();
             Role = new Role(true);
-            Role.Load(reader, GameScope.Instance.Map.Value.Grid.GetCell(index).Get<WorldCell>());
+            Role.Load(reader, GameScope.Instance.Map.Value.GetCell(index).Get<WorldCell>());
 
             SkillPoints = reader.ReadInt32();
 
@@ -114,7 +113,7 @@ namespace InfinityWorldChess.PlayerDomain
                 biography.OnGameCreation(Role);
             }
 
-            Role.Position = GameScope.Instance.Map.Value.Grid
+            Role.Position = GameScope.Instance.Map.Value.Cells
                 .First(u => u.Get<WorldCell>().SpecialIndex == 1)
                 .Get<WorldCell>();
 

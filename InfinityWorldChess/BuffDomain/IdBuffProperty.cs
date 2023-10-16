@@ -8,10 +8,20 @@ using Secyud.Ugf.Archiving;
 
 namespace InfinityWorldChess.BuffDomain
 {
-    public abstract class IdBuffProperty<TTarget> : SortedDictionary<int, IBuff<TTarget>>
+    public class IdBuffProperty<TTarget> : SortedDictionary<int, IBuff<TTarget>>
     {
-        protected abstract TTarget Target { get; }
+        protected virtual TTarget Target { get; }
 
+        public IdBuffProperty(TTarget target)
+        {
+            Target = target;
+        }
+
+        public IdBuffProperty()
+        {
+            
+        }
+        
         public virtual TBuff Get<TBuff>(int id)
             where TBuff : class, IBuff<TTarget>
         {

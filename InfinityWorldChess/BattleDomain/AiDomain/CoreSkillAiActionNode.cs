@@ -6,7 +6,6 @@ using InfinityWorldChess.SkillDomain;
 using JetBrains.Annotations;
 using Secyud.Ugf;
 using Secyud.Ugf.HexMap;
-using Secyud.Ugf.HexMap.Utilities;
 
 namespace InfinityWorldChess.BattleDomain.AiDomain
 {

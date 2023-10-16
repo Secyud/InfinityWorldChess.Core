@@ -64,8 +64,8 @@ namespace InfinityWorldChess.RoleDomain
             for (int i = 0; i < count; i++)
             {
                 Role role = new(true);
-                HexCell cell = map.Grid.GetCell(reader.ReadInt32());
-                role.Load(reader, (WorldCell)cell.Message);
+                HexCell cell = map.GetCell(reader.ReadInt32());
+                role.Load(reader, cell.Get<WorldCell>());
                 AddRole(role);
                 if (U.AddStep())
                     yield return null;

@@ -42,7 +42,7 @@ namespace InfinityWorldChess
 
         public void PostConfigureGame(ConfigurationContext context)
         {
-            RegisterWorldModel(context.Get<WorldGlobalService>(), context.Get<IwcAssets>());
+            //RegisterWorldModel(context.Get<WorldGlobalService>(), context.Get<IwcAssets>());
             WorldCellRoleDefaultButtons.RegistrarButtons(context.Get<InteractionButtons>());
             context.Get<WorldCellButtons>().Register(new TravelButtonDescriptor());
 
@@ -119,52 +119,52 @@ namespace InfinityWorldChess
             RoleGameContext role)
         {
             Role pr = player.Role;
-            HexUnit pu = world.WorldUnitPrefab.Instantiate(WorldGameContext.Map.Grid.transform);
+            HexUnit pu = world.WorldUnitPrefab.Instantiate(WorldGameContext.Map.transform);
             HexCell cell = pr.Position.Cell;
             WorldMap map = WorldGameContext.Map;
             player.Unit = pu;
             pu.Id = pr.Id;
             GameScope.Instance.Get<CurrentTabService>().Cell = cell.Get<WorldCell>(); 
-            map.Grid.AddUnit(pr,pu, cell, 0);
+            map.AddUnit(pu, cell, 0);
             Vector3 position = pu.transform.position;
             position.y = 0;
             AvatarEditor avatar = pu.GetComponentInChildren<AvatarEditor>();
             avatar.OnInitialize(pr.Basic);
             map.MapCamera.transform.position = position;
         }
-
-        private static void RegisterWorldModel(WorldGlobalService service, IAssetLoader ab)
-        {
-            PrefabContainer<Transform> GetPrefab(string name, string level, string type)
-            {
-                return PrefabContainer<Transform>.Create(ab, $"Features/{name}/{name} {level} {type}.prefab");
-            }
-
-            service.RegistrarResourceFeature(
-                new FeatureDescriptor(0, 0, GetPrefab("Ore", "Low", "1")),
-                new FeatureDescriptor(0, 0, GetPrefab("Ore", "Low", "2")),
-                new FeatureDescriptor(0, 1, GetPrefab("Ore", "Medium", "1")),
-                new FeatureDescriptor(0, 1, GetPrefab("Ore", "Medium", "2")),
-                new FeatureDescriptor(0, 2, GetPrefab("Ore", "High", "1")),
-                new FeatureDescriptor(0, 2, GetPrefab("Ore", "High", "2")),
-                new FeatureDescriptor(1, 0, GetPrefab("Plant", "Low", "1")),
-                new FeatureDescriptor(1, 0, GetPrefab("Plant", "Low", "2")),
-                new FeatureDescriptor(1, 1, GetPrefab("Plant", "Medium", "1")),
-                new FeatureDescriptor(1, 1, GetPrefab("Plant", "Medium", "2")),
-                new FeatureDescriptor(1, 2, GetPrefab("Plant", "High", "1")),
-                new FeatureDescriptor(1, 2, GetPrefab("Plant", "High", "2")),
-                new FeatureDescriptor(2, 0, GetPrefab("Farm", "Low", "1")),
-                new FeatureDescriptor(2, 0, GetPrefab("Farm", "Low", "2")),
-                new FeatureDescriptor(2, 1, GetPrefab("Farm", "Medium", "1")),
-                new FeatureDescriptor(2, 1, GetPrefab("Farm", "Medium", "2")),
-                new FeatureDescriptor(2, 2, GetPrefab("Farm", "High", "1")),
-                new FeatureDescriptor(2, 2, GetPrefab("Farm", "High", "2"))
-            );
-
-            service.RegistrarSpecialFeature(0,
-                PrefabContainer<Transform>.Create(ab, "Features/Special/Castle.prefab"));
-            service.RegistrarSpecialFeature(1,
-                PrefabContainer<Transform>.Create(ab, "Features/Special/Village.prefab"));
-        }
+        //
+        // private static void RegisterWorldModel(WorldGlobalService service, IAssetLoader ab)
+        // {
+        //     PrefabContainer<Transform> GetPrefab(string name, string level, string type)
+        //     {
+        //         return PrefabContainer<Transform>.Create(ab, $"Features/{name}/{name} {level} {type}.prefab");
+        //     }
+        //
+        //     service.RegistrarResourceFeature(
+        //         new FeatureDescriptor(0, 0, GetPrefab("Ore", "Low", "1")),
+        //         new FeatureDescriptor(0, 0, GetPrefab("Ore", "Low", "2")),
+        //         new FeatureDescriptor(0, 1, GetPrefab("Ore", "Medium", "1")),
+        //         new FeatureDescriptor(0, 1, GetPrefab("Ore", "Medium", "2")),
+        //         new FeatureDescriptor(0, 2, GetPrefab("Ore", "High", "1")),
+        //         new FeatureDescriptor(0, 2, GetPrefab("Ore", "High", "2")),
+        //         new FeatureDescriptor(1, 0, GetPrefab("Plant", "Low", "1")),
+        //         new FeatureDescriptor(1, 0, GetPrefab("Plant", "Low", "2")),
+        //         new FeatureDescriptor(1, 1, GetPrefab("Plant", "Medium", "1")),
+        //         new FeatureDescriptor(1, 1, GetPrefab("Plant", "Medium", "2")),
+        //         new FeatureDescriptor(1, 2, GetPrefab("Plant", "High", "1")),
+        //         new FeatureDescriptor(1, 2, GetPrefab("Plant", "High", "2")),
+        //         new FeatureDescriptor(2, 0, GetPrefab("Farm", "Low", "1")),
+        //         new FeatureDescriptor(2, 0, GetPrefab("Farm", "Low", "2")),
+        //         new FeatureDescriptor(2, 1, GetPrefab("Farm", "Medium", "1")),
+        //         new FeatureDescriptor(2, 1, GetPrefab("Farm", "Medium", "2")),
+        //         new FeatureDescriptor(2, 2, GetPrefab("Farm", "High", "1")),
+        //         new FeatureDescriptor(2, 2, GetPrefab("Farm", "High", "2"))
+        //     );
+        //
+        //     service.RegistrarSpecialFeature(0,
+        //         PrefabContainer<Transform>.Create(ab, "Features/Special/Castle.prefab"));
+        //     service.RegistrarSpecialFeature(1,
+        //         PrefabContainer<Transform>.Create(ab, "Features/Special/Village.prefab"));
+        // }
     }
 }

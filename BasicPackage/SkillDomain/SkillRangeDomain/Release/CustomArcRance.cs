@@ -16,7 +16,7 @@ namespace InfinityWorldChess.SkillDomain.SkillRangeDomain.Release
         {
             return SkillRange.GetArcRange(Start, End,
                 role.Unit.Location.Coordinates,
-                role.Direction + Direction,
+                role.Direction + (sbyte)Direction,
                 Range, IncludeUnit);
         }
     }

@@ -5,17 +5,17 @@ using InfinityWorldChess.RoleDomain;
 using InfinityWorldChess.SkillDomain;
 using Secyud.Ugf;
 using Secyud.Ugf.HexMap;
-using Secyud.Ugf.HexMap.Utilities;
 using System;
 using System.Linq;
+using Secyud.Ugf.UgfHexMap;
 using UnityEngine;
 
 #endregion
 
 namespace InfinityWorldChess.BattleDomain
 {
-    public class BattleRole : IdBuffProperty<BattleRole>,
-        ICanAttack, ICanDefend, IHasContent, IReleasable, IUnitBase
+    public class BattleRole : UnitProperty,
+        ICanAttack, ICanDefend, IHasContent, IReleasable
     {
         private float _health, _energy;
         private int _execution;
@@ -42,7 +42,7 @@ namespace InfinityWorldChess.BattleDomain
 
         public BattleCamp Camp { get; set; }
 
-        public HexUnit Unit { get; set; }
+        public IdBuffProperty<BattleRole> Buff { get; }
 
         public void OnDying()
         {
@@ -135,6 +135,7 @@ namespace InfinityWorldChess.BattleDomain
             Role.FormSkill.GetGroup(CurrentState, NextFormSkills);
             UnitPlay = role.PassiveSkill[0]?.UnitPlay ?? null;
             TypeBuff = new TypeBuffProperty<BattleRole>(this);
+            Buff = new IdBuffProperty<BattleRole>(this);
         }
 
         public void InitValue(float health, float energy, int execution)
@@ -210,7 +211,7 @@ namespace InfinityWorldChess.BattleDomain
             else if (Active)
                 Unit.SetHighlight(Color.yellow);
             else
-                Unit.SetHighlight(null);
+                Unit.SetHighlight(Color.white);
         }
 
         public int GetSpeed()
@@ -225,11 +226,20 @@ namespace InfinityWorldChess.BattleDomain
 
         public void Release()
         {
-            Clear();
-            if (Unit) Unit.Die();
+            if (Unit)
+            {
+                Unit.Die();
+            }
         }
 
-        protected override BattleRole Target => this;
+        public override void Initialize(HexUnit unit)
+        {
+            base.Initialize(unit);
+            SetHighlight();
+            OnBattleInitialize();
+
+            Dead = false;
+        }
 
         public void OnBattleInitialize()
         {
@@ -244,12 +254,13 @@ namespace InfinityWorldChess.BattleDomain
                 b.OnBattleInitialize(this);
         }
 
-        public TPropertyBuff GetProperty<TPropertyBuff>() 
+        public TPropertyBuff GetProperty<TPropertyBuff>()
             where TPropertyBuff : class, IBuff<BattleRole>
         {
             return TypeBuff.GetOrInstall<TPropertyBuff>();
         }
-        public TPropertyBuff TryGetProperty<TPropertyBuff>() 
+
+        public TPropertyBuff TryGetProperty<TPropertyBuff>()
             where TPropertyBuff : class, IBuff<BattleRole>
         {
             return TypeBuff.Get<TPropertyBuff>();

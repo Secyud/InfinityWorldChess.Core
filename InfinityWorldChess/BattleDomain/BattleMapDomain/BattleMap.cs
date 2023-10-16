@@ -3,6 +3,7 @@
 using InfinityWorldChess.SkillDomain;
 using Secyud.Ugf;
 using Secyud.Ugf.HexMap;
+using Secyud.Ugf.UgfHexMap;
 using UnityEngine;
 using UnityEngine.Animations;
 
@@ -10,7 +11,7 @@ using UnityEngine.Animations;
 
 namespace InfinityWorldChess.BattleDomain.BattleMapDomain
 {
-    public class BattleMap : HexMapRootBase
+    public class BattleMap : HexGrid
     {
         [SerializeField] private LookAtConstraint BillBoardPrefab;
         [SerializeField] private Canvas Canvas;
@@ -30,11 +31,11 @@ namespace InfinityWorldChess.BattleDomain.BattleMapDomain
 
             if (BattleScope.Instance.VictoryCondition.Victory ||
                 BattleScope.Instance.VictoryCondition.Defeated)
-                U.Get<BattleGlobalService>().DestroyBattle();
+                BattleScope.DestroyBattle();
             else
             {
                 HexCell cell = GetCellUnderCursor();
-                
+                _controlService.OnUpdate(cell);
             }
         }
 
@@ -60,7 +61,7 @@ namespace InfinityWorldChess.BattleDomain.BattleMapDomain
             if (play)
             {
                 HexUnitPlay clone = play.Instantiate(role.Unit.transform);
-                clone.Play(role.Unit, cell);
+                clone.Play(role.Unit.Get<UgfUnit>(), cell.Get<UgfCell>());
             }
             else
             {

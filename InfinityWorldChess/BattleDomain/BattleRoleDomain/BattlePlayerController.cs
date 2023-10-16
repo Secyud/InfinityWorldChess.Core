@@ -56,7 +56,7 @@ namespace InfinityWorldChess.BattleDomain.BattleRoleDomain
 
         public void FinishBattle()
         {
-            U.Get<BattleGlobalService>().DestroyBattle();
+            BattleScope.DestroyBattle();
         }
     }
 }

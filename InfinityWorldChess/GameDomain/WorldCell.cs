@@ -6,19 +6,19 @@ using InfinityWorldChess.RoleDomain;
 using Secyud.Ugf.Archiving;
 using Secyud.Ugf.HexMap;
 using Secyud.Ugf.TableComponents.ButtonComponents;
+using UnityEngine;
 
 #endregion
 
 namespace InfinityWorldChess.GameDomain
 {
-    public class WorldCell : CellBase, IArchivable
+    public class WorldCell : CellProperty, IArchivable
     {
         private int _specialIndex = -1;
         private int _stone;
         private int _tree;
         private int _farm;
         private byte _pathState;
-
 
         public byte PathState
         {
@@ -31,24 +31,28 @@ namespace InfinityWorldChess.GameDomain
             }
         }
 
-        public override void SetHighlight()
+        public void SetHighlight()
         {
             switch (_pathState)
             {
                 case 1:
-                    Cell.EnableHighlight(HexGrid.PathCellColor);
+                    Cell.EnableHighlight(PathCellColor);
                     break;
                 case 2:
-                    Cell.EnableHighlight(HexGrid.FromCellColor);
+                    Cell.EnableHighlight(FromCellColor);
                     break;
                 case 3:
-                    Cell.EnableHighlight(HexGrid.ToCellColor);
+                    Cell.EnableHighlight(ToCellColor);
                     break;
                 default:
                     Cell.DisableHighlight();
                     break;
             }
         }
+
+        public Color PathCellColor => Color.yellow;
+        public Color FromCellColor => Color.blue;
+        public Color ToCellColor => Color.green;
 
         public int Stone
         {
@@ -86,7 +90,6 @@ namespace InfinityWorldChess.GameDomain
             set
             {
                 _specialIndex = value;
-                Cell.IsSpecial = _specialIndex >= 0;
                 Cell.RefreshSelfOnly();
             }
         }

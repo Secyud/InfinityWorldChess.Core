@@ -3,12 +3,13 @@
 using Newtonsoft.Json;
 using Secyud.Ugf;
 using Secyud.Ugf.BasicComponents;
-using Secyud.Ugf.HexMap;
-using Secyud.Ugf.HexMap.Generator;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Secyud.Ugf.HexMap;
+using Secyud.Ugf.HexMap.Generator;
+using Secyud.Ugf.UgfHexMap;
 using UnityEngine;
 
 #endregion
@@ -59,8 +60,8 @@ namespace InfinityWorldChess.Ugf
 		}
 
 		private static SPopup _popupExist;
-
-		public static HexMapGeneratorParameter GetGeneratorParameter(this IHexCell cell, int x, int z)
+		
+		public static HexMapGeneratorParameter GetGeneratorParameter(this UgfCell cell, int x, int z)
 		{
 			HexMapGeneratorParameter parameter = new()
 			{
@@ -70,7 +71,7 @@ namespace InfinityWorldChess.Ugf
 				ChunkSizeMin = Math.Min(x, z),
 				RiverPercentage = cell.HasRiver ? 10 : 0,
 				LandPercentage = cell.IsUnderwater ? 30 : cell.HasRiver ? 50 : 95,
-				ErosionPercentage = cell.TerrainTypeIndex switch
+				ErosionPercentage = cell.TerrainType switch
 				{
 					0 => 5,
 					1 => 10,
@@ -82,7 +83,7 @@ namespace InfinityWorldChess.Ugf
 				HighTemperature = (cell.Elevation + 1) / 11.0f,
 				LowTemperature = (cell.Elevation - 1) / 11.0f
 			};
-
+		
 			return parameter;
 		}
 

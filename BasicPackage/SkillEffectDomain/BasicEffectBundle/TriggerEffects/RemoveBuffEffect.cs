@@ -30,7 +30,7 @@ namespace InfinityWorldChess.SkillEffectDomain.BasicEffectBundle
             TriggerTime--;
             if (TriggerTime <= 0)
             {
-                _target.Remove(_buff.Id);
+                _target.Buff.Remove(_buff.Id);
             }
         }
 

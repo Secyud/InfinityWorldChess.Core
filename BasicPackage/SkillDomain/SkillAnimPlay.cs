@@ -1,4 +1,4 @@
-using Secyud.Ugf.HexMap;
+using Secyud.Ugf.UgfHexMap;
 using UnityEngine;
 
 namespace InfinityWorldChess.SkillDomain
@@ -20,12 +20,12 @@ namespace InfinityWorldChess.SkillDomain
             _animTransform.position =  _e + value * (_s - _e);
         }
 
-        public override void Play(HexUnit unit, HexCell targetCell)
+        public override void Play(UgfUnit unit, UgfCell targetCell)
         {
             base.Play(unit, targetCell);
 
-            _animTransform = ControlRole ? unit.transform : transform;
-            _s = unit.Location.Position;
+            _animTransform = ControlRole ? unit.Unit.transform : transform;
+            _s = unit.Unit.Location.Position;
             _e = targetCell.Position;
         }
     }

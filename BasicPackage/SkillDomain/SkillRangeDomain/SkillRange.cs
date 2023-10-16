@@ -6,7 +6,6 @@ using InfinityWorldChess.BattleDomain;
 using InfinityWorldChess.Ugf;
 using Secyud.Ugf;
 using Secyud.Ugf.HexMap;
-using Secyud.Ugf.HexMap.Utilities;
 
 #endregion
 
@@ -84,7 +83,7 @@ namespace InfinityWorldChess.SkillDomain.SkillRangeDomain
 			byte startDistance, byte endDistance, HexCoordinates startCoordinate,
 			HexDirection startDirection, byte coverRange,bool includeUnit = true)
 		{
-			HexGrid grid = BattleScope.Instance.Map.Grid;
+			HexGrid grid = BattleScope.Instance.Map;
 			List<HexCell> cells = new();
 			HexCoordinates coordinate = startCoordinate;
 

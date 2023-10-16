@@ -39,7 +39,7 @@ namespace InfinityWorldChess.BattleDomain.BattleRoleDomain
             Energy.SetValue(Property.EnergyValue, Property.MaxEnergyValue);
             Execution.SetValue(Property.ExecutionValue, SharedConsts.MaxExecutionValue);
             _buffDelegate.Items.Clear();
-            foreach (IBuffShowable<BattleRole> buff in Property.GetVisibleBuff())
+            foreach (IBuffShowable<BattleRole> buff in Property.Buff.GetVisibleBuff())
                 _buffDelegate.Items.Add(buff);
             BuffContent.Refresh();
         }

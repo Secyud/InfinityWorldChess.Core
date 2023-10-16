@@ -14,7 +14,7 @@ namespace InfinityWorldChess.RoleDomain
 		public int GetSpeed()
 		{
 			int speed = BodyPart[BodyType.Nimble].MaxValue;
-			return Math.Max((int)(64 + 256 * speed / (256 + speed)), 1);
+			return Math.Max(64 + 256 * speed / (256 + speed), 1);
 		}
 
 		public class BodyPartProperty 

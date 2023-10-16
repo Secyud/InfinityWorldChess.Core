@@ -1,6 +1,5 @@
 using System;
 using InfinityWorldChess.BattleDomain;
-using InfinityWorldChess.BuffDomain;
 using InfinityWorldChess.SkillEffectDomain.BasicEffectBundle;
 using Secyud.Ugf;
 using Secyud.Ugf.DataManager;
@@ -42,7 +41,7 @@ namespace InfinityWorldChess.SkillEffectDomain.BasicAttackBundle
             if (o is SkillBuffBase buff)
             {
                 buff.SetSkill(Skill);
-                battleChess.Install(buff);
+                battleChess.Buff.Install(buff);
             }
         }
     }

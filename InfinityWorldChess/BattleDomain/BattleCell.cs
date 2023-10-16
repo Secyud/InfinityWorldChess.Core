@@ -10,7 +10,7 @@ using UnityEngine;
 
 namespace InfinityWorldChess.BattleDomain
 {
-    public sealed class BattleCell : CellBase
+    public sealed class BattleCell : CellProperty
     {
         [Flags]
         public enum State
@@ -70,7 +70,7 @@ namespace InfinityWorldChess.BattleDomain
 
             SetHighlight();
         }
-        public override void SetHighlight()
+        public void SetHighlight()
         {
             if (_state == 0)
             {

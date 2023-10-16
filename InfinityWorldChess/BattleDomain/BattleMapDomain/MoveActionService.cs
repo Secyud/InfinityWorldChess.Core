@@ -2,9 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using InfinityWorldChess.RoleDomain;
+using Secyud.Ugf;
 using Secyud.Ugf.DependencyInjection;
 using Secyud.Ugf.HexMap;
-using Secyud.Ugf.HexMap.Utilities;
+using Secyud.Ugf.UgfHexMap;
 using UnityEngine;
 
 namespace InfinityWorldChess.BattleDomain.BattleMapDomain
@@ -12,6 +13,13 @@ namespace InfinityWorldChess.BattleDomain.BattleMapDomain
     [Registry(DependScope = typeof(BattleScope))]
     public class MoveActionService : IBattleMapActionService, IRegistry
     {
+        private readonly BattleMapFunctionService _service;
+
+        public MoveActionService(BattleMapFunctionService service)
+        {
+            _service = service;
+        }
+        
         public void OnApply()
         {
             BattleContext context = BattleScope.Instance.Context;
@@ -26,9 +34,10 @@ namespace InfinityWorldChess.BattleDomain.BattleMapDomain
             if (context.ReleasableCells.Contains(cell))
             {
                 HexUnit unit = context.Role.Unit;
-                HexGrid grid = BattleScope.Instance.Map.Grid;
-                grid.FindPath(unit.Location, cell, unit);
-                context.InRangeCells = grid.GetPath();
+                _service.FindPath(unit.Location.Get<UgfCell>(), 
+                    cell.Get<UgfCell>(), unit);
+                context.InRangeCells = _service.GetPath()
+                    .Select(u=>u.Cell).ToList();
             }
             else
             {
@@ -41,10 +50,9 @@ namespace InfinityWorldChess.BattleDomain.BattleMapDomain
             BattleContext context = BattleScope.Instance.Context;
             BattleRole role = context.Role;
             HexUnit unit = context.Role.Unit;
-            HexGrid grid = BattleScope.Instance.Map.Grid;
             float distance = cell.DistanceTo(unit.Location);
             role.ExecutionValue -= (int)(distance / role.Role.BodyPart.Nimble.RealValue * 100);
-            unit.Travel(grid.GetPath());
+            _service.Travel();
         }
 
         public void OnTrig()
@@ -70,7 +78,7 @@ namespace InfinityWorldChess.BattleDomain.BattleMapDomain
 
             byte rg = (byte)Math.Min(nimble.RealValue * execution / 100, 10);
 
-            HexGrid grid = BattleScope.Instance.Map.Grid;
+            HexGrid grid = BattleScope.Instance.Map;
             List<HexCell> cells = new();
             List<Vector2> checks = new();
             HexCoordinates coordinate = role.Unit.Location.Coordinates;

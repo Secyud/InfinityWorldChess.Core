@@ -8,7 +8,7 @@ namespace InfinityWorldChess.BattleDomain
 {
     public abstract class BattleDescriptor
     {
-        public IHexCell Cell { get; set; }
+        public HexCell Cell { get; set; }
 
         public abstract int SizeX { get; }
 

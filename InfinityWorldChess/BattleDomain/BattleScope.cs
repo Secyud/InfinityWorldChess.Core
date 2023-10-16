@@ -2,6 +2,7 @@
 using System.Ugf.Collections.Generic;
 using InfinityWorldChess.BattleDomain.BattleMapDomain;
 using InfinityWorldChess.BattleDomain.BattleRoleDomain;
+using InfinityWorldChess.GameDomain;
 using InfinityWorldChess.GlobalDomain;
 using InfinityWorldChess.RoleDomain;
 using InfinityWorldChess.Ugf;
@@ -10,7 +11,7 @@ using Secyud.Ugf.AssetComponents;
 using Secyud.Ugf.DependencyInjection;
 using Secyud.Ugf.HexMap;
 using Secyud.Ugf.HexMap.Generator;
-using Secyud.Ugf.HexMap.Utilities;
+using Secyud.Ugf.UgfHexMap;
 using TMPro;
 using UnityEngine;
 
@@ -49,7 +50,7 @@ namespace InfinityWorldChess.BattleDomain
                 assets, "InfinityWorldChess/BattleDomain/DamageText.prefab"
             );
             _stateViewer = PrefabContainer<BattleRoleStateViewer>.Create(
-                assets,"InfinityWorldChess/BattleDomain/BattleRoleDomain/BattleRoleStateViewer.prefab");
+                assets, "InfinityWorldChess/BattleDomain/BattleRoleDomain/BattleRoleStateViewer.prefab");
             BattleFinishPanel
                 = MonoContainer<BattleFinishedPanel>.Create(assets);
         }
@@ -58,22 +59,25 @@ namespace InfinityWorldChess.BattleDomain
         {
             Instance = this;
             _map.Create();
-            _map.Value.Grid.HexMapManager = U.Get<BattleHexMapManager>();
+            _map.Value.Initialize(Get<UgfHexGridDrawer>());
         }
 
-        internal void CreateBattle(BattleDescriptor descriptor)
+        public static void CreateBattle(BattleDescriptor descriptor)
         {
-            BattleDescriptor = descriptor;
-            VictoryCondition = descriptor.GenerateVictoryCondition();
+            GameScope.Instance.OnInterrupt();
+            U.M.CreateScope<BattleScope>();
+
+            Instance.BattleDescriptor = descriptor;
+            Instance.VictoryCondition = descriptor.GenerateVictoryCondition();
 
             int width = descriptor.SizeX * HexMetrics.ChunkSizeX;
             int height = descriptor.SizeZ * HexMetrics.ChunkSizeZ;
-            HexGrid grid = Map.Grid;
+            BattleMap grid = Instance.Map;
 
             if (descriptor.Cell is not null)
             {
                 HexMapGenerator mapGenerator = U.Get<HexMapGenerator>();
-                mapGenerator.Parameter = descriptor.Cell.GetGeneratorParameter(width, height);
+                mapGenerator.Parameter = descriptor.Cell.Get<UgfCell>().GetGeneratorParameter(width, height);
                 mapGenerator.GenerateMap(grid, width, height);
             }
             else
@@ -81,11 +85,11 @@ namespace InfinityWorldChess.BattleDomain
 
             descriptor.OnBattleCreated();
 
-            VictoryCondition.OnBattleInitialize();
+            Instance.VictoryCondition.OnBattleInitialize();
         }
 
 
-        public void DestroyBattle()
+        public static void DestroyBattle()
         {
             Transform transform = U.Canvas.transform;
             for (int i = 0; i < transform.childCount; i++)
@@ -93,9 +97,13 @@ namespace InfinityWorldChess.BattleDomain
                 transform.GetChild(i).Destroy();
             }
 
-            BattleFinishPanel.Create();
-            Battle.OnBattleFinished();
-            BattleDescriptor.OnBattleFinished();
+            Instance.BattleFinishPanel.Create();
+            Instance.Battle.OnBattleFinished();
+            Instance.BattleDescriptor.OnBattleFinished();
+
+
+            U.M.DestroyScope<BattleScope>();
+            GameScope.Instance.OnContinue();
         }
 
         public override void Dispose()
@@ -121,17 +129,15 @@ namespace InfinityWorldChess.BattleDomain
             viewer.Bind(chess);
             viewer.TargetTrans = unit.transform;
 
-            Map.Grid.AddUnit(chess, unit, cell, 0);
+            Map.AddUnit(unit, cell, 0);
             Context.Roles.AddIfNotContains(chess);
-            chess.Unit = unit;
-            chess.SetHighlight();
-            chess.OnBattleInitialize();
-            chess.Dead = false;
+            
+            unit.SetProperty(chess);
+            
             if (chess.UnitPlay?.Value)
             {
                 HexUnitPlay play = Object.Instantiate(chess.UnitPlay?.Value, unit.transform);
-                unit.SetLoopPlay(play);
-                play.Play(chess.Unit, chess.Unit.Location);
+                play.Play(chess.Get<UgfUnit>(), chess.Unit.Location.Get<UgfCell>());
             }
 
             Context.OnChessAdded();
@@ -156,7 +162,7 @@ namespace InfinityWorldChess.BattleDomain
 
         public void AutoInitializeRole(Role role, BattleCamp camp, HexCoordinates hexCoordinates, bool playerControl)
         {
-            HexGrid grid = Map.Grid;
+            HexGrid grid = Map;
             HexCoordinates coordinate = hexCoordinates;
             int i = 0, k = 0;
             HexDirection j = HexDirection.Ne;

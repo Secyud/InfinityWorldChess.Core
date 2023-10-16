@@ -17,12 +17,9 @@ namespace InfinityWorldChess.RoleDomain
 		{
 			public List<IOnBattleRoleInitialize> BattleInitializes { get; } = new();
 
-			public RoleIdBuffProperty(Role target) 
+			public RoleIdBuffProperty(Role target) : base(target)
 			{
-				Target = target;
 			}
-
-			protected override Role Target { get; }
 		}
 	}
 }

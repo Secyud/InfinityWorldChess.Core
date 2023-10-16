@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using InfinityWorldChess.GameDomain.GameMenuDomain;
+﻿using InfinityWorldChess.GameDomain.GameMenuDomain;
 using InfinityWorldChess.GameDomain.SystemMenuDomain;
 using InfinityWorldChess.GameDomain.WorldMapDomain;
 using InfinityWorldChess.GlobalDomain;
@@ -8,6 +7,7 @@ using InfinityWorldChess.RoleDomain;
 using Secyud.Ugf;
 using Secyud.Ugf.AssetComponents;
 using Secyud.Ugf.DependencyInjection;
+using Secyud.Ugf.HexMap;
 using UnityEditor;
 using UnityEngine;
 
@@ -41,7 +41,7 @@ namespace InfinityWorldChess.GameDomain
         {
             Instance = this;
             Map.Create();
-            Map.Value.Grid.HexMapManager = U.Get<WorldHexMapManager>();
+            Map.Value.Initialize(U.Get<IHexGridDrawer>());
             Map.Value.transform.SetSiblingIndex(0);
         }
 

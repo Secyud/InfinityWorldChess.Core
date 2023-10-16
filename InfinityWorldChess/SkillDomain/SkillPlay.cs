@@ -1,5 +1,6 @@
 using InfinityWorldChess.BattleDomain;
 using Secyud.Ugf.HexMap;
+using Secyud.Ugf.UgfHexMap;
 using UnityEngine;
 
 namespace InfinityWorldChess.SkillDomain
@@ -30,7 +31,7 @@ namespace InfinityWorldChess.SkillDomain
             
         }
 
-        public override void Play(HexUnit unit, HexCell targetCell)
+        public override void Play(UgfUnit unit, UgfCell targetCell)
         {
             base.Play(unit, targetCell);
             _effected = false;

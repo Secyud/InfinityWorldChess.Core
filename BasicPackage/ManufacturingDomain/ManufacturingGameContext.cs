@@ -26,11 +26,11 @@ namespace InfinityWorldChess.ManufacturingDomain
 
             ActivityButtons = new List<ManufacturingButtonDescriptor>();
             int count = reader.ReadInt32();
-            var wc = GameScope.Instance.Map.Value.Grid;
+            WorldMap map = GameScope.Instance.Map.Value;
             for (int i = 0; i < count; i++)
             {
                 ManufacturingButtonDescriptor tmp = new();
-                AddButtonToChecker(tmp, wc.GetCell(reader.ReadInt32()).Get<WorldCell>());
+                AddButtonToChecker(tmp, map.GetCell(reader.ReadInt32()).Get<WorldCell>());
                 tmp.Load(reader);
             }
         }
@@ -51,11 +51,11 @@ namespace InfinityWorldChess.ManufacturingDomain
         {
             ActivityButtons = new List<ManufacturingButtonDescriptor>();
 
-            var worldContext = GameScope.Instance.Map.Value;
+            WorldMap grid = GameScope.Instance.Map.Value;
 
             int i = 0;
 
-            foreach (HexCell cell in worldContext.Grid)
+            foreach (HexCell cell in grid.Cells)
             {
                 var checker = cell.Get<WorldCell>();
                 if (checker.SpecialIndex != 1) continue;

@@ -13,7 +13,9 @@ namespace InfinityWorldChess.SkillEffectDomain.Abstractions
         {
             base.PostInteraction(interaction);
             if (interaction.TargetChess is BattleRole chess)
-                chess.Install(ConstructBuff());
+            {
+                chess.Buff.Install(ConstructBuff());
+            }
         }
     }
 }

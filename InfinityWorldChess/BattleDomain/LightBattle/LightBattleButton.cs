@@ -10,10 +10,8 @@ namespace InfinityWorldChess.BattleDomain.LightBattle
         public override void Invoke()
         {
             LightBattleDescriptor battle = new(GameScope.Instance.Player.Role, Target);
-
-
-            BattleGlobalService battleService = U.Get<BattleGlobalService>();
-            battleService.CreateBattle(battle);
+            
+            BattleScope.CreateBattle(battle);
         }
 
         public override string ShowName => "切磋";

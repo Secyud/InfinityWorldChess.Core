@@ -15,7 +15,7 @@ namespace InfinityWorldChess.SkillEffectDomain.BasicEffectBundle
         {
             TurnFinished -= 1;
             if (TurnFinished <= 0 && _target == BattleScope.Instance.Context.Role)
-                _target.UnInstall(_buff.Id);
+                _target.Buff.UnInstall(_buff.Id);
         }
         
         public void Install(BattleRole target, IBuff<BattleRole> buff)

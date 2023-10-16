@@ -29,7 +29,7 @@ namespace InfinityWorldChess.BattleDomain.LightBattle
         public override void OnBattleCreated()
         {
             BattleScope scope = BattleScope.Instance;
-            HexCell cell1 = scope.Map.Grid.GetCell(2, 2);
+            HexCell cell1 = scope.Map.GetCell(2, 2);
             BattlePlayer = new BattleRole(Player)
             {
                 PlayerControl = true,
@@ -41,9 +41,9 @@ namespace InfinityWorldChess.BattleDomain.LightBattle
                 }
             };
             scope.AddRoleBattleChess(BattlePlayer, cell1);
-            int width = scope.Map.Grid.CellCountX;
-            int height = scope.Map.Grid.CellCountZ;
-            HexCell cell2 = scope.Map.Grid.GetCell(width - 3, height - 3);
+            int width = scope.Map.CellCountX;
+            int height = scope.Map.CellCountZ;
+            HexCell cell2 = scope.Map.GetCell(width - 3, height - 3);
             BattleTarget = new BattleRole(Target)
             {
                 PlayerControl = false,

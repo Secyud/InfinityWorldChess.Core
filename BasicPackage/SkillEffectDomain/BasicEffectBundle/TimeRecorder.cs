@@ -18,7 +18,7 @@ namespace InfinityWorldChess.SkillEffectDomain.BasicEffectBundle
             TimeFinished -= BattleScope.Instance.Context.TotalTime - TimeRecord;
             if (TimeRecord <= 0 && _role is not null)
             {
-                _role.UnInstall(_buff.Id);
+                _role.Buff.UnInstall(_buff.Id);
                 return;
             }
 
