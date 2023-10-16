@@ -58,8 +58,6 @@ namespace InfinityWorldChess.ItemDomain.EquipmentDomain
 				buff.UnInstall(role);
 		}
 
-		public int this[int index] => Property[index];
-
 		protected override Equipment Target => this;
 
 		public override void Save(IArchiveWriter writer)
