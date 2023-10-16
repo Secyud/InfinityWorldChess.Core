@@ -1,8 +1,6 @@
-﻿using InfinityWorldChess.BuffDomain;
-using InfinityWorldChess.ItemDomain;
+﻿using InfinityWorldChess.ItemDomain;
 using InfinityWorldChess.ItemDomain.EquipmentDomain;
 using InfinityWorldChess.PlayerDomain;
-using InfinityWorldChess.RoleDomain;
 using InfinityWorldChess.Ugf;
 using Secyud.Ugf.TabComponents;
 using Secyud.Ugf.TableComponents;

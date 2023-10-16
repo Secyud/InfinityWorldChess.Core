@@ -1,6 +1,4 @@
-using InfinityWorldChess.RoleDomain;
 using Secyud.Ugf;
-using Secyud.Ugf.DataManager;
 
 namespace InfinityWorldChess.InteractionDomain
 {

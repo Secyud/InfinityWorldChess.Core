@@ -1,6 +1,5 @@
 using InfinityWorldChess.SkillDomain;
 using InfinityWorldChess.Ugf;
-using Secyud.Ugf;
 using Secyud.Ugf.BasicComponents;
 using UnityEngine;
 

@@ -2,14 +2,13 @@ using System;
 using System.Linq;
 using InfinityWorldChess.SkillDomain;
 using Secyud.Ugf.DependencyInjection;
-using Secyud.Ugf.HexMap;
 
 namespace InfinityWorldChess.BattleDomain.BattleMapDomain
 {
     [Registry(DependScope = typeof(BattleScope))]
     public class FormSkillActionService: IBattleMapActionService,IRegistry
     {
-        private HexCell _skillCastCell;
+        private BattleCell _skillCastCell;
         private FormSkillContainer _formSkill;
         private bool _apply;
 
@@ -24,7 +23,7 @@ namespace InfinityWorldChess.BattleDomain.BattleMapDomain
                     BattleContext context = BattleScope.Instance.Context;
                     BattleRole role = context.Role;
                     context.ReleasableCells = value?.FormSkill.GetCastPositionRange(role).Value;
-                    context.InRangeCells = Array.Empty<HexCell>();
+                    context.InRangeCells = Array.Empty<BattleCell>();
                 }
             }
         }
@@ -35,7 +34,7 @@ namespace InfinityWorldChess.BattleDomain.BattleMapDomain
             FormSkill = FormSkill;
         }
         
-        public void OnHover(HexCell cell)
+        public void OnHover(BattleCell cell)
         {
             if (FormSkill is not null)
             {
@@ -49,12 +48,12 @@ namespace InfinityWorldChess.BattleDomain.BattleMapDomain
                 }
                 else
                 {
-                    context.InRangeCells = Array.Empty<HexCell>();
+                    context.InRangeCells = Array.Empty<BattleCell>();
                 }
             }
         }
 
-        public void OnPress(HexCell cell)
+        public void OnPress(BattleCell cell)
         {
             if (FormSkill is not null)
             {
@@ -73,7 +72,7 @@ namespace InfinityWorldChess.BattleDomain.BattleMapDomain
 
             role.SetFormSkillCall((byte)(FormSkill.EquipCode / 4));
 
-            HexCell selfCell = role.Unit.Location;
+            BattleCell selfCell = role.Unit.Location as BattleCell;
             if (selfCell != _skillCastCell)
                 role.Direction = _skillCastCell.DirectionTo(selfCell);
             FormSkill.FormSkill.ConditionCast(role);

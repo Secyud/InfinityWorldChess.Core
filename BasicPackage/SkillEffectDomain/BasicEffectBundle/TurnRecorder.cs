@@ -1,5 +1,4 @@
 ﻿using InfinityWorldChess.BattleDomain;
-using InfinityWorldChess.BattleDomain.BattleRoleDomain;
 using InfinityWorldChess.BuffDomain;
 
 namespace InfinityWorldChess.SkillEffectDomain.BasicEffectBundle

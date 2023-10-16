@@ -13,6 +13,7 @@ using InfinityWorldChess.GameDomain;
 using Secyud.Ugf;
 using Secyud.Ugf.Archiving;
 using Secyud.Ugf.DependencyInjection;
+using Secyud.Ugf.HexUtilities;
 
 #endregion
 
@@ -53,7 +54,8 @@ namespace InfinityWorldChess.PlayerDomain
 
             int index = reader.ReadInt32();
             Role = new Role(true);
-            Role.Load(reader, GameScope.Instance.Map.Value.GetCell(index).Get<WorldCell>());
+            Role.Load(reader, 
+                GameScope.Instance.Map.Value.GetCell(index) as WorldCell);
 
             SkillPoints = reader.ReadInt32();
 
@@ -79,7 +81,7 @@ namespace InfinityWorldChess.PlayerDomain
         {
             using FileStream stream = File.OpenRead(SavePath);
             using DefaultArchiveWriter writer = new(stream);
-            writer.Write(Role.Position.Cell.Index);
+            writer.Write(Role.Position.Index);
             Role.Save(writer);
             writer.Write(SkillPoints);
 
@@ -114,8 +116,8 @@ namespace InfinityWorldChess.PlayerDomain
             }
 
             Role.Position = GameScope.Instance.Map.Value.Cells
-                .First(u => u.Get<WorldCell>().SpecialIndex == 1)
-                .Get<WorldCell>();
+                .First(u => ((WorldCell)u).SpecialIndex == 1)
+                as WorldCell ;
 
             foreach (IBundle bundle in cs.Bundles)
             {

@@ -4,7 +4,6 @@ using InfinityWorldChess.BattleDomain.AiDomain;
 using InfinityWorldChess.BattleDomain.BattleRoleDomain;
 using Secyud.Ugf.AssetComponents;
 using Secyud.Ugf.DependencyInjection;
-using Secyud.Ugf.HexMap;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -33,7 +32,7 @@ namespace InfinityWorldChess.BattleDomain
             _playerController = MonoContainer<BattlePlayerController>.Create(assets);
         }
 
-        public void OnUpdate(HexCell cell)
+        public void OnUpdate(BattleCell cell)
         {
             if (!EventSystem.current.IsPointerOverGameObject())
             {
@@ -114,7 +113,7 @@ namespace InfinityWorldChess.BattleDomain
         }
 
 
-        private void ControlUnitWithCell(HexCell cell)
+        private void ControlUnitWithCell(BattleCell cell)
         {
             if (_context.Role.PlayerControl)
             {

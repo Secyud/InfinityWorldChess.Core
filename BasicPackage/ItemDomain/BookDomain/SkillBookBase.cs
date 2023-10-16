@@ -1,12 +1,7 @@
 ﻿#region
 
-using System;
 using InfinityWorldChess.RoleDomain;
-using InfinityWorldChess.Ugf;
-using InfinityWorldChess.GameDomain;
-using InfinityWorldChess.PlayerDomain;
 using Secyud.Ugf.DataManager;
-using UnityEngine;
 
 #endregion
 

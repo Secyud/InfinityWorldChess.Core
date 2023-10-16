@@ -1,9 +1,7 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using InfinityWorldChess.GameDomain;
 using InfinityWorldChess.ItemDomain.FoodDomain;
 using InfinityWorldChess.ManufacturingDomain.FlavorDomain;
-using InfinityWorldChess.ManufacturingDomain.MetalDomain;
 
 namespace InfinityWorldChess.ManufacturingDomain.DragDomain
 {

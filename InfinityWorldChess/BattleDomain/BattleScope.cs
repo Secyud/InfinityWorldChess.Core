@@ -10,8 +10,9 @@ using Secyud.Ugf;
 using Secyud.Ugf.AssetComponents;
 using Secyud.Ugf.DependencyInjection;
 using Secyud.Ugf.HexMap;
-using Secyud.Ugf.HexMap.Generator;
+using Secyud.Ugf.HexUtilities;
 using Secyud.Ugf.UgfHexMap;
+using Secyud.Ugf.UgfHexMapGenerator;
 using TMPro;
 using UnityEngine;
 
@@ -77,7 +78,7 @@ namespace InfinityWorldChess.BattleDomain
             if (descriptor.Cell is not null)
             {
                 HexMapGenerator mapGenerator = U.Get<HexMapGenerator>();
-                mapGenerator.Parameter = descriptor.Cell.Get<UgfCell>().GetGeneratorParameter(width, height);
+                mapGenerator.Parameter = descriptor.Cell.GetGeneratorParameter(width, height);
                 mapGenerator.GenerateMap(grid, width, height);
             }
             else
@@ -137,7 +138,7 @@ namespace InfinityWorldChess.BattleDomain
             if (chess.UnitPlay?.Value)
             {
                 HexUnitPlay play = Object.Instantiate(chess.UnitPlay?.Value, unit.transform);
-                play.Play(chess.Get<UgfUnit>(), chess.Unit.Location.Get<UgfCell>());
+                play.Play(chess.Unit as UgfUnit, chess.Unit.Location as BattleCell);
             }
 
             Context.OnChessAdded();

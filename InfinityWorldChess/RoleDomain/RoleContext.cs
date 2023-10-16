@@ -7,7 +7,6 @@ using InfinityWorldChess.GlobalDomain;
 using Secyud.Ugf;
 using Secyud.Ugf.Archiving;
 using Secyud.Ugf.DependencyInjection;
-using Secyud.Ugf.HexMap;
 
 namespace InfinityWorldChess.RoleDomain
 {
@@ -48,7 +47,7 @@ namespace InfinityWorldChess.RoleDomain
 
             foreach (Role role in roles)
             {
-                writer.Write(role.Relation.Position.Cell.Index);
+                writer.Write(role.Relation.Position.Index);
                 role.Save(writer);
                 if (U.AddStep())
                     yield return null;
@@ -64,8 +63,8 @@ namespace InfinityWorldChess.RoleDomain
             for (int i = 0; i < count; i++)
             {
                 Role role = new(true);
-                HexCell cell = map.GetCell(reader.ReadInt32());
-                role.Load(reader, cell.Get<WorldCell>());
+                WorldCell cell = map.GetCell(reader.ReadInt32()) as WorldCell;
+                role.Load(reader, cell);
                 AddRole(role);
                 if (U.AddStep())
                     yield return null;

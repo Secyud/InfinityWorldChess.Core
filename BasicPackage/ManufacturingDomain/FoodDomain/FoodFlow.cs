@@ -1,5 +1,4 @@
 ﻿using InfinityWorldChess.ItemDomain.FoodDomain;
-using InfinityWorldChess.ManufacturingDomain.FoodDomain;
 using InfinityWorldChess.ManufacturingDomain.FlavorDomain;
 
 namespace InfinityWorldChess.ManufacturingDomain.FoodDomain

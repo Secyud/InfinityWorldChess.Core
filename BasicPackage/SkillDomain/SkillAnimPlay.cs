@@ -24,8 +24,8 @@ namespace InfinityWorldChess.SkillDomain
         {
             base.Play(unit, targetCell);
 
-            _animTransform = ControlRole ? unit.Unit.transform : transform;
-            _s = unit.Unit.Location.Position;
+            _animTransform = ControlRole ? unit.transform : transform;
+            _s = unit.Location.Position;
             _e = targetCell.Position;
         }
     }

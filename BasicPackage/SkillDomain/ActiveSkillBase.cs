@@ -3,7 +3,6 @@ using InfinityWorldChess.BattleDomain;
 using InfinityWorldChess.GameDomain;
 using InfinityWorldChess.ItemDomain;
 using InfinityWorldChess.SkillDomain.SkillRangeDomain;
-using InfinityWorldChess.SkillDomain.SkillRangeDomain.Target;
 using InfinityWorldChess.Ugf;
 using Secyud.Ugf;
 using Secyud.Ugf.Archiving;
@@ -65,14 +64,14 @@ namespace InfinityWorldChess.SkillDomain
         public virtual ISkillRange GetCastPositionRange(BattleRole role,IActiveSkill skill)
         {
             if (Position is null)
-                return new SkillRange(Array.Empty<HexCell>());
+                return new SkillRange(Array.Empty<BattleCell>());
             return Position.GetCastPositionRange(role,skill);
         }
 
-        public virtual ISkillRange GetCastResultRange(BattleRole role, HexCell castPosition,IActiveSkill skill)
+        public virtual ISkillRange GetCastResultRange(BattleRole role, BattleCell castPosition,IActiveSkill skill)
         {
             if (Result is null)
-                return new SkillRange(Array.Empty<HexCell>());
+                return new SkillRange(Array.Empty<BattleCell>());
             return Result.GetCastResultRange(role, castPosition,skill);
         }
 

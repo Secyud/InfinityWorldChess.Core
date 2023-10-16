@@ -1,4 +1,3 @@
-using System.Linq;
 using InfinityWorldChess.InteractionDomain;
 using InfinityWorldChess.RoleDomain;
 using Secyud.Ugf;

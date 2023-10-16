@@ -1,6 +1,5 @@
 #region
 
-using InfinityWorldChess.ItemDomain.FoodDomain;
 using InfinityWorldChess.ManufacturingDomain.FlavorDomain;
 
 #endregion

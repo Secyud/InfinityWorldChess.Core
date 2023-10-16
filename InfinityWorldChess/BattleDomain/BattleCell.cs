@@ -2,15 +2,15 @@
 
 using System;
 using InfinityWorldChess.BuffDomain;
-using Secyud.Ugf.HexMap;
 using System.Collections.Generic;
+using Secyud.Ugf.UgfHexMap;
 using UnityEngine;
 
 #endregion
 
 namespace InfinityWorldChess.BattleDomain
 {
-    public sealed class BattleCell : CellProperty
+    public sealed class BattleCell : UgfCell
     {
         [Flags]
         public enum State
@@ -74,11 +74,11 @@ namespace InfinityWorldChess.BattleDomain
         {
             if (_state == 0)
             {
-                Cell.DisableHighlight();
+                DisableHighlight();
                 return;
             }
 
-            Cell.EnableHighlight((int)_state switch
+            EnableHighlight((int)_state switch
             {
                 < 2      => Color.red,
                 < 2 << 1 => Color.green,

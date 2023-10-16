@@ -1,5 +1,4 @@
-﻿using InfinityWorldChess.ManufacturingDomain.EquipmentDomain;
-using InfinityWorldChess.Ugf;
+﻿using InfinityWorldChess.Ugf;
 using Secyud.Ugf;
 using Secyud.Ugf.DataManager;
 using UnityEngine;

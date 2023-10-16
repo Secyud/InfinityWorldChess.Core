@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.IO;
 using InfinityWorldChess.GameDomain;
 using InfinityWorldChess.GameDomain.WorldMapDomain;
-using InfinityWorldChess.PlayerDomain;
 using Secyud.Ugf.Archiving;
 using Secyud.Ugf.HexMap;
 
@@ -30,7 +29,7 @@ namespace InfinityWorldChess.ManufacturingDomain
             for (int i = 0; i < count; i++)
             {
                 ManufacturingButtonDescriptor tmp = new();
-                AddButtonToChecker(tmp, map.GetCell(reader.ReadInt32()).Get<WorldCell>());
+                AddButtonToChecker(tmp, map.GetCell(reader.ReadInt32()) as WorldCell);
                 tmp.Load(reader);
             }
         }
@@ -42,7 +41,7 @@ namespace InfinityWorldChess.ManufacturingDomain
             writer.Write(ActivityButtons.Count);
             foreach (ManufacturingButtonDescriptor b in ActivityButtons)
             {
-                writer.Write(b.Target.Cell.Index);
+                writer.Write(b.Target.Index);
                 b.Save(writer);
             }
         }
@@ -55,10 +54,10 @@ namespace InfinityWorldChess.ManufacturingDomain
 
             int i = 0;
 
-            foreach (HexCell cell in grid.Cells)
+            foreach (HexCell hexCell in grid.Cells)
             {
-                var checker = cell.Get<WorldCell>();
-                if (checker.SpecialIndex != 1) continue;
+                WorldCell cell = (WorldCell)hexCell;
+                if (cell.SpecialIndex != 1) continue;
 
                 for (int j = 0; j < 3; j++)
                 {
@@ -66,7 +65,7 @@ namespace InfinityWorldChess.ManufacturingDomain
                     {
                         Type = i
                     };
-                    AddButtonToChecker(button, checker);
+                    AddButtonToChecker(button, cell);
                     i = (i + 1) % 5;
                 }
             }

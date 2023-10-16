@@ -1,6 +1,6 @@
 #region
 
-using Secyud.Ugf.HexMap;
+using InfinityWorldChess.BattleDomain;
 
 #endregion
 
@@ -8,6 +8,6 @@ namespace InfinityWorldChess.SkillDomain
 {
 	public interface ISkillRange
 	{
-		HexCell[] Value { get; }
+		BattleCell[] Value { get; }
 	}
 }

@@ -23,7 +23,7 @@ namespace InfinityWorldChess.GameDomain.WorldCellDomain
             WorldCell cell = GameScope.Instance.Get<SelectObservedService>().Cell;
             if (cell is not null)
             {
-                Position.Set(": " + cell.Cell.Coordinates);
+                Position.Set(": " + cell.Coordinates);
                 Resources.Set(
                     ": " + cell.Stone,
                     ": " + cell.Tree,

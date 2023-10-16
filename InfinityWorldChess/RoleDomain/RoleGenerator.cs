@@ -11,7 +11,6 @@ using Secyud.Ugf;
 using Secyud.Ugf.Collections;
 using Secyud.Ugf.DependencyInjection;
 using Secyud.Ugf.HexMap;
-using Secyud.Ugf.UgfHexMap;
 
 #endregion
 
@@ -37,27 +36,27 @@ namespace InfinityWorldChess.RoleDomain
         {
             _resourceManager = resourceManager;
 
-            foreach (HexCell cell in GameScope.Instance.Map.Value.Cells) 
+            foreach (HexCell hexCell in 
+                     GameScope.Instance.Map.Value.Cells) 
             {
-                WorldCell checker = cell.Get<WorldCell>();
-                UgfCell ugfCell = cell.Get<UgfCell>();
-                if (checker.SpecialIndex >= 0)
+                WorldCell cell = (WorldCell)hexCell;
+                if (cell.SpecialIndex >= 0)
                 {
-                    _availableWorldCheckers.Add(checker);
+                    _availableWorldCheckers.Add(cell);
                     continue;
                 }
 
-                if (ugfCell.IsUnderwater)
+                if (cell.IsUnderwater)
                     continue;
 
                 int randomValueMax = 4;
 
-                if (ugfCell.HasRiver)
+                if (cell.HasRiver)
                     randomValueMax += 2;
-                if (ugfCell.HasRoads)
+                if (cell.HasRoads)
                     randomValueMax -= 1;
-                randomValueMax += Math.Max(0, ugfCell.Elevation - 6);
-                switch (ugfCell.TerrainType % 4)
+                randomValueMax += Math.Max(0, cell.Elevation - 6);
+                switch (cell.TerrainType % 4)
                 {
                     case 0:
                     case 3:
@@ -65,7 +64,7 @@ namespace InfinityWorldChess.RoleDomain
                         break;
                 }
 
-                switch (ugfCell.TerrainType / 4 % 4)
+                switch (cell.TerrainType / 4 % 4)
                 {
                     case 0:
                     case 3:
@@ -74,7 +73,7 @@ namespace InfinityWorldChess.RoleDomain
                 }
 
                 if (U.GetRandom(randomValueMax) == 0)
-                    _availableWorldCheckers.Add(checker);
+                    _availableWorldCheckers.Add(cell);
             }
 
             {

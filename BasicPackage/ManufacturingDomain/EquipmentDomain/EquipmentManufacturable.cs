@@ -1,9 +1,7 @@
 #region
 
-using InfinityWorldChess.ItemDomain.EquipmentDomain;
 using InfinityWorldChess.Ugf;
 using Secyud.Ugf.DataManager;
-using Secyud.Ugf.TableComponents;
 using UnityEngine;
 
 #endregion

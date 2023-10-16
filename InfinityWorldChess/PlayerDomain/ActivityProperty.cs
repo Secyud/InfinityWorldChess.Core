@@ -2,7 +2,6 @@
 
 using InfinityWorldChess.ActivityDomain;
 using System.Collections.Generic;
-using System.Linq;
 using Secyud.Ugf.Archiving;
 
 #endregion

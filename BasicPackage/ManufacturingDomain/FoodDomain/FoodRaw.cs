@@ -1,7 +1,4 @@
-﻿using System;
-using InfinityWorldChess.ItemDomain;
-using InfinityWorldChess.ItemDomain.FoodDomain;
-using InfinityWorldChess.ManufacturingDomain.FlavorDomain;
+﻿using InfinityWorldChess.ItemDomain.FoodDomain;
 using InfinityWorldChess.Ugf;
 using UnityEngine;
 

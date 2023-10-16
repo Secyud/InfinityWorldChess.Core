@@ -6,21 +6,22 @@ using InfinityWorldChess.BattleDomain;
 using InfinityWorldChess.Ugf;
 using Secyud.Ugf;
 using Secyud.Ugf.HexMap;
+using Secyud.Ugf.HexUtilities;
 
 #endregion
 
 namespace InfinityWorldChess.SkillDomain.SkillRangeDomain
 {
-	public class SkillRange : ISkillRange, IObjectAccessor<HexCell[]>
+	public class SkillRange : ISkillRange, IObjectAccessor<BattleCell[]>
 	{
-		public SkillRange(params HexCell[] cells)
+		public SkillRange(params BattleCell[] cells)
 		{
 			Value = cells.ToArray();
 		}
 
-		public HexCell[] Value { get; }
+		public BattleCell[] Value { get; }
 
-		public static SkillRange GetFixedRange(params HexCell[] cells)
+		public static SkillRange GetFixedRange(params BattleCell[] cells)
 		{
 			return new SkillRange(cells);
 		}
@@ -84,7 +85,7 @@ namespace InfinityWorldChess.SkillDomain.SkillRangeDomain
 			HexDirection startDirection, byte coverRange,bool includeUnit = true)
 		{
 			HexGrid grid = BattleScope.Instance.Map;
-			List<HexCell> cells = new();
+			List<BattleCell> cells = new();
 			HexCoordinates coordinate = startCoordinate;
 
 			for (int i = 0; i < startDistance; i++)

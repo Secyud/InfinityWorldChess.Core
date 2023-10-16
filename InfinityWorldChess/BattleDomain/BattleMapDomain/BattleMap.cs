@@ -1,6 +1,5 @@
 #region
 
-using InfinityWorldChess.SkillDomain;
 using Secyud.Ugf;
 using Secyud.Ugf.HexMap;
 using Secyud.Ugf.UgfHexMap;
@@ -19,8 +18,9 @@ namespace InfinityWorldChess.BattleDomain.BattleMapDomain
 
         private BattleControlService _controlService;
 
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
             _controlService = U.Get<BattleControlService>();
         }
 
@@ -35,7 +35,7 @@ namespace InfinityWorldChess.BattleDomain.BattleMapDomain
             else
             {
                 HexCell cell = GetCellUnderCursor();
-                _controlService.OnUpdate(cell);
+                _controlService.OnUpdate(cell as BattleCell);
             }
         }
 
@@ -54,14 +54,14 @@ namespace InfinityWorldChess.BattleDomain.BattleMapDomain
         }
 
 
-        public void StartBroadcast(BattleRole role, HexCell cell, HexUnitPlay play)
+        public void StartBroadcast(BattleRole role, BattleCell cell, HexUnitPlay play)
         {
             BattleScope.Instance.State = BattleFlowState.AnimationPlay;
 
             if (play)
             {
                 HexUnitPlay clone = play.Instantiate(role.Unit.transform);
-                clone.Play(role.Unit.Get<UgfUnit>(), cell.Get<UgfCell>());
+                clone.Play(role.Unit as UgfUnit, cell);
             }
             else
             {

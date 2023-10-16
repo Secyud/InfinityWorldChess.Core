@@ -6,16 +6,17 @@ using InfinityWorldChess.SkillDomain;
 using JetBrains.Annotations;
 using Secyud.Ugf;
 using Secyud.Ugf.HexMap;
+using Secyud.Ugf.HexUtilities;
 
 namespace InfinityWorldChess.BattleDomain.AiDomain
 {
     public class CoreSkillAiActionNode : AiActionNode
     {
-        private readonly HexCell _cell;
+        private readonly BattleCell _cell;
         private readonly CoreSkillContainer _container;
         private readonly BattleRole _battleRole;
 
-        private CoreSkillAiActionNode([NotNull] HexCell cell,
+        private CoreSkillAiActionNode([NotNull] BattleCell cell,
             [NotNull] CoreSkillContainer container,
             [NotNull] BattleRole battleRole)
         {
@@ -36,7 +37,7 @@ namespace InfinityWorldChess.BattleDomain.AiDomain
             ISkillRange range = _container.Skill.GetCastResultRange(_battleRole, _cell);
 
             float score = 0;
-            foreach (HexCell cell in range.Value)
+            foreach (BattleCell cell in range.Value)
             {
                 if (cell.Unit && cell.Unit.Get<BattleRole>().Camp != _battleRole.Camp)
                 {

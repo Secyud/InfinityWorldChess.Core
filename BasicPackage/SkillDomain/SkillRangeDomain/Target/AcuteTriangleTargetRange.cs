@@ -1,5 +1,4 @@
 ﻿using InfinityWorldChess.BattleDomain;
-using Secyud.Ugf.HexMap;
 
 namespace InfinityWorldChess.SkillDomain.SkillRangeDomain.Target
 {
@@ -7,7 +6,7 @@ namespace InfinityWorldChess.SkillDomain.SkillRangeDomain.Target
     {
         public override string ShowDescription => "锐角";
         
-        public ISkillRange GetCastResultRange(BattleRole role, HexCell castPosition,IActiveSkill skill)
+        public ISkillRange GetCastResultRange(BattleRole role, BattleCell castPosition,IActiveSkill skill)
         {
             var center = GetCenter(role, castPosition);
             

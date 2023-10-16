@@ -1,7 +1,5 @@
 using InfinityWorldChess.BattleDomain;
 using InfinityWorldChess.BuffDomain;
-using InfinityWorldChess.SkillDomain;
-using Secyud.Ugf;
 using Secyud.Ugf.DataManager;
 
 namespace InfinityWorldChess.SkillEffectDomain.BasicEffectBundle

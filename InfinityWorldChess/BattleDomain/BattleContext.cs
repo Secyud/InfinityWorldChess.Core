@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using InfinityWorldChess.BattleDomain.BattleMapDomain;
 using Secyud.Ugf.DependencyInjection;
-using Secyud.Ugf.HexMap;
 using Secyud.Ugf.ObserverComponents;
 
 namespace InfinityWorldChess.BattleDomain
@@ -20,9 +19,9 @@ namespace InfinityWorldChess.BattleDomain
 
         #region State
 
-        private HexCell _hoverCell;
+        private BattleCell _hoverCell;
 
-        public HexCell HoverCell
+        public BattleCell HoverCell
         {
             get => _hoverCell;
             set
@@ -34,14 +33,14 @@ namespace InfinityWorldChess.BattleDomain
 
                 if (_hoverCell)
                 {
-                    _hoverCell.Get<BattleCell>().Hovered = false;
+                    _hoverCell.Hovered = false;
                 }
 
                 _hoverCell = value;
 
                 if (_hoverCell)
                 {
-                    _hoverCell.Get<BattleCell>().Hovered = true;
+                    _hoverCell.Hovered = true;
                 }
 
                 MapAction.OnHover(_hoverCell);
@@ -51,9 +50,9 @@ namespace InfinityWorldChess.BattleDomain
 
         public ObservedService HoverCellService { get; } = new();
 
-        private HexCell _selectedCell;
+        private BattleCell _selectedCell;
 
-        public HexCell SelectedCell
+        public BattleCell SelectedCell
         {
             get => _selectedCell;
             set
@@ -65,13 +64,13 @@ namespace InfinityWorldChess.BattleDomain
 
                 if (_selectedCell)
                 {
-                    _selectedCell.Get<BattleCell>().Selected = false;
+                    _selectedCell.Selected = false;
                 }
 
                 _selectedCell = value;
                 if (_selectedCell)
                 {
-                    _selectedCell.Get<BattleCell>().Selected = true;
+                    _selectedCell.Selected = true;
                 }
 
                 SelectedCellService.Refresh();
@@ -81,47 +80,47 @@ namespace InfinityWorldChess.BattleDomain
         public ObservedService SelectedCellService { get; } = new();
 
 
-        private readonly List<HexCell> _releasableCells = new();
+        private readonly List<BattleCell> _releasableCells = new();
 
-        public IReadOnlyList<HexCell> ReleasableCells
+        public IReadOnlyList<BattleCell> ReleasableCells
         {
             get => _releasableCells;
             set
             {
-                foreach (HexCell cell in _releasableCells)
+                foreach (BattleCell cell in _releasableCells)
                 {
-                    cell.Get<BattleCell>().Releasable = false;
+                    cell.Releasable = false;
                 }
 
                 _releasableCells.Clear();
                 if (value is null) return;
 
-                foreach (HexCell cell in value)
+                foreach (BattleCell cell in value)
                 {
-                    cell.Get<BattleCell>().Releasable = true;
+                    cell.Releasable = true;
                     _releasableCells.Add(cell);
                 }
             }
         }
 
-        private readonly List<HexCell> _inRangeCells = new();
+        private readonly List<BattleCell> _inRangeCells = new();
 
-        public IReadOnlyList<HexCell> InRangeCells
+        public IReadOnlyList<BattleCell> InRangeCells
         {
             get => _inRangeCells;
             set
             {
-                foreach (HexCell cell in _inRangeCells)
+                foreach (BattleCell cell in _inRangeCells)
                 {
-                    cell.Get<BattleCell>().InRange = false;
+                    cell.InRange = false;
                 }
 
                 _inRangeCells.Clear();
                 if (value is null) return;
 
-                foreach (HexCell cell in value)
+                foreach (BattleCell cell in value)
                 {
-                    cell.Get<BattleCell>().InRange = true;
+                    cell.InRange = true;
                     _inRangeCells.Add(cell);
                 }
             }
@@ -176,12 +175,12 @@ namespace InfinityWorldChess.BattleDomain
         public ObservedService RoleService { get; } = new();
         public ObservedService StateService { get; } = new();
 
-        public virtual void SelectCell(HexCell cell)
+        public virtual void SelectCell(BattleCell cell)
         {
             SelectedCell = cell;
         }
 
-        public virtual void TriggerCell(HexCell cell)
+        public virtual void TriggerCell(BattleCell cell)
         {
             if (_releasableCells.Contains(cell))
             {

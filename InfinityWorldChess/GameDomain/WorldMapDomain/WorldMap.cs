@@ -2,11 +2,9 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using System.Ugf.Collections.Generic;
 using InfinityWorldChess.GameDomain.WorldCellDomain;
 using Secyud.Ugf;
 using Secyud.Ugf.HexMap;
-using Secyud.Ugf.UgfHexMap;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Rendering.Universal;
@@ -24,8 +22,9 @@ namespace InfinityWorldChess.GameDomain.WorldMapDomain
         private SelectObservedService _selectObservedService;
         private WorldMapFunctionService _mapFunction;
 
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
             _selectObservedService = U.Get<SelectObservedService>();
             _mapFunction = U.Get<WorldMapFunctionService>();
         }
@@ -49,47 +48,47 @@ namespace InfinityWorldChess.GameDomain.WorldMapDomain
 
         private void OnCellLeftClick(HexCell cell)
         {
-            _selectObservedService.Cell = cell.Get<WorldCell>();
+            _selectObservedService.Cell = cell as WorldCell;
         }
 
         private void OnCellHover(HexCell cell)
         {
-            _selectObservedService.HoverCell = cell.Get<WorldCell>();
+            _selectObservedService.HoverCell = cell as WorldCell;
         }
 
-        private readonly List<UgfCell> _path = new();
+        private readonly List<WorldCell> _path = new();
 
-        public IList<UgfCell> Path
+        public IList<WorldCell> Path
         {
             get => _path;
             set
             {
-                foreach (UgfCell cell in _path)
+                foreach (WorldCell cell in _path)
                 {
-                    cell.Cell.Get<WorldCell>().PathState = 0;
+                    cell.PathState = 0;
                 }
 
                 _path.Clear();
 
                 if (value.Count == 0)return;
                 
-                _path[0].Cell.Get<WorldCell>().PathState = 2;
+                _path[0].PathState = 2;
 
                 for (int i = 1; i < _path.Count - 1; i++)
-                    _path[i].Cell.Get<WorldCell>().PathState = 1;
+                    _path[i].PathState = 1;
 
-                _path.Last().Cell.Get<WorldCell>().PathState = 3;
+                _path.Last().PathState = 3;
             }
         }
 
         private void OnCellRightClick(HexCell cell)
         {
             _mapFunction.FindPath(
-                GameScope.Instance.Player.Unit.Location.Get<UgfCell>(),
-                cell.Get<UgfCell>(), GameScope.Instance.Player.Unit
+                GameScope.Instance.Player.Unit.Location as WorldCell,
+                cell as WorldCell, GameScope.Instance.Player.Unit
             );
 
-            Path = _mapFunction.GetPath();
+            Path = _mapFunction.GetPath().Cast<WorldCell>().ToList();
 
             IwcAssets.Instance.ButtonGroupInk.Value.Create(
                 cell, U.Get<WorldCellButtons>().Items.SelectVisibleFor(cell)

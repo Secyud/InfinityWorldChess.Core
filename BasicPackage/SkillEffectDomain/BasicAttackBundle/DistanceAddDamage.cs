@@ -1,6 +1,6 @@
 ﻿using InfinityWorldChess.SkillDomain.SkillInteractionDomain;
 using Secyud.Ugf.DataManager;
-using Secyud.Ugf.HexMap;
+using Secyud.Ugf.HexUtilities;
 
 namespace InfinityWorldChess.SkillEffectDomain.BasicAttackBundle
 {

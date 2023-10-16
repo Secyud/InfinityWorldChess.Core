@@ -1,7 +1,5 @@
-﻿using InfinityWorldChess.BattleDomain;
-using InfinityWorldChess.RoleDomain;
+﻿using InfinityWorldChess.RoleDomain;
 using Secyud.Ugf;
-using Secyud.Ugf.AssetLoading;
 using System;
 using System.Collections.Generic;
 using Secyud.Ugf.AssetComponents;

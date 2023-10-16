@@ -11,12 +11,12 @@ namespace InfinityWorldChess.BattleDomain.AiDomain
 {
     public class FormSkillAiActionNode : AiActionNode
     {
-        private readonly HexCell _cell;
+        private readonly BattleCell _cell;
         private readonly FormSkillContainer _container;
         private readonly BattleRole _battleRole;
 
         private FormSkillAiActionNode(
-            [NotNull] HexCell cell,
+            [NotNull] BattleCell cell,
             [NotNull] FormSkillContainer container,
             [NotNull] BattleRole battleRole)
         {

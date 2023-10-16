@@ -1,6 +1,5 @@
 ﻿#region
 
-using InfinityWorldChess.ActivityDomain;
 using InfinityWorldChess.ItemDomain.EquipmentDomain;
 
 #endregion

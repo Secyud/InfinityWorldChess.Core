@@ -1,7 +1,6 @@
 using InfinityWorldChess.BattleDomain.LightBattle;
 using InfinityWorldChess.InteractionDomain;
 using InfinityWorldChess.InteractionDomain.ChatDomain;
-using Secyud.Ugf;
 
 namespace InfinityWorldChess.GameDomain.WorldCellDomain
 {

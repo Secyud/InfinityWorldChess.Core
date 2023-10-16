@@ -1,5 +1,3 @@
-using InfinityWorldChess.BattleDomain;
-
 namespace InfinityWorldChess.SkillDomain
 {
     public interface ICoreSkill : IActiveSkill

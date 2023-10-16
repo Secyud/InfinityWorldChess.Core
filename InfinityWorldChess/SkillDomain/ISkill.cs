@@ -1,6 +1,4 @@
-﻿using InfinityWorldChess.GlobalDomain;
-using Secyud.Ugf;
-using Secyud.Ugf.HexMap;
+﻿using Secyud.Ugf;
 
 namespace InfinityWorldChess.SkillDomain
 {

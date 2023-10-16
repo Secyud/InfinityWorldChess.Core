@@ -1,13 +1,9 @@
 #region
 
 using Secyud.Ugf.HexMap;
-using System.Collections.Generic;
-using System.Ugf.Collections.Generic;
 using InfinityWorldChess.GameDomain;
-using Secyud.Ugf.AssetComponents;
 using Secyud.Ugf.DependencyInjection;
 using Secyud.Ugf.UgfHexMap;
-using UnityEngine;
 
 #endregion
 

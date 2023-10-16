@@ -2,7 +2,6 @@
 
 using InfinityWorldChess.GameDomain;
 using InfinityWorldChess.GameDomain.GameMenuDomain;
-using InfinityWorldChess.PlayerDomain;
 using Secyud.Ugf;
 using Secyud.Ugf.TableComponents.ButtonComponents;
 

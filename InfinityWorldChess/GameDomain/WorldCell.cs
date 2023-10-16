@@ -4,15 +4,15 @@ using System;
 using System.Collections.Generic;
 using InfinityWorldChess.RoleDomain;
 using Secyud.Ugf.Archiving;
-using Secyud.Ugf.HexMap;
 using Secyud.Ugf.TableComponents.ButtonComponents;
+using Secyud.Ugf.UgfHexMap;
 using UnityEngine;
 
 #endregion
 
 namespace InfinityWorldChess.GameDomain
 {
-    public class WorldCell : CellProperty, IArchivable
+    public class WorldCell : UgfCell
     {
         private int _specialIndex = -1;
         private int _stone;
@@ -36,16 +36,16 @@ namespace InfinityWorldChess.GameDomain
             switch (_pathState)
             {
                 case 1:
-                    Cell.EnableHighlight(PathCellColor);
+                    EnableHighlight(PathCellColor);
                     break;
                 case 2:
-                    Cell.EnableHighlight(FromCellColor);
+                    EnableHighlight(FromCellColor);
                     break;
                 case 3:
-                    Cell.EnableHighlight(ToCellColor);
+                    EnableHighlight(ToCellColor);
                     break;
                 default:
-                    Cell.DisableHighlight();
+                    DisableHighlight();
                     break;
             }
         }
@@ -60,7 +60,7 @@ namespace InfinityWorldChess.GameDomain
             set
             {
                 _stone = value;
-                Cell.RefreshSelfOnly();
+                RefreshSelfOnly();
             }
         }
 
@@ -70,7 +70,7 @@ namespace InfinityWorldChess.GameDomain
             set
             {
                 _tree = value;
-                Cell.RefreshSelfOnly();
+                RefreshSelfOnly();
             }
         }
 
@@ -80,7 +80,7 @@ namespace InfinityWorldChess.GameDomain
             set
             {
                 _farm = value;
-                Cell.RefreshSelfOnly();
+                RefreshSelfOnly();
             }
         }
 
@@ -90,7 +90,7 @@ namespace InfinityWorldChess.GameDomain
             set
             {
                 _specialIndex = value;
-                Cell.RefreshSelfOnly();
+                RefreshSelfOnly();
             }
         }
 
@@ -132,8 +132,9 @@ namespace InfinityWorldChess.GameDomain
             return Math.Min(value / 1024 - 1, SharedConsts.MaxWorldResourceLevel);
         }
 
-        public void Save(IArchiveWriter writer)
+        public override void Save(IArchiveWriter writer)
         {
+            base.Save(writer);
             writer.Write(_specialIndex);
             writer.Write(_stone);
             writer.Write(_tree);
@@ -141,8 +142,9 @@ namespace InfinityWorldChess.GameDomain
             writer.Write(_pathState);
         }
 
-        public void Load(IArchiveReader reader)
+        public override void Load(IArchiveReader reader)
         {
+            base.Load(reader);
             _specialIndex = reader.ReadInt32();
             _stone = reader.ReadInt32();
             _tree = reader.ReadInt32();

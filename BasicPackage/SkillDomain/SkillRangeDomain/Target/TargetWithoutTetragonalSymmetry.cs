@@ -2,6 +2,7 @@
 using InfinityWorldChess.BattleDomain;
 using Secyud.Ugf.DataManager;
 using Secyud.Ugf.HexMap;
+using Secyud.Ugf.HexUtilities;
 
 namespace InfinityWorldChess.SkillDomain.SkillRangeDomain.Target
 {

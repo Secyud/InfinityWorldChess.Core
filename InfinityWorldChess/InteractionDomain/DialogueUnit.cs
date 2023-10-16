@@ -1,11 +1,5 @@
-﻿using InfinityWorldChess.RoleDomain;
-using Secyud.Ugf;
-using Secyud.Ugf.AssetLoading;
-using System;
-using System.Collections.Generic;
-using Secyud.Ugf.AssetComponents;
+﻿using System.Collections.Generic;
 using Secyud.Ugf.DataManager;
-using UnityEngine;
 
 namespace InfinityWorldChess.InteractionDomain
 {

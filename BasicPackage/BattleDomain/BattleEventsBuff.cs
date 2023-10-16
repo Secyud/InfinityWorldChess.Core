@@ -1,8 +1,6 @@
 #region
 
 using InfinityWorldChess.BuffDomain;
-using InfinityWorldChess.GlobalDomain;
-using InfinityWorldChess.SkillDomain;
 using InfinityWorldChess.SkillDomain.SkillInteractionDomain;
 using Secyud.Ugf;
 

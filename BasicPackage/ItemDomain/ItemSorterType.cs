@@ -4,10 +4,7 @@ using InfinityWorldChess.ItemDomain.BookDomain;
 using InfinityWorldChess.ItemDomain.EquipmentDomain;
 using InfinityWorldChess.ItemDomain.FoodDomain;
 using InfinityWorldChess.ManufacturingDomain;
-using Secyud.Ugf;
-using Secyud.Ugf.TableComponents;
 using Secyud.Ugf.TableComponents.SorterComponents;
-using UnityEngine;
 
 #endregion
 

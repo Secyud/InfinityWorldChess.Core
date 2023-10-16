@@ -11,15 +11,16 @@ using Secyud.Ugf.Archiving;
 using Secyud.Ugf.AssetComponents;
 using Secyud.Ugf.DependencyInjection;
 using Secyud.Ugf.HexMap;
-using Secyud.Ugf.HexMap.Generator;
+using Secyud.Ugf.HexUtilities;
 using Secyud.Ugf.UgfHexMap;
+using Secyud.Ugf.UgfHexMapGenerator;
 
 #endregion
 
 namespace InfinityWorldChess.GameDomain.WorldMapDomain
 {
     [Registry(DependScope = typeof(GameScope))]
-    public class WorldGameContext:IRegistry
+    public class WorldGameContext : IRegistry
     {
         public readonly IObjectAccessor<HexUnit> WorldUnitPrefab;
         public static WorldMap Map => GameScope.Instance.Map.Value;
@@ -40,11 +41,11 @@ namespace InfinityWorldChess.GameDomain.WorldMapDomain
             using DefaultArchiveReader reader = new(stream);
 
             Map.Load(reader);
-            
+
             for (int x = 0; x < Map.CellCountX; x++)
             for (int z = 0; z < Map.CellCountZ; z++)
             {
-                Map.GetCell(x,z).Get<WorldCell>().Load(reader);
+                Map.GetCell(x, z).Load(reader);
                 if (U.AddStep(64))
                     yield return null;
             }
@@ -60,8 +61,8 @@ namespace InfinityWorldChess.GameDomain.WorldMapDomain
             for (int x = 0; x < Map.CellCountX; x++)
             for (int z = 0; z < Map.CellCountZ; z++)
             {
-                Map.GetCell(x,z).Get<WorldCell>().Save(writer);
-                
+                Map.GetCell(x, z).Save(writer);
+
                 if (U.AddStep(64))
                     yield return null;
             }
@@ -82,39 +83,39 @@ namespace InfinityWorldChess.GameDomain.WorldMapDomain
 
             if (U.AddStep(64))
                 yield return null;
-            
+
             GenerateMapMassage();
         }
 
         private void GenerateMapMassage()
         {
-            HashSet<UgfCell> tmp = new();
+            HashSet<WorldCell> tmp = new();
             int max = Map.CellCountX * Map.CellCountZ;
             while (tmp.Count < 20)
             {
-                UgfCell cell = Map.GetCell(U.GetRandom(max)) .Get<UgfCell>() ;
-                if (!cell.IsUnderwater && !cell.HasRiver)
+                WorldCell cell = Map.GetCell(U.GetRandom(max)) as WorldCell;
+                if (!cell!.IsUnderwater && !cell.HasRiver)
                 {
                     tmp.Add(cell);
-                    cell.Cell.Get<WorldCell>().SpecialIndex = 0;
+                    cell.SpecialIndex = 0;
                 }
             }
 
             while (tmp.Count < 30)
             {
-                UgfCell cell = Map.GetCell(U.GetRandom(max)).Get<UgfCell>()  ;
-                if (cell.IsUnderwater ||
+                WorldCell cell = Map.GetCell(U.GetRandom(max)) as WorldCell;
+                if (cell!.IsUnderwater ||
                     cell.HasRiver ||
                     tmp.Contains(cell))
                     continue;
 
                 tmp.Add(cell);
-                cell.Cell.Get<WorldCell>().SpecialIndex = 1;
+                cell.SpecialIndex = 1;
             }
 
             const int threshold = 3;
 
-            foreach (UgfCell cell in tmp)
+            foreach (WorldCell cell in tmp)
             {
                 int fixD = U.GetRandom(6 / threshold);
                 for (int i = 0; i < 6; i += threshold)
@@ -138,7 +139,7 @@ namespace InfinityWorldChess.GameDomain.WorldMapDomain
                             }
                         }
 
-                        if (neighbour is  null)
+                        if (neighbour is null)
                             break;
 
                         if (neighbour.HasRoads)

@@ -15,9 +15,17 @@ namespace InfinityWorldChess.GameDomain.WorldCellDomain
             internal set
             {
                 if (_cell == value) return;
-                _cell?.SetHighlight();
+                if (_cell)
+                {
+                    _cell.SetHighlight();
+                }
+
                 _cell = value;
-                _cell?.Cell.EnableHighlight(Color.green);
+                if (_cell)
+                {
+                    _cell.EnableHighlight(Color.green);
+                }
+
                 Refresh();
             }
         }
@@ -33,12 +41,12 @@ namespace InfinityWorldChess.GameDomain.WorldCellDomain
 
                 if (_hoverCell is not null)
                     if (_hoverCell == _cell)
-                        _hoverCell.Cell.EnableHighlight(Color.green);
+                        _hoverCell.EnableHighlight(Color.green);
                     else
                         _hoverCell.SetHighlight();
 
                 _hoverCell = value;
-                _hoverCell.Cell.EnableHighlight(Color.white);
+                _hoverCell.EnableHighlight(Color.white);
             }
         }
     }

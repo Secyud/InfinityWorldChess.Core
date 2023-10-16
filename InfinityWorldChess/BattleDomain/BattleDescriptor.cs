@@ -1,14 +1,8 @@
-#region
-
-using Secyud.Ugf.HexMap;
-
-#endregion
-
 namespace InfinityWorldChess.BattleDomain
 {
     public abstract class BattleDescriptor
     {
-        public HexCell Cell { get; set; }
+        public BattleCell Cell { get; set; }
 
         public abstract int SizeX { get; }
 

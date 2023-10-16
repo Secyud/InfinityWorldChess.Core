@@ -17,13 +17,13 @@ namespace InfinityWorldChess.SkillDomain.SkillPlayDomain
             if(_instance)
                 Destroy(_instance);
             Transform parent;
-            if (Role && targetCell.Cell.Unit)
+            if (Role && targetCell.Unit)
             {
-                parent = targetCell.Cell.Unit.transform;
+                parent = targetCell.Unit.transform;
             }
             else
             {
-                parent = targetCell.Cell.transform;
+                parent = targetCell.transform;
             }
 
             _instance = Instantiate(TargetObject, parent);

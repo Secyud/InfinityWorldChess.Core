@@ -1,5 +1,4 @@
-﻿using InfinityWorldChess.InteractionDomain;
-using Secyud.Ugf.BasicComponents;
+﻿using Secyud.Ugf.BasicComponents;
 using Secyud.Ugf.TabComponents;
 using UnityEngine;
 

@@ -2,10 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using InfinityWorldChess.RoleDomain;
-using Secyud.Ugf;
 using Secyud.Ugf.DependencyInjection;
 using Secyud.Ugf.HexMap;
-using Secyud.Ugf.UgfHexMap;
+using Secyud.Ugf.HexUtilities;
 using UnityEngine;
 
 namespace InfinityWorldChess.BattleDomain.BattleMapDomain
@@ -27,25 +26,25 @@ namespace InfinityWorldChess.BattleDomain.BattleMapDomain
             context.ReleasableCells = GetRange(role);
         }
 
-        public void OnHover(HexCell cell)
+        public void OnHover(BattleCell cell)
         {
             BattleContext context = BattleScope.Instance.Context;
 
             if (context.ReleasableCells.Contains(cell))
             {
                 HexUnit unit = context.Role.Unit;
-                _service.FindPath(unit.Location.Get<UgfCell>(), 
-                    cell.Get<UgfCell>(), unit);
+                _service.FindPath(unit.Location as BattleCell, 
+                    cell, unit);
                 context.InRangeCells = _service.GetPath()
-                    .Select(u=>u.Cell).ToList();
+                    .Cast<BattleCell>().ToList();
             }
             else
             {
-                context.InRangeCells = Array.Empty<HexCell>();
+                context.InRangeCells = Array.Empty<BattleCell>();
             }
         }
 
-        public void OnPress(HexCell cell)
+        public void OnPress(BattleCell cell)
         {
             BattleContext context = BattleScope.Instance.Context;
             BattleRole role = context.Role;
@@ -62,15 +61,15 @@ namespace InfinityWorldChess.BattleDomain.BattleMapDomain
         public void OnClear()
         {
             BattleContext context = BattleScope.Instance.Context;
-            context.ReleasableCells = Array.Empty<HexCell>();
-            context.InRangeCells = Array.Empty<HexCell>();
+            context.ReleasableCells = Array.Empty<BattleCell>();
+            context.InRangeCells = Array.Empty<BattleCell>();
         }
 
-        private IReadOnlyList<HexCell> GetRange(BattleRole role)
+        private IReadOnlyList<BattleCell> GetRange(BattleRole role)
         {
             if (role.ExecutionValue <= 0)
             {
-                return Array.Empty<HexCell>();
+                return Array.Empty<BattleCell>();
             }
             
             RoleBodyPart nimble = role.Role.BodyPart.Nimble;
@@ -79,7 +78,7 @@ namespace InfinityWorldChess.BattleDomain.BattleMapDomain
             byte rg = (byte)Math.Min(nimble.RealValue * execution / 100, 10);
 
             HexGrid grid = BattleScope.Instance.Map;
-            List<HexCell> cells = new();
+            List<BattleCell> cells = new();
             List<Vector2> checks = new();
             HexCoordinates coordinate = role.Unit.Location.Coordinates;
 
@@ -104,7 +103,7 @@ namespace InfinityWorldChess.BattleDomain.BattleMapDomain
 
             void TryAddCell(HexCoordinates c)
             {
-                HexCell cell = grid.GetCell(c);
+                BattleCell cell = grid.GetCell(c) as BattleCell;
 
                 if (!cell) return;
 

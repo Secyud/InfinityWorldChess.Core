@@ -1,5 +1,4 @@
 using InfinityWorldChess.BattleDomain;
-using InfinityWorldChess.SkillDomain.SkillRangeDomain.Target;
 using Secyud.Ugf.DataManager;
 
 namespace InfinityWorldChess.SkillDomain.SkillRangeDomain.Release

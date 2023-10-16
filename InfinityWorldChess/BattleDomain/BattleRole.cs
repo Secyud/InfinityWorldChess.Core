@@ -7,6 +7,7 @@ using Secyud.Ugf;
 using Secyud.Ugf.HexMap;
 using System;
 using System.Linq;
+using Secyud.Ugf.HexUtilities;
 using Secyud.Ugf.UgfHexMap;
 using UnityEngine;
 

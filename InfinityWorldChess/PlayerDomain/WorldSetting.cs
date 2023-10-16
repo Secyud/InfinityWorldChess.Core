@@ -1,6 +1,6 @@
 #region
 
-using Secyud.Ugf.HexMap.Generator;
+using Secyud.Ugf.UgfHexMapGenerator;
 
 #endregion
 

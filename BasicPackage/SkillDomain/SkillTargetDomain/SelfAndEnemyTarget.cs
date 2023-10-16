@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Ugf.Collections.Generic;
 using InfinityWorldChess.BattleDomain;
 
 namespace InfinityWorldChess.SkillDomain.SkillTargetDomain

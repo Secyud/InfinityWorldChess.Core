@@ -9,13 +9,10 @@ using InfinityWorldChess.GameDomain.WorldCellDomain;
 using InfinityWorldChess.GameDomain.WorldMapDomain;
 using InfinityWorldChess.InteractionDomain;
 using InfinityWorldChess.InteractionDomain.ChatDomain;
-using InfinityWorldChess.MapDomain;
 using InfinityWorldChess.PlayerDomain;
 using InfinityWorldChess.RoleDomain;
 using Secyud.Ugf;
 using Secyud.Ugf.Archiving;
-using Secyud.Ugf.AssetComponents;
-using Secyud.Ugf.AssetLoading;
 using Secyud.Ugf.DataManager;
 using Secyud.Ugf.HexMap;
 using Secyud.Ugf.Modularity;
@@ -120,11 +117,11 @@ namespace InfinityWorldChess
         {
             Role pr = player.Role;
             HexUnit pu = world.WorldUnitPrefab.Instantiate(WorldGameContext.Map.transform);
-            HexCell cell = pr.Position.Cell;
+            HexCell cell = pr.Position;
             WorldMap map = WorldGameContext.Map;
             player.Unit = pu;
             pu.Id = pr.Id;
-            GameScope.Instance.Get<CurrentTabService>().Cell = cell.Get<WorldCell>(); 
+            GameScope.Instance.Get<CurrentTabService>().Cell = (WorldCell)cell; 
             map.AddUnit(pu, cell, 0);
             Vector3 position = pu.transform.position;
             position.y = 0;

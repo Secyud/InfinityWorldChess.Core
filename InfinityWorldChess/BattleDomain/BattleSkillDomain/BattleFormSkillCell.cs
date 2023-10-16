@@ -1,10 +1,6 @@
-
-using System;
 using InfinityWorldChess.BattleDomain.BattleMapDomain;
 using InfinityWorldChess.SkillDomain;
-using InfinityWorldChess.Ugf;
 using Secyud.Ugf;
-using UnityEngine;
 
 namespace InfinityWorldChess.BattleDomain.BattleSkillDomain
 {

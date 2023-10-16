@@ -1,5 +1,4 @@
-﻿using InfinityWorldChess.GameDomain.WorldCellDomain;
-using InfinityWorldChess.PlayerDomain;
+﻿using InfinityWorldChess.PlayerDomain;
 using InfinityWorldChess.SkillDomain;
 using Secyud.Ugf.TabComponents;
 using UnityEngine;

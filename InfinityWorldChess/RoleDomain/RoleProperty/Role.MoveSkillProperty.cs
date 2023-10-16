@@ -1,10 +1,8 @@
 #region
 
 using InfinityWorldChess.SkillDomain;
-using Secyud.Ugf;
 using Secyud.Ugf.Archiving;
 using System.Collections.Generic;
-using System.Ugf.Collections.Generic;
 
 #endregion
 

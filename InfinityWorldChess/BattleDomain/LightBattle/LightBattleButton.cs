@@ -1,6 +1,5 @@
 using InfinityWorldChess.GameDomain;
 using InfinityWorldChess.RoleDomain;
-using Secyud.Ugf;
 using Secyud.Ugf.TableComponents.ButtonComponents;
 
 namespace InfinityWorldChess.BattleDomain.LightBattle
