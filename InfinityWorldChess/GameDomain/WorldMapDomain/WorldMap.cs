@@ -34,7 +34,7 @@ namespace InfinityWorldChess.GameDomain.WorldMapDomain
             if (EventSystem.current.IsPointerOverGameObject() || !Camera.isActiveAndEnabled)
                 return;
 
-            HexCell cell = GetCellUnderCursor();
+            WorldCell cell = GetCellUnderCursor() as WorldCell;
             if (cell)
             {
                 if (Input.GetMouseButtonDown(0))
@@ -46,14 +46,14 @@ namespace InfinityWorldChess.GameDomain.WorldMapDomain
             }
         }
 
-        private void OnCellLeftClick(HexCell cell)
+        private void OnCellLeftClick(WorldCell cell)
         {
-            _selectObservedService.Cell = cell as WorldCell;
+            _selectObservedService.Cell = cell;
         }
 
-        private void OnCellHover(HexCell cell)
+        private void OnCellHover(WorldCell cell)
         {
-            _selectObservedService.HoverCell = cell as WorldCell;
+            _selectObservedService.HoverCell = cell;
         }
 
         private readonly List<WorldCell> _path = new();
@@ -81,11 +81,11 @@ namespace InfinityWorldChess.GameDomain.WorldMapDomain
             }
         }
 
-        private void OnCellRightClick(HexCell cell)
+        private void OnCellRightClick(WorldCell cell)
         {
             _mapFunction.FindPath(
                 GameScope.Instance.Player.Unit.Location as WorldCell,
-                cell as WorldCell, GameScope.Instance.Player.Unit
+                cell, GameScope.Instance.Player.Unit
             );
 
             Path = _mapFunction.GetPath().Cast<WorldCell>().ToList();

@@ -13,9 +13,9 @@ using Secyud.Ugf.TableComponents.ButtonComponents;
 
 namespace InfinityWorldChess.GameDomain.WorldMapDomain
 {
-    public class TravelButtonDescriptor : ButtonDescriptor<HexCell>
+    public class TravelButtonDescriptor : ButtonDescriptor<WorldCell>
     {
-        public override bool Visible(HexCell target) =>
+        public override bool Visible(WorldCell target) =>
             !WorldGameContext.Map.Path.IsNullOrEmpty();
 
         public override void Invoke()

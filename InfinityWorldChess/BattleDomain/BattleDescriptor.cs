@@ -1,8 +1,11 @@
+using InfinityWorldChess.GameDomain;
+using InfinityWorldChess.GameDomain.WorldCellDomain;
+
 namespace InfinityWorldChess.BattleDomain
 {
     public abstract class BattleDescriptor
     {
-        public BattleCell Cell { get; set; }
+        public WorldCell Cell { get; set; }
 
         public abstract int SizeX { get; }
 

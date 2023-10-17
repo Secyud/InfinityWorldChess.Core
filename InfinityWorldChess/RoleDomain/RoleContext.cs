@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using InfinityWorldChess.GameDomain;
+using InfinityWorldChess.GameDomain.WorldCellDomain;
 using InfinityWorldChess.GameDomain.WorldMapDomain;
 using InfinityWorldChess.GlobalDomain;
 using Secyud.Ugf;

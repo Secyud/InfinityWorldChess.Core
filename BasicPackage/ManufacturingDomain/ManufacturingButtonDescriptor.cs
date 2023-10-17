@@ -1,6 +1,7 @@
 ﻿#region
 
 using InfinityWorldChess.GameDomain;
+using InfinityWorldChess.GameDomain.WorldCellDomain;
 using InfinityWorldChess.ManufacturingDomain.DragDomain;
 using InfinityWorldChess.ManufacturingDomain.FoodDomain;
 using InfinityWorldChess.ManufacturingDomain.MetalDomain;

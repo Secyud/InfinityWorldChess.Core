@@ -10,6 +10,7 @@ using System.IO;
 using System.Linq;
 using InfinityWorldChess.GameCreatorDomain;
 using InfinityWorldChess.GameDomain;
+using InfinityWorldChess.GameDomain.WorldCellDomain;
 using Secyud.Ugf;
 using Secyud.Ugf.Archiving;
 using Secyud.Ugf.DependencyInjection;

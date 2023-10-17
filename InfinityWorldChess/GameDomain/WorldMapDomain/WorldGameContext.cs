@@ -1,8 +1,6 @@
 ﻿#region
 
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.IO;
 using InfinityWorldChess.GameCreatorDomain;
 using InfinityWorldChess.PlayerDomain;
@@ -12,8 +10,7 @@ using Secyud.Ugf.AssetComponents;
 using Secyud.Ugf.DependencyInjection;
 using Secyud.Ugf.HexMap;
 using Secyud.Ugf.HexUtilities;
-using Secyud.Ugf.UgfHexMap;
-using Secyud.Ugf.UgfHexMapGenerator;
+using UnityEngine;
 
 #endregion
 
@@ -72,87 +69,17 @@ namespace InfinityWorldChess.GameDomain.WorldMapDomain
         {
             WorldSetting worldSetting = GameCreatorScope.Instance.WorldSetting;
 
-            int xMax = worldSetting.WorldSizeX * HexMetrics.ChunkSizeX;
-            int zMax = worldSetting.WorldSizeZ * HexMetrics.ChunkSizeZ;
+            string path = worldSetting.MapId switch
+            {
+                _ => Application.persistentDataPath +"/123"
+            };
 
-            HexMapGenerator generator = U.Get<HexMapGenerator>();
-
-            generator.Parameter = worldSetting;
-
-            generator.GenerateMap(Map, xMax, zMax);
+            FileStream stream = File.OpenRead(path);
+            DefaultArchiveReader reader = new DefaultArchiveReader(stream);
+            Map.Load(reader);
 
             if (U.AddStep(64))
                 yield return null;
-
-            GenerateMapMassage();
-        }
-
-        private void GenerateMapMassage()
-        {
-            HashSet<WorldCell> tmp = new();
-            int max = Map.CellCountX * Map.CellCountZ;
-            while (tmp.Count < 20)
-            {
-                WorldCell cell = Map.GetCell(U.GetRandom(max)) as WorldCell;
-                if (!cell!.IsUnderwater && !cell.HasRiver)
-                {
-                    tmp.Add(cell);
-                    cell.SpecialIndex = 0;
-                }
-            }
-
-            while (tmp.Count < 30)
-            {
-                WorldCell cell = Map.GetCell(U.GetRandom(max)) as WorldCell;
-                if (cell!.IsUnderwater ||
-                    cell.HasRiver ||
-                    tmp.Contains(cell))
-                    continue;
-
-                tmp.Add(cell);
-                cell.SpecialIndex = 1;
-            }
-
-            const int threshold = 3;
-
-            foreach (WorldCell cell in tmp)
-            {
-                int fixD = U.GetRandom(6 / threshold);
-                for (int i = 0; i < 6; i += threshold)
-                {
-                    UgfCell cellTmp = cell;
-                    while (cellTmp is not null)
-                    {
-                        int d = fixD + i + U.GetRandom(6 / threshold) % 6;
-                        HexDirection direction = HexDirection.Ne;
-                        UgfCell neighbour = null;
-                        for (int j = 0; j < threshold; j++)
-                        {
-                            direction = (HexDirection)((d + j) % 6);
-                            UgfCell neighbourTmp = cellTmp.GetNeighbor(direction);
-                            if (neighbourTmp is not null && !neighbourTmp.IsUnderwater &&
-                                !cellTmp.HasRiverThroughEdge(direction) &&
-                                Math.Abs(neighbourTmp.Elevation - cellTmp.Elevation) <= 1)
-                            {
-                                neighbour = neighbourTmp;
-                                break;
-                            }
-                        }
-
-                        if (neighbour is null)
-                            break;
-
-                        if (neighbour.HasRoads)
-                        {
-                            cellTmp.AddRoad(direction);
-                            break;
-                        }
-
-                        cellTmp.AddRoad(direction);
-                        cellTmp = neighbour;
-                    }
-                }
-            }
         }
     }
 }

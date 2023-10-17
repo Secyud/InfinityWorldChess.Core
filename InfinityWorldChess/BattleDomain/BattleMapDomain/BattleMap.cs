@@ -1,8 +1,11 @@
 #region
 
+using InfinityWorldChess.GameDomain;
+using InfinityWorldChess.GameDomain.WorldCellDomain;
 using Secyud.Ugf;
 using Secyud.Ugf.HexMap;
 using Secyud.Ugf.UgfHexMap;
+using Secyud.Ugf.UgfHexMapGenerator;
 using UnityEngine;
 using UnityEngine.Animations;
 
@@ -14,6 +17,7 @@ namespace InfinityWorldChess.BattleDomain.BattleMapDomain
     {
         [SerializeField] private LookAtConstraint BillBoardPrefab;
         [SerializeField] private Canvas Canvas;
+        [SerializeField] private HexMapGenerator MapGenerator;
         public Canvas Ui => Canvas;
 
         private BattleControlService _controlService;
@@ -67,6 +71,14 @@ namespace InfinityWorldChess.BattleDomain.BattleMapDomain
             {
                 BattleScope.Instance.State = BattleFlowState.OnEffectTrig;
             }
+        }
+
+        public void GenerateMap(WorldCell cell,int width, int height)
+        {
+            // TODO: use world cell to init parameter
+            MapGenerator.ChunkCountX = width;
+            MapGenerator.ChunkCountZ = height;
+            MapGenerator.GenerateMap();
         }
     }
 }

@@ -5,14 +5,12 @@ using InfinityWorldChess.BattleDomain.BattleRoleDomain;
 using InfinityWorldChess.GameDomain;
 using InfinityWorldChess.GlobalDomain;
 using InfinityWorldChess.RoleDomain;
-using InfinityWorldChess.Ugf;
 using Secyud.Ugf;
 using Secyud.Ugf.AssetComponents;
 using Secyud.Ugf.DependencyInjection;
 using Secyud.Ugf.HexMap;
 using Secyud.Ugf.HexUtilities;
 using Secyud.Ugf.UgfHexMap;
-using Secyud.Ugf.UgfHexMapGenerator;
 using TMPro;
 using UnityEngine;
 
@@ -71,18 +69,9 @@ namespace InfinityWorldChess.BattleDomain
             Instance.BattleDescriptor = descriptor;
             Instance.VictoryCondition = descriptor.GenerateVictoryCondition();
 
-            int width = descriptor.SizeX * HexMetrics.ChunkSizeX;
-            int height = descriptor.SizeZ * HexMetrics.ChunkSizeZ;
             BattleMap grid = Instance.Map;
-
-            if (descriptor.Cell is not null)
-            {
-                HexMapGenerator mapGenerator = U.Get<HexMapGenerator>();
-                mapGenerator.Parameter = descriptor.Cell.GetGeneratorParameter(width, height);
-                mapGenerator.GenerateMap(grid, width, height);
-            }
-            else
-                grid.CreateMap(width, height);
+            grid.GenerateMap(descriptor.Cell, 
+                descriptor.SizeX, descriptor.SizeZ);
 
             descriptor.OnBattleCreated();
 

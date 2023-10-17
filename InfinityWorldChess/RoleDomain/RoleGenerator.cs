@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Ugf.Collections.Generic;
 using InfinityWorldChess.GameDomain;
+using InfinityWorldChess.GameDomain.WorldCellDomain;
 using InfinityWorldChess.GlobalDomain;
 using Secyud.Ugf;
 using Secyud.Ugf.Collections;

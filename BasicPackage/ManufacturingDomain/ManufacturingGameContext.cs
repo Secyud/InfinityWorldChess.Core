@@ -4,6 +4,7 @@ using Secyud.Ugf.DependencyInjection;
 using System.Collections.Generic;
 using System.IO;
 using InfinityWorldChess.GameDomain;
+using InfinityWorldChess.GameDomain.WorldCellDomain;
 using InfinityWorldChess.GameDomain.WorldMapDomain;
 using Secyud.Ugf.Archiving;
 using Secyud.Ugf.HexMap;

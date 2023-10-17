@@ -60,33 +60,6 @@ namespace InfinityWorldChess.Ugf
 
 		private static SPopup _popupExist;
 		
-		public static HexMapGeneratorParameter GetGeneratorParameter(this UgfCell cell, int x, int z)
-		{
-			HexMapGeneratorParameter parameter = new()
-			{
-				ElevationMaximum = cell.Elevation + 3,
-				ElevationMinimum = cell.Elevation - 2,
-				ChunkSizeMax = Math.Max(x, z),
-				ChunkSizeMin = Math.Min(x, z),
-				RiverPercentage = cell.HasRiver ? 10 : 0,
-				LandPercentage = cell.IsUnderwater ? 30 : cell.HasRiver ? 50 : 95,
-				ErosionPercentage = cell.TerrainType switch
-				{
-					0 => 5,
-					1 => 10,
-					2 => 30,
-					3 => 50,
-					4 => 70,
-					_ => 95
-				},
-				HighTemperature = (cell.Elevation + 1) / 11.0f,
-				LowTemperature = (cell.Elevation - 1) / 11.0f
-			};
-		
-			return parameter;
-		}
-
-
 		public static List<string> GetStringListFromPath(this string path)
 		{
 			if (!path.EndsWith(".json"))
