@@ -41,12 +41,7 @@ namespace InfinityWorldChess.RoleDomain
                      GameScope.Instance.Map.Value.Cells) 
             {
                 WorldCell cell = (WorldCell)hexCell;
-                if (cell.SpecialIndex >= 0)
-                {
-                    _availableWorldCheckers.Add(cell);
-                    continue;
-                }
-
+                
                 if (cell.IsUnderwater)
                     continue;
 

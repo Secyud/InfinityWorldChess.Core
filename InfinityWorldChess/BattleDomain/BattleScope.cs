@@ -126,8 +126,8 @@ namespace InfinityWorldChess.BattleDomain
             
             if (chess.UnitPlay?.Value)
             {
-                HexUnitPlay play = Object.Instantiate(chess.UnitPlay?.Value, unit.transform);
-                play.Play(chess.Unit as UgfUnit, chess.Unit.Location as BattleCell);
+                HexUnitAnim anim = Object.Instantiate(chess.UnitPlay?.Value, unit.transform);
+                anim.Play(chess.Unit as UgfUnit, chess.Unit.Location as BattleCell);
             }
 
             Context.OnChessAdded();

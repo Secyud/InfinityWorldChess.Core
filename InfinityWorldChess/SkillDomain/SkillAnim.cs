@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace InfinityWorldChess.SkillDomain
 {
-    public class SkillPlay:HexUnitPlay
+    public class SkillAnim:HexUnitAnim
     {
         [SerializeField] private float MidTime;
 

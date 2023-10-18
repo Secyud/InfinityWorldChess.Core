@@ -1,6 +1,6 @@
 namespace InfinityWorldChess.SkillDomain.SkillPlayDomain
 {
-    public class NormalPlay:SkillPlay
+    public class NormalAnim:SkillAnim
     {
         
     }

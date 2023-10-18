@@ -1,4 +1,5 @@
 ﻿using Secyud.Ugf.DependencyInjection;
+using Secyud.Ugf.HexMapExtensions;
 using Secyud.Ugf.ObserverComponents;
 using UnityEngine;
 
@@ -39,11 +40,17 @@ namespace InfinityWorldChess.GameDomain.WorldCellDomain
             {
                 if (_hoverCell == value) return;
 
-                if (_hoverCell is not null)
+                if (_hoverCell)
+                {
                     if (_hoverCell == _cell)
+                    {
                         _hoverCell.EnableHighlight(Color.green);
+                    }
                     else
+                    {
                         _hoverCell.SetHighlight();
+                    }
+                }
 
                 _hoverCell = value;
                 _hoverCell.EnableHighlight(Color.white);

@@ -3,8 +3,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using InfinityWorldChess.GameDomain.WorldCellDomain;
+using InfinityWorldChess.Ugf;
 using Secyud.Ugf;
 using Secyud.Ugf.HexMap;
+using Secyud.Ugf.HexMapExtensions;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Rendering.Universal;
@@ -35,7 +37,7 @@ namespace InfinityWorldChess.GameDomain.WorldMapDomain
                 return;
 
             WorldCell cell = GetCellUnderCursor() as WorldCell;
-            if (cell)
+            if (cell.IsValid())
             {
                 if (Input.GetMouseButtonDown(0))
                     OnCellLeftClick(cell);
@@ -70,8 +72,8 @@ namespace InfinityWorldChess.GameDomain.WorldMapDomain
 
                 _path.Clear();
 
-                if (value.Count == 0)return;
-                
+                if (value.Count == 0) return;
+
                 _path[0].PathState = 2;
 
                 for (int i = 1; i < _path.Count - 1; i++)

@@ -22,7 +22,7 @@ namespace InfinityWorldChess.GameDomain.WorldCellDomain
             ButtonGroup.Clear();
 
             WorldCell cell = _service.Cell;
-            if (cell is not null)
+            if (cell)
             {
                 ButtonGroup.OnInitialize(cell, cell.Buttons);
             }

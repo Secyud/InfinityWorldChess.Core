@@ -47,9 +47,7 @@ namespace InfinityWorldChess.GameCreatorDomain
         public readonly WorldSetting WorldSetting = new();
 
         public static GameCreatorScope Instance { get; private set; }
-
-       
-        
+     
         public GameCreatorScope(IwcAssets assets)
         {
             _gameCreator = MonoContainer<GameCreatorPanel>.Create(assets);

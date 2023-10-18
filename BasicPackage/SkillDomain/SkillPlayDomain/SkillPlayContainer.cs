@@ -8,9 +8,9 @@ using UnityEngine;
 
 namespace InfinityWorldChess.SkillDomain.SkillPlayDomain
 {
-    public class SkillPlayContainer : PrefabContainer<SkillPlay>
+    public class SkillPlayContainer : PrefabContainer<SkillAnim>
     {
-        public new static AssetContainer<SkillPlay> Create(
+        public new static AssetContainer<SkillAnim> Create(
             IAssetLoader loader, string assetName)
         {
             return assetName.IsNullOrEmpty()
@@ -22,23 +22,23 @@ namespace InfinityWorldChess.SkillDomain.SkillPlayDomain
                 };
         }
 
-        public new static AssetContainer<SkillPlay> Create(
+        public new static AssetContainer<SkillAnim> Create(
             Type loaderType, string assetName)
         {
             return Create(U.Get(loaderType) as IAssetLoader, assetName);
         }
 
-        public new static AssetContainer<SkillPlay> Create<TAssetLoader>(
+        public new static AssetContainer<SkillAnim> Create<TAssetLoader>(
             string assetName) where TAssetLoader : class, IAssetLoader
         {
             return Create(U.Get<TAssetLoader>(), assetName);
         }
 
-        protected override SkillPlay GetObject()
+        protected override SkillAnim GetObject()
         {
             return Loader
                 .LoadAsset<GameObject>("SkillPlay/" + AssetName + ".prefab")
-                .GetComponent<SkillPlay>();
+                .GetComponent<SkillAnim>();
         }
 
 

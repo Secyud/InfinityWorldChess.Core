@@ -20,7 +20,7 @@ namespace InfinityWorldChess.SkillDomain
         [field: S] public string Name { get; set; }
         [field: S] public string Description { get; set; }
         [field: S] public byte Score { get; set; }
-        [field: S] public IObjectAccessor<SkillPlay> UnitPlay { get; set; }
+        [field: S] public IObjectAccessor<SkillAnim> UnitPlay { get; set; }
         [field: S] public IObjectAccessor<Sprite> Icon { get; set; }
         [field: S] public ISkillCastCondition Condition { get; set; }
         [field: S] public ISkillCastPosition Position { get; set; }

@@ -11,5 +11,6 @@ namespace InfinityWorldChess.BundleDomain
 	{
 		void OnGameCreation();
 		void OnGameLoading();
+		void OnGameSaving();
 	}
 }

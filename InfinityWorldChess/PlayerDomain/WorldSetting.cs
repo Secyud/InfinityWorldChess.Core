@@ -13,6 +13,6 @@ namespace InfinityWorldChess.PlayerDomain
 		public int WorldSizeZ { get; set; } = 12;
 		public int Seed { get; set; }
 		
-		public int MapId { get; set; }
+		public string PlayName { get; set; }
 	}
 }

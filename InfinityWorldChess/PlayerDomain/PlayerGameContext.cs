@@ -7,7 +7,6 @@ using InfinityWorldChess.RoleDomain;
 using Secyud.Ugf.HexMap;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using InfinityWorldChess.GameCreatorDomain;
 using InfinityWorldChess.GameDomain;
 using InfinityWorldChess.GameDomain.WorldCellDomain;
@@ -24,7 +23,7 @@ namespace InfinityWorldChess.PlayerDomain
     public class PlayerGameContext : IRegistry
     {
         private HexUnit _unit;
-         public PlayerSetting PlayerSetting { get; } = new();
+        public PlayerSetting PlayerSetting { get; } = new();
         public List<IBundle> Bundles { get; } = new();
         public ActivityProperty Activity { get; } = new();
 
@@ -55,7 +54,7 @@ namespace InfinityWorldChess.PlayerDomain
 
             int index = reader.ReadInt32();
             Role = new Role(true);
-            Role.Load(reader, 
+            Role.Load(reader,
                 GameScope.Instance.Map.Value.GetCell(index) as WorldCell);
 
             SkillPoints = reader.ReadInt32();
@@ -116,8 +115,8 @@ namespace InfinityWorldChess.PlayerDomain
                 biography.OnGameCreation(Role);
             }
 
-            Role.Position = GameScope.Instance.Map.Value.Cells
-                .First(u => ((WorldCell)u).SpecialIndex == 1)
+            Role.Position = GameScope.Instance.Map.Value.GetCell(
+                    GameScope.Instance.Play.MapSetting.PlayerInitialIndex)
                 as WorldCell ;
 
             foreach (IBundle bundle in cs.Bundles)

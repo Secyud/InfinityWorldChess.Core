@@ -121,7 +121,7 @@ namespace InfinityWorldChess.BattleDomain
             }
         }
 
-        public IObjectAccessor<HexUnitPlay> UnitPlay { get; set; }
+        public IObjectAccessor<HexUnitAnim> UnitPlay { get; set; }
         public bool Dead { get; set; }
 
         private bool _active;

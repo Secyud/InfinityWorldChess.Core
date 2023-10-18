@@ -58,7 +58,6 @@ namespace InfinityWorldChess.ManufacturingDomain
             foreach (HexCell hexCell in grid.Cells)
             {
                 WorldCell cell = (WorldCell)hexCell;
-                if (cell.SpecialIndex != 1) continue;
 
                 for (int j = 0; j < 3; j++)
                 {

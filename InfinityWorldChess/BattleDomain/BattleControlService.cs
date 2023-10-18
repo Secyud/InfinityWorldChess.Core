@@ -4,6 +4,7 @@ using InfinityWorldChess.BattleDomain.AiDomain;
 using InfinityWorldChess.BattleDomain.BattleRoleDomain;
 using Secyud.Ugf.AssetComponents;
 using Secyud.Ugf.DependencyInjection;
+using Secyud.Ugf.HexMapExtensions;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -117,9 +118,6 @@ namespace InfinityWorldChess.BattleDomain
         {
             if (_context.Role.PlayerControl)
             {
-                if (cell is null)
-                    return;
-
                 if (Input.GetMouseButtonDown(0))
                 {
                     _context.TriggerCell(cell);

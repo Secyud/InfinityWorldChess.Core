@@ -21,7 +21,7 @@ namespace InfinityWorldChess.BattleDomain.BattleRoleDomain
             HexCell cell = BattleScope.Instance.Context.SelectedCell;
             BattleRole chess = null;
 
-            if (cell is not null && cell.Unit)
+            if (cell && cell.Unit)
             {
                 HexUnit unit = cell.Unit;
                 chess = BattleScope.Instance.GetChess(unit);

@@ -1,9 +1,11 @@
 ﻿#region
 
 using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using InfinityWorldChess.GameCreatorDomain;
 using InfinityWorldChess.PlayerDomain;
+using InfinityWorldChess.WorldDomain;
 using Secyud.Ugf;
 using Secyud.Ugf.Archiving;
 using Secyud.Ugf.AssetComponents;
@@ -24,13 +26,20 @@ namespace InfinityWorldChess.GameDomain.WorldMapDomain
 
         private static readonly string SavePath = SharedConsts.SaveFilePath(nameof(WorldGameContext));
 
+        private SortedDictionary<int, IWorldCellMessage> WorldSpecialCell { get; } = new();
+
+        public void AddCellMessage(IWorldCellMessage message)
+        {
+            HexCell cell = GameScope.Instance.Map.Value.GetCell(message.Index);
+
+        }
+        
         public WorldGameContext(IwcAssets assets)
         {
             WorldUnitPrefab = PrefabContainer<HexUnit>.Create(
                 assets, U.TypeToPath<WorldGameContext>() + "Unit.prefab"
             );
         }
-
 
         public virtual IEnumerator OnGameLoading()
         {
@@ -67,17 +76,16 @@ namespace InfinityWorldChess.GameDomain.WorldMapDomain
 
         public virtual IEnumerator OnGameCreation()
         {
-            WorldSetting worldSetting = GameCreatorScope.Instance.WorldSetting;
-
-            string path = worldSetting.MapId switch
-            {
-                _ => Application.persistentDataPath +"/123"
-            };
-
+            Play play = GameScope.Instance.Play;
+            
+            string path = $"{Application.persistentDataPath}/{play.MapName}";
+          
             FileStream stream = File.OpenRead(path);
-            DefaultArchiveReader reader = new DefaultArchiveReader(stream);
+            DefaultArchiveReader reader = new(stream);
             Map.Load(reader);
 
+            play.MapSetting.SetMap();
+            
             if (U.AddStep(64))
                 yield return null;
         }

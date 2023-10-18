@@ -1,4 +1,5 @@
 ﻿using Secyud.Ugf.DependencyInjection;
+using Secyud.Ugf.HexMapExtensions;
 using Secyud.Ugf.TabComponents;
 
 namespace InfinityWorldChess.GameDomain.WorldCellDomain
@@ -14,7 +15,9 @@ namespace InfinityWorldChess.GameDomain.WorldCellDomain
             internal set
             {
                 if (_cell == value)
+                {
                     return;
+                }
 
                 _cell = value;
                 RefreshCurrentTab();

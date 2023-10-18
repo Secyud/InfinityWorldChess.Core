@@ -2,8 +2,10 @@
 
 using InfinityWorldChess.GameDomain;
 using InfinityWorldChess.GameDomain.WorldCellDomain;
+using InfinityWorldChess.Ugf;
 using Secyud.Ugf;
 using Secyud.Ugf.HexMap;
+using Secyud.Ugf.HexMapExtensions;
 using Secyud.Ugf.UgfHexMap;
 using Secyud.Ugf.UgfHexMapGenerator;
 using UnityEngine;
@@ -39,7 +41,10 @@ namespace InfinityWorldChess.BattleDomain.BattleMapDomain
             else
             {
                 HexCell cell = GetCellUnderCursor();
-                _controlService.OnUpdate(cell as BattleCell);
+                if (cell.IsValid())
+                {
+                    _controlService.OnUpdate(cell as BattleCell);
+                }
             }
         }
 
@@ -58,13 +63,13 @@ namespace InfinityWorldChess.BattleDomain.BattleMapDomain
         }
 
 
-        public void StartBroadcast(BattleRole role, BattleCell cell, HexUnitPlay play)
+        public void StartBroadcast(BattleRole role, BattleCell cell, HexUnitAnim anim)
         {
             BattleScope.Instance.State = BattleFlowState.AnimationPlay;
 
-            if (play)
+            if (anim)
             {
-                HexUnitPlay clone = play.Instantiate(role.Unit.transform);
+                HexUnitAnim clone = anim.Instantiate(role.Unit.transform);
                 clone.Play(role.Unit as UgfUnit, cell);
             }
             else

@@ -30,5 +30,10 @@ namespace InfinityWorldChess.BundleDomain
         public void OnGameLoading()
         {
         }
+
+        public void OnGameSaving()
+        {
+            
+        }
     }
 }
