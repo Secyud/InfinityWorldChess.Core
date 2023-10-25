@@ -8,7 +8,17 @@ namespace InfinityWorldChess.InteractionDomain
     {
         private readonly IMonoContainer<DialoguePanel> _dialoguePanel;
 
-        public DialoguePanel Panel => _dialoguePanel.Value;
+        public DialoguePanel Panel
+        {
+            get
+            {
+                if (!_dialoguePanel.Value)
+                {
+                    OpenDialoguePanel();
+                }
+                return _dialoguePanel.Value;
+            }
+        }
 
         public DialogueService(IwcAssets assets)
         {

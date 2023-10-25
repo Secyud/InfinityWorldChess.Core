@@ -8,13 +8,10 @@ using UnityEngine;
 
 namespace InfinityWorldChess.ActivityDomain
 {
-    public class DialogueActivityTrigger : IActivityTrigger,IHasContent
+    public class DialogueActivityTrigger : IActivityTrigger, IHasContent
     {
         [field: S] public TriggerDialogueAction Action { get; set; }
         [field: S] public int RoleId { get; set; }
-
-
-        public ActivityState State { get; set; }
         public Role Role => GlobalScope.Instance.RoleContext.Get(RoleId);
         protected virtual string ShowDescription => $"寻找{Role.ShowName}，和他谈谈。";
 
