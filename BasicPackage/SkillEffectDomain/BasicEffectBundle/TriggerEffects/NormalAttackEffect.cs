@@ -25,7 +25,7 @@ namespace InfinityWorldChess.SkillEffectDomain.BasicEffectBundle
             effect.LayerCount += LayerCount;
         }
 
-        private BattleEventsBuff _record;
+        private BattleEvents _record;
 
         protected override void SetAttack(SkillInteraction interaction)
         {

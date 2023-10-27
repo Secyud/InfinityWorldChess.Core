@@ -32,7 +32,7 @@ namespace InfinityWorldChess.SkillEffectDomain.BasicEffectBundle
             
         }
 
-        private BattleEventsBuff _record;
+        private BattleEvents _record;
 
         public void Active()
         {

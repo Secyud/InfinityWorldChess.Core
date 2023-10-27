@@ -7,14 +7,14 @@ namespace InfinityWorldChess.SkillEffectDomain.BasicEffectBundle
 {
     public class ReceiveTrigger : BuffTriggerBase, IActionable<SkillInteraction>
     {
-        private BattleEventsBuff _record;
+        private BattleEvents _record;
         public override string ShowDescription => "每次受到技能触发," + base.ShowDescription;
         public int Priority => 65535;
 
         public override void Install(BattleRole target, IBuff<BattleRole> buff)
         {
             base.Install(target, buff);
-            _record = target.GetBattleEvents();
+            _record = target.GetProperty<BattleEvents>();
             _record.ReceiveCallback.Add(this);
         }
 

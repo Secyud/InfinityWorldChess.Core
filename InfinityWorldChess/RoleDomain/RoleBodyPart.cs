@@ -10,15 +10,9 @@ namespace InfinityWorldChess.RoleDomain
 {
     public class RoleBodyPart 
     {
-        [S] private float _realValue = 10;
+        [field: S ] public int MaxValue { get; set; } = 10;
 
-        [field: S, ] public int MaxValue { get; set; } = 10;
-
-        public float RealValue
-        {
-            get => _realValue;
-            set => _realValue = Math.Min(MaxValue, value);
-        }
+        [field: S] public int RealValue { get; set; } = 10;
 
 
         public override string ToString()

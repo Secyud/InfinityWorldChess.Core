@@ -2,7 +2,6 @@
 using InfinityWorldChess.BuffDomain;
 using InfinityWorldChess.SkillDomain.AttackDomain;
 using InfinityWorldChess.SkillDomain.SkillInteractionDomain;
-using InfinityWorldChess.Ugf;
 using Secyud.Ugf.DataManager;
 
 namespace InfinityWorldChess.SkillEffectDomain.BasicPassiveBundle
@@ -18,7 +17,7 @@ namespace InfinityWorldChess.SkillEffectDomain.BasicPassiveBundle
 
         public override void OnBattleInitialize(BattleRole chess)
         {
-            BattleEventsBuff e = chess.GetBattleEvents();
+            BattleEvents e = chess.GetProperty<BattleEvents>();
             e.PrepareLaunch.Add(this);
         }
 

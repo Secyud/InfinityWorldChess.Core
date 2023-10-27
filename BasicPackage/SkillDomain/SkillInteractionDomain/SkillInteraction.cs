@@ -37,17 +37,17 @@ namespace InfinityWorldChess.SkillDomain.SkillInteractionDomain
 			};
 		}
 
-		private BattleEventsBuff _launchRecord;
-		private BattleEventsBuff _targetRecord;
+		private BattleEvents _launchRecord;
+		private BattleEvents _targetRecord;
 
 		/// <summary>
 		/// before effect hit, some roles has buff to trigger. and target also prepare for it.
 		/// </summary>
 		public void BeforeHit()
 		{
-			_launchRecord = LaunchChess?.GetBattleEvents();
+			_launchRecord = LaunchChess?.GetProperty<BattleEvents>();
 			_launchRecord?.PrepareLaunch.On(this);
-			_targetRecord = TargetChess?.GetBattleEvents();
+			_targetRecord = TargetChess?.GetProperty<BattleEvents>();
 			_targetRecord?.PrepareReceive.On(this);
 		}
 

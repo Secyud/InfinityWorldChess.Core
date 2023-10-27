@@ -12,11 +12,6 @@ namespace InfinityWorldChess.Ugf
 {
 	public static class BpSkillExtension
 	{
-		public static BattleEventsBuff GetBattleEvents(this BattleRole role)
-		{
-			return role.GetProperty<BattleEventsBuff>();
-		}
-
 		public static AttackRecordBuff SetAttack(this SkillInteraction interaction)
 		{
 			AttackRecordBuff attackRecord =
@@ -41,7 +36,6 @@ namespace InfinityWorldChess.Ugf
 			}
 			return ret;
 		}
-		
 		
 		public static bool FitWeapon(this ICoreSkill coreSkill, BattleRole chess)
 		{
