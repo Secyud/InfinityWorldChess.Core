@@ -1,6 +1,5 @@
 #region
 
-using InfinityWorldChess.GameDomain;
 using InfinityWorldChess.GameDomain.WorldCellDomain;
 using InfinityWorldChess.GlobalDomain;
 using Secyud.Ugf.Archiving;
@@ -12,7 +11,7 @@ namespace InfinityWorldChess.RoleDomain
 {
 	public partial class Role
 	{
-		public RelationProperty Relation { get; } = new();
+		[field:S]public RelationProperty Relation { get; } = new();
 
 		public WorldCell Position
 		{
@@ -35,8 +34,14 @@ namespace InfinityWorldChess.RoleDomain
 				if (to == Position || role is null)
 					return;
 
-				Position?.InRoles.Remove(role);
-				to?.InRoles.Add(role);
+				if (Position)
+				{
+					Position.InRoles.Remove(role);
+				}
+				if (to)
+				{
+					to.InRoles.Add(role);
+				}
 				Position = to;
 
 				if (Position is not null)

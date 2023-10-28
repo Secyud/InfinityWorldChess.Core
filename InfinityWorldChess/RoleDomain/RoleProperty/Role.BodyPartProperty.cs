@@ -9,7 +9,7 @@ namespace InfinityWorldChess.RoleDomain
 {
 	public partial class Role
 	{
-		public BodyPartProperty BodyPart { get; } = new();
+		[field:S] public BodyPartProperty BodyPart { get; } = new();
 
 		public int GetSpeed()
 		{

@@ -1,6 +1,7 @@
 #region
 
 using Secyud.Ugf.Archiving;
+using Secyud.Ugf.DataManager;
 
 #endregion
 
@@ -8,11 +9,11 @@ namespace InfinityWorldChess.RoleDomain
 {
 	public partial class Role
 	{
-		public NatureProperty Nature { get; } = new();
+		[field:S]public NatureProperty Nature { get; } = new();
 
 		public class NatureProperty : IArchivable
 		{
-			public readonly float[] Properties = new float[SharedConsts.NatureCount];
+			[S]public readonly float[] Properties = new float[SharedConsts.NatureCount];
 // 认知
 			public float Recognize
 			{

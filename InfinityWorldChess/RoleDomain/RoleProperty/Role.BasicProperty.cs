@@ -10,7 +10,7 @@ namespace InfinityWorldChess.RoleDomain
 {
     public partial class Role
     {
-        public BasicProperty Basic { get; } = new();
+        [field:S] public BasicProperty Basic { get; } = new();
 
         public class BasicProperty : IArchivable
         {

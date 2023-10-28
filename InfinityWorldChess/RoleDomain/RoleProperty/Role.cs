@@ -9,6 +9,7 @@ using InfinityWorldChess.GameDomain.WorldCellDomain;
 using InfinityWorldChess.GlobalDomain;
 using InfinityWorldChess.Ugf;
 using Secyud.Ugf.Archiving;
+using Secyud.Ugf.DataManager;
 using Secyud.Ugf.HexMap;
 using UnityEngine;
 
@@ -18,7 +19,7 @@ namespace InfinityWorldChess.RoleDomain
 {
     public partial class Role :  IHasContent
     {
-        public int Id { get; private set; }
+        [field:S]public int Id { get; private set; }
 
         private readonly Dictionary<Type, RoleProperty> _extraProperties = new();
         private HexUnit _unit;

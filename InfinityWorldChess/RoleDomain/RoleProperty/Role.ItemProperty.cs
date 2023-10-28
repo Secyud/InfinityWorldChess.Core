@@ -7,6 +7,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Ugf.Collections.Generic;
+using Secyud.Ugf.DataManager;
 
 #endregion
 
@@ -18,7 +19,7 @@ namespace InfinityWorldChess.RoleDomain
 
         public class ItemProperty : IList<IItem>, IArchivable
         {
-            private readonly List<IItem> _items = new();
+            [S] private readonly List<IItem> _items = new();
             public int Award { get; set; }
 
             public void Save(IArchiveWriter writer)

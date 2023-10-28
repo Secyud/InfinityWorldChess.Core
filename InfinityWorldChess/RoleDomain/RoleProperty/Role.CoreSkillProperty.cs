@@ -4,6 +4,7 @@ using InfinityWorldChess.SkillDomain;
 using Secyud.Ugf.Archiving;
 using System.Collections.Generic;
 using System.Linq;
+using Secyud.Ugf.DataManager;
 
 #endregion
 
