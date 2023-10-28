@@ -7,9 +7,9 @@ namespace InfinityWorldChess.ItemDomain
 {
     public class Item :  IItem
     {
-        [field: S] public string ShowName { get; set; }
-        [field: S] public string ShowDescription { get; set; }
-        [field: S] public IObjectAccessor<Sprite> ShowIcon { get; set; }
+        [field: S] public string Name { get; set; }
+        [field: S] public string Description { get; set; }
+        [field: S] public IObjectAccessor<Sprite> Icon { get; set; }
         [field: S] public int Score { get; set; }
         public int SaveIndex { get; set; }
 

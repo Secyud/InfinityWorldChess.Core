@@ -14,7 +14,7 @@ namespace InfinityWorldChess.SkillEffectDomain.BasicEffectBundle
     {
         [field: S] public IActionableEffect Effect { get; set; }
         [field: S] public IEffectLimit Limit { get; set; }
-        public string ShowDescription => Effect.ShowDescription;
+        public string Description => Effect.Description;
         public int Priority => Effect.Priority;
 
         public void Install(BattleRole target, IBuff<BattleRole> buff)

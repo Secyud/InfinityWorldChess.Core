@@ -12,7 +12,7 @@ namespace InfinityWorldChess.ItemDomain.BookDomain
 {
 	public class ItemNormalButtonReading : ButtonDescriptor<IItem>
 	{
-		public override string ShowName => "研读";
+		public override string Name => "研读";
 
 		public override void Invoke()
 		{

@@ -12,7 +12,7 @@ namespace InfinityWorldChess.SkillEffectDomain.BasicPassiveBundle
         private byte _kiling;
         private byte _nimble;
         private byte _defend;
-        public override string ShowDescription => "战斗时提供四维属性加成。";
+        public override string Description => "战斗时提供四维属性加成。";
         public override void Equip( Role role,IPassiveSkill skill)
         {
             base.Equip(role,skill);

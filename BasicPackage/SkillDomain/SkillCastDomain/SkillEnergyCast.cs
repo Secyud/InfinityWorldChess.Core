@@ -7,7 +7,7 @@ namespace InfinityWorldChess.SkillDomain.SkillCastDomain
     {
         [field:S] public float EnergyConsume { get; set; }
         [field:S] public int ExecutionConsume { get; set; }
-        public string ShowDescription => $"内力: {EnergyConsume}, 行动力: {ExecutionConsume}";
+        public string Description => $"内力: {EnergyConsume}, 行动力: {ExecutionConsume}";
         public string CheckCastCondition(BattleRole chess,IActiveSkill skill)
         {
             if (chess.ExecutionValue < ExecutionConsume)

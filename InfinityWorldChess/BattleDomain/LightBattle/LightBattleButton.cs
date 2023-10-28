@@ -13,7 +13,7 @@ namespace InfinityWorldChess.BattleDomain.LightBattle
             BattleScope.CreateBattle(battle);
         }
 
-        public override string ShowName => "切磋";
+        public override string Name => "切磋";
 
         public override bool Visible(Role target)
         {

@@ -8,9 +8,9 @@ namespace InfinityWorldChess.BundleDomain
 {
     public class InitializeBundle : IBundle
     {
-        [field: S] public string ShowDescription { get; set; }
-        [field: S] public string ShowName { get; set; }
-        [field: S] public IObjectAccessor<Sprite> ShowIcon { get; set; }
+        [field: S] public string Description { get; set; }
+        [field: S] public string Name { get; set; }
+        [field: S] public IObjectAccessor<Sprite> Icon { get; set; }
         [field: S] public List<ITrigger> Triggers { get; } = new();
 
         

@@ -69,7 +69,7 @@ namespace InfinityWorldChess.RoleDomain
 
                 for (int i = 0; i < SharedConsts.FormSkillCount; i++)
                 {
-                    writer.Write(_skills[i]?.FormSkill.ShowName ?? string.Empty);
+                    writer.Write(_skills[i]?.FormSkill.Name ?? string.Empty);
                 }
             }
 
@@ -81,7 +81,7 @@ namespace InfinityWorldChess.RoleDomain
                 for (int i = 0; i < count; i++)
                 {
                     IFormSkill skill = reader.ReadObject<IFormSkill>();
-                    LearnedSkills[skill.ShowName] = skill;
+                    LearnedSkills[skill.Name] = skill;
                 }
 
                 for (int i = 0; i < SharedConsts.FormSkillCount; i++)

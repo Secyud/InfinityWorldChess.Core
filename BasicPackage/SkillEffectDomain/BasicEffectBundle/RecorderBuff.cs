@@ -11,8 +11,8 @@ namespace InfinityWorldChess.SkillEffectDomain.BasicEffectBundle
     public class RecorderBuff : SkillBuffBase
     {
         [field: S] public IBuffRecorder BuffRecorder { get; set; }
-        public override string ShowDescription => base.ShowDescription +
-                                         BuffRecorder?.ShowDescription;
+        public override string Description => base.Description +
+                                         BuffRecorder?.Description;
 
         public override void Install(BattleRole target)
         {

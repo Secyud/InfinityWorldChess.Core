@@ -58,9 +58,9 @@ namespace InfinityWorldChess.RoleDomain
                 if (item is IOverloadedItem oItem)
                 {
                     Type type = item.GetType();
-                    string name = item.ShowName;
+                    string name = item.Name;
                     IOverloadedItem min = _items
-                        .Where(u => u.GetType() == type && u.ShowName == name)
+                        .Where(u => u.GetType() == type && u.Name == name)
                         .Cast<IOverloadedItem>()
                         .OrderBy(u=>u.Quantity)
                         .FirstOrDefault();
@@ -91,9 +91,9 @@ namespace InfinityWorldChess.RoleDomain
                 if (item is IOverloadedItem oItem)
                 {
                     Type type = item.GetType();
-                    string name = item.ShowName;
+                    string name = item.Name;
                     List<IOverloadedItem> items = _items
-                        .Where(u => u.GetType() == type && u.ShowName == name)
+                        .Where(u => u.GetType() == type && u.Name == name)
                         .Cast<IOverloadedItem>()
                         .OrderByDescending(u=>u.Quantity)
                         .ToList();

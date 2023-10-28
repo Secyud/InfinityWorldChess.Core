@@ -8,7 +8,7 @@ namespace InfinityWorldChess.SkillEffectDomain.BasicEffectBundle
         private IBuff<BattleRole> _buff;
         private BattleRole _target;
         public int TurnFinished { get; set; }
-        public string  ShowDescription => $"(持续{TurnFinished}回合)";
+        public string  Description => $"(持续{TurnFinished}回合)";
 
         private void CalculateRemove()
         {

@@ -20,7 +20,7 @@ namespace InfinityWorldChess.ActivityDomain
         {
             PlayerGameContext context = U.Get<PlayerGameContext>();
             ActivityGroup group = context.Activity
-                .Find(u => u.ShowName == GroupName);
+                .Find(u => u.Name == GroupName);
             if (group is null)
             {
                 Debug.LogError($"Cannot find activity group: {GroupName}");
@@ -31,7 +31,7 @@ namespace InfinityWorldChess.ActivityDomain
             activity.State = CurrentSuccess ? ActivityState.Success : ActivityState.Failed;
             activity.FinishActivity(group);
 
-            activity = group.Activities.Find(u => u.ShowName == ActivityName);
+            activity = group.Activities.Find(u => u.Name == ActivityName);
             if (activity is null)
             {
                 Debug.LogError($"Cannot find activity({ActivityName}) in group({GroupName}).");

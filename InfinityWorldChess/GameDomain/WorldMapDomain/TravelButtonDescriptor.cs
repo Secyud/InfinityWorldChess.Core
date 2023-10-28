@@ -29,6 +29,6 @@ namespace InfinityWorldChess.GameDomain.WorldMapDomain
             WorldGameContext.Map.Path = Array.Empty<WorldCell>();
         }
 
-        public override string ShowName => "旅行";
+        public override string Name => "旅行";
     }
 }

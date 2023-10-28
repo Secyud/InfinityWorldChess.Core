@@ -6,7 +6,7 @@ namespace InfinityWorldChess.RoleDomain
 {
     public class RoleAddCoreSkill : RoleItemFunctionBase<ICoreSkill>,IHasDescription
     {
-        public  string ShowDescription => $"可习得招式{Name}。";
+        public  string Description => $"可习得招式{Name}。";
 
         public override void Invoke(Role role)
         {
@@ -20,7 +20,7 @@ namespace InfinityWorldChess.RoleDomain
 
         protected override void Invoke(Role role, ICoreSkill item)
         {
-            role.CoreSkill.LearnedSkills[item.ShowName] = item;
+            role.CoreSkill.LearnedSkills[item.Name] = item;
         }
     }
 }

@@ -10,7 +10,7 @@ namespace InfinityWorldChess.SkillDomain.SkillRangeDomain.Release
         [field:S] public byte Direction { get; set; }
         [field:S] public byte Range { get; set; }
         [field:S] public bool IncludeUnit { get; set; }
-        public string ShowDescription => $"({Start}-{End}, {Range}, {Direction})";
+        public string Description => $"({Start}-{End}, {Range}, {Direction})";
         public ISkillRange GetCastPositionRange(BattleRole role, IActiveSkill skill = null)
         {
             return SkillRange.GetArcRange(Start, End,

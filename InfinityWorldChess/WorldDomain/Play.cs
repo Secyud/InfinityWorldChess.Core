@@ -6,9 +6,9 @@ namespace InfinityWorldChess.WorldDomain
 {
     public class Play:IShowable
     {
-        [field:S]public string ShowDescription { get;set; }
-        [field:S]public string ShowName { get;set; }
-        [field:S]public IObjectAccessor<Sprite> ShowIcon { get;set; }
+        [field:S]public string Description { get;set; }
+        [field:S]public string Name { get;set; }
+        [field:S]public IObjectAccessor<Sprite> Icon { get;set; }
         [field:S]public string MapName { get;set; }
         [field:S]public IMapSetting MapSetting { get;set; }
         

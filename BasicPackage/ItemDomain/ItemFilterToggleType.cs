@@ -18,9 +18,8 @@ namespace InfinityWorldChess.ItemDomain
 		protected ItemFilterToggleType(Type type)
 		{
 			_type = type;
+			Name = "ItemFilterType_" + _type.Name;
 		}
-
-		public override string ShowName => "ItemFilterType_" + _type.Name;
 
 		public override bool Filter(IItem target)
 		{

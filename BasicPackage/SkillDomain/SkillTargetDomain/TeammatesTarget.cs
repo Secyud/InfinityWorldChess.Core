@@ -5,7 +5,7 @@ namespace InfinityWorldChess.SkillDomain.SkillTargetDomain
 {
     public class TeammatesTarget:ISkillTargetInRange
     {
-        public string ShowDescription => "友军";
+        public string Description => "友军";
         public ISkillTarget GetTargetInRange(BattleRole battleChess, ISkillRange range)
         {
             return new SkillTarget(

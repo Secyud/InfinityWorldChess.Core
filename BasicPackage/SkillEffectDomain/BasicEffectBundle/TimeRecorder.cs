@@ -11,7 +11,7 @@ namespace InfinityWorldChess.SkillEffectDomain.BasicEffectBundle
         public float TimeFinished { get; set; }
         public float TimeRecord { get; private set; }
 
-        public string ShowDescription => $"(持续{TimeFinished:N0}时序)";
+        public string Description => $"(持续{TimeFinished:N0}时序)";
 
         private void CalculateRemove()
         {

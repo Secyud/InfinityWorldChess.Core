@@ -4,7 +4,7 @@ namespace InfinityWorldChess.SkillDomain.SkillRangeDomain.Target
 {
     public class WideHalfCircleTargetRange :TargetWithoutTetragonalSymmetry, ISkillCastResult
     {
-        public override string ShowDescription => "半圆";
+        public override string Description => "半圆";
 
         public ISkillRange GetCastResultRange(BattleRole role, BattleCell castPosition,IActiveSkill skill)
         {

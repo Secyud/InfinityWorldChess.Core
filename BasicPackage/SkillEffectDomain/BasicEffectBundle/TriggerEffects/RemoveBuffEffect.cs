@@ -10,7 +10,7 @@ namespace InfinityWorldChess.SkillEffectDomain.BasicEffectBundle
         private IBuff<BattleRole> _buff;
         private BattleRole _target;
         [field:S] public int TriggerTime { get; set; }
-        public string ShowDescription => $"剩余{TriggerTime}次。";
+        public string Description => $"剩余{TriggerTime}次。";
         public void Install(BattleRole target, IBuff<BattleRole> buff)
         {
             _target = target;

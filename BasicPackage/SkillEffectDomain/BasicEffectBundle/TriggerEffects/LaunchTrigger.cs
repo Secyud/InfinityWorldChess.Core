@@ -8,7 +8,7 @@ namespace InfinityWorldChess.SkillEffectDomain.BasicEffectBundle
     public class LaunchTrigger : BuffTriggerBase, IActionable<SkillInteraction>
     {
         private BattleEvents _record;
-        public override string ShowDescription => "每次释放技能触发," + base.ShowDescription;
+        public override string Description => "每次释放技能触发," + base.Description;
         public int Priority => 65535;
 
         public override void Install(BattleRole target, IBuff<BattleRole> buff)

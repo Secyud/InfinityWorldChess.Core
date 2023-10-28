@@ -16,17 +16,17 @@ namespace InfinityWorldChess.SkillEffectDomain.BasicAttackBundle
         private object Template => _template
             ??= U.Tm.ConstructFromResource(BuffTypeId, BuffName);
 
-        public override string ShowDescription
+        public override string Description
         {
             get
             {
                 if (Template is IHasDescription description)
                 {
-                    return base.ShowDescription + description.ShowDescription;
+                    return base.Description + description.Description;
                 }
                 else
                 {
-                    return base.ShowDescription;
+                    return base.Description;
                 }
             }
         }

@@ -6,7 +6,7 @@ namespace InfinityWorldChess.SkillDomain.SkillTargetDomain
 {
     public class AllTarget : ISkillTargetInRange
     {
-        public string ShowDescription => "所有人";
+        public string Description => "所有人";
 
         public ISkillTarget GetTargetInRange(BattleRole battleChess, ISkillRange range)
         {

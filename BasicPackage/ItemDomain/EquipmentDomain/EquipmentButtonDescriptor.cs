@@ -20,7 +20,7 @@ namespace InfinityWorldChess.ItemDomain.EquipmentDomain
 			U.Get<GameMenuTabService>().RefreshCurrentTab();
 		}
 
-		public override string ShowName => "装备";
+		public override string Name => "装备";
 
 		public override bool Visible(IItem target) => target is IEquipment;
 

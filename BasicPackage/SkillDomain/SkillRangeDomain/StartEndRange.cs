@@ -12,11 +12,11 @@ namespace InfinityWorldChess.SkillDomain.SkillRangeDomain
 
         protected virtual string SeLabel => $"({Start},{End})";
 
-        public virtual string ShowDescription => null;
+        public virtual string Description => null;
         
         public virtual void SetContent(Transform transform)
         {
-            transform.AddParagraph(ShowDescription + SeLabel);
+            transform.AddParagraph(Description + SeLabel);
         }
     }
 }

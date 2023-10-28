@@ -12,7 +12,7 @@ namespace InfinityWorldChess.SkillEffectDomain.BasicPassiveBundle
 
         public int Priority => 1;
 
-        public override string ShowDescription =>
+        public override string Description =>
             $"将所有攻击转化为{AttackType switch { 0 => "外伤", 1 => "内伤", 2 => "精神", _ => "未知" }}属性。";
 
         public override void OnBattleInitialize(BattleRole chess)

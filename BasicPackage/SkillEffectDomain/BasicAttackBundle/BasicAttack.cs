@@ -13,7 +13,7 @@ namespace InfinityWorldChess.SkillEffectDomain.BasicAttackBundle
     public class BasicAttack : SkillInteractionEffectBase
     {
         protected override ISkillTargetInRange TargetGetter => EnemiesTarget.Instance;
-        public override string ShowDescription => $"{p}攻击系数:{AttackBaseFactor}{p}攻击基值:{FixedAttackValue}";
+        public override string Description => $"{p}攻击系数:{AttackBaseFactor}{p}攻击基值:{FixedAttackValue}";
 
         protected AttackRecordBuff AttackRecord;
 

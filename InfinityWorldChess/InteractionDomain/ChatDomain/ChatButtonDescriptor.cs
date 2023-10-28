@@ -26,7 +26,7 @@ namespace InfinityWorldChess.InteractionDomain.ChatDomain
             service.Panel.SetRightRole(target);
         }
 
-        public override string ShowName => "闲聊";
+        public override string Name => "闲聊";
 
         public override bool Visible(Role target)
         {

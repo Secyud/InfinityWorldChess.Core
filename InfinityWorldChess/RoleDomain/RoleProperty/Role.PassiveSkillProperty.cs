@@ -78,7 +78,7 @@ namespace InfinityWorldChess.RoleDomain
 
                 for (int i = 0; i < SharedConsts.PassiveSkillCount; i++)
                 {
-                    writer.Write(_skills[i].ShowName ?? string.Empty);
+                    writer.Write(_skills[i].Name ?? string.Empty);
                 }
             }
 
@@ -90,7 +90,7 @@ namespace InfinityWorldChess.RoleDomain
                 for (int i = 0; i < count; i++)
                 {
                     IPassiveSkill skill = reader.ReadObject<IPassiveSkill>();
-                    LearnedSkills[skill.ShowName] = skill;
+                    LearnedSkills[skill.Name] = skill;
                 }
 
 

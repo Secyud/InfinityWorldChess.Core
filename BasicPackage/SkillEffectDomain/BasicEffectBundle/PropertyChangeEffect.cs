@@ -14,7 +14,7 @@ namespace InfinityWorldChess.SkillEffectDomain.BasicEffectBundle
 
         private BodyType BodyType => (BodyType)Type;
         private BattleProperty _battleProperty;
-        public string ShowDescription =>
+        public string Description =>
             (Value > 0 ? $"增加{Value:N0}" : $"减少{-Value:N0}") + "点" +
             BodyType switch
             {

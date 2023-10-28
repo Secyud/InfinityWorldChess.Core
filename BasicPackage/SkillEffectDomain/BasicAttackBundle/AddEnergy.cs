@@ -8,8 +8,8 @@ namespace InfinityWorldChess.SkillEffectDomain.BasicAttackBundle
         [field: S] public float RecoverFactor { get; set; }
         [field: S] public float RecoverValue { get; set; }
 
-        public override string ShowDescription =>
-            base.ShowDescription +
+        public override string Description =>
+            base.Description +
             $"{p}此招式恢复自身内力，受技能[生]属性影响。";
 
         protected override void PostInteraction(SkillInteraction interaction)

@@ -11,7 +11,7 @@ namespace InfinityWorldChess.SkillEffectDomain.BasicAttackBundle
     {
         [field: S] private float F256 { get; set; }
 
-        public override string ShowDescription=>base.ShowDescription+
+        public override string Description=>base.Description+
                                                 $"此招式将造成伤害的{F256:P0}转化为自身生命。";
 			
         protected override void PostInteraction(SkillInteraction interaction)

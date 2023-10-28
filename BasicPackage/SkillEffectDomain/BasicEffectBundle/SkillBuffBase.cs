@@ -12,8 +12,8 @@ namespace InfinityWorldChess.SkillEffectDomain.BasicEffectBundle
         [field: S] public IBuffEffect BuffEffect { get; set; }
         [S] private string _description;
 
-        public virtual string ShowDescription => _description
-                                         + BuffEffect?.ShowDescription;
+        public virtual string Description => _description
+                                         + BuffEffect?.Description;
         public virtual void Install(BattleRole target)
         {
             BuffEffect?.Install(target, this);

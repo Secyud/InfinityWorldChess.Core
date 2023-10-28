@@ -10,7 +10,7 @@ namespace InfinityWorldChess.SkillEffectDomain.BasicAttackBundle
     /// </summary>
     public class RepelOrAttackMore : BasicAttack
     {
-        public override string ShowDescription=>base.ShowDescription+
+        public override string Description=>base.Description+
                                                 "击退敌方一格，若因阻挡而无法击退，则再次对敌方造成伤害。";
         protected override void PostInteraction(SkillInteraction interaction)
         {

@@ -42,7 +42,7 @@ namespace InfinityWorldChess.ActivityDomain
         
         protected override void InitData()
         {
-            Name.Invoke(Property.ShowName);
+            Name.Invoke(Property.Name);
             State.Invoke(Property.State);
             Collapsed = Property.Collapsed;
         }

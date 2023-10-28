@@ -16,7 +16,7 @@ namespace InfinityWorldChess.SkillEffectDomain.BasicEffectBundle
 	{
 		[field:S]public float Factor { get; set; }
 		
-		public virtual string ShowDescription => $"伤害变化{Factor:P0}。";
+		public virtual string Description => $"伤害变化{Factor:P0}。";
 
 		public int Priority => 1;
 

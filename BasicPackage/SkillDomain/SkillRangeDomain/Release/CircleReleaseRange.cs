@@ -6,7 +6,7 @@ namespace InfinityWorldChess.SkillDomain.SkillRangeDomain.Release
     public class CircleReleaseRange :StartEndRange,  ISkillCastPosition
     {
         [field:S] public bool IncludeUnit { get; set; }
-        public override string ShowDescription => "圆形";
+        public override string Description => "圆形";
 
         public ISkillRange GetCastPositionRange(BattleRole role,IActiveSkill skill)
         {

@@ -4,7 +4,7 @@ namespace InfinityWorldChess.SkillDomain.SkillRangeDomain.Target
 {
     public class CircleTargetRange :StartEndRange, ISkillCastResult
     {
-        public override string ShowDescription => "圆形";
+        public override string Description => "圆形";
         
         public ISkillRange GetCastResultRange(BattleRole role, BattleCell castPosition,IActiveSkill skill)
         {

@@ -6,7 +6,7 @@ namespace InfinityWorldChess.SkillEffectDomain.BasicPassiveBundle
 {
     public abstract class BattlePassive:IPassiveSkillEffect,IOnBattleRoleInitialize
     {
-        public abstract string ShowDescription { get; }
+        public abstract string Description { get; }
         
         public virtual void Equip( Role role,IPassiveSkill skill)
         {

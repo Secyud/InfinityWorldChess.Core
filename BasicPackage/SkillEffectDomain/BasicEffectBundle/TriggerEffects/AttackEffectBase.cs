@@ -15,7 +15,7 @@ namespace InfinityWorldChess.SkillEffectDomain.BasicEffectBundle
 
         public int Priority => 65535;
 
-        public abstract string ShowDescription { get; }
+        public abstract string Description { get; }
 
         public virtual void Install(BattleRole target, IBuff<BattleRole> buff)
         {

@@ -163,7 +163,7 @@ namespace InfinityWorldChess.RoleDomain
                     count <<= 1;
                     for (int j = 0; j < count; j++)
                     {
-                        writer.Write(layer[i]?.Skill.ShowName ?? string.Empty);
+                        writer.Write(layer[i]?.Skill.Name ?? string.Empty);
                     }
                 }
             }
@@ -176,7 +176,7 @@ namespace InfinityWorldChess.RoleDomain
                 for (int i = 0; i < skillCount; i++)
                 {
                     ICoreSkill skill = reader.ReadObject<ICoreSkill>();
-                    LearnedSkills[skill.ShowName] = skill;
+                    LearnedSkills[skill.Name] = skill;
                 }
 
                 uint count = 1;

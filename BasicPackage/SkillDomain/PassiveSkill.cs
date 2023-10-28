@@ -9,11 +9,10 @@ using UnityEngine;
 
 namespace InfinityWorldChess.SkillDomain
 {
-    public class PassiveSkill : IPassiveSkill, IArchivable, IArchivableShown
+    public class PassiveSkill : IPassiveSkill, IArchivable,IArchivedResource
     {
-        public string ShowName => Name;
-        public string ShowDescription => Description;
-        public IObjectAccessor<Sprite> ShowIcon => Icon;
+
+        [field: S] public string ResourceId { get; set; }
         [field: S] public byte Score { get; set; }
         [field: S] public IPassiveSkillEffect Effect { get; set; }
         [field: S] public IObjectAccessor<SkillAnim> UnitPlay { get; set; }
@@ -43,7 +42,7 @@ namespace InfinityWorldChess.SkillDomain
 
         protected virtual void SetHideContent(Transform transform)
         {
-            transform.AddParagraph($"效果：{Effect.ShowDescription}。");
+            transform.AddParagraph($"效果：{Effect.Description}。");
         }
 
         public byte Living { get; set; }
@@ -55,13 +54,13 @@ namespace InfinityWorldChess.SkillDomain
         public virtual void Save(IArchiveWriter writer)
         {
             this.SaveSkill(writer);
-            this.SaveByName(writer);
+            this.SaveResource(writer);
         }
 
         public virtual void Load(IArchiveReader reader)
         {
             this.LoadSkill(reader);
-            this.LoadByName(reader);
+            this.LoadResource(reader);
         }
     }
 }

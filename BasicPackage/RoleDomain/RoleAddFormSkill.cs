@@ -6,7 +6,7 @@ namespace InfinityWorldChess.RoleDomain
 {
     public class RoleAddFormSkill:RoleItemFunctionBase<IFormSkill>,IHasDescription
     {
-        public  string ShowDescription => $"可习得阵势{Name}。";
+        public  string Description => $"可习得阵势{Name}。";
 
         public override void Invoke(Role role)
         {
@@ -20,7 +20,7 @@ namespace InfinityWorldChess.RoleDomain
 
         protected override void Invoke(Role role, IFormSkill item)
         {
-            role.FormSkill.LearnedSkills[item.ShowName] = item;
+            role.FormSkill.LearnedSkills[item.Name] = item;
         }
     }
 }

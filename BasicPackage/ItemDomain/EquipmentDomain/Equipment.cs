@@ -3,7 +3,6 @@
 using InfinityWorldChess.BuffDomain;
 using InfinityWorldChess.RoleDomain;
 using InfinityWorldChess.Ugf;
-using Secyud.Ugf;
 using Secyud.Ugf.Archiving;
 using System.Collections.Generic;
 using InfinityWorldChess.BattleDomain;
@@ -13,22 +12,11 @@ using UnityEngine;
 
 namespace InfinityWorldChess.ItemDomain.EquipmentDomain
 {
-	public class Equipment : IdBuffProperty<Equipment>, IEquipment, IArchivableShown,IArchivable
+	public class Equipment : CustomizableItem<Equipment>, IEquipment,IArchivable
 	{
 		public readonly List<IBuff<Role>> RoleBuff = new();
 		public readonly List<IBuff<BattleRole>> BattleRoleBuff = new();
 
-		public string Name { get; set; }
-
-		public string Description { get; set; }
-
-		public IObjectAccessor<Sprite> Icon { get; set; }
-
-		public string ShowName => "装备".PointAfter() + Name;
-
-		public string ShowDescription => Description;
-
-		public IObjectAccessor<Sprite> ShowIcon => Icon;
 
 		public int Antique { get; set; }
 
@@ -64,7 +52,6 @@ namespace InfinityWorldChess.ItemDomain.EquipmentDomain
 		{
 			writer.Write(Antique);
 			writer.Write(TypeCode);
-			this.SaveShown(writer);
 			for (int i = 0; i < SharedConsts.EquipmentPropertyCount; i++)
 				writer.Write(Property[i]);
 			base.Save(writer);
@@ -74,7 +61,6 @@ namespace InfinityWorldChess.ItemDomain.EquipmentDomain
 		{
 			Antique = reader.ReadInt32();
 			TypeCode = reader.ReadByte();
-			this.LoadShown(reader);
 			for (int i = 0; i < SharedConsts.EquipmentPropertyCount; i++)
 				Property[i] = reader.ReadInt32();
 			base.Load(reader);

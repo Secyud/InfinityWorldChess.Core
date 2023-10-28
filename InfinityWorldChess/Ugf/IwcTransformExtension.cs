@@ -51,11 +51,11 @@ namespace InfinityWorldChess.Ugf
 
 		public static void AddSimpleShown(this Transform transform, IShowable shown)
 		{
-			transform.AddTitle1(shown.ShowName);
-			if (shown.ShowDescription.IsNullOrEmpty())
+			transform.AddTitle1(shown.Name);
+			if (shown.Description.IsNullOrEmpty())
 				return;
 
-			transform.AddParagraph(shown.ShowDescription.Point());
+			transform.AddParagraph(shown.Description.Point());
 		}
 
 		public static void AddListShown<TItem>(this Transform transform, string title, IEnumerable<TItem> items)
@@ -68,7 +68,7 @@ namespace InfinityWorldChess.Ugf
 			transform.AddTitle2(title);
 			foreach (string str in result.Select(
 				item =>
-					$"<size=18><color=#202000ff><b>【{U.T.Translate(item.ShowName)}】</b> {U.T.Translate(item.ShowDescription)}</color></size>"
+					$"<size=18><color=#202000ff><b>【{U.T.Translate(item.Name)}】</b> {U.T.Translate(item.Description)}</color></size>"
 			))
 			{
 				IwcAssets.Instance.BodyFieldText.Value.Create(transform, str.Point());

@@ -14,7 +14,7 @@ namespace InfinityWorldChess.RoleDomain
 			GameScope.Instance.OpenGameMenu();
 		}
 
-		public override string ShowName => "详情";
+		public override string Name => "详情";
 
 		public override bool Visible(Role target) => true;
 	}

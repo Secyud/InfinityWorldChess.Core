@@ -18,7 +18,7 @@ namespace InfinityWorldChess.SkillEffectDomain.BasicEffectBundle
                 BattleScope.Instance.Get<CoreSkillActionService>().CoreSkill;
 
             if (coreSkill is not null &&
-                coreSkill.CoreSkill.ShowName.Contains(NameContain))
+                coreSkill.CoreSkill.Name.Contains(NameContain))
             {
                 return true;
             }
@@ -27,7 +27,7 @@ namespace InfinityWorldChess.SkillEffectDomain.BasicEffectBundle
                 BattleScope.Instance.Get<FormSkillActionService>().FormSkill;
             
             if (formSkill is not null &&
-                formSkill.FormSkill.ShowName.Contains(NameContain))
+                formSkill.FormSkill.Name.Contains(NameContain))
             {
                 return true;
             }

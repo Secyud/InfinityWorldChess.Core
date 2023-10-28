@@ -29,9 +29,9 @@ namespace InfinityWorldChess.Ugf
         public virtual void BindShowable(IShowable item)
         {
             if (IconImage)
-                IconImage.Sprite = item?.ShowIcon?.Value;
+                IconImage.Sprite = item?.Icon?.Value;
             if (ShowLabel)
-                ShowLabel.text = U.T[item?.ShowName];
+                ShowLabel.text = U.T[item?.Name];
             if (item is IHasContent withContent)
             {
                 _withContent = withContent;

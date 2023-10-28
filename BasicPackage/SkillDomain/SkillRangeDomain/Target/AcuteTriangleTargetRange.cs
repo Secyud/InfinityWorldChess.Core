@@ -4,7 +4,7 @@ namespace InfinityWorldChess.SkillDomain.SkillRangeDomain.Target
 {
     public class AcuteTriangleTargetRange : TargetWithoutTetragonalSymmetry,   ISkillCastResult
     {
-        public override string ShowDescription => "锐角";
+        public override string Description => "锐角";
         
         public ISkillRange GetCastResultRange(BattleRole role, BattleCell castPosition,IActiveSkill skill)
         {

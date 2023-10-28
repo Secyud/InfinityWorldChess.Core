@@ -8,7 +8,7 @@ namespace InfinityWorldChess.SkillEffectDomain.BasicAttackBundle
 		{
 			[field: S] public int D256 { get; set; }
 
-			public override string ShowDescription=>base.ShowDescription+
+			public override string Description=>base.Description+
 			                                        $"此招式穿透增加{D256}。";
 
 			protected override void PreInteraction(SkillInteraction interaction)

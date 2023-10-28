@@ -12,7 +12,7 @@ namespace InfinityWorldChess.SkillEffectDomain.BasicEffectBundle
         [field:S] private int Time { get; set; }
 
         private float _timeRecord;
-        public override string ShowDescription => $"每{Time}时序触发," + base.ShowDescription;
+        public override string Description => $"每{Time}时序触发," + base.Description;
 
         public override void Install(BattleRole target, IBuff<BattleRole> buff)
         {

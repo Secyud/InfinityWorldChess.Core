@@ -46,38 +46,6 @@ namespace InfinityWorldChess.Ugf
             }
         }
 
-        public static void SaveShown(this IArchivableShown item, IArchiveWriter writer)
-        {
-            writer.Write(item.Name ?? string.Empty);
-            writer.Write(item.Description ?? string.Empty);
-            writer.WriteNullable(item.Icon);
-        }
-
-        public static void LoadShown(this IArchivableShown item, IArchiveReader reader)
-        {
-            item.Name = reader.ReadString();
-            item.Description = reader.ReadString();
-            item.Icon = reader.ReadNullable<IObjectAccessor<Sprite>>();
-        }
-
-        public static void SaveByName(this IArchivableShown shown, IArchiveWriter writer)
-        {
-            writer.Write(shown.Name);
-        }
-        public static void LoadByName(this IArchivableShown shown, IArchiveReader reader)
-        {
-            string name = reader.ReadString();
-            TypeDescriptor property = U.Tm.GetProperty(shown.GetType());
-            if (property.Resources.TryGetValue(name, out ResourceDescriptor resource))
-            {
-                resource.WriteToObject(shown);
-            }
-            else
-            {
-                Debug.LogError($"Cannot get item from resource. Type: {shown.GetType()}, Name: {name}.");
-            }
-        }
-
         public static void SaveSkill(this ISkill skill, IArchiveWriter writer)
         {
             writer.Write(skill.Living);

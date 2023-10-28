@@ -22,7 +22,7 @@ namespace InfinityWorldChess.ManufacturingDomain
 
 		public int Type { get; set; }
 
-		public override string ShowName => Names[Type];
+		public override string Name => Names[Type];
 
 		public override bool Visible(WorldCell target) => true;
 

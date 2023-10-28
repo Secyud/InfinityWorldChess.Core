@@ -12,11 +12,9 @@ using UnityEngine;
 
 namespace InfinityWorldChess.SkillDomain
 {
-    public abstract class ActiveSkillBase : IActiveSkill, IArchivableShown, IArchivable
+    public abstract class ActiveSkillBase : IActiveSkill, IArchivable,IArchivedResource
     {
-        public string ShowName => Name;
-        public string ShowDescription => Description;
-        public IObjectAccessor<Sprite> ShowIcon => Icon;
+        [field: S] public string ResourceId { get; set; }
         [field: S] public string Name { get; set; }
         [field: S] public string Description { get; set; }
         [field: S] public byte Score { get; set; }
@@ -45,10 +43,10 @@ namespace InfinityWorldChess.SkillDomain
         protected virtual void SetHideContent(Transform transform)
         {
             if (Condition is not null)
-                transform.AddParagraph($"释放要求：{Condition.ShowDescription}。");
-            transform.AddParagraph($"释放范围：{Position.ShowDescription}。");
-            transform.AddParagraph($"目标范围：{Result.ShowDescription}。");
-            transform.AddParagraph($"效果：{SkillEffect.ShowDescription}。");
+                transform.AddParagraph($"释放要求：{Condition.Description}。");
+            transform.AddParagraph($"释放范围：{Position.Description}。");
+            transform.AddParagraph($"目标范围：{Result.Description}。");
+            transform.AddParagraph($"效果：{SkillEffect.Description}。");
         }
 
         public virtual string CheckCastCondition(BattleRole chess,IActiveSkill skill)
@@ -83,13 +81,14 @@ namespace InfinityWorldChess.SkillDomain
         public virtual void Save(IArchiveWriter writer)
         {
             this.SaveSkill(writer);
-            this.SaveByName(writer);
+            this.SaveResource(writer);
         }
 
         public virtual void Load(IArchiveReader reader)
         {
             this.LoadSkill(reader);
-            this.LoadByName(reader);
+            this.LoadResource(reader);
         }
+
     }
 }

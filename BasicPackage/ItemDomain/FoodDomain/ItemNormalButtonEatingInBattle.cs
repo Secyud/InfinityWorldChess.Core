@@ -9,7 +9,7 @@ namespace InfinityWorldChess.ItemDomain.FoodDomain
 {
 	public class ItemNormalButtonEatingInBattle : ButtonDescriptor<IItem>
 	{
-		public override string ShowName => "食用";
+		public override string Name => "食用";
 
 		public override void Invoke()
 		{

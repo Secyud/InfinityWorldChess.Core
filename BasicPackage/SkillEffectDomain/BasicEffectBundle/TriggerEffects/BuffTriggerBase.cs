@@ -13,11 +13,11 @@ namespace InfinityWorldChess.SkillEffectDomain.BasicEffectBundle
     {
         [field: S] public List<ITriggerEffect> Effects { get; set; }
 
-        public virtual string ShowDescription
+        public virtual string Description
         {
             get { return
                 Effects
-                .Select(u => u.ShowDescription)
+                .Select(u => u.Description)
                 .JoinAsString(""); }
         }
 

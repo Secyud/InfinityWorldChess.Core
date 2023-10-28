@@ -10,7 +10,7 @@ namespace InfinityWorldChess.SkillEffectDomain.BasicAttackBundle
     {
         [field: S] public float F256 { get; set; }
 
-        public override string ShowDescription => base.ShowDescription +
+        public override string Description => base.Description +
                                                   $"增加此招式技能层数*{F256:P0}的攻击系数。";
 
         protected override void PreInteraction(SkillInteraction interaction)

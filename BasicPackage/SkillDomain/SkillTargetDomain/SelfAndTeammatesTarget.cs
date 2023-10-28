@@ -7,7 +7,7 @@ namespace InfinityWorldChess.SkillDomain.SkillTargetDomain
 {
     public class SelfAndTeammatesTarget : ISkillTargetInRange
     {
-        public string ShowDescription => "友军加自身";
+        public string Description => "友军加自身";
         public ISkillTarget GetTargetInRange(BattleRole battleChess, ISkillRange range)
         {
             List<BattleRole> r =

@@ -7,7 +7,7 @@ namespace InfinityWorldChess.SkillDomain.SkillTargetDomain
     {
         public static EnemiesTarget Instance { get; } = new();
         
-        public string ShowDescription => "敌方";
+        public string Description => "敌方";
         public ISkillTarget GetTargetInRange(BattleRole battleChess, ISkillRange range)
         {
             return new SkillTarget(

@@ -8,7 +8,7 @@ namespace InfinityWorldChess.SkillEffectDomain.BasicAttackBundle
     {
         [field: S] public float F256 { get; set; }
 
-        public override string ShowDescription=>base.ShowDescription+
+        public override string Description=>base.Description+
                                                 $"每单位距离增加此招式{F256:P0}伤害。";
 
         protected override void PreInteraction(SkillInteraction interaction)

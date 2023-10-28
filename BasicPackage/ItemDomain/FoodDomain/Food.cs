@@ -4,7 +4,6 @@ using InfinityWorldChess.BattleDomain;
 using InfinityWorldChess.BuffDomain;
 using InfinityWorldChess.RoleDomain;
 using InfinityWorldChess.Ugf;
-using Secyud.Ugf;
 using Secyud.Ugf.Archiving;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,24 +12,11 @@ using UnityEngine;
 
 namespace InfinityWorldChess.ItemDomain.FoodDomain
 {
-    public sealed class Food : IdBuffProperty<Food>,
-        IItem, IEdible, IEdibleInBattle, IHasFlavor, IHasMouthfeel, IArchivableShown, IArchivable
+    public sealed class Food : CustomizableItem<Food>,
+        IItem, IEdible, IEdibleInBattle, IHasFlavor, IHasMouthfeel, IArchivable
     {
         public readonly List<IBuff<Role>> RoleBuffs = new();
         public readonly List<IBuff<BattleRole>> BattleRoleBuffs = new();
-
-
-        public string Name { get; set; }
-
-        public string Description { get; set; }
-
-        public IObjectAccessor<Sprite> Icon { get; set; }
-
-        public string ShowName => "菜肴 " + Name;
-
-        public string ShowDescription => Description;
-
-        public IObjectAccessor<Sprite> ShowIcon => Icon;
 
         public int Score { get; set; }
 
@@ -55,7 +41,6 @@ namespace InfinityWorldChess.ItemDomain.FoodDomain
 
         public override void Save(IArchiveWriter writer)
         {
-            this.SaveShown(writer);
             this.SaveMouthFeel(writer);
             this.SaveFlavors(writer);
             base.Save(writer);
@@ -63,7 +48,6 @@ namespace InfinityWorldChess.ItemDomain.FoodDomain
 
         public override void Load(IArchiveReader reader)
         {
-            this.LoadShown(reader);
             this.LoadMouthFeel(reader);
             this.LoadFlavors(reader);
             base.Load(reader);

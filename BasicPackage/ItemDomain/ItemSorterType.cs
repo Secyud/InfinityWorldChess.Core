@@ -25,6 +25,6 @@ namespace InfinityWorldChess.ItemDomain
 			};
 		}
 
-		public override string ShowName => "物品类型";
+		public override string Name => "物品类型";
 	}
 }

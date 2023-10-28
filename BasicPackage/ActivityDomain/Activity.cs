@@ -8,9 +8,9 @@ namespace InfinityWorldChess.ActivityDomain
 {
     public class Activity: IActivity
     {
-        [field: S] public string ShowDescription { get; set; }
-        [field: S] public string ShowName { get; set; }
-        [field: S] public IObjectAccessor<Sprite> ShowIcon { get; set; }
+        [field: S] public string Description { get; set; }
+        [field: S] public string Name { get; set; }
+        [field: S] public IObjectAccessor<Sprite> Icon { get; set; }
         [field: S] public List<IActivityTrigger> Triggers { get; } = new();
         public ActivityState State { get; set; }
         public void SetContent(Transform transform)

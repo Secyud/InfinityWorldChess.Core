@@ -8,9 +8,9 @@ namespace InfinityWorldChess.ActivityDomain
 {
     public class ActivityGroup : IShowable, IArchivable
     {
-        [field: S] public string ShowName { get; set; }
-        [field: S] public string ShowDescription { get; set; }
-        [field: S] public IObjectAccessor<Sprite> ShowIcon { get; set; }
+        [field: S] public string Name { get; set; }
+        [field: S] public string Description { get; set; }
+        [field: S] public IObjectAccessor<Sprite> Icon { get; set; }
 
         [field: S] public List<IActivity> Activities { get; } = new();
 
@@ -20,15 +20,15 @@ namespace InfinityWorldChess.ActivityDomain
         public virtual void Save(IArchiveWriter writer)
         {
             writer.Write((byte)State);
-            writer.Write(ShowName);
+            writer.Write(Name);
             writer.Write(Activities.IndexOf(CurrentActivity));
         }
 
         public virtual void Load(IArchiveReader reader)
         {
             State = (ActivityState)reader.ReadByte();
-            ShowName = reader.ReadString();
-            U.Tm.TryWriteObject(this, ShowName);
+            Name = reader.ReadString();
+            U.Tm.TryWriteObject(this, Name);
             int index = reader.ReadInt32();
             if (index >= 0 && index < Activities.Count)
             {

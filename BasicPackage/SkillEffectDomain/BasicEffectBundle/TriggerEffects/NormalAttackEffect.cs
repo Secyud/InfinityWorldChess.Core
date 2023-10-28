@@ -13,7 +13,7 @@ namespace InfinityWorldChess.SkillEffectDomain.BasicEffectBundle
         [field: S] public float AttackFactor { get; set; }
         public int LayerCount { get; set; }
 
-        public override string ShowDescription =>
+        public override string Description =>
             $"触发{AttackValue}伤害。({LayerCount})";
 
         public override void Overlay(IBuffEffect sameEffect, IBuff<BattleRole> buff)
