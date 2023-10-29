@@ -5,6 +5,7 @@ using Secyud.Ugf.Archiving;
 using System.Collections.Generic;
 using System.Linq;
 using Secyud.Ugf.DataManager;
+using UnityEngine;
 
 #endregion
 
@@ -12,7 +13,7 @@ namespace InfinityWorldChess.RoleDomain
 {
     public partial class Role
     {
-        public CoreSkillProperty CoreSkill { get; } = new();
+        [field: S] public CoreSkillProperty CoreSkill { get; } = new();
 
         public void AutoEquipCoreSkill()
         {
@@ -21,31 +22,39 @@ namespace InfinityWorldChess.RoleDomain
 
         public class CoreSkillProperty : IArchivable
         {
-            public SortedDictionary<string, ICoreSkill> LearnedSkills { get; } = new();
+            [S] private readonly List<ICoreSkill> _learnedSkills = new();
 
-            private readonly CoreSkillContainer[][] _layers;
+            private readonly CoreSkillContainer[] _equippedSkills =
+                new CoreSkillContainer[SharedConsts.CoreSkillCount];
 
-            public CoreSkillProperty()
+            public IReadOnlyList<ICoreSkill> GetLearnedSkills()
             {
-                _layers = new CoreSkillContainer[SharedConsts.CoreSkillLayerCount][];
-                uint count = 1u;
-                for (int i = 0; i < SharedConsts.CoreSkillLayerCount; i++)
-                {
-                    count <<= 1;
-                    _layers[i] = new CoreSkillContainer[count];
-                }
+                return _learnedSkills;
             }
+
+            public bool TryAddLearnedSkill(ICoreSkill skill)
+            {
+                if (_learnedSkills.Any(u => u.ResourceId == skill.ResourceId))
+                {
+                    Debug.LogWarning($"{skill.ResourceId} is already exist;");
+
+                    return false;
+                }
+
+                _learnedSkills.Add(skill);
+                return true;
+            }
+
 
             public CoreSkillContainer Get(byte maxLayer, byte fullCode)
             {
-                FormatCode(maxLayer, ref fullCode);
-                return _layers[maxLayer][fullCode];
+                return _equippedSkills[GetIndex(maxLayer, fullCode)];
             }
 
             public void Set(ICoreSkill value, byte maxLayer, byte fullCode)
             {
-                FormatCode(maxLayer, ref fullCode);
-                _layers[maxLayer][fullCode] = value is null ? null : new CoreSkillContainer(value, maxLayer, fullCode);
+                _equippedSkills[GetIndex(maxLayer, fullCode)] =
+                    value is null ? null : new CoreSkillContainer(value, maxLayer, fullCode);
             }
 
             public void Set(ICoreSkill skill, byte lastCode, byte[] codeArray)
@@ -63,7 +72,9 @@ namespace InfinityWorldChess.RoleDomain
             public void GetGroup(byte maxLayer, byte preCode, CoreSkillContainer[] group)
             {
                 for (uint i = 0; i < SharedConsts.CoreSkillCodeCount; i++)
-                    group[i] = _layers[maxLayer][preCode + (i << maxLayer)];
+                {
+                    group[i] = _equippedSkills[GetIndex(maxLayer, (byte)(preCode + (i << maxLayer)))];
+                }
             }
 
             /// <summary>
@@ -81,6 +92,18 @@ namespace InfinityWorldChess.RoleDomain
                 return (byte)code;
             }
 
+            private int GetIndex(byte maxLayer, byte fullCode)
+            {
+                int bias = 0, layerLen = 1;
+                for (int i = 0; i < maxLayer; i++)
+                {
+                    layerLen *= SharedConsts.CoreSkillCodeCount;
+                    bias += layerLen;
+                }
+
+                return GetCode(maxLayer, fullCode) + bias;
+            }
+
             public static bool CanSet(ICoreSkill skill, byte maxLayer, byte fullCode)
             {
                 if (maxLayer < skill.MaxLayer)
@@ -88,17 +111,17 @@ namespace InfinityWorldChess.RoleDomain
 
                 byte skillCode = skill.FullCode;
 
-                FormatCode(maxLayer, ref fullCode);
-                FormatCode(skill.MaxLayer, ref skillCode);
+                fullCode = GetCode(maxLayer, fullCode);
+                skillCode = GetCode(skill.MaxLayer, skillCode);
 
                 fullCode = (byte)(fullCode >> (maxLayer - skill.MaxLayer));
 
                 return fullCode == skillCode;
             }
 
-            private static void FormatCode(byte maxLayer, ref byte code)
+            private static byte GetCode(byte maxLayer, byte fullCode)
             {
-                code = (byte)(code % (1u << maxLayer + 1));
+                return (byte)(fullCode % (1u << maxLayer + 1));
             }
 
 
@@ -106,7 +129,7 @@ namespace InfinityWorldChess.RoleDomain
             {
                 List<ICoreSkill> tmp = new();
 
-                foreach (ICoreSkill skill in LearnedSkills.Values)
+                foreach (ICoreSkill skill in _learnedSkills)
                 {
                     if (Get(skill.MaxLayer, skill.FullCode) is null)
                     {
@@ -126,13 +149,13 @@ namespace InfinityWorldChess.RoleDomain
                 {
                     TrySetFromList(1, i);
                 }
-
-                foreach (byte i in _layers[3]
-                             .Where(c => c is not null)
-                             .Select(c => (byte)(c.EquipCode & 0b111)))
-                {
-                    TrySetFromList(2, i);
-                }
+                //
+                // foreach (byte i in _layers[3]
+                //              .Where(c => c is not null)
+                //              .Select(c => (byte)(c.EquipCode & 0b111)))
+                // {
+                //     TrySetFromList(2, i);
+                // }
 
                 return;
 
@@ -151,49 +174,53 @@ namespace InfinityWorldChess.RoleDomain
 
             public void Save(IArchiveWriter writer)
             {
-                writer.Write(LearnedSkills.Count);
-                foreach (ICoreSkill skill in LearnedSkills.Values)
+                writer.Write(_learnedSkills.Count);
+                for (int i = 0; i < _learnedSkills.Count; i++)
                 {
+                    ICoreSkill skill = _learnedSkills[i];
+                    skill.SaveIndex = i;
                     writer.WriteObject(skill);
                 }
 
-                uint count = 1;
-                for (int i = 0; i < SharedConsts.CoreSkillLayerCount; i++)
+                for (int i = 0; i < _equippedSkills.Length; i++)
                 {
-                    CoreSkillContainer[] layer = _layers[i];
-                    count <<= 1;
-                    for (int j = 0; j < count; j++)
-                    {
-                        writer.Write(layer[i]?.Skill.Name ?? string.Empty);
-                    }
+                    CoreSkillContainer skill = _equippedSkills[i];
+                    writer.Write(skill?.Skill.SaveIndex ?? -1);
                 }
+
             }
 
             public void Load(IArchiveReader reader)
             {
-                LearnedSkills.Clear();
+                _learnedSkills.Clear();
                 int skillCount = reader.ReadInt32();
 
                 for (int i = 0; i < skillCount; i++)
                 {
                     ICoreSkill skill = reader.ReadObject<ICoreSkill>();
-                    LearnedSkills[skill.Name] = skill;
+                    _learnedSkills.Add(skill);
                 }
 
-                uint count = 1;
-                for (byte i = 0; i < SharedConsts.CoreSkillLayerCount; i++)
+                for (int i = 0; i < _equippedSkills.Length; i++)
                 {
-                    CoreSkillContainer[] layer = _layers[i];
-                    count <<= 1;
-                    for (byte j = 0; j < count; j++)
-                    {
-                        string str = reader.ReadString();
+                    int index = reader.ReadInt32();
 
-                        layer[j] = str.Length == 0
-                            ? null
-                            : new CoreSkillContainer(
-                                LearnedSkills[str],
-                                i, j);
+                    if (index < 0)
+                    {
+                        _equippedSkills[i] = null;
+                    }
+                    else
+                    {
+                        int layerLen = SharedConsts.CoreSkillCodeCount, layer = 0, code = i;
+                        for (; code - layerLen > 0;)
+                        {
+                            code -= layerLen;
+                            layer++;
+                            layerLen *= SharedConsts.CoreSkillCodeCount;
+                        }
+
+                        _equippedSkills[i] = new CoreSkillContainer(
+                            _learnedSkills[index], (byte)layer, (byte)code);
                     }
                 }
             }

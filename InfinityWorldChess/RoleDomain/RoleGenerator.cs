@@ -217,7 +217,7 @@ namespace InfinityWorldChess.RoleDomain
             for (int i = total - 1; i >= min; i--)
             {
                 ICoreSkill skill = _coreSkills[i];
-                role.CoreSkill.LearnedSkills[skill.Name] = skill;
+                role.CoreSkill.TryAddLearnedSkill(skill);
                 _coreSkills.RemoveAt(i);
             }
 
@@ -226,7 +226,7 @@ namespace InfinityWorldChess.RoleDomain
             for (int i = total - 1; i >= min; i--)
             {
                 IFormSkill skill = _formSkills[i];
-                role.FormSkill.LearnedSkills[skill.Name] = skill;
+                role.FormSkill.TryAddLearnedSkill(skill);
                 _formSkills.RemoveAt(i);
             }
 
@@ -235,7 +235,7 @@ namespace InfinityWorldChess.RoleDomain
             for (int i = total - 1; i >= min; i--)
             {
                 IPassiveSkill skill = _passiveSkills[i];
-                role.PassiveSkill.LearnedSkills[skill.Name] = skill;
+                role.PassiveSkill.TryAddLearnedSkill(skill) ;
                 _passiveSkills.RemoveAt(i);
             }
 

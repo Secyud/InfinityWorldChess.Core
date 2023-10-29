@@ -29,21 +29,21 @@ namespace InfinityWorldChess.SkillDomain
 			{
 				SkillTable.AutoSetButtonTable
 					<ICoreSkill, CoreSkillSorters,CoreSkillFilters,CoreSkillButtons>(
-						_role.CoreSkill.LearnedSkills.Values.ToList());
+						_role.CoreSkill.GetLearnedSkills().ToList());
 				break;
 			}
 			case 1:
 			{
 				SkillTable.AutoSetButtonTable
 					<IFormSkill, FormSkillSorters,FormSkillFilters,FormSkillButtons>(
-						_role.FormSkill.LearnedSkills.Values.ToList());
+						_role.FormSkill.GetLearnedSkills().ToList());
 				break;
 			}
 			case 2:
 			{
 				SkillTable.AutoSetButtonTable
 					<IPassiveSkill, PassiveSkillSorters,PassiveSkillFilters,PassiveSkillButtons>(
-						_role.PassiveSkill.LearnedSkills.Values.ToList());
+						_role.PassiveSkill.GetLearnedSkills().ToList());
 				break;
 			}
 			}

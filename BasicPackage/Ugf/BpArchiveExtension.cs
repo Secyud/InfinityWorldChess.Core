@@ -1,12 +1,8 @@
 ﻿#region
 
-using InfinityWorldChess.ItemDomain;
 using InfinityWorldChess.ItemDomain.FoodDomain;
 using InfinityWorldChess.SkillDomain;
-using Secyud.Ugf;
 using Secyud.Ugf.Archiving;
-using Secyud.Ugf.DataManager;
-using UnityEngine;
 
 #endregion
 

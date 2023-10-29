@@ -1,6 +1,5 @@
 ﻿using InfinityWorldChess.SkillDomain;
 using Secyud.Ugf;
-using UnityEngine;
 
 namespace InfinityWorldChess.RoleDomain
 {
@@ -8,19 +7,9 @@ namespace InfinityWorldChess.RoleDomain
     {
         public  string Description => $"可习得招式{Name}。";
 
-        public override void Invoke(Role role)
-        {
-            if (role.CoreSkill.LearnedSkills.ContainsKey(Name))
-            {
-                Debug.LogWarning($"{Name} is already exist;");
-                return;
-            }
-            base.Invoke(role);
-        }
-
         protected override void Invoke(Role role, ICoreSkill item)
         {
-            role.CoreSkill.LearnedSkills[item.Name] = item;
+            role.CoreSkill.TryAddLearnedSkill(item);
         }
     }
 }

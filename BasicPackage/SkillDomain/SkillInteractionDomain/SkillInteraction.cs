@@ -2,7 +2,6 @@
 
 using InfinityWorldChess.BattleDomain;
 using InfinityWorldChess.BuffDomain;
-using InfinityWorldChess.Ugf;
 
 #endregion
 

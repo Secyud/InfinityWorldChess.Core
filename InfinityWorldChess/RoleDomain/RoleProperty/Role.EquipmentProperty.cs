@@ -5,6 +5,7 @@ using InfinityWorldChess.ItemDomain.EquipmentDomain;
 using System.Collections.Generic;
 using System.Ugf.Collections.Generic;
 using Secyud.Ugf.Archiving;
+using Secyud.Ugf.DataManager;
 
 #endregion
 
@@ -12,7 +13,7 @@ namespace InfinityWorldChess.RoleDomain
 {
     public partial class Role
     {
-        public EquipmentProperty Equipment { get; } = new();
+        [field: S] public EquipmentProperty Equipment { get; } = new();
 
         public void SetEquipment(IEquipment equipment)
         {
@@ -70,17 +71,16 @@ namespace InfinityWorldChess.RoleDomain
                 {
                     if (_equipments[i] is null)
                     {
-                        writer.Write(false);
+                        writer.Write(-1);
                         continue;
                     }
 
                     if (i > 0 && _equipments[i] == _equipments[i - 1])
                     {
-                        writer.Write(false);
+                        writer.Write(-1);
                         continue;
                     }
 
-                    writer.Write(true);
                     writer.Write(_equipments[i].SaveIndex);
                 }
             }
@@ -90,10 +90,12 @@ namespace InfinityWorldChess.RoleDomain
                 for (byte i = 0; i < SharedConsts.MaxBodyPartsCount; i++)
                 {
                     this[i, role] = null;
-                    bool b = reader.ReadBoolean();
-                    if (!b) continue;
-
-                    this[i, role] = role.Item[reader.ReadInt32()] as IEquipment;
+                    int index = reader.ReadInt32();
+                    if (index >= 0 && role.Item.Count > index &&
+                        role.Item[index] is IEquipment equipment)
+                    {
+                        this[i, role] = equipment;
+                    }
                 }
             }
 

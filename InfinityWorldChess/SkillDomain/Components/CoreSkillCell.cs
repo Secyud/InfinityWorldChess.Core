@@ -33,7 +33,7 @@ namespace InfinityWorldChess.SkillDomain
         {
             GlobalScope.Instance.OpenSelect().AutoSetSingleSelectTable
                 <ICoreSkill, CoreSkillSorters, CoreSkillFilters>(
-                    SkillView.Property.CoreSkill.LearnedSkills.Values
+                    SkillView.Property.CoreSkill.GetLearnedSkills()
                         .Where(u=>Role.CoreSkillProperty.CanSet(u,Layer,Code))
                         .ToList(),
                     EnsureSkill);

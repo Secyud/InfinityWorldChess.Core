@@ -11,7 +11,7 @@ namespace InfinityWorldChess.SkillDomain
         {
             GlobalScope.Instance.OpenSelect().AutoSetSingleSelectTable
                 <IFormSkill, FormSkillSorters, FormSkillFilters>(
-                    SkillView.Property.FormSkill.LearnedSkills.Values
+                    SkillView.Property.FormSkill.GetLearnedSkills()
                         .Where(u=>Role.FormSkillProperty.CanSet(u,CellIndex))
                             .ToList(), EnsureSkill);
         }

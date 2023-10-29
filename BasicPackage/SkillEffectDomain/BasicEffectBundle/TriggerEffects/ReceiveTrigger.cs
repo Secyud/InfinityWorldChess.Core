@@ -1,7 +1,6 @@
 using InfinityWorldChess.BattleDomain;
 using InfinityWorldChess.BuffDomain;
 using InfinityWorldChess.SkillDomain.SkillInteractionDomain;
-using InfinityWorldChess.Ugf;
 
 namespace InfinityWorldChess.SkillEffectDomain.BasicEffectBundle
 {

@@ -4,6 +4,8 @@ using InfinityWorldChess.SkillDomain;
 using System.Collections.Generic;
 using System.Linq;
 using Secyud.Ugf.Archiving;
+using Secyud.Ugf.DataManager;
+using UnityEngine;
 
 #endregion
 
@@ -11,7 +13,7 @@ namespace InfinityWorldChess.RoleDomain
 {
     public partial class Role
     {
-        public PassiveSkillProperty PassiveSkill { get; } = new();
+        [field:S]public PassiveSkillProperty PassiveSkill { get; } = new();
 
         public void SetPassiveSkill(IPassiveSkill passiveSkill, int location)
         {
@@ -25,20 +27,37 @@ namespace InfinityWorldChess.RoleDomain
 
         public class PassiveSkillProperty
         {
-            private readonly IPassiveSkill[] _skills = new IPassiveSkill[SharedConsts.PassiveSkillCount];
+            [S]private readonly List< IPassiveSkill> _learnedSkills = new();
+            private readonly IPassiveSkill[] _equippedskills = new IPassiveSkill[SharedConsts.PassiveSkillCount];
 
-            public SortedDictionary<string, IPassiveSkill> LearnedSkills { get; } = new();
-            public int Living => _skills.Sum(u => u?.Living ?? 0);
+            public IReadOnlyList<IPassiveSkill> GetLearnedSkills()
+            {
+                return _learnedSkills;
+            }
 
-            public int Kiling => _skills.Sum(u => u?.Kiling ?? 0);
+            public bool TryAddLearnedSkill(IPassiveSkill skill)
+            {
+                if (_learnedSkills.Any(u => u.ResourceId == skill.ResourceId))
+                {
+                    Debug.LogWarning($"{skill.ResourceId} is already exist;");
+                    return false;
+                }
 
-            public int Nimble => _skills.Sum(u => u?.Nimble ?? 0);
+                _learnedSkills.Add(skill);
+                return true;
+            }
+            
+            public int Living => _equippedskills.Sum(u => u?.Living ?? 0);
 
-            public int Defend => _skills.Sum(u => u?.Defend ?? 0);
+            public int Kiling => _equippedskills.Sum(u => u?.Kiling ?? 0);
+
+            public int Nimble => _equippedskills.Sum(u => u?.Nimble ?? 0);
+
+            public int Defend => _equippedskills.Sum(u => u?.Defend ?? 0);
 
             public int Length => SharedConsts.PassiveSkillCount;
 
-            public IPassiveSkill this[int location] => _skills[location];
+            public IPassiveSkill this[int location] => _equippedskills[location];
 
             public IPassiveSkill this[int location, Role role]
             {
@@ -49,55 +68,57 @@ namespace InfinityWorldChess.RoleDomain
 
                     if (value is not null)
                         for (int i = 0; i < SharedConsts.PassiveSkillCount; i++)
-                            if (_skills[i] is not null && _skills[i] == value)
+                            if (_equippedskills[i] is not null && _equippedskills[i] == value)
                             {
                                 if (i == location)
                                     return;
 
-                                _skills[i].UnEquip(role);
-                                _skills[i] = null;
+                                _equippedskills[i].UnEquip(role);
+                                _equippedskills[i] = null;
                                 break;
                             }
 
-                    IPassiveSkill skill = _skills[location];
+                    IPassiveSkill skill = _equippedskills[location];
 
                     skill?.UnEquip(role);
                     value?.Equip(role);
 
-                    _skills[location] = value;
+                    _equippedskills[location] = value;
                 }
             }
 
             public void Save(IArchiveWriter writer)
             {
-                writer.Write(LearnedSkills.Count);
-                foreach (IPassiveSkill skill in LearnedSkills.Values)
+                writer.Write(_learnedSkills.Count);
+                for (int i = 0; i < _learnedSkills.Count; i++)
                 {
+                    IPassiveSkill skill = _learnedSkills[i];
                     writer.WriteObject(skill);
+                    skill.SaveIndex = i;
                 }
 
                 for (int i = 0; i < SharedConsts.PassiveSkillCount; i++)
                 {
-                    writer.Write(_skills[i].Name ?? string.Empty);
+                    writer.Write(_equippedskills[i]?.SaveIndex ?? -1);
                 }
             }
 
             public void Load(IArchiveReader reader, Role role)
             {
-                LearnedSkills.Clear();
+                _learnedSkills.Clear();
                 int count = reader.ReadInt32();
 
                 for (int i = 0; i < count; i++)
                 {
                     IPassiveSkill skill = reader.ReadObject<IPassiveSkill>();
-                    LearnedSkills[skill.Name] = skill;
+                    _learnedSkills.Add(skill);
                 }
 
 
                 for (int i = 0; i < SharedConsts.PassiveSkillCount; i++)
                 {
-                    string str = reader.ReadString();
-                    this[i, role] = str.Length == 0 ? null : LearnedSkills[str];
+                    int index = reader.ReadInt32();
+                    this[i, role] = index < 0 ? null : _learnedSkills[index];
                 }
             }
 
@@ -106,7 +127,7 @@ namespace InfinityWorldChess.RoleDomain
                 int minLevel = 0;
                 int record = 0;
                 IPassiveSkill[] tmp = new IPassiveSkill[SharedConsts.PassiveSkillCount];
-                foreach (IPassiveSkill skill in LearnedSkills.Values
+                foreach (IPassiveSkill skill in _learnedSkills
                              .Where(skill => skill.Score >= minLevel))
                 {
                     minLevel = skill.Score;

@@ -1,5 +1,4 @@
 ﻿using InfinityWorldChess.GameDomain;
-using InfinityWorldChess.ItemDomain;
 using InfinityWorldChess.RoleDomain;
 using InfinityWorldChess.Ugf;
 using Secyud.Ugf;
@@ -9,7 +8,7 @@ using UnityEngine;
 
 namespace InfinityWorldChess.SkillDomain
 {
-    public class PassiveSkill : IPassiveSkill, IArchivable,IArchivedResource
+    public class PassiveSkill : IPassiveSkill, IArchivable,IDataResource
     {
 
         [field: S] public string ResourceId { get; set; }
@@ -62,5 +61,7 @@ namespace InfinityWorldChess.SkillDomain
             this.LoadSkill(reader);
             this.LoadResource(reader);
         }
+
+        public int SaveIndex { get; set; }
     }
 }

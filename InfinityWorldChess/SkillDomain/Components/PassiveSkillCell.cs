@@ -10,7 +10,7 @@ namespace InfinityWorldChess.SkillDomain
         {
             GlobalScope.Instance.OpenSelect().AutoSetSingleSelectTable
                 <IPassiveSkill, PassiveSkillSorters, PassiveSkillFilters>(
-                    SkillView.Property.PassiveSkill.LearnedSkills.Values.ToList(),
+                    SkillView.Property.PassiveSkill.GetLearnedSkills().ToList(),
                     EnsureSkill);
         }
 
