@@ -1,8 +1,9 @@
 using Secyud.Ugf;
+using Secyud.Ugf.Archiving;
 
 namespace InfinityWorldChess.ActivityDomain
 {
-    public interface IActivity:IShowable,IHasContent
+    public interface IActivity:IShowable,IHasContent,IDataResource
     {
         ActivityState State { get; set; }
         /// <summary>

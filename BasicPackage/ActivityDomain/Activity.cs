@@ -8,6 +8,7 @@ namespace InfinityWorldChess.ActivityDomain
 {
     public class Activity: IActivity
     {
+        [field: S] public string ResourceId { get; set; }
         [field: S] public string Description { get; set; }
         [field: S] public string Name { get; set; }
         [field: S] public IObjectAccessor<Sprite> Icon { get; set; }

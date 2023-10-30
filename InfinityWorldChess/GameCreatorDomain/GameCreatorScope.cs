@@ -44,7 +44,7 @@ namespace InfinityWorldChess.GameCreatorDomain
         public readonly List<IBundle> Bundles = new();
         public readonly List<IBiography> Biography = new();
         public readonly PlayerSetting PlayerSetting = new();
-        public readonly WorldSetting WorldSetting = new();
+        public readonly WorldMessageSetting WorldMessageSetting = new();
 
         public static GameCreatorScope Instance { get; private set; }
      

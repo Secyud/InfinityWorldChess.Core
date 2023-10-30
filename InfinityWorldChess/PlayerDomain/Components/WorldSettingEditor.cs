@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace InfinityWorldChess.PlayerDomain
 {
-	public class WorldSettingEditor :  EditorBase<WorldSetting>
+	public class WorldSettingEditor :  EditorBase<WorldMessageSetting>
 	{
 		[SerializeField] private EditorEvent<string> SeedText;
 		public void SetSeed(string b)

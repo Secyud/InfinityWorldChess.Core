@@ -5,13 +5,13 @@ using InfinityWorldChess.GameDomain.WorldMapDomain;
 using InfinityWorldChess.GlobalDomain;
 using InfinityWorldChess.PlayerDomain;
 using InfinityWorldChess.RoleDomain;
-using InfinityWorldChess.WorldDomain;
 using Secyud.Ugf;
 using Secyud.Ugf.AssetComponents;
 using Secyud.Ugf.DependencyInjection;
 using Secyud.Ugf.HexMap;
 using UnityEditor;
 using UnityEngine;
+using WorldSetting = InfinityWorldChess.GameDomain.WorldMapDomain.WorldSetting;
 
 namespace InfinityWorldChess.GameDomain
 {
@@ -29,8 +29,6 @@ namespace InfinityWorldChess.GameDomain
         public WorldGameContext World =>  Get<WorldGameContext>();
         public PlayerGameContext Player => Get<PlayerGameContext>();
         public RoleGameContext Role => Get<RoleGameContext>();
-
-        public Play Play { get; private set; }
         
         public static GameScope Instance { get; private set; }
 
@@ -47,14 +45,11 @@ namespace InfinityWorldChess.GameDomain
             Map.Create();
             Map.Value.Initialize(U.Get<IHexGridDrawer>());
             Map.Value.transform.SetSiblingIndex(0);
-            Play = U.Tm.ConstructFromResource<Play>(
-                GameCreatorScope.Instance.WorldSetting.PlayName);
         }
 
         public override void Dispose()
         {
             Map.Destroy();
-            Play = null;
             Instance = null;
         }
 

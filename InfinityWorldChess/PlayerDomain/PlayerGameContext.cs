@@ -98,13 +98,15 @@ namespace InfinityWorldChess.PlayerDomain
             }
 
             Activity.Save(writer);
+            
+            GameScope.Instance.World.WorldSetting.PreparePlayer(this);
         }
 
         public virtual IEnumerator OnGameCreation()
         {
             GameCreatorScope cs = GameCreatorScope.Instance;
 
-            HexMetrics.InitializeHashGrid(cs.WorldSetting.Seed);
+            HexMetrics.InitializeHashGrid(cs.WorldMessageSetting.Seed);
 
             Role = GameCreatorScope.Instance.Role;
 
@@ -115,10 +117,6 @@ namespace InfinityWorldChess.PlayerDomain
                 biography.OnGameCreation(Role);
             }
 
-            Role.Position = GameScope.Instance.Map.Value.GetCell(
-                    GameScope.Instance.Play.MapSetting.PlayerInitialIndex)
-                as WorldCell ;
-
             foreach (IBundle bundle in cs.Bundles)
             {
                 bundle.OnGameCreation();
@@ -128,6 +126,8 @@ namespace InfinityWorldChess.PlayerDomain
                     yield return null;
                 }
             }
+            
+            GameScope.Instance.World.WorldSetting.PreparePlayer(this);
         }
     }
 }

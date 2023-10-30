@@ -1,6 +1,7 @@
 #region
 
 using System.Collections.Generic;
+using InfinityWorldChess.GameDomain.WorldMapDomain;
 using InfinityWorldChess.RoleDomain;
 using Secyud.Ugf.TableComponents.ButtonComponents;
 using Secyud.Ugf.UgfHexMap;
@@ -48,5 +49,8 @@ namespace InfinityWorldChess.GameDomain.WorldCellDomain
                     break;
             }
         }
+        
+        
+        public WorldCellMessage Message => GameScope.Instance.World.GetMessage(Index) ;
     }
 }

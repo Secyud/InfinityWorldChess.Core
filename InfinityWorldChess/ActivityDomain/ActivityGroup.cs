@@ -6,8 +6,9 @@ using UnityEngine;
 
 namespace InfinityWorldChess.ActivityDomain
 {
-    public class ActivityGroup : IShowable, IArchivable
+    public sealed class ActivityGroup : IShowable, IArchivable,IDataResource
     {
+        [field: S] public string ResourceId { get; set; }
         [field: S] public string Name { get; set; }
         [field: S] public string Description { get; set; }
         [field: S] public IObjectAccessor<Sprite> Icon { get; set; }
@@ -17,26 +18,28 @@ namespace InfinityWorldChess.ActivityDomain
         public ActivityState State { get; set; }
         public bool Collapsed { get; set; }
         public IActivity CurrentActivity { get; set; }
-        public virtual void Save(IArchiveWriter writer)
+        public void Save(IArchiveWriter writer)
         {
             writer.Write((byte)State);
             writer.Write(Name);
-            writer.Write(Activities.IndexOf(CurrentActivity));
+            for (int i = 0; i < Activities.Count; i++)
+            {
+                writer.Write((byte)Activities[i].State);
+            }
         }
 
-        public virtual void Load(IArchiveReader reader)
+        public void Load(IArchiveReader reader)
         {
             State = (ActivityState)reader.ReadByte();
-            Name = reader.ReadString();
-            U.Tm.TryWriteObject(this, Name);
-            int index = reader.ReadInt32();
-            if (index >= 0 && index < Activities.Count)
+            this.LoadResource(reader);
+            for (int i = 0; i < Activities.Count; i++)
             {
-                CurrentActivity = Activities[index];
-            }
-            if (State == ActivityState.Received)
-            {
-                CurrentActivity.StartActivity(this);
+                ActivityState state = (ActivityState)reader.ReadByte();
+                Activities[i].State = state;
+                if (state == ActivityState.Received)
+                {
+                    CurrentActivity = Activities[i];
+                }
             }
         }
     }

@@ -6,10 +6,10 @@ using Secyud.Ugf.UgfHexMapGenerator;
 
 namespace InfinityWorldChess.PlayerDomain
 {
-	public class WorldSetting 
+	public class WorldMessageSetting 
 	{
 		public int Seed { get; set; }
 
-		public string PlayName { get; set; } = "default";
+		public string WorldName { get; set; } = "default";
 	}
 }
