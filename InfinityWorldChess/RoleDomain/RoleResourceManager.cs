@@ -23,18 +23,18 @@ namespace InfinityWorldChess.RoleDomain
         public readonly RegistrableDictionary<int, AvatarSpriteContainer>[] FemaleAvatarResource =
             new RegistrableDictionary<int, AvatarSpriteContainer>[SharedConsts.AvatarElementCount];
 
-        public readonly List<Tuple<string,Guid> > CoreSkills = new();
-        public readonly List<Tuple<string,Guid>> FormSkills = new();
-        public readonly List<Tuple<string,Guid>> PassiveSkills = new();
-        public readonly List<Tuple<string,Guid>> Items = new();
+        public List<Tuple<string, Guid>> CoreSkills { get; } = new();
+        public List<Tuple<string, Guid>> FormSkills { get; } = new();
+        public List<Tuple<string, Guid>> PassiveSkills { get; } = new();
+        public List<Tuple<string, Guid>> Items { get; } = new();
 
-        public readonly List<string> LastNames;
-        public readonly List<char> FirstNameFrontFemale;
-        public readonly List<char> FirstNameFrontMale;
-        public readonly List<char> FirstNameBehindFemale;
-        public readonly List<char> FirstNameBehindMale;
-        public readonly List<string> FirstNamesFemale;
-        public readonly List<string> FirstNamesMale;
+        public List<string> LastNames { get; }
+        public List<char> FirstNameFrontFemale { get; }
+        public List<char> FirstNameFrontMale { get; }
+        public List<char> FirstNameBehindFemale { get; }
+        public List<char> FirstNameBehindMale { get; }
+        public List<string> FirstNamesFemale { get; }
+        public List<string> FirstNamesMale { get; }
 
         public RoleResourceManager()
         {

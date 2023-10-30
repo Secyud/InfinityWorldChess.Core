@@ -1,4 +1,4 @@
-using InfinityWorldChess.GlobalDomain;
+using InfinityWorldChess.GameDomain;
 using InfinityWorldChess.InteractionDomain;
 using InfinityWorldChess.RoleDomain;
 using InfinityWorldChess.Ugf;
@@ -12,7 +12,7 @@ namespace InfinityWorldChess.ActivityDomain
     {
         [field: S] public TriggerDialogueAction Action { get; set; }
         [field: S] public int RoleId { get; set; }
-        public Role Role => GlobalScope.Instance.RoleContext.Get(RoleId);
+        public Role Role => GameScope.Instance.Role[RoleId];
         protected virtual string ShowDescription => $"寻找{Role.ShowName}，和他谈谈。";
 
         public void SetContent(Transform transform)

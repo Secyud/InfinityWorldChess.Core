@@ -17,20 +17,12 @@ using UnityEngine;
 
 namespace InfinityWorldChess.RoleDomain
 {
-    public partial class Role :  IHasContent
+    public partial class Role : IHasContent
     {
-        [field:S]public int Id { get; private set; }
+        [field: S] public int Id { get; set; }
 
         private readonly Dictionary<Type, RoleProperty> _extraProperties = new();
         private HexUnit _unit;
-
-        public Role(bool load = false)
-        {
-            if (!load)
-            {
-                Id = GlobalScope.Instance.RoleContext.GetNewId();
-            }
-        }
 
         public void SetContent(Transform transform)
         {
@@ -75,15 +67,15 @@ namespace InfinityWorldChess.RoleDomain
             FormSkill.Save(writer);
             PassiveSkill.Save(writer);
             Relation.Save(writer);
-            
-            
+
+
             foreach (RoleProperty extraProperty in
                      _extraProperties.Values.ToList()
                          .Where(extraProperty => !extraProperty.CheckNeeded()))
             {
                 _extraProperties.Remove(extraProperty.GetType());
             }
-            
+
             writer.Write(_extraProperties.Count);
             foreach (RoleProperty extraProperty in _extraProperties.Values)
             {

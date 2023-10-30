@@ -12,5 +12,6 @@ namespace InfinityWorldChess.InteractionDomain
 		
 		// the saying text for current role
 		string Text { get; }
+		 int RoleId { get; }
 	}
 }

@@ -14,16 +14,13 @@ namespace InfinityWorldChess.InteractionDomain.ChatDomain
             service.OpenDialoguePanel();
             ChatRegister register = U.Get<ChatRegister>();
             ChatDialogueUnit unit = new();
-            Role player = GameScope.Instance.Player.Role;
-            Role target = Target;
+            GameScope.Instance.Role.MainOperationRole = Target;
             foreach (IDialogueAction item in register.Items
-                         .Where(item => item.VisibleFor(target)))
+                         .Where(item => item.VisibleFor(Target)))
             {
                 unit.ActionList.Add(item);
             }
             service.Panel.SetInteraction(unit);
-            service.Panel.SetLeftRole(player);
-            service.Panel.SetRightRole(target);
         }
 
         public override string Name => "闲聊";

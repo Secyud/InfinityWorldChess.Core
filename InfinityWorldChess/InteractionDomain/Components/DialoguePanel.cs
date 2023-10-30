@@ -4,6 +4,7 @@ using InfinityWorldChess.Ugf;
 using Secyud.Ugf.BasicComponents;
 using System.Collections.Generic;
 using System.Ugf.Collections.Generic;
+using InfinityWorldChess.GameDomain;
 using InfinityWorldChess.RoleDomain;
 using Secyud.Ugf.LayoutComponents;
 using UnityEngine;
@@ -15,8 +16,7 @@ namespace InfinityWorldChess.InteractionDomain
 {
     public class DialoguePanel : MonoBehaviour
     {
-        [SerializeField] private AvatarEditor LeftRoleAvatar;
-        [SerializeField] private AvatarEditor RightRoleAvatar;
+        [SerializeField] private AvatarEditor CurrentRoleAvatar;
         [SerializeField] private UnityEvent<string> SayingText;
         [SerializeField] private SelectOptionCell SelectPrefab;
         [SerializeField] private SButton NextButton;
@@ -25,19 +25,9 @@ namespace InfinityWorldChess.InteractionDomain
 
         public SImage BackImage => BackGround;
         
-        public Role LeftRole { get; private set; }
-        public Role RightRole { get; private set; }
-        
-        public void SetLeftRole(Role role)
+        public void SetCurrentRole(Role role)
         {
-            LeftRole = role;
-            LeftRoleAvatar.OnInitialize(role?.Basic);
-        }
-        
-        public void SetRightRole(Role role)
-        {
-            RightRole = role;
-            RightRoleAvatar.OnInitialize(role?.Basic);
+            CurrentRoleAvatar.OnInitialize(role?.Basic);
         }
 
         public void SetInteraction(IDialogueUnit unit)
@@ -46,6 +36,8 @@ namespace InfinityWorldChess.InteractionDomain
                 InteractionScope.Instance.DialogueService.CloseDialoguePanel();
             else
             {
+                GameScope.Instance.Role.TryGetValue(unit.RoleId,out Role role);
+                SetCurrentRole(role);
                 SayingText.Invoke(unit.Text);
                 SetDefaultAction(unit.DefaultAction);
                 SetActionList(unit.ActionList);

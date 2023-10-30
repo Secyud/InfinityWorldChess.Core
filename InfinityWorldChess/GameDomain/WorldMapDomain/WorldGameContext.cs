@@ -109,10 +109,12 @@ namespace InfinityWorldChess.GameDomain.WorldMapDomain
         public virtual IEnumerator OnGameCreation()
         {
             string settingName = GameCreatorScope.Instance.WorldMessageSetting.WorldName;
-            string path = $"{Application.persistentDataPath}/{settingName}";
             WorldSetting = U.Tm.ConstructFromResource<WorldSetting>(settingName);
-            FileStream stream = File.OpenRead(path);
-            DefaultArchiveReader reader = new(stream);
+            
+            string path = Path.Combine(WorldSetting.GetDataDirectory(),"map.binary");
+            
+            using FileStream stream = File.OpenRead(path);
+            using DefaultArchiveReader reader = new(stream);
             
             Map.Load(reader);
 

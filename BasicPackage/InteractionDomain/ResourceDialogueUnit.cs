@@ -16,5 +16,6 @@ namespace InfinityWorldChess.InteractionDomain
         public List<IDialogueAction> ActionList => Unit.ActionList;
         public IDialogueAction DefaultAction => Unit.DefaultAction;
         public string Text => Unit.Text;
+        public int RoleId => Unit.RoleId;
     }
 }

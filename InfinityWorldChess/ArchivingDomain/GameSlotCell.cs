@@ -32,7 +32,7 @@ namespace InfinityWorldChess.ArchivingDomain
             if (File.Exists(_slotMessagePath))
             {
                 using FileStream fileStream = File.OpenRead(_slotMessagePath);
-                DefaultArchiveReader reader = new(fileStream);
+                using DefaultArchiveReader reader = new(fileStream);
                 Role.BasicProperty basic = new();
                 basic.Load(reader);
                 Avatar.OnInitialize(basic);

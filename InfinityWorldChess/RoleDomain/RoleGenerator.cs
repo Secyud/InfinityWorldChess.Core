@@ -7,11 +7,11 @@ using System.Collections.Generic;
 using System.Ugf.Collections.Generic;
 using InfinityWorldChess.GameDomain;
 using InfinityWorldChess.GameDomain.WorldCellDomain;
-using InfinityWorldChess.GlobalDomain;
 using Secyud.Ugf;
 using Secyud.Ugf.Collections;
 using Secyud.Ugf.DependencyInjection;
 using Secyud.Ugf.HexMap;
+using UnityEngine.SocialPlatforms;
 
 #endregion
 
@@ -20,6 +20,7 @@ namespace InfinityWorldChess.RoleDomain
     public class RoleGenerator : IRegistry
     {
         private const int GenerateRoleCount = 500;
+        private const int GenerateRoleStartId = 10000;
         private readonly RoleResourceManager _resourceManager;
         private readonly List<WorldCell> _availableWorldCheckers = new();
         private readonly List<ICoreSkill> _coreSkills = new();
@@ -37,11 +38,11 @@ namespace InfinityWorldChess.RoleDomain
         {
             _resourceManager = resourceManager;
 
-            foreach (HexCell hexCell in 
-                     GameScope.Instance.Map.Value.Cells) 
+            foreach (HexCell hexCell in
+                     GameScope.Instance.Map.Value.Cells)
             {
                 WorldCell cell = (WorldCell)hexCell;
-                
+
                 if (cell.IsUnderwater)
                     continue;
 
@@ -72,91 +73,49 @@ namespace InfinityWorldChess.RoleDomain
                     _availableWorldCheckers.Add(cell);
             }
 
+            SetItemResource(_coreSkills, resourceManager.CoreSkills, out _coreSkillCountPerPerson);
+            SetItemResource(_formSkills, resourceManager.FormSkills, out _formSkillCountPerPerson);
+            SetItemResource(_passiveSkills, resourceManager.PassiveSkills, out _passiveSkillCountPerPerson);
+            SetItemResource(_items, resourceManager.Items, out _itemCountPerPerson);
+
+
+            return;
+
+            void SetItemResource<TItem>(
+                List<TItem> itemList,
+                List<Tuple<string, Guid>> resourceIndexes,
+                out int countPerPerson) where TItem : class, IHasScore
             {
-                foreach ((string name , Guid id) in resourceManager.CoreSkills)
+                foreach ((string name, Guid id) in resourceIndexes)
                 {
-                    if (U.Tm.ConstructFromResource(id,name) is ICoreSkill skill)
+                    if (U.Tm.ConstructFromResource(id, name) is not TItem item)
+                        continue;
+                    itemList.Add(item);
+
+                    int count = GetGenerateCount(item.Score, 8, resourceIndexes.Count);
+
+                    for (int i = 0; i < count; i++)
                     {
-                        int count = GetGenerateCount(skill.Score, 16, resourceManager.CoreSkills.Count);
-                        _coreSkills.Add(skill);
-                        if (skill is ICloneable c)
-                        {
-                            for (int i = 0; i < count; i++)
-                                _coreSkills.Add(c.Clone() as ICoreSkill);
-                        }
+                        itemList.Add(U.Tm.ConstructFromResource(id, name) as TItem);
                     }
                 }
 
-                _coreSkillCountPerPerson = _coreSkills.Count / GenerateRoleCount;
-                Shuffle(_coreSkills);
-            }
-            {
-                foreach ((string name , Guid id) in resourceManager.FormSkills)
-                {
-                    if (U.Tm.ConstructFromResource(id, name) is IFormSkill skill)
-                    {
-                        int count = GetGenerateCount(skill.Score, 9, resourceManager.FormSkills.Count);
-                        _formSkills.Add(skill);
-                        if (skill is ICloneable c)
-                        {
-                            for (int i = 0; i < count; i++)
-                                _formSkills.Add(c.Clone() as IFormSkill);
-                        }
-                    }
-                }
-
-                _formSkillCountPerPerson = _formSkills.Count / GenerateRoleCount;
-                Shuffle(_formSkills);
-            }
-            {
-                foreach ((string name , Guid id) in resourceManager.PassiveSkills)
-                {
-                    if (U.Tm.ConstructFromResource(id, name) is IPassiveSkill skill)
-                    {
-                        int count = GetGenerateCount(skill.Score, 3, resourceManager.PassiveSkills.Count);
-                        _passiveSkills.Add(skill);
-                        if (skill is ICloneable c)
-                        {
-                            for (int i = 0; i < count; i++)
-                                _passiveSkills.Add(c.Clone() as IPassiveSkill);
-                        }
-                    }
-                }
-
-                _passiveSkillCountPerPerson = _passiveSkills.Count / GenerateRoleCount;
-                Shuffle(_passiveSkills);
-            }
-            {
-                foreach ((string name , Guid id) in resourceManager.Items)
-                {
-                    if (U.Tm.ConstructFromResource(id, name) is IItem item)
-                    {
-                        int count = GetGenerateCount(item.Score, 8, resourceManager.Items.Count);
-                        _items.Add(item);
-                        if (item is ICloneable c)
-                        {
-                            for (int i = 0; i < count; i++)
-                                _items.Add(c.Clone() as IItem);
-                        }
-                    }
-                }
-
-                _itemCountPerPerson = _items.Count / GenerateRoleCount;
-                Shuffle(_items);
+                countPerPerson = itemList.Count / GenerateRoleCount;
+                Shuffle(itemList);
             }
         }
 
         public IEnumerable<Role> GenerateRole()
         {
             List<Role> roles = new();
-            GlobalScope.Instance.RoleContext.CheckMax = true;
-            for (int i = 0; i < 500; i++)
+            for (int i = GenerateRoleStartId; i < GenerateRoleStartId + GenerateRoleCount; i++)
             {
                 bool female = U.GetRandom(2) > 0;
                 RegistrableDictionary<int, AvatarSpriteContainer>[] group =
                     female ? _resourceManager.FemaleAvatarResource : _resourceManager.MaleAvatarResource;
                 Role role = new()
                 {
+                    Id = i,
                     Basic =
                     {
                         FirstName = _resourceManager.GenerateFirstName(female),
@@ -235,7 +194,7 @@ namespace InfinityWorldChess.RoleDomain
             for (int i = total - 1; i >= min; i--)
             {
                 IPassiveSkill skill = _passiveSkills[i];
-                role.PassiveSkill.TryAddLearnedSkill(skill) ;
+                role.PassiveSkill.TryAddLearnedSkill(skill);
                 _passiveSkills.RemoveAt(i);
             }
 

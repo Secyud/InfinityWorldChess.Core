@@ -1,3 +1,4 @@
+using InfinityWorldChess.GameDomain;
 using InfinityWorldChess.InteractionDomain;
 using InfinityWorldChess.RoleDomain;
 using Secyud.Ugf;
@@ -13,13 +14,16 @@ namespace InfinityWorldChess.ActivityDomain
         
         protected override IDialogueUnit NextDialogueUnit()
         {
-            DialogueService dialogue = U.Get<DialogueService>();
-            Role role = dialogue.Panel.RightRole;
-            RoleActivityDialogueProperty property = role.GetProperty<RoleActivityDialogueProperty>();
+            Role role = GameScope.Instance.Role.MainOperationRole;
+            RoleActivityDialogueProperty property = role?.GetProperty<RoleActivityDialogueProperty>();
             DialogueUnit ret = new();
-            foreach (IDialogueAction dialogueAction in property.DialogueActions)
+            
+            if (property is not null)
             {
-                ret.ActionList.Add(dialogueAction);
+                foreach (IDialogueAction dialogueAction in property.DialogueActions)
+                {
+                    ret.ActionList.Add(dialogueAction);
+                }
             }
             
             return ret;

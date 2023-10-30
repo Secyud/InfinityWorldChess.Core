@@ -12,7 +12,7 @@ namespace InfinityWorldChess.SkillDomain
     {
 
         [field: S] public string ResourceId { get; set; }
-        [field: S] public byte Score { get; set; }
+        [field: S] public int Score { get; set; }
         [field: S] public IPassiveSkillEffect Effect { get; set; }
         [field: S] public IObjectAccessor<SkillAnim> UnitPlay { get; set; }
         [field: S] public string Name { get; set; }

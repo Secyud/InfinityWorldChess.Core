@@ -1,58 +1,97 @@
 #region
 
 using System.Collections;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using InfinityWorldChess.GameDomain;
-using InfinityWorldChess.GlobalDomain;
+using InfinityWorldChess.GameDomain.WorldCellDomain;
+using InfinityWorldChess.GameDomain.WorldMapDomain;
 using Secyud.Ugf;
 using Secyud.Ugf.Archiving;
 using Secyud.Ugf.DependencyInjection;
+using Secyud.Ugf.HexMap;
 
 #endregion
 
 namespace InfinityWorldChess.RoleDomain
 {
-	[Registry(DependScope = typeof(GameScope))]
-	public class RoleGameContext: IRegistry
-	{
-		public Role MainOperationRole { get; set; }
+    [Registry(DependScope = typeof(GameScope))]
+    public class RoleGameContext : SortedDictionary<int, Role>, IRegistry
+    {
+        public Role MainOperationRole { get; set; }
 
-		public Role SupportOperationRole { get; set; }
+        public Role SupportOperationRole { get; set; }
 
-		private static readonly string SavePath = SharedConsts.SaveFilePath(nameof(RoleGameContext));
+        private static readonly string SavePath = SharedConsts.SaveFilePath(nameof(RoleGameContext));
 
-		public bool IsPlayer()
-		{
-			return MainOperationRole.Id == 0;
-		}
+        public bool IsPlayer()
+        {
+            return MainOperationRole.Id == 0;
+        }
 
-		public bool IsPlayerView()
-		{
-			return IsPlayer() || GameScope.Instance.Player.PlayerSetting.YunChouWeiWo;
-		}
+        public bool IsPlayerView()
+        {
+            return IsPlayer() || GameScope.Instance.Player.PlayerSetting.YunChouWeiWo;
+        }
 
-		public virtual IEnumerator OnGameLoading()
-		{
-			using FileStream stream = File.OpenRead(SavePath);
-			using DefaultArchiveReader reader = new(stream);
-			RoleContext roleContext = GlobalScope.Instance.RoleContext;
-			yield return roleContext.Load(reader);
-		}
+        public virtual IEnumerator OnGameLoading()
+        {
+            using FileStream stream = File.OpenRead(SavePath);
+            using DefaultArchiveReader reader = new(stream);
 
-		public virtual IEnumerator OnGameSaving()
-		{
-			using FileStream stream = File.OpenRead(SavePath);
-			using DefaultArchiveWriter writer = new(stream);
+            WorldMap map = GameScope.Instance.Map.Value;
+            Clear();
+            int count = reader.ReadInt32();
 
-			RoleContext role = GlobalScope.Instance.RoleContext;
-			yield return role.Save(writer);
-		}
+            for (int i = 0; i < count; i++)
+            {
+                Role role = new();
+                WorldCell cell = map.GetCell(reader.ReadInt32()) as WorldCell;
+                role.Load(reader, cell);
+                this[role.Id] = role;
+                if (U.AddStep())
+                    yield return null;
+            }
+        }
 
-		public virtual IEnumerator OnGameCreation()
-		{
-			U.Get<RoleGenerator>().GenerateRole();
-			if (U.AddStep())
-				yield return null;
-		}
-	}
+        public virtual IEnumerator OnGameSaving()
+        {
+            using FileStream stream = File.OpenRead(SavePath);
+            using DefaultArchiveWriter writer = new(stream);
+
+
+            List<Role> roles = Values.ToList();
+
+            int count = roles.Count;
+
+            writer.Write(count);
+
+            foreach (Role role in roles)
+            {
+                writer.Write(role.Relation.Position.Index);
+                role.Save(writer);
+                if (U.AddStep())
+                    yield return null;
+            }
+        }
+
+        public virtual IEnumerator OnGameCreation()
+        {
+            string directory = GameScope.Instance.World.WorldSetting.GetDataDirectory();
+            string path = Path.Combine(directory, "roles.binary");
+
+            List<Role> roles = U.Tm.ConstructListFromFile<Role>(path);
+
+            foreach (Role role in roles)
+            {
+                this[role.Id] = role;
+                HexCell cell = GameScope.Instance.Map.Value.GetCell(role.PositionIndex);
+                role.Position = cell as WorldCell;
+            }
+            
+            if (U.AddStep())
+                yield return null;
+        }
+    }
 }

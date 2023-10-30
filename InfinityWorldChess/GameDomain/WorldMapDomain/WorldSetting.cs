@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.IO;
 using InfinityWorldChess.GameDomain.WorldCellDomain;
 using InfinityWorldChess.PlayerDomain;
 using Secyud.Ugf;
@@ -30,6 +31,11 @@ namespace InfinityWorldChess.GameDomain.WorldMapDomain
         public void PreparePlayer(PlayerGameContext context)
         {
             context.Role.Position = GameScope.Instance.Map.Value.GetCell(PlayerCellIndex) as WorldCell;
+        }
+
+        public string GetDataDirectory()
+        {
+            return Path.Combine(U.Path,"Data/Play",Name);
         }
     }
 }

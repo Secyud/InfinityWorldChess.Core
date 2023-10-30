@@ -11,8 +11,6 @@ namespace InfinityWorldChess.GlobalDomain
         private readonly IMonoContainer<BodyPartSelectComponent> _bodyPartSelect;
         
         public static GlobalScope Instance { get; private set; }
-
-        public RoleContext RoleContext => Get<RoleContext>();
         public GlobalScope(IwcAssets assets)
         {
             _selectTable = MonoContainer<Table>.Create(assets,"SelectableTable");

@@ -104,15 +104,21 @@ namespace InfinityWorldChess.RoleDomain
                 IEquipment[] tmp = new IEquipment[SharedConsts.MaxBodyPartsCount];
 
                 foreach (IEquipment equipment in equipments)
+                {
                     for (byte i = 0; i < SharedConsts.MaxBodyPartsCount; i++)
+                    {
                         if (equipment.CanSet(i) && (tmp[i] == null || tmp[i].Score < equipment.Score))
                         {
                             tmp[i] = equipment;
                             break;
                         }
+                    }
+                }
 
                 for (byte i = 0; i < SharedConsts.MaxBodyPartsCount; i++)
+                {
                     this[i, role] = tmp[i];
+                }
             }
         }
     }

@@ -85,7 +85,7 @@ namespace InfinityWorldChess.Ugf
 		// ReSharper disable StringLiteralTypo
 		private static void AddSkillScoreInfo(this Transform content, int score)
 		{
-			string s = (score >> 5) switch
+			string s = (score >> 28) switch
 			{
 				0 => "<color=#808080ff>[粗浅]</color>",
 				1 => "<color=#ffffffff>[入门]</color>",

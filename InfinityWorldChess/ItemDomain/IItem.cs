@@ -7,7 +7,11 @@ using Secyud.Ugf;
 
 namespace InfinityWorldChess.ItemDomain
 {
-	public interface IItem : IShowable, IHasContent, IHasSaveIndex
+	public interface IItem : IShowable, IHasContent, IHasSaveIndex,IHasScore
+	{
+	}
+
+	public interface IHasScore
 	{
 		int Score { get; }
 	}

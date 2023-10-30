@@ -15,7 +15,7 @@ namespace InfinityWorldChess.GameDomain.WorldMapDomain
 	{
 		public override float GetSpeed(HexUnit unit)
 		{
-			Role role = GlobalScope.Instance.RoleContext.Get(unit.Id);
+			GameScope.Instance.Role.TryGetValue(unit.Id, out Role role);
 			return role?.GetSpeed() ?? 1;
 		}
 	}

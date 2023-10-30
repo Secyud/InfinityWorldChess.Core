@@ -1,11 +1,10 @@
-﻿using Secyud.Ugf;
+﻿using InfinityWorldChess.ItemDomain;
+using Secyud.Ugf;
 
 namespace InfinityWorldChess.SkillDomain
 {
-    public interface ISkill:IShowable
+    public interface ISkill:IShowable,IHasScore
     {
-        byte Score { get; set; }
-		
         IObjectAccessor<SkillAnim> UnitPlay { get; set; }
         
         // 生杀灵御

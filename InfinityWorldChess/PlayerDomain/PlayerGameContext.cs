@@ -53,9 +53,8 @@ namespace InfinityWorldChess.PlayerDomain
             using DefaultArchiveReader reader = new(stream);
 
             int index = reader.ReadInt32();
-            Role = new Role(true);
-            Role.Load(reader,
-                GameScope.Instance.Map.Value.GetCell(index) as WorldCell);
+            Role = new Role();
+            Role.Load(reader, GameScope.Instance.Map.Value.GetCell(index) as WorldCell);
 
             SkillPoints = reader.ReadInt32();
 
