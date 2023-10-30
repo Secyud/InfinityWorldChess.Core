@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace InfinityWorldChess.SkillDomain
 {
-    public class PassiveSkill : IPassiveSkill, IArchivable,IDataResource
+    public class PassiveSkill : IPassiveSkill, IArchivable
     {
 
         [field: S] public string ResourceId { get; set; }

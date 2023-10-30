@@ -6,15 +6,15 @@ namespace InfinityWorldChess.SkillEffectDomain.BasicAttackBundle
 	
 		public class AddPenetration : BasicAttack
 		{
-			[field: S] public int D256 { get; set; }
+			[field: S] public int Penetration { get; set; }
 
 			public override string Description=>base.Description+
-			                                        $"此招式穿透增加{D256}。";
+			                                        $"此招式穿透增加{Penetration}。";
 
 			protected override void PreInteraction(SkillInteraction interaction)
 			{
 				base.PreInteraction(interaction);
-				AttackRecord.Penetration += D256;
+				AttackRecord.Penetration += Penetration;
 			}
 		}
 }

@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace InfinityWorldChess.SkillDomain
 {
-    public class SkillAnimAnim:SkillAnim
+    public class SkillAnimAnim : SkillAnim
     {
         [SerializeField] private AnimationCurve Curve;
         [SerializeField] private bool ControlRole;
@@ -17,7 +17,7 @@ namespace InfinityWorldChess.SkillDomain
         {
             base.OnUpdate();
             float value = Curve.Evaluate(LastTime / PlayTime);
-            _animTransform.position =  _e + value * (_s - _e);
+            _animTransform.position = _e + value * (_s - _e);
         }
 
         public override void Play(UgfUnit unit, UgfCell targetCell)

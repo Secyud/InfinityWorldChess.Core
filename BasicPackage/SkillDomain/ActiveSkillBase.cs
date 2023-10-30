@@ -6,12 +6,11 @@ using InfinityWorldChess.Ugf;
 using Secyud.Ugf;
 using Secyud.Ugf.Archiving;
 using Secyud.Ugf.DataManager;
-using Secyud.Ugf.HexMap;
 using UnityEngine;
 
 namespace InfinityWorldChess.SkillDomain
 {
-    public abstract class ActiveSkillBase : IActiveSkill, IArchivable,IDataResource
+    public abstract class ActiveSkillBase : IActiveSkill, IArchivable
     {
         [field: S] public string ResourceId { get; set; }
         [field: S] public string Name { get; set; }
@@ -28,7 +27,7 @@ namespace InfinityWorldChess.SkillDomain
         public byte Kiling { get; set; }
         public byte Nimble { get; set; }
         public byte Defend { get; set; }
-        
+
         public void SetContent(Transform transform)
         {
             transform.AddSimpleShown(this);
@@ -48,33 +47,33 @@ namespace InfinityWorldChess.SkillDomain
             transform.AddParagraph($"效果：{SkillEffect.Description}。");
         }
 
-        public virtual string CheckCastCondition(BattleRole chess,IActiveSkill skill)
+        public virtual string CheckCastCondition(BattleRole chess, IActiveSkill skill)
         {
-            return Condition?.CheckCastCondition(chess,skill);
+            return Condition?.CheckCastCondition(chess, skill);
         }
 
-        public virtual void ConditionCast(BattleRole chess,IActiveSkill skill)
+        public virtual void ConditionCast(BattleRole chess, IActiveSkill skill)
         {
-            Condition?.ConditionCast(chess,skill);
+            Condition?.ConditionCast(chess, skill);
         }
 
-        public virtual ISkillRange GetCastPositionRange(BattleRole role,IActiveSkill skill)
+        public virtual ISkillRange GetCastPositionRange(BattleRole role, IActiveSkill skill)
         {
             if (Position is null)
                 return new SkillRange(Array.Empty<BattleCell>());
-            return Position.GetCastPositionRange(role,skill);
+            return Position.GetCastPositionRange(role, skill);
         }
 
-        public virtual ISkillRange GetCastResultRange(BattleRole role, BattleCell castPosition,IActiveSkill skill)
+        public virtual ISkillRange GetCastResultRange(BattleRole role, BattleCell castPosition, IActiveSkill skill)
         {
             if (Result is null)
                 return new SkillRange(Array.Empty<BattleCell>());
-            return Result.GetCastResultRange(role, castPosition,skill);
+            return Result.GetCastResultRange(role, castPosition, skill);
         }
 
-        public virtual void Cast(BattleRole role, HexCell releasePosition, ISkillRange range,IActiveSkill skill)
+        public virtual void Cast(BattleRole role, BattleCell releasePosition, ISkillRange range, IActiveSkill skill)
         {
-            SkillEffect?.Cast(role, releasePosition, range,this);
+            SkillEffect?.Cast(role, releasePosition, range, this);
         }
 
         public virtual void Save(IArchiveWriter writer)

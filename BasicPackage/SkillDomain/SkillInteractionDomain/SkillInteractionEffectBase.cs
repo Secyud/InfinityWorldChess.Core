@@ -1,7 +1,6 @@
 ﻿#region
 
 using InfinityWorldChess.BattleDomain;
-using Secyud.Ugf.HexMap;
 
 #endregion
 
@@ -17,13 +16,13 @@ namespace InfinityWorldChess.SkillDomain.SkillInteractionDomain
         public abstract string Description { get; }
 
         protected IActiveSkill Skill { get; set; }
-        public void Cast(BattleRole role, HexCell releasePosition, ISkillRange range,IActiveSkill skill)
+        public void Cast(BattleRole role, BattleCell releasePosition, ISkillRange range,IActiveSkill skill)
         {
             Skill = skill;
             Cast(role, releasePosition, range);
         }
 
-        public void Cast(BattleRole role, HexCell releasePosition, ISkillRange range)
+        public void Cast(BattleRole role, BattleCell releasePosition, ISkillRange range)
         {
             Targets = TargetGetter.GetTargetInRange(role, range);
             PreSkill(role, releasePosition);
@@ -51,11 +50,11 @@ namespace InfinityWorldChess.SkillDomain.SkillInteractionDomain
         {
         }
 
-        protected virtual void PreSkill(BattleRole battleChess, HexCell releasePosition)
+        protected virtual void PreSkill(BattleRole battleChess, BattleCell releasePosition)
         {
         }
 
-        protected virtual void PostSkill(BattleRole battleChess, HexCell releasePosition)
+        protected virtual void PostSkill(BattleRole battleChess, BattleCell releasePosition)
         {
         }
 

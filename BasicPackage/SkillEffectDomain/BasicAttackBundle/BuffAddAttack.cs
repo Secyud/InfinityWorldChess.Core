@@ -3,7 +3,6 @@ using InfinityWorldChess.BattleDomain;
 using InfinityWorldChess.SkillEffectDomain.BasicEffectBundle;
 using Secyud.Ugf;
 using Secyud.Ugf.DataManager;
-using Secyud.Ugf.HexMap;
 
 namespace InfinityWorldChess.SkillEffectDomain.BasicAttackBundle
 {
@@ -33,7 +32,7 @@ namespace InfinityWorldChess.SkillEffectDomain.BasicAttackBundle
 
 
         protected override void PostSkill(
-            BattleRole battleChess, HexCell releasePosition)
+            BattleRole battleChess, BattleCell releasePosition)
         {
             base.PostSkill(battleChess, releasePosition);
 
