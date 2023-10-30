@@ -9,10 +9,9 @@ namespace InfinityWorldChess.RoleDomain
     public abstract class RoleItemFunctionBase : ITrigger<Role>
     {
         public abstract void Invoke(Role role);
-
     }
-    
-    public abstract class RoleItemFunctionBase<TItem>:RoleItemFunctionBase
+
+    public abstract class RoleItemFunctionBase<TItem> : RoleItemFunctionBase
     {
         [field: S] public string Name { get; set; }
         [field: S] public Guid ClassId { get; set; }
@@ -22,7 +21,9 @@ namespace InfinityWorldChess.RoleDomain
             if (U.Tm.ConstructFromResource(ClassId, Name)
                 is not TItem item)
             {
+#if DEBUG
                 Debug.LogError($"unable to read resource {Name};");
+#endif
                 return;
             }
 

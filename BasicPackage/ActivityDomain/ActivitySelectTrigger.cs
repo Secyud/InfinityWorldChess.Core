@@ -12,18 +12,20 @@ namespace InfinityWorldChess.ActivityDomain
     /// </summary>
     public class ActivitySelectTrigger : ITrigger
     {
-        [field: S] private string GroupName { get; set; }
-        [field: S] private string ActivityName { get; set; }
+        [field: S] private string GroupResourceId { get; set; }
+        [field: S] private string ActivityResourceId { get; set; }
         [field: S] private bool CurrentSuccess { get; set; }
 
         public void Invoke()
         {
             PlayerGameContext context = U.Get<PlayerGameContext>();
             ActivityGroup group = context.Activity
-                .Find(u => u.Name == GroupName);
+                .Find(u => u.ResourceId == GroupResourceId);
             if (group is null)
             {
-                Debug.LogError($"Cannot find activity group: {GroupName}");
+#if DEBUG
+                Debug.LogError($"Cannot find activity group: {GroupResourceId}");
+#endif
                 return;
             }
 
@@ -31,10 +33,10 @@ namespace InfinityWorldChess.ActivityDomain
             activity.State = CurrentSuccess ? ActivityState.Success : ActivityState.Failed;
             activity.FinishActivity(group);
 
-            activity = group.Activities.Find(u => u.Name == ActivityName);
+            activity = group.Activities.Find(u => u.ResourceId == ActivityResourceId);
             if (activity is null)
             {
-                Debug.LogError($"Cannot find activity({ActivityName}) in group({GroupName}).");
+                Debug.LogError($"Cannot find activity({ActivityResourceId}) in group({GroupResourceId}).");
                 return;
             }
 
