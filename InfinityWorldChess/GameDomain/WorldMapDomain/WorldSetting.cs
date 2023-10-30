@@ -17,16 +17,6 @@ namespace InfinityWorldChess.GameDomain.WorldMapDomain
         [field: S] public int PlayerCellIndex { get; set; }
 
         [field: S] public string ResourceId { get; set; }
-        [field: S] public List<WorldCellMessage> Messages { get; } = new();
-
-
-        public void PrepareWorld(WorldGameContext context)
-        {
-            foreach (WorldCellMessage message in Messages)
-            {
-                context.AddMessage(message);
-            }
-        }
 
         public void PreparePlayer(PlayerGameContext context)
         {

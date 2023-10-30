@@ -10,7 +10,6 @@ using Secyud.Ugf.Archiving;
 using Secyud.Ugf.AssetComponents;
 using Secyud.Ugf.DependencyInjection;
 using Secyud.Ugf.HexMap;
-using UnityEngine;
 
 #endregion
 
@@ -26,7 +25,7 @@ namespace InfinityWorldChess.GameDomain.WorldMapDomain
 
 
         public WorldSetting WorldSetting { get; private set; }
-        
+
         public SortedDictionary<int, WorldCellMessage> WorldMessage { get; } = new();
 
         public void AddMessage(WorldCellMessage message)
@@ -71,56 +70,69 @@ namespace InfinityWorldChess.GameDomain.WorldMapDomain
 
         public virtual IEnumerator OnGameLoading()
         {
-            using FileStream stream = File.OpenRead(SavePath);
-            using DefaultArchiveReader reader = new(stream);
-
-            Map.Load(reader);
-
-            for (int x = 0; x < Map.CellCountX; x++)
-            for (int z = 0; z < Map.CellCountZ; z++)
             {
-                Map.GetCell(x, z).Load(reader);
-                if (U.AddStep(64))
-                    yield return null;
-            }
+                using FileStream stream = File.OpenRead(SavePath);
+                using DefaultArchiveReader reader = new(stream);
 
-            string resourceId = reader.ReadString();
-            WorldSetting = U.Tm.ConstructFromResource<WorldSetting>(resourceId);
+                string resourceId = reader.ReadString();
+                WorldSetting = U.Tm.ConstructFromResource<WorldSetting>(resourceId);
+            }
+            
+            {
+                string path = Path.Combine(WorldSetting.GetDataDirectory(), "map.binary");
+
+                using FileStream stream = File.OpenRead(path);
+                using DefaultArchiveReader reader = new(stream);
+
+                Map.Load(reader);
+
+                path = Path.Combine(WorldSetting.GetDataDirectory(), "regions.binary");
+
+                List<WorldCellMessage> messages = U.Tm.ConstructListFromFile<WorldCellMessage>(path);
+
+                foreach (WorldCellMessage message in messages)
+                {
+                    AddMessage(message);
+                    if (U.AddStep())
+                        yield return null;
+                }
+            }
+            
         }
 
         public virtual IEnumerator OnGameSaving()
         {
             using FileStream stream = File.OpenWrite(SavePath);
             using DefaultArchiveWriter writer = new(stream);
-            
-            Map.Save(writer);
 
-            for (int x = 0; x < Map.CellCountX; x++)
-            for (int z = 0; z < Map.CellCountZ; z++)
-            {
-                Map.GetCell(x, z).Save(writer);
-
-                if (U.AddStep(64))
-                    yield return null;
-            }
             writer.Write(WorldSetting.ResourceId);
+            
+            if (U.AddStep())
+                yield return null;
         }
-
+        
         public virtual IEnumerator OnGameCreation()
         {
             string settingName = GameCreatorScope.Instance.WorldMessageSetting.WorldName;
             WorldSetting = U.Tm.ConstructFromResource<WorldSetting>(settingName);
-            
-            string path = Path.Combine(WorldSetting.GetDataDirectory(),"map.binary");
-            
+
+            string path = Path.Combine(WorldSetting.GetDataDirectory(), "map.binary");
+
             using FileStream stream = File.OpenRead(path);
             using DefaultArchiveReader reader = new(stream);
-            
+
             Map.Load(reader);
 
-            WorldSetting.PrepareWorld(this);
+            path = Path.Combine(WorldSetting.GetDataDirectory(), "regions.binary");
 
-            if (U.AddStep(64))
+            List<WorldCellMessage> messages = U.Tm.ConstructListFromFile<WorldCellMessage>(path);
+
+            foreach (WorldCellMessage message in messages)
+            {
+                AddMessage(message);
+            }
+
+            if (U.AddStep())
                 yield return null;
         }
     }
