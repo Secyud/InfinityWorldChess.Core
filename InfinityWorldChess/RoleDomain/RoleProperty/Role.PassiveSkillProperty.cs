@@ -28,7 +28,7 @@ namespace InfinityWorldChess.RoleDomain
         public class PassiveSkillProperty
         {
             [S]private readonly List< IPassiveSkill> _learnedSkills = new();
-            private readonly IPassiveSkill[] _equippedskills = new IPassiveSkill[SharedConsts.PassiveSkillCount];
+            private readonly IPassiveSkill[] _equippedSkills = new IPassiveSkill[SharedConsts.PassiveSkillCount];
 
             public IReadOnlyList<IPassiveSkill> GetLearnedSkills()
             {
@@ -47,17 +47,17 @@ namespace InfinityWorldChess.RoleDomain
                 return true;
             }
             
-            public int Living => _equippedskills.Sum(u => u?.Living ?? 0);
+            public int Living => _equippedSkills.Sum(u => u?.Living ?? 0);
 
-            public int Kiling => _equippedskills.Sum(u => u?.Kiling ?? 0);
+            public int Kiling => _equippedSkills.Sum(u => u?.Kiling ?? 0);
 
-            public int Nimble => _equippedskills.Sum(u => u?.Nimble ?? 0);
+            public int Nimble => _equippedSkills.Sum(u => u?.Nimble ?? 0);
 
-            public int Defend => _equippedskills.Sum(u => u?.Defend ?? 0);
+            public int Defend => _equippedSkills.Sum(u => u?.Defend ?? 0);
 
             public int Length => SharedConsts.PassiveSkillCount;
 
-            public IPassiveSkill this[int location] => _equippedskills[location];
+            public IPassiveSkill this[int location] => _equippedSkills[location];
 
             public IPassiveSkill this[int location, Role role]
             {
@@ -68,22 +68,22 @@ namespace InfinityWorldChess.RoleDomain
 
                     if (value is not null)
                         for (int i = 0; i < SharedConsts.PassiveSkillCount; i++)
-                            if (_equippedskills[i] is not null && _equippedskills[i] == value)
+                            if (_equippedSkills[i] is not null && _equippedSkills[i] == value)
                             {
                                 if (i == location)
                                     return;
 
-                                _equippedskills[i].UnEquip(role);
-                                _equippedskills[i] = null;
+                                _equippedSkills[i].UnEquip(role);
+                                _equippedSkills[i] = null;
                                 break;
                             }
 
-                    IPassiveSkill skill = _equippedskills[location];
+                    IPassiveSkill skill = _equippedSkills[location];
 
                     skill?.UnEquip(role);
                     value?.Equip(role);
 
-                    _equippedskills[location] = value;
+                    _equippedSkills[location] = value;
                 }
             }
 
@@ -99,7 +99,7 @@ namespace InfinityWorldChess.RoleDomain
 
                 for (int i = 0; i < SharedConsts.PassiveSkillCount; i++)
                 {
-                    writer.Write(_equippedskills[i]?.SaveIndex ?? -1);
+                    writer.Write(_equippedSkills[i]?.SaveIndex ?? -1);
                 }
             }
 

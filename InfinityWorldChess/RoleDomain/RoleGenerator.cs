@@ -148,9 +148,9 @@ namespace InfinityWorldChess.RoleDomain
                     };
                 }
 
-                for (int j = 0; j < 9; j++)
+                for (int j = 0; j < SharedConsts.NatureCount; j++)
                 {
-                    role.Nature.Properties[j] = U.GetRandom(1000) - 500;
+                    role.Nature[j] = U.GetRandom(1000) - 500;
                 }
 
                 for (int j = 0; j < 4; j++)
