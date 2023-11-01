@@ -6,6 +6,7 @@ namespace InfinityWorldChess.PluginDomain
     public class PluginInfo
     {
         public string ModuleAssemblyName { get; set; }
+        public bool Disabled { get; set; }
         
         private PluginInfo()
         {

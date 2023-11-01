@@ -11,7 +11,6 @@ namespace InfinityWorldChess.GameDomain.WorldMapDomain
         [field: S] public int Index { get; set; }
         [field: S] public IObjectAccessor<Transform> FeaturePrefab { get; set; }
         [field: S] public string Name { get; set; }
-
         public WorldCell Cell => GameScope.Instance.Map.Value.GetCell(Index) as WorldCell;
     }
 }

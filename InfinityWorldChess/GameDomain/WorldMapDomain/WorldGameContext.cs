@@ -23,14 +23,15 @@ namespace InfinityWorldChess.GameDomain.WorldMapDomain
 
         private static readonly string SavePath = SharedConsts.SaveFilePath(nameof(WorldGameContext));
 
-
         public WorldSetting WorldSetting { get; private set; }
 
         public SortedDictionary<int, WorldCellMessage> WorldMessage { get; } = new();
+        public SortedDictionary<int, WorldCellMessage> WorldIndexById { get; } = new();
 
         public void AddMessage(WorldCellMessage message)
         {
             WorldMessage[message.Index] = message;
+            WorldIndexById[message.Id] = message;
             WorldCell cell = message.Cell;
             if (cell)
             {
@@ -41,6 +42,11 @@ namespace InfinityWorldChess.GameDomain.WorldMapDomain
         public WorldCellMessage GetMessage(int index)
         {
             WorldMessage.TryGetValue(index, out WorldCellMessage msg);
+            return msg;
+        }
+        public WorldCellMessage GetMessageById(int id)
+        {
+            WorldIndexById.TryGetValue(id, out WorldCellMessage msg);
             return msg;
         }
 
@@ -55,10 +61,11 @@ namespace InfinityWorldChess.GameDomain.WorldMapDomain
                     {
                         cell.FeaturePrefab = null;
                     }
-
-                    WorldMessage.Remove(message.Id);
                 }
             }
+
+            WorldMessage.Remove(message.Index);
+            WorldMessage.Remove(message.Id);
         }
 
         public WorldGameContext(IwcAssets assets)
