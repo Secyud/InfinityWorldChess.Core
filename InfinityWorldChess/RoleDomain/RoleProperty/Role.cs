@@ -4,9 +4,7 @@ using Secyud.Ugf;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using InfinityWorldChess.GameDomain;
 using InfinityWorldChess.GameDomain.WorldCellDomain;
-using InfinityWorldChess.GlobalDomain;
 using InfinityWorldChess.Ugf;
 using Secyud.Ugf.Archiving;
 using Secyud.Ugf.DataManager;
@@ -17,11 +15,11 @@ using UnityEngine;
 
 namespace InfinityWorldChess.RoleDomain
 {
-    public partial class Role : IHasContent
+    public partial class Role : IHasContent,IReleasable
     {
         [field: S] public int Id { get; set; }
 
-        private readonly Dictionary<Type, RoleProperty> _extraProperties = new();
+        private readonly SortedDictionary<Guid, RoleProperty> _extraProperties = new();
         private HexUnit _unit;
 
         public void SetContent(Transform transform)
@@ -30,19 +28,14 @@ namespace InfinityWorldChess.RoleDomain
             transform.AddParagraph(ShowDescription);
         }
 
-
-        public void Die()
-        {
-            Position = null;
-        }
-
         public TProperty GetProperty<TProperty>()
             where TProperty : RoleProperty
         {
-            if (!_extraProperties.TryGetValue(typeof(TProperty), out RoleProperty property))
+            Guid id = U.Tm[typeof(TProperty)];
+            if (!_extraProperties.TryGetValue(id, out RoleProperty property))
             {
                 property = U.Get<TProperty>();
-                _extraProperties[typeof(TProperty)] = property;
+                _extraProperties[id] = property;
                 property.Role = this;
             }
 
@@ -52,7 +45,8 @@ namespace InfinityWorldChess.RoleDomain
         public void RemoveProperty<TProperty>()
             where TProperty : RoleProperty
         {
-            _extraProperties.Remove(typeof(TProperty));
+            Guid id = U.Tm[typeof(TProperty)];
+            _extraProperties.Remove(id);
         }
 
         public void Save(IArchiveWriter writer)
@@ -73,7 +67,8 @@ namespace InfinityWorldChess.RoleDomain
                      _extraProperties.Values.ToList()
                          .Where(extraProperty => !extraProperty.CheckNeeded()))
             {
-                _extraProperties.Remove(extraProperty.GetType());
+                Guid id = U.Tm[extraProperty.GetType()];
+                _extraProperties.Remove(id);
             }
 
             writer.Write(_extraProperties.Count);
@@ -99,7 +94,8 @@ namespace InfinityWorldChess.RoleDomain
             for (int i = 0; i < count; i++)
             {
                 RoleProperty property = reader.ReadObject<RoleProperty>();
-                _extraProperties[property!.GetType()] = property;
+                Guid id = U.Tm[property.GetType()];
+                _extraProperties[id] = property;
             }
         }
 
@@ -107,15 +103,9 @@ namespace InfinityWorldChess.RoleDomain
 
         public string ShowDescription => Basic.Description;
 
-
-        public HexUnit Unit { get; set; }
-
-        public void OnDying()
+        public void Release()
         {
-        }
-
-        public void OnEndPlay()
-        {
+            Position = null;
         }
     }
 }
