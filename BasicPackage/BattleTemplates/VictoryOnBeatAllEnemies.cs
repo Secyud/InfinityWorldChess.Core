@@ -1,0 +1,44 @@
+#region
+
+using System.Linq;
+using InfinityWorldChess.BattleDomain;
+
+#endregion
+
+namespace InfinityWorldChess.BattleTemplates
+{
+	public class VictoryOnBeatAllEnemies : IBattleVictoryCondition
+	{
+		private BattleContext _context;
+
+		public void OnBattleInitialize()
+		{
+			BattleScope.Instance.Context.ChessRemovedAction += CheckVictory;
+		}
+
+		public string Description => "击败所有不同阵营的角色.";
+
+		public bool Victory { get; private set; }
+
+		public bool Defeated { get; private set; }
+
+		public void CheckVictory()
+		{
+			bool victory = true;
+			bool defeated = true;
+			
+			foreach (BattleRole chess in BattleScope.Instance.Context.BattleRoles
+				.Where(chess => chess.Camp is not null && !chess.Dead))
+			{
+				if (chess.Camp.Index == 0)
+					defeated = false;
+				else
+					victory = false;
+				if (!defeated&&!victory)
+					return;
+			}
+			Victory = victory;
+			Defeated = defeated;
+		}
+	}
+}

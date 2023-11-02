@@ -3,12 +3,12 @@
 using System.Collections;
 using System.IO;
 using InfinityWorldChess.ActivityDomain;
+using InfinityWorldChess.DialogueDomain;
 using InfinityWorldChess.GameCreatorDomain;
 using InfinityWorldChess.GameDomain;
 using InfinityWorldChess.GameDomain.WorldCellDomain;
 using InfinityWorldChess.GameDomain.WorldMapDomain;
 using InfinityWorldChess.InteractionDomain;
-using InfinityWorldChess.InteractionDomain.ChatDomain;
 using InfinityWorldChess.PlayerDomain;
 using InfinityWorldChess.RoleDomain;
 using Secyud.Ugf;

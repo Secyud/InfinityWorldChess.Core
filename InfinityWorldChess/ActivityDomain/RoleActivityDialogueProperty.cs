@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using InfinityWorldChess.DialogueDomain;
 using InfinityWorldChess.InteractionDomain;
 using InfinityWorldChess.RoleDomain;
 

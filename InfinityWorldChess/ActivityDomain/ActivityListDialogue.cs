@@ -1,5 +1,6 @@
-using InfinityWorldChess.DataOperation.Functions.DialogueActionFunctions;
-using InfinityWorldChess.DataOperation.Templates.DialogueTemplates;
+using InfinityWorldChess.DialogueDomain;
+using InfinityWorldChess.DialogueFunctions;
+using InfinityWorldChess.DialogueTemplates;
 using InfinityWorldChess.GameDomain;
 using InfinityWorldChess.InteractionDomain;
 using InfinityWorldChess.RoleDomain;

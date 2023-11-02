@@ -3,6 +3,7 @@
 using InfinityWorldChess.ItemDomain.BookDomain;
 using InfinityWorldChess.ItemDomain.EquipmentDomain;
 using InfinityWorldChess.ItemDomain.FoodDomain;
+using InfinityWorldChess.ItemTemplates;
 using InfinityWorldChess.ManufacturingDomain;
 using Secyud.Ugf.TableComponents.SorterComponents;
 
@@ -19,7 +20,7 @@ namespace InfinityWorldChess.ItemDomain
 				IEquipment => 1,
 				Food => 2,
 				Drag => 3,
-				SkillBookBase => 4,
+				SkillBook => 4,
 				Manufacturable => 5,
 				_ => 0
 			};

@@ -2,6 +2,7 @@
 using System.Linq;
 using InfinityWorldChess.BuffDomain;
 using InfinityWorldChess.ItemDomain.EquipmentDomain;
+using InfinityWorldChess.ItemTemplates;
 
 namespace InfinityWorldChess.ManufacturingDomain.EquipmentDomain
 {
