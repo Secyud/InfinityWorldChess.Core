@@ -1,4 +1,6 @@
 using System.Linq;
+using InfinityWorldChess.DataOperation.Accessors.RoleAccessors;
+using InfinityWorldChess.DataOperation.Templates.DialogueTemplates;
 using InfinityWorldChess.GameDomain;
 using InfinityWorldChess.RoleDomain;
 using Secyud.Ugf;
@@ -13,8 +15,18 @@ namespace InfinityWorldChess.InteractionDomain.ChatDomain
             DialogueService service = U.Get<DialogueService>();
             service.OpenDialoguePanel();
             ChatRegister register = U.Get<ChatRegister>();
-            ChatDialogueUnit unit = new();
+            
             GameScope.Instance.Role.MainOperationRole = Target;
+            
+            DialogueUnit unit = new()
+            {
+                Text = "你找我干什么？",
+                RoleAccessor = new RoleDirectly
+                {
+                    Value = Target
+                }
+            };
+            
             foreach (IDialogueAction item in register.Items
                          .Where(item => item.VisibleFor(Target)))
             {

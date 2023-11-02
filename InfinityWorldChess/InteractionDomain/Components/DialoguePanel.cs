@@ -24,7 +24,7 @@ namespace InfinityWorldChess.InteractionDomain
         [SerializeField] private SImage BackGround;
 
         public SImage BackImage => BackGround;
-        
+
         public void SetCurrentRole(Role role)
         {
             CurrentRoleAvatar.OnInitialize(role?.Basic);
@@ -36,8 +36,7 @@ namespace InfinityWorldChess.InteractionDomain
                 InteractionScope.Instance.DialogueService.CloseDialoguePanel();
             else
             {
-                GameScope.Instance.Role.TryGetValue(unit.RoleId,out Role role);
-                SetCurrentRole(role);
+                SetCurrentRole(unit.RoleAccessor?.Value);
                 SayingText.Invoke(unit.Text);
                 SetDefaultAction(unit.DefaultAction);
                 SetActionList(unit.ActionList);
@@ -46,18 +45,15 @@ namespace InfinityWorldChess.InteractionDomain
 
         private void SetDefaultAction(IDialogueAction action)
         {
-            if (action is null)
-            {
-                NextButton.gameObject.SetActive(false);
-            }
-            else
-            {
-                NextButton.gameObject.SetActive(true);
-                NextButton.Bind(action.Invoke);
-            }
+            NextButton.Bind(action is null ? Die : action.Invoke);
         }
 
-        private void SetActionList( List<IDialogueAction> actions)
+        private void Die()
+        {
+            Destroy(gameObject);
+        }
+
+        private void SetActionList(IList<IDialogueAction> actions)
         {
             if (actions.IsNullOrEmpty())
             {
@@ -67,12 +63,12 @@ namespace InfinityWorldChess.InteractionDomain
             {
                 SelectActionContent.gameObject.SetActive(true);
                 RectTransform content = SelectActionContent.PrepareLayout();
-                
+
                 for (int index = 0; index < actions.Count; index++)
                 {
                     IDialogueAction action = actions[index];
                     SelectOptionCell cell = SelectPrefab.Instantiate(content);
-                    cell.OnInitialize(index,action.Invoke , action.ActionText);
+                    cell.OnInitialize(index, action.Invoke, action.ActionText);
                 }
             }
         }
