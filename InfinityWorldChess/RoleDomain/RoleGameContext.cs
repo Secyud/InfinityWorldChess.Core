@@ -78,8 +78,8 @@ namespace InfinityWorldChess.RoleDomain
 
         public virtual IEnumerator OnGameCreation()
         {
-            string directory = GameScope.Instance.World.WorldSetting.GetDataDirectory();
-            string path = Path.Combine(directory, "roles.binary");
+            string path = GameScope.Instance.World.WorldSetting
+                .GetDataDirectory("roles.binary");
 
             List<Role> roles = U.Tm.ConstructListFromFile<Role>(path);
 
@@ -89,7 +89,7 @@ namespace InfinityWorldChess.RoleDomain
                 HexCell cell = GameScope.Instance.Map.Value.GetCell(role.PositionIndex);
                 role.Position = cell as WorldCell;
             }
-            
+
             if (U.AddStep())
                 yield return null;
         }

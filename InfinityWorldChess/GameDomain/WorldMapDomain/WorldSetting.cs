@@ -23,9 +23,9 @@ namespace InfinityWorldChess.GameDomain.WorldMapDomain
             context.Role.Position = GameScope.Instance.Map.Value.GetCell(PlayerCellIndex) as WorldCell;
         }
 
-        public string GetDataDirectory()
+        public string GetDataDirectory(string fileName)
         {
-            return Path.Combine(U.Path,"Data/Play",Name);
+            return Path.Combine(U.Path,"Data/Play",Name,fileName);
         }
     }
 }

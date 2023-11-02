@@ -86,14 +86,14 @@ namespace InfinityWorldChess.GameDomain.WorldMapDomain
             }
             
             {
-                string path = Path.Combine(WorldSetting.GetDataDirectory(), "map.binary");
+                string path = WorldSetting.GetDataDirectory("map.binary");
 
                 using FileStream stream = File.OpenRead(path);
                 using DefaultArchiveReader reader = new(stream);
 
                 Map.Load(reader);
 
-                path = Path.Combine(WorldSetting.GetDataDirectory(), "regions.binary");
+                path = WorldSetting.GetDataDirectory("regions.binary");
 
                 List<WorldCellMessage> messages = U.Tm.ConstructListFromFile<WorldCellMessage>(path);
 
@@ -123,14 +123,14 @@ namespace InfinityWorldChess.GameDomain.WorldMapDomain
             string settingName = GameCreatorScope.Instance.WorldMessageSetting.WorldName;
             WorldSetting = U.Tm.ConstructFromResource<WorldSetting>(settingName);
 
-            string path = Path.Combine(WorldSetting.GetDataDirectory(), "map.binary");
+            string path = WorldSetting.GetDataDirectory("map.binary");
 
             using FileStream stream = File.OpenRead(path);
             using DefaultArchiveReader reader = new(stream);
 
             Map.Load(reader);
 
-            path = Path.Combine(WorldSetting.GetDataDirectory(), "regions.binary");
+            path = WorldSetting.GetDataDirectory("regions.binary");
 
             List<WorldCellMessage> messages = U.Tm.ConstructListFromFile<WorldCellMessage>(path);
 
