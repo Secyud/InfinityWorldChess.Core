@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using InfinityWorldChess.BattleDomain.BattleCellDomain;
 using InfinityWorldChess.SkillDomain;
 using Secyud.Ugf.DependencyInjection;
 

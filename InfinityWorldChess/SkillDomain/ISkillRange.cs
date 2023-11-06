@@ -1,6 +1,7 @@
 #region
 
 using InfinityWorldChess.BattleDomain;
+using InfinityWorldChess.BattleDomain.BattleCellDomain;
 
 #endregion
 

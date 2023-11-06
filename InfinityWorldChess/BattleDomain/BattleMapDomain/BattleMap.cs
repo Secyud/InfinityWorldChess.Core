@@ -1,8 +1,7 @@
 #region
 
-using InfinityWorldChess.GameDomain;
+using InfinityWorldChess.BattleDomain.BattleCellDomain;
 using InfinityWorldChess.GameDomain.WorldCellDomain;
-using InfinityWorldChess.Ugf;
 using Secyud.Ugf;
 using Secyud.Ugf.HexMap;
 using Secyud.Ugf.HexMapExtensions;
@@ -35,8 +34,8 @@ namespace InfinityWorldChess.BattleDomain.BattleMapDomain
             if (BattleScope.Instance.Battle is null)
                 return;
 
-            if (BattleScope.Instance.VictoryCondition.Victory ||
-                BattleScope.Instance.VictoryCondition.Defeated)
+            if (BattleScope.Instance.BattleDescriptor.Victory ||
+                BattleScope.Instance.BattleDescriptor.Defeated)
                 BattleScope.DestroyBattle();
             else
             {

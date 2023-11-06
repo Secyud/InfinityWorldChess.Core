@@ -1,3 +1,5 @@
+using InfinityWorldChess.BattleDomain.BattleCellDomain;
+
 namespace InfinityWorldChess.BattleDomain.BattleMapDomain
 {
     public interface IBattleMapActionService

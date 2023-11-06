@@ -1,7 +1,6 @@
 ﻿using InfinityWorldChess.ActivityDomain;
-using InfinityWorldChess.DialogueAccessors;
+using InfinityWorldChess.BattleDomain;
 using InfinityWorldChess.DialogueDomain;
-using InfinityWorldChess.InteractionDomain;
 using InfinityWorldChess.RoleDomain;
 using InfinityWorldChess.Ugf;
 using Secyud.Ugf;
@@ -10,15 +9,15 @@ using UnityEngine;
 
 namespace InfinityWorldChess.ActivityTemplates
 {
-    public class DialogueActivityTrigger : IActivityTrigger,IDialogueAction
+    public class BattleActivityTrigger : IActivityTrigger,IDialogueAction
     {
         [field: S] public IObjectAccessor<Role> RoleAccessor { get; set; }
-        [field: S] public ResourceDialogueUnit DialogueAccessor { get; set; }
+        [field: S] public IObjectAccessor<IBattleDescriptor> BattleAccessor { get; set; }
         [field: S] public string ActionText { get; set;}
+        
 
         private RoleActivityDialogueProperty Property =>
             RoleAccessor?.Value?.GetProperty<RoleActivityDialogueProperty>();
-
         public void StartActivity(ActivityGroup group, Activity activity)
         {
             Property?.AddAction(this);
@@ -36,7 +35,9 @@ namespace InfinityWorldChess.ActivityTemplates
 
         public void Invoke()
         {
-            InteractionScope.Instance.DialogueService.Panel.SetInteraction(DialogueAccessor.Value);
+            IBattleDescriptor battle = BattleAccessor.Value;
+            
+            BattleScope.CreateBattle(battle);
         }
     }
 }

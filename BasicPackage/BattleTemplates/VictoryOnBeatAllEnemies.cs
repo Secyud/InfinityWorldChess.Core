@@ -7,16 +7,16 @@ using InfinityWorldChess.BattleDomain;
 
 namespace InfinityWorldChess.BattleTemplates
 {
-	public class VictoryOnBeatAllEnemies : IBattleVictoryCondition
+	public class VictoryOnBeatAllEnemies :IBattleVictoryCondition
 	{
 		private BattleContext _context;
 
-		public void OnBattleInitialize()
+		public string Description => "击败所有不同阵营的角色.";
+
+		public void SetCondition()
 		{
 			BattleScope.Instance.Context.ChessRemovedAction += CheckVictory;
 		}
-
-		public string Description => "击败所有不同阵营的角色.";
 
 		public bool Victory { get; private set; }
 

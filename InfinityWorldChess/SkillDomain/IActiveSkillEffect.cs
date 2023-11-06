@@ -1,4 +1,5 @@
 ﻿using InfinityWorldChess.BattleDomain;
+using InfinityWorldChess.BattleDomain.BattleCellDomain;
 using Secyud.Ugf;
 using Secyud.Ugf.HexMap;
 

@@ -1,10 +1,12 @@
+using InfinityWorldChess.GameDomain.WorldCellDomain;
 using InfinityWorldChess.RoleDomain;
+using Secyud.Ugf;
 using Secyud.Ugf.HexMap;
 using UnityEngine;
 
 namespace InfinityWorldChess.BattleDomain.LightBattle
 {
-    public class LightBattleDescriptor : BattleDescriptor
+    public class LightBattleDescriptor : IBattleDescriptor
     {
         public LightBattleDescriptor(Role player, Role target)
         {
@@ -12,21 +14,21 @@ namespace InfinityWorldChess.BattleDomain.LightBattle
             Target = target;
         }
 
-        public override int SizeX => 4;
-        public override int SizeZ => 4;
+        public string Description => "将目标血量降至50%以下。";
+        public string Name => "切磋";
+        public IObjectAccessor<Sprite> Icon => null;
+        
+        public WorldCell Cell { get; set; }
 
-        public override IBattleVictoryCondition GenerateVictoryCondition()
-        {
-            return new LightBattleVictoryCondition(this);
-        }
-
+        public int SizeX => 4;
+        public int SizeZ => 4;
         private Role Player { get; }
         private Role Target { get; }
-
         public BattleRole BattlePlayer { get; private set; }
         public BattleRole BattleTarget { get; private set; }
 
-        public override void OnBattleCreated()
+
+        public void OnBattleCreated()
         {
             BattleScope scope = BattleScope.Instance;
             HexCell cell1 = scope.Map.GetCell(2, 2);
@@ -55,6 +57,27 @@ namespace InfinityWorldChess.BattleDomain.LightBattle
                 }
             };
             scope.AddRoleBattleChess(BattleTarget, cell2);
+
+
+            BattleContext context = scope.Context;
+            context.RoundBeginAction += CheckVictory;
+            context.RoundEndAction += CheckVictory;
+            context.ActionFinishedAction += CheckVictory;
         }
+
+        public void OnBattleFinished()
+        {
+        }
+
+        private void CheckVictory()
+        {
+            BattleRole target = BattleTarget;
+            Victory = target.HealthValue < target.MaxHealthValue / 2;
+            BattleRole player = BattlePlayer;
+            Defeated = player.HealthValue < player.MaxHealthValue / 2;
+        }
+
+        public bool Victory { get; private set; }
+        public bool Defeated { get; private set; }
     }
 }

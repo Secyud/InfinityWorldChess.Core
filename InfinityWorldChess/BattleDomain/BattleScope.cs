@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Ugf.Collections.Generic;
+using InfinityWorldChess.BattleDomain.BattleCellDomain;
 using InfinityWorldChess.BattleDomain.BattleMapDomain;
 using InfinityWorldChess.BattleDomain.BattleRoleDomain;
 using InfinityWorldChess.GameDomain;
@@ -28,8 +29,7 @@ namespace InfinityWorldChess.BattleDomain
 
         public static BattleScope Instance { get; private set; }
         public BattleMap Map => _map.Value;
-        public BattleDescriptor BattleDescriptor { get; private set; }
-        public IBattleVictoryCondition VictoryCondition { get; private set; }
+        public IBattleDescriptor BattleDescriptor { get; private set; }
         public BattleContext Battle => Get<BattleContext>();
         public BattleContext Context => Get<BattleContext>();
 
@@ -61,21 +61,18 @@ namespace InfinityWorldChess.BattleDomain
             _map.Value.Initialize(Get<UgfHexGridDrawer>());
         }
 
-        public static void CreateBattle(BattleDescriptor descriptor)
+        public static void CreateBattle(IBattleDescriptor descriptor)
         {
             GameScope.Instance.OnInterrupt();
             U.M.CreateScope<BattleScope>();
 
             Instance.BattleDescriptor = descriptor;
-            Instance.VictoryCondition = descriptor.GenerateVictoryCondition();
 
             BattleMap grid = Instance.Map;
             grid.GenerateMap(descriptor.Cell, 
                 descriptor.SizeX, descriptor.SizeZ);
 
             descriptor.OnBattleCreated();
-
-            Instance.VictoryCondition.OnBattleInitialize();
         }
 
 

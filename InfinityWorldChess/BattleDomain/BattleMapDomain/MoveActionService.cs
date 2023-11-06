@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using InfinityWorldChess.BattleDomain.BattleCellDomain;
 using InfinityWorldChess.RoleDomain;
 using Secyud.Ugf.DependencyInjection;
 using Secyud.Ugf.HexMap;

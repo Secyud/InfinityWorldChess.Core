@@ -1,14 +1,14 @@
 #region
 
 using System;
-using InfinityWorldChess.BuffDomain;
 using System.Collections.Generic;
+using InfinityWorldChess.BuffDomain;
 using Secyud.Ugf.UgfHexMap;
 using UnityEngine;
 
 #endregion
 
-namespace InfinityWorldChess.BattleDomain
+namespace InfinityWorldChess.BattleDomain.BattleCellDomain
 {
     public sealed class BattleCell : UgfCell
     {

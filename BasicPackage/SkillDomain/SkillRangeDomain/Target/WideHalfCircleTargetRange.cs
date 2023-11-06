@@ -1,4 +1,5 @@
 ﻿using InfinityWorldChess.BattleDomain;
+using InfinityWorldChess.BattleDomain.BattleCellDomain;
 
 namespace InfinityWorldChess.SkillDomain.SkillRangeDomain.Target
 {

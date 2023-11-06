@@ -1,5 +1,6 @@
 ﻿using System;
 using InfinityWorldChess.BattleDomain;
+using InfinityWorldChess.BattleDomain.BattleCellDomain;
 using InfinityWorldChess.GameDomain;
 using InfinityWorldChess.SkillDomain.SkillRangeDomain;
 using InfinityWorldChess.Ugf;

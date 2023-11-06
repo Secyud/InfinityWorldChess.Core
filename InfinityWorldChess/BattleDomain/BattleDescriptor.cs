@@ -1,24 +1,23 @@
 using InfinityWorldChess.GameDomain;
 using InfinityWorldChess.GameDomain.WorldCellDomain;
+using Secyud.Ugf;
 
 namespace InfinityWorldChess.BattleDomain
 {
-    public abstract class BattleDescriptor
+    public interface IBattleDescriptor:IShowable
     {
-        public WorldCell Cell { get; set; }
+        WorldCell Cell { get; }
 
-        public abstract int SizeX { get; }
+        int SizeX { get; }
 
-        public abstract int SizeZ { get; }
-        
-        public abstract IBattleVictoryCondition GenerateVictoryCondition();
+        int SizeZ { get; }
 
-        public virtual void OnBattleFinished()
-        {
-        }
+        void OnBattleFinished();
 
-        public virtual void OnBattleCreated()
-        {
-        }
+        void OnBattleCreated();
+		
+        public bool Victory { get; }
+		
+        public bool Defeated { get; }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using InfinityWorldChess.BattleDomain.BattleCellDomain;
 using InfinityWorldChess.BattleDomain.BattleMapDomain;
 using Secyud.Ugf.DependencyInjection;
 using Secyud.Ugf.ObserverComponents;
