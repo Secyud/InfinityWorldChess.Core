@@ -1,10 +1,11 @@
 using InfinityWorldChess.GameDomain;
 using InfinityWorldChess.GameDomain.WorldCellDomain;
 using Secyud.Ugf;
+using Secyud.Ugf.Archiving;
 
 namespace InfinityWorldChess.BattleDomain
 {
-    public interface IBattleDescriptor:IShowable
+    public interface IBattleDescriptor:IShowable,IDataResource
     {
         WorldCell Cell { get; }
 

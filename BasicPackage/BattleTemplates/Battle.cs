@@ -12,6 +12,7 @@ namespace InfinityWorldChess.BattleTemplates
 {
     public class Battle : IBattleDescriptor
     {
+        [field: S]public string ResourceId { get; set; }
         [field: S] public int SizeX { get; set; }
         [field: S] public int SizeZ { get; set; }
         [field: S] public IBattleVictoryCondition VictoryCondition { get; set; }
@@ -21,7 +22,6 @@ namespace InfinityWorldChess.BattleTemplates
         [field: S] public List<BattleCampSetting> BattleCampSettings { get; } = new();
         public virtual WorldCell Cell => GameScope.Instance.Player.Role.Position;
         
-
         public void OnBattleFinished()
         {
             
@@ -35,7 +35,7 @@ namespace InfinityWorldChess.BattleTemplates
                 {
                     Name = setting.Name,
                     Index = setting.Index,
-                    Color = new Color(setting.R,setting.B,setting.B)
+                    Color = new Color(setting.R,setting.G,setting.B)
                 };
 
                 foreach (RoleWithIndex roleIndex in setting.CampRoles)
@@ -65,6 +65,5 @@ namespace InfinityWorldChess.BattleTemplates
             };
             scope.AddRoleBattleChess(battleRole, cell);
         }
-
     }
 }

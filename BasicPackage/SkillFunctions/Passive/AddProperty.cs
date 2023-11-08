@@ -30,7 +30,7 @@ namespace InfinityWorldChess.SkillFunctions.Passive
         public override void OnBattleInitialize(BattleRole chess)
         {
             Add();
-            BattleScope.Instance.Battle.BattleFinishAction += Remove;
+            BattleScope.Instance.Context.BattleFinishAction += Remove;
         }
 
         private void Add()

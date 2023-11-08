@@ -8,6 +8,7 @@ namespace InfinityWorldChess.BattleDomain.LightBattle
 {
     public class LightBattleDescriptor : IBattleDescriptor
     {
+        public string ResourceId { get; set; } = "切磋";
         public LightBattleDescriptor(Role player, Role target)
         {
             Player = player;
@@ -26,7 +27,6 @@ namespace InfinityWorldChess.BattleDomain.LightBattle
         private Role Target { get; }
         public BattleRole BattlePlayer { get; private set; }
         public BattleRole BattleTarget { get; private set; }
-
 
         public void OnBattleCreated()
         {

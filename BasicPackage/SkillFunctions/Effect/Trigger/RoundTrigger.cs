@@ -17,19 +17,19 @@ namespace InfinityWorldChess.SkillFunctions.Effect
         public override void Install(BattleRole target, IBuff<BattleRole> buff)
         {
             base.Install(target, buff);
-            BattleScope.Instance.Battle.RoundBeginAction += EffectCheck;
-            _timeRecord = BattleScope.Instance.Battle.TotalTime;
+            BattleScope.Instance.Context.RoundBeginAction += EffectCheck;
+            _timeRecord = BattleScope.Instance.Context.TotalTime;
         }
 
         public override void UnInstall(BattleRole target, IBuff<BattleRole> buff)
         {
             base.UnInstall(target, buff);
-            BattleScope.Instance.Battle.RoundBeginAction -= EffectCheck;
+            BattleScope.Instance.Context.RoundBeginAction -= EffectCheck;
         }
 
         private void EffectCheck()
         {
-            float currentTime = BattleScope.Instance.Battle.TotalTime;
+            float currentTime = BattleScope.Instance.Context.TotalTime;
             while (currentTime > _timeRecord + Time)
             {
                 foreach (ITriggerEffect e in Effects)

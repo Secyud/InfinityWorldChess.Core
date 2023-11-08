@@ -1,23 +1,24 @@
 ﻿using InfinityWorldChess.ActivityDomain;
 using InfinityWorldChess.BattleDomain;
+using InfinityWorldChess.BattleFunctions;
+using InfinityWorldChess.BattleTemplates;
 using InfinityWorldChess.DialogueDomain;
 using InfinityWorldChess.RoleDomain;
-using InfinityWorldChess.Ugf;
 using Secyud.Ugf;
 using Secyud.Ugf.DataManager;
-using UnityEngine;
 
 namespace InfinityWorldChess.ActivityTemplates
 {
-    public class BattleActivityTrigger : IActivityTrigger,IDialogueAction
+    public class BattleActivityTrigger : IActivityTrigger, IDialogueAction
     {
         [field: S] public IObjectAccessor<Role> RoleAccessor { get; set; }
-        [field: S] public IObjectAccessor<IBattleDescriptor> BattleAccessor { get; set; }
-        [field: S] public string ActionText { get; set;}
-        
+        [field: S] public IObjectAccessor<Battle> BattleAccessor { get; set; }
+        [field: S] public string ActionText { get; set; }
+        [field: S] public BattleTrigger NextActivity { get; set; }
 
         private RoleActivityDialogueProperty Property =>
             RoleAccessor?.Value?.GetProperty<RoleActivityDialogueProperty>();
+
         public void StartActivity(ActivityGroup group, Activity activity)
         {
             Property?.AddAction(this);
@@ -35,9 +36,14 @@ namespace InfinityWorldChess.ActivityTemplates
 
         public void Invoke()
         {
-            IBattleDescriptor battle = BattleAccessor.Value;
-            
+            Battle battle = BattleAccessor.Value;
+
             BattleScope.CreateBattle(battle);
+
+            BattleScope instance = BattleScope.Instance;
+
+            instance.Context.BattleFinishAction +=
+                ()=> NextActivity.Invoke(instance);
         }
     }
 }

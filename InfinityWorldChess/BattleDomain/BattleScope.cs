@@ -29,8 +29,7 @@ namespace InfinityWorldChess.BattleDomain
 
         public static BattleScope Instance { get; private set; }
         public BattleMap Map => _map.Value;
-        public IBattleDescriptor BattleDescriptor { get; private set; }
-        public BattleContext Battle => Get<BattleContext>();
+        public IBattleDescriptor Battle { get; private set; }
         public BattleContext Context => Get<BattleContext>();
 
         public BattleFlowState State
@@ -66,7 +65,7 @@ namespace InfinityWorldChess.BattleDomain
             GameScope.Instance.OnInterrupt();
             U.M.CreateScope<BattleScope>();
 
-            Instance.BattleDescriptor = descriptor;
+            Instance.Battle = descriptor;
 
             BattleMap grid = Instance.Map;
             grid.GenerateMap(descriptor.Cell, 
@@ -85,8 +84,8 @@ namespace InfinityWorldChess.BattleDomain
             }
 
             Instance.BattleFinishPanel.Create();
+            Instance.Context.OnBattleFinished();
             Instance.Battle.OnBattleFinished();
-            Instance.BattleDescriptor.OnBattleFinished();
 
 
             U.M.DestroyScope<BattleScope>();

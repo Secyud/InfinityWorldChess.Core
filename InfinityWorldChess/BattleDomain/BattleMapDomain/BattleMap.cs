@@ -31,11 +31,11 @@ namespace InfinityWorldChess.BattleDomain.BattleMapDomain
 
         private void Update()
         {
-            if (BattleScope.Instance.Battle is null)
+            if (BattleScope.Instance.Context is null)
                 return;
 
-            if (BattleScope.Instance.BattleDescriptor.Victory ||
-                BattleScope.Instance.BattleDescriptor.Defeated)
+            if (BattleScope.Instance.Battle.Victory ||
+                BattleScope.Instance.Battle.Defeated)
                 BattleScope.DestroyBattle();
             else
             {
