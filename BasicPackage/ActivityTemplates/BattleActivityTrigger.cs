@@ -12,7 +12,7 @@ namespace InfinityWorldChess.ActivityTemplates
     public class BattleActivityTrigger : IActivityTrigger, IDialogueAction
     {
         [field: S] public IObjectAccessor<Role> RoleAccessor { get; set; }
-        [field: S] public IObjectAccessor<Battle> BattleAccessor { get; set; }
+        [field: S] public IObjectAccessor<IBattleDescriptor> BattleAccessor { get; set; }
         [field: S] public string ActionText { get; set; }
         [field: S] public BattleTrigger NextActivity { get; set; }
 
@@ -36,7 +36,7 @@ namespace InfinityWorldChess.ActivityTemplates
 
         public void Invoke()
         {
-            Battle battle = BattleAccessor.Value;
+            IBattleDescriptor battle = BattleAccessor.Value;
 
             BattleScope.CreateBattle(battle);
 
