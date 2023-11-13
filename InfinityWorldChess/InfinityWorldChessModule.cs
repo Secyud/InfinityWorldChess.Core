@@ -44,7 +44,7 @@ namespace InfinityWorldChess
             context.Get<WorldCellButtons>().Register(new TravelButtonDescriptor());
 
             TypeManager tm = context.Get<TypeManager>();
-            string path = Path.Combine(Application.dataPath, "Data/ResourceManager/te.binary");
+            string path = Path.Combine(U.Path, "Data/Resource/te.binary");
             tm.ReadResource(path);
             
             

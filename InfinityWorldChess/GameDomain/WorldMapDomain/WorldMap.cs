@@ -71,9 +71,8 @@ namespace InfinityWorldChess.GameDomain.WorldMapDomain
                 }
 
                 _path.Clear();
-
+                _path.AddRange(value);
                 if (value.Count == 0) return;
-
                 _path[0].PathState = 2;
 
                 for (int i = 1; i < _path.Count - 1; i++)

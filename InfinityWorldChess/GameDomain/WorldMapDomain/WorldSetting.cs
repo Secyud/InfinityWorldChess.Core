@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+using InfinityWorldChess.BundleDomain;
 using InfinityWorldChess.GameDomain.WorldCellDomain;
 using InfinityWorldChess.PlayerDomain;
 using Secyud.Ugf;
@@ -17,6 +18,7 @@ namespace InfinityWorldChess.GameDomain.WorldMapDomain
         [field: S] public int PlayerCellIndex { get; set; }
 
         [field: S] public string ResourceId { get; set; }
+        [field: S] public List<IBundle> PlayBundles { get; } = new();
 
         public void PreparePlayer(PlayerGameContext context)
         {
