@@ -10,14 +10,13 @@ namespace InfinityWorldChess.SkillDomain
 {
     public class PassiveSkill : IPassiveSkill, IArchivable
     {
-
-        [field: S] public string ResourceId { get; set; }
-        [field: S] public int Score { get; set; }
-        [field: S] public IPassiveSkillEffect Effect { get; set; }
-        [field: S] public IObjectAccessor<SkillAnim> UnitPlay { get; set; }
-        [field: S] public string Name { get; set; }
-        [field: S] public string Description { get; set; }
-        [field: S] public IObjectAccessor<Sprite> Icon { get; set; }
+        [field: S(0)] public string ResourceId { get; set; }
+        [field: S(1)] public int Score { get; set; }
+        [field: S(255)] public IPassiveSkillEffect Effect { get; set; }
+        [field: S(254)] public IObjectAccessor<SkillAnim> UnitPlay { get; set; }
+        [field: S(0)] public string Name { get; set; }
+        [field: S(2)] public string Description { get; set; }
+        [field: S(254)] public IObjectAccessor<Sprite> Icon { get; set; }
 
         public void Equip(Role role,IPassiveSkill skill)
         {

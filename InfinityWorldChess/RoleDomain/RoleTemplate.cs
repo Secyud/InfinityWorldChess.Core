@@ -32,6 +32,7 @@ namespace InfinityWorldChess.RoleDomain
         [field: S(10)] public int Kiling { get; set; }
         [field: S(10)] public int Nimble { get; set; }
         [field: S(10)] public int Defend { get; set; }
+        [field: S(10)] public byte SkillPoint { get; set; }
 
 
         [field: S(11)] public List<IObjectAccessor<ICoreSkill>> LearnedCoreSkills { get; } = new();

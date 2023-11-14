@@ -21,7 +21,7 @@ namespace InfinityWorldChess.BattleDomain
         private float _health, _energy;
         private int _execution;
 
-        public TypeBuffProperty<BattleRole> TypeBuff;
+        public TypeBuffProperty<BattleRole> TypeBuff { get; }
 
         public CoreSkillContainer[] NextCoreSkills { get; } =
             new CoreSkillContainer[SharedConsts.CoreSkillCodeCount];
@@ -134,7 +134,7 @@ namespace InfinityWorldChess.BattleDomain
             Role = role;
             Role.CoreSkill.GetGroup(CurrentLayer, 0, NextCoreSkills);
             Role.FormSkill.GetGroup(CurrentState, NextFormSkills);
-            UnitPlay = role.PassiveSkill[0]?.UnitPlay ?? null;
+            UnitPlay = role.PassiveSkill[0]?.UnitPlay;
             TypeBuff = new TypeBuffProperty<BattleRole>(this);
             Buff = new IdBuffProperty<BattleRole>(this);
         }

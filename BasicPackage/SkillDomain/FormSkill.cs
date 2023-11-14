@@ -4,7 +4,7 @@ namespace InfinityWorldChess.SkillDomain
 {
     public class FormSkill : ActiveSkillBase,IFormSkill
     {
-        [field:S]public byte Type { get; set; }
-        [field:S]public byte State { get; set; }
+        [field:S(16)]public byte Type { get; set; }
+        [field:S(16)]public byte State { get; set; }
     }
 }
