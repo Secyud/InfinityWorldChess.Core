@@ -8,7 +8,7 @@ using UnityEngine;
 
 #endregion
 
-namespace InfinityWorldChess.BattleDomain.BattleCellDomain
+namespace InfinityWorldChess.BattleDomain
 {
     public sealed class BattleCell : UgfCell
     {

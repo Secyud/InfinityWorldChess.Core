@@ -7,8 +7,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Secyud.Ugf.UgfHexMap;
-using Secyud.Ugf.UgfHexMapGenerator;
 using UnityEngine;
 
 #endregion

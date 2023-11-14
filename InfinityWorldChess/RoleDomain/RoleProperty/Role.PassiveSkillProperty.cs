@@ -4,7 +4,6 @@ using InfinityWorldChess.SkillDomain;
 using System.Collections.Generic;
 using System.Linq;
 using Secyud.Ugf.Archiving;
-using Secyud.Ugf.DataManager;
 using UnityEngine;
 
 #endregion
@@ -13,7 +12,7 @@ namespace InfinityWorldChess.RoleDomain
 {
     public partial class Role
     {
-        [field:S]public PassiveSkillProperty PassiveSkill { get; } = new();
+        public PassiveSkillProperty PassiveSkill { get; } = new();
 
         public void SetPassiveSkill(IPassiveSkill passiveSkill, int location)
         {
@@ -27,7 +26,7 @@ namespace InfinityWorldChess.RoleDomain
 
         public class PassiveSkillProperty
         {
-            [S]private readonly List< IPassiveSkill> _learnedSkills = new();
+            private readonly List< IPassiveSkill> _learnedSkills = new();
             private readonly IPassiveSkill[] _equippedSkills = new IPassiveSkill[SharedConsts.PassiveSkillCount];
 
             public IReadOnlyList<IPassiveSkill> GetLearnedSkills()

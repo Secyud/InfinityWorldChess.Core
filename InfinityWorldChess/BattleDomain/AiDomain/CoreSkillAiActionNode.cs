@@ -1,15 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using InfinityWorldChess.BattleDomain.BattleCellDomain;
-using InfinityWorldChess.BattleDomain.BattleMapDomain;
 using InfinityWorldChess.SkillDomain;
 using JetBrains.Annotations;
 using Secyud.Ugf;
-using Secyud.Ugf.HexMap;
 using Secyud.Ugf.HexUtilities;
 
-namespace InfinityWorldChess.BattleDomain.AiDomain
+namespace InfinityWorldChess.BattleDomain
 {
     public class CoreSkillAiActionNode : AiActionNode
     {

@@ -6,7 +6,6 @@ using System.Linq;
 using System.Ugf.Collections.Generic;
 using InfinityWorldChess.GameDomain.WorldCellDomain;
 using Secyud.Ugf;
-using Secyud.Ugf.HexMap;
 using Secyud.Ugf.TableComponents.ButtonComponents;
 
 #endregion

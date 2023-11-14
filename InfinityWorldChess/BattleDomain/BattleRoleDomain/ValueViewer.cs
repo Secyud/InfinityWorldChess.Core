@@ -1,7 +1,7 @@
 ﻿using Secyud.Ugf.BasicComponents;
 using UnityEngine;
 
-namespace InfinityWorldChess.BattleDomain.BattleRoleDomain
+namespace InfinityWorldChess.BattleDomain
 {
     public class ValueViewer : MonoBehaviour
     {

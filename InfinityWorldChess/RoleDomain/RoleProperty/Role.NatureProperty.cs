@@ -15,32 +15,32 @@ namespace InfinityWorldChess.RoleDomain
         public class NatureProperty : IArchivable
         {
             // 认知
-            [field: S] public float Recognize { get; set; }
+            public float Recognize { get; set; }
 
             // 稳定 
-            [field: S] public float Stability { get; set; }
+            public float Stability { get; set; }
 
             // 能力 
-            [field: S] public float Confident { get; set; }
+            public float Confident { get; set; }
 
             // 效益
-            [field: S] public float Efficient { get; set; }
+            public float Efficient { get; set; }
 
-// 合群
-            [field: S] public float Gregarious { get; set; }
+            // 合群
+            public float Gregarious { get; set; }
 
             // 利他
-            [field: S] public float Altruistic { get; set; }
+            public float Altruistic { get; set; }
 
             // 理性 
-            [field: S] public float Rationality { get; set; }
+            public float Rationality { get; set; }
 
             // 远见
-            [field: S] public float Foresighted { get; set; }
+            public float Foresighted { get; set; }
 
             // 渊博
-            [field: S] public float Intelligent { get; set; }
-            
+            public float Intelligent { get; set; }
+
             public float this[int i]
             {
                 get

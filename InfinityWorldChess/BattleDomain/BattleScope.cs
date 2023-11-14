@@ -1,8 +1,5 @@
 ﻿using System.Linq;
 using System.Ugf.Collections.Generic;
-using InfinityWorldChess.BattleDomain.BattleCellDomain;
-using InfinityWorldChess.BattleDomain.BattleMapDomain;
-using InfinityWorldChess.BattleDomain.BattleRoleDomain;
 using InfinityWorldChess.GameDomain;
 using InfinityWorldChess.GlobalDomain;
 using InfinityWorldChess.RoleDomain;

@@ -1,14 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using InfinityWorldChess.BattleDomain.BattleCellDomain;
 using InfinityWorldChess.RoleDomain;
 using Secyud.Ugf.DependencyInjection;
 using Secyud.Ugf.HexMap;
 using Secyud.Ugf.HexUtilities;
 using UnityEngine;
 
-namespace InfinityWorldChess.BattleDomain.BattleMapDomain
+namespace InfinityWorldChess.BattleDomain
 {
     [Registry(DependScope = typeof(BattleScope))]
     public class MoveActionService : IBattleMapActionService, IRegistry

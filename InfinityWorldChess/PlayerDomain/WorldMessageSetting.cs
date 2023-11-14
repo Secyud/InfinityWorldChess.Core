@@ -1,7 +1,5 @@
 #region
 
-using Secyud.Ugf.UgfHexMapGenerator;
-
 #endregion
 
 namespace InfinityWorldChess.PlayerDomain

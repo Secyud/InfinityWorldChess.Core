@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using InfinityWorldChess.GameDomain;
-using InfinityWorldChess.ItemDomain.FoodDomain;
 using InfinityWorldChess.ItemTemplates;
 using InfinityWorldChess.ManufacturingDomain.FlavorDomain;
 

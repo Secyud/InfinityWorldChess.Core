@@ -10,7 +10,6 @@ using InfinityWorldChess.GameDomain.WorldMapDomain;
 using Secyud.Ugf;
 using Secyud.Ugf.Archiving;
 using Secyud.Ugf.DependencyInjection;
-using Secyud.Ugf.HexMap;
 
 #endregion
 
@@ -81,13 +80,11 @@ namespace InfinityWorldChess.RoleDomain
             string path = GameScope.Instance.World.WorldSetting
                 .GetDataDirectory("roles.binary");
 
-            List<Role> roles = U.Tm.ConstructListFromFile<Role>(path);
+            List<RoleTemplate> roles = U.Tm.ConstructListFromFile<RoleTemplate>(path);
 
-            foreach (Role role in roles)
+            foreach (RoleTemplate template in roles)
             {
-                this[role.Id] = role;
-                HexCell cell = GameScope.Instance.Map.Value.GetCell(role.PositionIndex);
-                role.Position = cell as WorldCell;
+                template.GenerateRole();
             }
 
             if (U.AddStep())

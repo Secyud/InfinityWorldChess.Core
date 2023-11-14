@@ -1,8 +1,7 @@
-using InfinityWorldChess.BattleDomain.BattleMapDomain;
 using InfinityWorldChess.SkillDomain;
 using Secyud.Ugf;
 
-namespace InfinityWorldChess.BattleDomain.BattleSkillDomain
+namespace InfinityWorldChess.BattleDomain
 {
     public class BattleFormSkillCell:BattleSkillCell
     {

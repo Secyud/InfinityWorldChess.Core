@@ -1,7 +1,6 @@
 ﻿using InfinityWorldChess.ActivityDomain;
 using InfinityWorldChess.BattleDomain;
 using InfinityWorldChess.BattleFunctions;
-using InfinityWorldChess.BattleTemplates;
 using InfinityWorldChess.DialogueDomain;
 using InfinityWorldChess.RoleDomain;
 using Secyud.Ugf;

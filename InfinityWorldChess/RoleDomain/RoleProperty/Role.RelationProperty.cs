@@ -2,7 +2,6 @@
 
 using InfinityWorldChess.GameDomain.WorldCellDomain;
 using Secyud.Ugf.Archiving;
-using Secyud.Ugf.DataManager;
 
 #endregion
 
@@ -10,8 +9,7 @@ namespace InfinityWorldChess.RoleDomain
 {
     public partial class Role
     {
-        [field: S] public RelationProperty Relation { get; } = new();
-        [field: S] public int PositionIndex { get; private set; }
+        public RelationProperty Relation { get; } = new();
 
         public WorldCell Position
         {
@@ -21,11 +19,11 @@ namespace InfinityWorldChess.RoleDomain
 
         public class RelationProperty
         {
-            [S] public float AreaView;
-            [S] public float LifeView;
+            public float AreaView { get; set; }
+            public float LifeView { get; set; }
 
-            [S] public float ValueView;
-            [S] public float WorldView;
+            public float ValueView { get; set; }
+            public float WorldView { get; set; }
 
             public WorldCell Position { get; private set; }
 
@@ -41,7 +39,6 @@ namespace InfinityWorldChess.RoleDomain
 
                 if (to)
                 {
-                    role.PositionIndex = to.Index;
                     to.InRoles.Add(role);
                 }
 

@@ -2,7 +2,6 @@
 
 using Secyud.Ugf.Archiving;
 using System.Globalization;
-using Secyud.Ugf.DataManager;
 
 #endregion
 
@@ -10,26 +9,26 @@ namespace InfinityWorldChess.RoleDomain
 {
     public partial class Role
     {
-        [field:S] public BasicProperty Basic { get; } = new();
+        public BasicProperty Basic { get; } = new();
 
         public class BasicProperty : IArchivable
         {
-            [S] public readonly AvatarElement[] Avatar =
+            public AvatarElement[] Avatar { get; set; } =
                 new AvatarElement[SharedConsts.AvatarElementCount];
 
-            [S] public int BirthYear;
-            [S] public byte BirthMonth;
-            [S] public byte BirthDay;
-            [S] public byte BirthHour;
+            public int BirthYear { get; set; }
+            public byte BirthMonth { get; set; }
+            public byte BirthDay { get; set; }
+            public byte BirthHour { get; set; }
 
-            [S] public bool Female;
+            public bool Female { get; set; }
 
             // 名
-            [S] public string FirstName = string.Empty;
+            public string FirstName { get; set; } = string.Empty;
 
             // 姓
-            [S] public string LastName = string.Empty;
-            [S] public string Description;
+            public string LastName { get; set; } = string.Empty;
+            public string Description { get; set; }
 
             public BasicProperty()
             {
@@ -39,14 +38,10 @@ namespace InfinityWorldChess.RoleDomain
                 }
             }
 
-            public string Name
-            {
-                get =>
-                    CultureInfo.CurrentCulture.TwoLetterISOLanguageName == "zh"
-                        ? $"{LastName}{FirstName}"
-                        : $"{FirstName} {LastName}";
-                set => LastName = value;
-            }
+            public string Name =>
+                CultureInfo.CurrentCulture.TwoLetterISOLanguageName == "zh"
+                    ? $"{LastName}{FirstName}"
+                    : $"{FirstName} {LastName}";
 
             public void Save(IArchiveWriter writer)
             {

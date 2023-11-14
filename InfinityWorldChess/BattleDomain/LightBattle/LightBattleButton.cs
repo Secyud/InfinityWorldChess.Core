@@ -2,7 +2,7 @@ using InfinityWorldChess.GameDomain;
 using InfinityWorldChess.RoleDomain;
 using Secyud.Ugf.TableComponents.ButtonComponents;
 
-namespace InfinityWorldChess.BattleDomain.LightBattle
+namespace InfinityWorldChess.BattleDomain
 {
     public class LightBattleButton : ButtonDescriptor<Role>
     {

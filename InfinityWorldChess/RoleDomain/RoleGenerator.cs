@@ -11,7 +11,6 @@ using Secyud.Ugf;
 using Secyud.Ugf.Collections;
 using Secyud.Ugf.DependencyInjection;
 using Secyud.Ugf.HexMap;
-using UnityEngine.SocialPlatforms;
 
 #endregion
 

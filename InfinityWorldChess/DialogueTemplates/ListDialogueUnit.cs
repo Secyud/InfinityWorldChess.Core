@@ -1,8 +1,6 @@
 using System.Collections.Generic;
 using InfinityWorldChess.DialogueDomain;
-using InfinityWorldChess.GameDomain;
 using InfinityWorldChess.InteractionDomain;
-using InfinityWorldChess.RoleAccessors;
 using InfinityWorldChess.RoleDomain;
 using InfinityWorldChess.Ugf;
 using Secyud.Ugf;

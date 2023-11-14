@@ -7,7 +7,6 @@ using System.Linq;
 using InfinityWorldChess.GameDomain.WorldCellDomain;
 using InfinityWorldChess.Ugf;
 using Secyud.Ugf.Archiving;
-using Secyud.Ugf.DataManager;
 using Secyud.Ugf.HexMap;
 using UnityEngine;
 
@@ -15,9 +14,9 @@ using UnityEngine;
 
 namespace InfinityWorldChess.RoleDomain
 {
-    public partial class Role : IHasContent,IReleasable
+    public partial class Role : IHasContent, IReleasable
     {
-        [field: S] public int Id { get; set; }
+        public int Id { get; set; }
 
         private readonly SortedDictionary<Guid, RoleProperty> _extraProperties = new();
         private HexUnit _unit;
@@ -40,6 +39,13 @@ namespace InfinityWorldChess.RoleDomain
             }
 
             return property as TProperty;
+        }
+
+        public void ReplaceProperty(RoleProperty property)
+        {
+            Guid id = U.Tm[property.GetType()];
+            _extraProperties[id] = property;
+            property.Role = this;
         }
 
         public void RemoveProperty<TProperty>()

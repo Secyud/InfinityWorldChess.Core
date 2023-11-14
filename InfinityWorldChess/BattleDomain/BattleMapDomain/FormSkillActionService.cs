@@ -1,10 +1,9 @@
 using System;
 using System.Linq;
-using InfinityWorldChess.BattleDomain.BattleCellDomain;
 using InfinityWorldChess.SkillDomain;
 using Secyud.Ugf.DependencyInjection;
 
-namespace InfinityWorldChess.BattleDomain.BattleMapDomain
+namespace InfinityWorldChess.BattleDomain
 {
     [Registry(DependScope = typeof(BattleScope))]
     public class FormSkillActionService: IBattleMapActionService,IRegistry

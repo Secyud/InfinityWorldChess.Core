@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using InfinityWorldChess.GameDomain;
 using InfinityWorldChess.ItemDomain;
-using InfinityWorldChess.ItemDomain.EquipmentDomain;
 using InfinityWorldChess.ItemTemplates;
 using InfinityWorldChess.Ugf;
 using Secyud.Ugf.LayoutComponents;

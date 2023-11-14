@@ -1,6 +1,5 @@
 #region
 
-using Secyud.Ugf.DataManager;
 using UnityEngine;
 
 #endregion

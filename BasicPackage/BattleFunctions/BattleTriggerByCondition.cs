@@ -1,5 +1,4 @@
 using InfinityWorldChess.BattleDomain;
-using InfinityWorldChess.NormalTriggers;
 using InfinityWorldChess.Ugf;
 using Secyud.Ugf.DataManager;
 

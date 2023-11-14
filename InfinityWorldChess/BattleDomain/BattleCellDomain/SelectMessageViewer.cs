@@ -5,7 +5,7 @@ using UnityEngine;
 
 #endregion
 
-namespace InfinityWorldChess.BattleDomain.BattleCellDomain
+namespace InfinityWorldChess.BattleDomain
 {
 	public class SelectMessageViewer : MonoBehaviour
 	{

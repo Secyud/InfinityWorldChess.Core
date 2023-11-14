@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Secyud.Ugf;
 using Secyud.Ugf.DependencyInjection;
 
-namespace InfinityWorldChess.BattleDomain.AiDomain
+namespace InfinityWorldChess.BattleDomain
 {
     [Registry(DependScope = typeof(BattleScope))]
     public class IwcBattleAiController : IBattleAiController

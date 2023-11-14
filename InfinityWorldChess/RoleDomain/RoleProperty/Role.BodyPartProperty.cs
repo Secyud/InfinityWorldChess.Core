@@ -1,7 +1,6 @@
 #region
 
 using System;
-using Secyud.Ugf.DataManager;
 
 #endregion
 
@@ -9,7 +8,7 @@ namespace InfinityWorldChess.RoleDomain
 {
 	public partial class Role
 	{
-		[field:S] public BodyPartProperty BodyPart { get; } = new();
+		public BodyPartProperty BodyPart { get; } = new();
 
 		public int GetSpeed()
 		{
@@ -19,13 +18,13 @@ namespace InfinityWorldChess.RoleDomain
 
 		public class BodyPartProperty 
 		{
-			[field:S] public RoleBodyPart Living { get; set; } = new();
+			public RoleBodyPart Living { get; set; } = new();
 
-			[field:S] public RoleBodyPart Kiling { get; set; } = new();
+			public RoleBodyPart Kiling { get; set; } = new();
 
-			[field:S] public RoleBodyPart Nimble { get; set; } = new();
+			public RoleBodyPart Nimble { get; set; } = new();
 
-			[field:S] public RoleBodyPart Defend { get; set; } = new();
+			public RoleBodyPart Defend { get; set; } = new();
 
 			public RoleBodyPart this[BodyType part] =>
 				part switch

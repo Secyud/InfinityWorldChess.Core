@@ -1,8 +1,8 @@
 #region
 
-using Secyud.Ugf.HexMap;
 using InfinityWorldChess.GameDomain;
 using Secyud.Ugf.DependencyInjection;
+using Secyud.Ugf.HexMap;
 using Secyud.Ugf.UgfHexMap;
 
 #endregion

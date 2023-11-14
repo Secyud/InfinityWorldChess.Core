@@ -4,7 +4,6 @@ using InfinityWorldChess.SkillDomain;
 using Secyud.Ugf.Archiving;
 using System.Collections.Generic;
 using System.Linq;
-using Secyud.Ugf.DataManager;
 using UnityEngine;
 
 #endregion
@@ -13,7 +12,7 @@ namespace InfinityWorldChess.RoleDomain
 {
     public partial class Role
     {
-        [field: S] public CoreSkillProperty CoreSkill { get; } = new();
+        public CoreSkillProperty CoreSkill { get; } = new();
 
         public void AutoEquipCoreSkill()
         {
@@ -22,7 +21,7 @@ namespace InfinityWorldChess.RoleDomain
 
         public class CoreSkillProperty : IArchivable
         {
-            [S] private readonly List<ICoreSkill> _learnedSkills = new();
+            private readonly List<ICoreSkill> _learnedSkills = new();
 
             private readonly CoreSkillContainer[] _equippedSkills =
                 new CoreSkillContainer[SharedConsts.CoreSkillCount];
@@ -83,7 +82,7 @@ namespace InfinityWorldChess.RoleDomain
             /// <param name="lastCode">the last select code</param>
             /// <param name="codeArray">the pre select codes</param>
             /// <returns></returns>
-            public static byte GetCode(byte lastCode, params byte[] codeArray)
+            public static byte GetCode(byte lastCode, byte[] codeArray)
             {
                 uint code = lastCode;
                 int len = codeArray.Length - 1;
@@ -92,7 +91,35 @@ namespace InfinityWorldChess.RoleDomain
                 return (byte)code;
             }
 
-            private int GetIndex(byte maxLayer, byte fullCode)
+            private static byte GetCode(byte maxLayer, byte fullCode)
+            {
+                return (byte)(fullCode % (1u << maxLayer + 1));
+            }
+
+            public static void GetCodeAndLayer(int index, out byte layer, out byte code)
+            {
+                switch (index)
+                {
+                    case > 14:
+                        layer = 3;
+                        code = (byte)(index - 14);
+                        break;
+                    case > 6:
+                        layer = 2;
+                        code = (byte)(index - 6);
+                        break;
+                    case > 2:
+                        layer = 1;
+                        code = (byte)(index - 2);
+                        break;
+                    default:
+                        layer = 0;
+                        code = (byte)(index);
+                        break;
+                }
+            }
+
+            public static int GetIndex(byte maxLayer, byte fullCode)
             {
                 int bias = 0, layerLen = 1;
                 for (int i = 0; i < maxLayer; i++)
@@ -117,11 +144,6 @@ namespace InfinityWorldChess.RoleDomain
                 fullCode = (byte)(fullCode >> (maxLayer - skill.MaxLayer));
 
                 return fullCode == skillCode;
-            }
-
-            private static byte GetCode(byte maxLayer, byte fullCode)
-            {
-                return (byte)(fullCode % (1u << maxLayer + 1));
             }
 
 
@@ -187,7 +209,6 @@ namespace InfinityWorldChess.RoleDomain
                     CoreSkillContainer skill = _equippedSkills[i];
                     writer.Write(skill?.Skill.SaveIndex ?? -1);
                 }
-
             }
 
             public void Load(IArchiveReader reader)

@@ -5,7 +5,7 @@ using Secyud.Ugf.EditorComponents;
 using Secyud.Ugf.TableComponents;
 using UnityEngine;
 
-namespace InfinityWorldChess.BattleDomain.BattleRoleDomain
+namespace InfinityWorldChess.BattleDomain
 {
     public class RoleMessageViewerBase : EditorBase<BattleRole>
     {

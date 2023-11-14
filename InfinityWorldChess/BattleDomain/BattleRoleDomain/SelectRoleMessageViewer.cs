@@ -1,6 +1,6 @@
 ﻿using Secyud.Ugf.HexMap;
 
-namespace InfinityWorldChess.BattleDomain.BattleRoleDomain
+namespace InfinityWorldChess.BattleDomain
 {
     public class SelectRoleMessageViewer : RoleMessageViewerBase
     {

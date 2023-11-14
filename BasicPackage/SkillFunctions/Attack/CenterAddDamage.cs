@@ -1,5 +1,4 @@
 using InfinityWorldChess.BattleDomain;
-using InfinityWorldChess.BattleDomain.BattleCellDomain;
 using InfinityWorldChess.SkillDomain.SkillInteractionDomain;
 using Secyud.Ugf.DataManager;
 

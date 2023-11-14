@@ -3,10 +3,8 @@ using InfinityWorldChess.DialogueAccessors;
 using InfinityWorldChess.DialogueDomain;
 using InfinityWorldChess.InteractionDomain;
 using InfinityWorldChess.RoleDomain;
-using InfinityWorldChess.Ugf;
 using Secyud.Ugf;
 using Secyud.Ugf.DataManager;
-using UnityEngine;
 
 namespace InfinityWorldChess.ActivityTemplates
 {

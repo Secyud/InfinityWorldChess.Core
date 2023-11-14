@@ -4,7 +4,7 @@ using Secyud.Ugf;
 using Secyud.Ugf.HexMap;
 using UnityEngine;
 
-namespace InfinityWorldChess.BattleDomain.LightBattle
+namespace InfinityWorldChess.BattleDomain
 {
     public class LightBattleDescriptor : IBattleDescriptor
     {

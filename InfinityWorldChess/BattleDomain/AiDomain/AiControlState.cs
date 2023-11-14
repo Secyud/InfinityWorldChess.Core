@@ -1,4 +1,4 @@
-﻿namespace InfinityWorldChess.BattleDomain.AiDomain
+﻿namespace InfinityWorldChess.BattleDomain
 {
     public enum AiControlState
     {

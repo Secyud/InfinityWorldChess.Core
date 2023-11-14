@@ -1,6 +1,5 @@
 #region
 
-using System;
 using System.IO;
 using Secyud.Ugf.DataManager;
 

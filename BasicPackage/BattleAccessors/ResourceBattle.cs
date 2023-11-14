@@ -1,18 +1,14 @@
 using System;
 using InfinityWorldChess.BattleDomain;
-using Secyud.Ugf;
+using InfinityWorldChess.Ugf;
 using Secyud.Ugf.DataManager;
 
 namespace InfinityWorldChess.BattleAccessors
 {
-    public class ResourceBattle : IObjectAccessor<IBattleDescriptor>
+    public class ResourceBattle :ResourceAccessor<IBattleDescriptor>
     {
-        [field: S] private string ResourceId { get; set; }
-
-        [field: S, TypeLimit(typeof(IBattleVictoryCondition))]
+        [field: S, TypeLimit(typeof(IBattleDescriptor))]
         private Guid ClassId { get; set; }
-
-        public virtual IBattleDescriptor Value =>
-            U.Tm.ConstructFromResource(ClassId, ResourceId) as IBattleDescriptor;
+        protected override Guid TypeId => ClassId;
     }
 }

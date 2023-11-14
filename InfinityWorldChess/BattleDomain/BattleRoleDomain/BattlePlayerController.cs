@@ -1,13 +1,12 @@
 #region
 
-using InfinityWorldChess.BattleDomain.BattleMapDomain;
 using InfinityWorldChess.Ugf;
 using Secyud.Ugf;
 using UnityEngine;
 
 #endregion
 
-namespace InfinityWorldChess.BattleDomain.BattleRoleDomain
+namespace InfinityWorldChess.BattleDomain
 {
     public class BattlePlayerController : MonoBehaviour
     {

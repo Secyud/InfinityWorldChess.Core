@@ -1,6 +1,6 @@
 using Secyud.Ugf;
 
-namespace InfinityWorldChess.BattleDomain.AiDomain
+namespace InfinityWorldChess.BattleDomain
 {
     public class StopActionNode:AiActionNode
     {

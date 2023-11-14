@@ -1,4 +1,4 @@
-using InfinityWorldChess.BattleDomain.LightBattle;
+using InfinityWorldChess.BattleDomain;
 using InfinityWorldChess.DialogueDomain;
 using InfinityWorldChess.InteractionDomain;
 

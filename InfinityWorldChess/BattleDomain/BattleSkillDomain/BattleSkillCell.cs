@@ -3,7 +3,7 @@ using InfinityWorldChess.Ugf;
 using Secyud.Ugf.BasicComponents;
 using UnityEngine;
 
-namespace InfinityWorldChess.BattleDomain.BattleSkillDomain
+namespace InfinityWorldChess.BattleDomain
 {
     public abstract class BattleSkillCell:ShownCell
     {

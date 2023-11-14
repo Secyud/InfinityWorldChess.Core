@@ -3,7 +3,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using InfinityWorldChess.GameDomain.WorldCellDomain;
-using InfinityWorldChess.Ugf;
 using Secyud.Ugf;
 using Secyud.Ugf.HexMap;
 using Secyud.Ugf.HexMapExtensions;

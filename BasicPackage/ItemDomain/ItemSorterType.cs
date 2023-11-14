@@ -1,8 +1,6 @@
 ﻿#region
 
-using InfinityWorldChess.ItemDomain.BookDomain;
 using InfinityWorldChess.ItemDomain.EquipmentDomain;
-using InfinityWorldChess.ItemDomain.FoodDomain;
 using InfinityWorldChess.ItemTemplates;
 using InfinityWorldChess.ManufacturingDomain;
 using Secyud.Ugf.TableComponents.SorterComponents;

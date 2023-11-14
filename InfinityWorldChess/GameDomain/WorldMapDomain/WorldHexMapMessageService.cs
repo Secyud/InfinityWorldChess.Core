@@ -1,6 +1,5 @@
 #region
 
-using InfinityWorldChess.GlobalDomain;
 using InfinityWorldChess.RoleDomain;
 using Secyud.Ugf.DependencyInjection;
 using Secyud.Ugf.HexMap;

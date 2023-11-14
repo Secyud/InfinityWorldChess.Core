@@ -3,7 +3,6 @@
 using Secyud.Ugf.HexMap;
 using System.Collections.Generic;
 using InfinityWorldChess.BattleDomain;
-using InfinityWorldChess.BattleDomain.BattleCellDomain;
 using Secyud.Ugf.HexUtilities;
 
 #endregion

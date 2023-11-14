@@ -1,7 +1,7 @@
 using Secyud.Ugf.EditorComponents;
 using UnityEngine;
 
-namespace InfinityWorldChess.BattleDomain.BattleRoleDomain
+namespace InfinityWorldChess.BattleDomain
 {
     public class BattleRoleStateViewer : EditorBase<BattleRole>
     {

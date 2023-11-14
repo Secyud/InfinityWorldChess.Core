@@ -1,5 +1,4 @@
-﻿using InfinityWorldChess.GameCreatorDomain;
-using InfinityWorldChess.GameDomain.GameMenuDomain;
+﻿using InfinityWorldChess.GameDomain.GameMenuDomain;
 using InfinityWorldChess.GameDomain.SystemMenuDomain;
 using InfinityWorldChess.GameDomain.WorldMapDomain;
 using InfinityWorldChess.GlobalDomain;
@@ -11,7 +10,6 @@ using Secyud.Ugf.DependencyInjection;
 using Secyud.Ugf.HexMap;
 using UnityEditor;
 using UnityEngine;
-using WorldSetting = InfinityWorldChess.GameDomain.WorldMapDomain.WorldSetting;
 
 namespace InfinityWorldChess.GameDomain
 {
@@ -21,10 +19,6 @@ namespace InfinityWorldChess.GameDomain
         public readonly IMonoContainer<SystemMenuPanel> SystemMenu;
         public readonly IMonoContainer<GameMenuPanel> GameMenu;
         public readonly IMonoContainer<WorldMap> Map;
-
-        private WorldGameContext _world;
-        private PlayerGameContext _player;
-        private RoleGameContext _role;
 
         public WorldGameContext World =>  Get<WorldGameContext>();
         public PlayerGameContext Player => Get<PlayerGameContext>();

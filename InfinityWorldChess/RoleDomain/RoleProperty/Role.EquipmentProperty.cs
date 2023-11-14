@@ -5,7 +5,6 @@ using InfinityWorldChess.ItemDomain.EquipmentDomain;
 using System.Collections.Generic;
 using System.Ugf.Collections.Generic;
 using Secyud.Ugf.Archiving;
-using Secyud.Ugf.DataManager;
 
 #endregion
 
@@ -13,7 +12,7 @@ namespace InfinityWorldChess.RoleDomain
 {
     public partial class Role
     {
-        [field: S] public EquipmentProperty Equipment { get; } = new();
+       public EquipmentProperty Equipment { get; } = new();
 
         public void SetEquipment(IEquipment equipment)
         {

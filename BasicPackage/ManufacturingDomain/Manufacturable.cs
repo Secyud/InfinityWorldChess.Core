@@ -1,6 +1,5 @@
 ﻿#region
 
-using InfinityWorldChess.ItemDomain;
 using InfinityWorldChess.ItemTemplates;
 
 #endregion

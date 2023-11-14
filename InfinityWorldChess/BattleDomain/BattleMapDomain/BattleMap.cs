@@ -1,6 +1,5 @@
 #region
 
-using InfinityWorldChess.BattleDomain.BattleCellDomain;
 using InfinityWorldChess.GameDomain.WorldCellDomain;
 using Secyud.Ugf;
 using Secyud.Ugf.HexMap;
@@ -12,7 +11,7 @@ using UnityEngine.Animations;
 
 #endregion
 
-namespace InfinityWorldChess.BattleDomain.BattleMapDomain
+namespace InfinityWorldChess.BattleDomain
 {
     public class BattleMap : HexGrid
     {
