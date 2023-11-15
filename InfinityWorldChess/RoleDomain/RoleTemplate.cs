@@ -139,51 +139,70 @@ namespace InfinityWorldChess.RoleDomain
             HexCell cell = GameScope.Instance.Map.Value.GetCell(PositionIndex);
             role.Position = cell as WorldCell;
 
-            foreach (IObjectAccessor<ICoreSkill> coreSkill in LearnedCoreSkills)
+            byte living, kiling, nimble, defend;
+
             {
-                role.CoreSkill.TryAddLearnedSkill(coreSkill.Value);
+                float totalValue = Living + Kiling + Nimble + Defend;
+                living = (byte)(SkillPoint * Living / totalValue);
+                kiling = (byte)(SkillPoint * Kiling / totalValue);
+                nimble = (byte)(SkillPoint * Nimble / totalValue);
+                defend = (byte)(SkillPoint * Defend / totalValue);
+            }
+            
+            
+            foreach (IObjectAccessor<ICoreSkill> accessor in LearnedCoreSkills)
+            {
+                var skill = accessor.Value;
+                SetSkill(skill);
+                role.CoreSkill.TryAddLearnedSkill(skill);
             }
 
             for (int i = 0; i < CoreSkills.Length; i++)
             {
-                var coreSkillAccessor = CoreSkills[i];
-                if (coreSkillAccessor is null) continue;
+                var accessor = CoreSkills[i];
+                if (accessor is null) continue;
 
-                var coreSkill = coreSkillAccessor.Value;
-                role.CoreSkill.TryAddLearnedSkill(coreSkill);
+                var skill = accessor.Value;
+                SetSkill(skill);
+                role.CoreSkill.TryAddLearnedSkill(skill);
                 Role.CoreSkillProperty.GetCodeAndLayer(i, out byte layer, out byte code);
-                role.CoreSkill.Set(coreSkill, layer, code);
+                role.CoreSkill.Set(skill, layer, code);
             }
 
-            foreach (IObjectAccessor<IFormSkill> formSkill in LearnedFormSkills)
+            foreach (IObjectAccessor<IFormSkill> accessor in LearnedFormSkills)
             {
-                role.FormSkill.TryAddLearnedSkill(formSkill.Value);
+                var skill = accessor.Value;
+                SetSkill(skill);
+                role.FormSkill.TryAddLearnedSkill(skill);
             }
 
             for (int i = 0; i < FormSkills.Length; i++)
             {
-                var formSkillAccessor = FormSkills[i];
-                if (formSkillAccessor is null) continue;
+                var accessor = FormSkills[i];
+                if (accessor is null) continue;
 
-                var formSkill = formSkillAccessor.Value;
-                role.FormSkill.TryAddLearnedSkill(formSkill);
-                role.FormSkill.Set(formSkill, (byte)(i / SharedConsts.FormSkillTypeCount),
+                var skill = accessor.Value;
+                SetSkill(skill);
+                role.FormSkill.TryAddLearnedSkill(skill);
+                role.FormSkill.Set(skill, (byte)(i / SharedConsts.FormSkillTypeCount),
                     (byte)(i % SharedConsts.FormSkillTypeCount));
             }
 
-            foreach (IObjectAccessor<IPassiveSkill> passiveSkill in LearnedPassiveSkills)
+            foreach (IObjectAccessor<IPassiveSkill> accessor in LearnedPassiveSkills)
             {
-                role.PassiveSkill.TryAddLearnedSkill(passiveSkill.Value);
+                var skill = accessor.Value;
+                SetSkill(skill);
+                role.PassiveSkill.TryAddLearnedSkill(skill);
             }
 
             for (int i = 0; i < PassiveSkills.Length; i++)
             {
-                var passiveSkillAccessor = PassiveSkills[i];
-                if (passiveSkillAccessor is null) continue;
+                var accessor = PassiveSkills[i];
+                if (accessor is null) continue;
 
-                var passiveSkill = passiveSkillAccessor.Value;
-                role.PassiveSkill.TryAddLearnedSkill(passiveSkill);
-                role.PassiveSkill[i, role] = passiveSkill;
+                var skill = accessor.Value;
+                role.PassiveSkill.TryAddLearnedSkill(skill);
+                role.PassiveSkill[i, role] = skill;
             }
 
             foreach (IObjectAccessor<IItem> item in Items)
@@ -212,6 +231,14 @@ namespace InfinityWorldChess.RoleDomain
             }
             
             return role;
+
+            void SetSkill(ISkill skill)
+            {
+                skill.Living = living;
+                skill.Kiling = kiling;
+                skill.Nimble = nimble;
+                skill.Defend = defend;
+            }
         }
     }
 }
