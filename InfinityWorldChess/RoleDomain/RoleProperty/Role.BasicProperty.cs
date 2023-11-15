@@ -13,7 +13,7 @@ namespace InfinityWorldChess.RoleDomain
 
         public class BasicProperty : IArchivable
         {
-            public AvatarElement[] Avatar { get; set; } =
+            public AvatarElement[] Avatar { get; } =
                 new AvatarElement[SharedConsts.AvatarElementCount];
 
             public int BirthYear { get; set; }

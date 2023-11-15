@@ -1,23 +1,17 @@
 using System.Collections.Generic;
 using InfinityWorldChess.ActivityDomain;
-using InfinityWorldChess.Ugf;
 using Secyud.Ugf;
 using Secyud.Ugf.DataManager;
 using UnityEngine;
 
 namespace InfinityWorldChess.ActivityTemplates
 {
-    public class Activity: IActivity
+    public class Activity: ActivityBase
     {
-        [field: S] public string ResourceId { get; set; }
-        [field: S] public string Description { get; set; }
-        [field: S] public string Name { get; set; }
-        [field: S] public IObjectAccessor<Sprite> Icon { get; set; }
-        [field: S] public List<IActivityTrigger> Triggers { get; } = new();
-        public ActivityState State { get; set; }
-        public void SetContent(Transform transform)
+        [field: S(3)] public List<IActivityTrigger> Triggers { get; } = new();
+        public override void SetContent(Transform transform)
         {
-            transform.AddSimpleShown(this);
+            base.SetContent(transform);
             foreach (IActivityTrigger trigger in Triggers)
             {
                 if (trigger is IHasContent content)
@@ -27,7 +21,7 @@ namespace InfinityWorldChess.ActivityTemplates
             }
         }
 
-        public void StartActivity(ActivityGroup group)
+        public override void StartActivity(ActivityGroup group)
         {
             foreach (IActivityTrigger trigger in Triggers)
             {
@@ -35,7 +29,7 @@ namespace InfinityWorldChess.ActivityTemplates
             }
         }
 
-        public void FinishActivity(ActivityGroup group)
+        public override void FinishActivity(ActivityGroup group)
         {
             foreach (IActivityTrigger trigger in Triggers)
             {

@@ -8,21 +8,32 @@ using Secyud.Ugf.DataManager;
 
 namespace InfinityWorldChess.ActivityTemplates
 {
-    public class DialogueActivityTrigger : IActivityTrigger,IDialogueAction
+    public class DialogueActivity :ActivityBase, IActivityTrigger,IDialogueAction
     {
-        [field: S] public IObjectAccessor<Role> RoleAccessor { get; set; }
-        [field: S] public ResourceDialogueUnit DialogueAccessor { get; set; }
-        [field: S] public string ActionText { get; set;}
+        [field: S(4)] public IObjectAccessor<Role> RoleAccessor { get; set; }
+        [field: S(4)] public ResourceDialogueUnit DialogueAccessor { get; set; }
+        [field: S(3)] public string ActionText { get; set;}
 
         private RoleActivityDialogueProperty Property =>
             RoleAccessor?.Value?.GetProperty<RoleActivityDialogueProperty>();
 
-        public void StartActivity(ActivityGroup group, Activity activity)
+        public override void StartActivity(ActivityGroup group)
+        {
+            StartActivity(group,this);
+        }
+
+        public override void FinishActivity(ActivityGroup group)
+        {
+            FinishActivity(group,this);
+        }
+
+
+        public void StartActivity(ActivityGroup group, IActivity activity)
         {
             Property?.AddAction(this);
         }
 
-        public void FinishActivity(ActivityGroup group, Activity activity)
+        public void FinishActivity(ActivityGroup group, IActivity activity)
         {
             Property?.RemoveAction(this);
         }

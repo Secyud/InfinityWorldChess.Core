@@ -9,6 +9,8 @@ namespace InfinityWorldChess.RoleDomain
 {
     public class AvatarElement : IArchivable
     {
+        public static AvatarElement DefaultElement { get; } = new();
+
         [S] public int Id;
         [S] public byte PositionX = 0x80;
         [S] public byte PositionY = 0x80;

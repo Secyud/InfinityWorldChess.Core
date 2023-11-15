@@ -8,12 +8,12 @@ namespace InfinityWorldChess.ActivityDomain
 {
     public sealed class ActivityGroup : IShowable, IArchivable,IDataResource
     {
-        [field: S] public string ResourceId { get; set; }
-        [field: S] public string Name { get; set; }
-        [field: S] public string Description { get; set; }
-        [field: S] public IObjectAccessor<Sprite> Icon { get; set; }
+        [field: S(0)] public string ResourceId { get; set; }
+        [field: S(0)] public string Name { get; set; }
+        [field: S(1)] public string Description { get; set; }
+        [field: S(3)] public IObjectAccessor<Sprite> Icon { get; set; }
 
-        [field: S] public List<IActivity> Activities { get; } = new();
+        [field: S(2)] public List<IActivity> Activities { get; } = new();
 
         public ActivityState State { get; set; }
         public bool Collapsed { get; set; }

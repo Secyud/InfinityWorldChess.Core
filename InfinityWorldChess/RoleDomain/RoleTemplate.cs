@@ -109,8 +109,7 @@ namespace InfinityWorldChess.RoleDomain
                     BirthMonth = BirthMonth,
                     BirthDay = BirthDay,
                     BirthHour = BirthHour,
-                    Description = Description,
-                    Avatar = Avatar
+                    Description = Description
                 },
                 BodyPart =
                 {
@@ -127,6 +126,13 @@ namespace InfinityWorldChess.RoleDomain
                 },
                 Relation = { AreaView = AreaView, LifeView = LifeView, WorldView = WorldView, ValueView = ValueView },
             };
+
+            for (int i = 0; i < Avatar.Length; i++)
+            {
+                AvatarElement element = Avatar[i];
+                role.Basic.Avatar[i] = element ?? new AvatarElement();
+            }
+
 
             RoleGameContext roleGameContext = GameScope.Instance.Role;
             roleGameContext[role.Id] = role;
