@@ -10,7 +10,7 @@ using UnityEngine;
 
 namespace InfinityWorldChess.BattleTemplates
 {
-    public class Battle : IBattleDescriptor
+    public class Battle : IBattleDescriptor,IObjectAccessor<IBattleDescriptor>
     {
         [field: S]public string ResourceId { get; set; }
         [field: S] public int SizeX { get; set; }
@@ -65,5 +65,7 @@ namespace InfinityWorldChess.BattleTemplates
             };
             scope.AddRoleBattleChess(battleRole, cell);
         }
+
+        public IBattleDescriptor Value => this;
     }
 }
