@@ -6,12 +6,13 @@ using Secyud.Ugf.DataManager;
 
 namespace InfinityWorldChess.DialogueTemplates
 {
-    public class DialogueUnit : IDialogueUnit
+    public class DialogueUnit : IDialogueUnit,IObjectAccessor<IDialogueUnit>
     {
         [S] private readonly List<IDialogueAction> _actions = new();
         public IList<IDialogueAction> ActionList => _actions;
         [field: S] public IDialogueAction DefaultAction { get; set; }
         [field: S] public string Text { get; set; }
         [field: S] public IObjectAccessor<Role> RoleAccessor { get; set; }
+        public IDialogueUnit Value => this;
     }
 }

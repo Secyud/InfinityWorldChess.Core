@@ -11,7 +11,7 @@ namespace InfinityWorldChess.ActivityTemplates
     public class DialogueActivity :ActivityBase, IActivityTrigger,IDialogueAction
     {
         [field: S(4)] public IObjectAccessor<Role> RoleAccessor { get; set; }
-        [field: S(4)] public ResourceDialogueUnit DialogueAccessor { get; set; }
+        [field: S(4)] public IObjectAccessor<IDialogueUnit> DialogueAccessor { get; set; }
         [field: S(3)] public string ActionText { get; set;}
 
         private RoleActivityDialogueProperty Property =>

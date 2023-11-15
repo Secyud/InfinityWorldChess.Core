@@ -8,12 +8,12 @@ using Secyud.Ugf.DataManager;
 
 namespace InfinityWorldChess.DialogueTemplates
 {
-    public class ListDialogueUnit : IDialogueUnit, IDialogueAction
+    public class ListDialogueUnit : IDialogueUnit, IDialogueAction, IObjectAccessor<IDialogueUnit>
     {
-        [field: S] public IObjectAccessor<Role> RoleAccessor { get; set; }
-        [field: S] public string Text { get;set; }
-        [field: S] public List<DialogueTuple> List { get; } = new();
-        [field: S] public ITrigger FinishDialogueAction { get;set; }
+        [field: S(1)] public IObjectAccessor<Role> RoleAccessor { get; set; }
+        [field: S(0)] public string Text { get; set; }
+        [field: S(2)] public List<DialogueTuple> List { get; } = new();
+        [field: S(3)] public ITrigger FinishDialogueAction { get; set; }
 
         private int _currentIndex = 0;
         public IList<IDialogueAction> ActionList => null;
@@ -35,9 +35,9 @@ namespace InfinityWorldChess.DialogueTemplates
                 {
                     Text = tuple.Text,
                     DefaultAction = this,
-                    RoleAccessor = tuple.RoleAccessor ?? RoleAccessor 
+                    RoleAccessor = tuple.RoleAccessor ?? RoleAccessor
                 };
-            
+
                 InteractionScope.Instance.DialogueService.Panel.SetInteraction(unit);
                 _currentIndex++;
             }
@@ -54,5 +54,7 @@ namespace InfinityWorldChess.DialogueTemplates
                 }
             }
         }
+
+        public IDialogueUnit Value => this;
     }
 }
