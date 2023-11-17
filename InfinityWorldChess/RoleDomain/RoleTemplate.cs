@@ -152,7 +152,8 @@ namespace InfinityWorldChess.RoleDomain
             
             foreach (IObjectAccessor<ICoreSkill> accessor in LearnedCoreSkills)
             {
-                var skill = accessor.Value;
+                var skill = accessor?.Value;
+                if (skill is null)continue;
                 SetSkill(skill);
                 role.CoreSkill.TryAddLearnedSkill(skill);
             }
@@ -160,9 +161,8 @@ namespace InfinityWorldChess.RoleDomain
             for (int i = 0; i < CoreSkills.Length; i++)
             {
                 var accessor = CoreSkills[i];
-                if (accessor is null) continue;
-
-                var skill = accessor.Value;
+                var skill = accessor?.Value;
+                if (skill is null)continue;
                 SetSkill(skill);
                 role.CoreSkill.TryAddLearnedSkill(skill);
                 Role.CoreSkillProperty.GetCodeAndLayer(i, out byte layer, out byte code);
@@ -171,7 +171,7 @@ namespace InfinityWorldChess.RoleDomain
 
             foreach (IObjectAccessor<IFormSkill> accessor in LearnedFormSkills)
             {
-                var skill = accessor.Value;
+                var skill = accessor?.Value;
                 SetSkill(skill);
                 role.FormSkill.TryAddLearnedSkill(skill);
             }
@@ -179,9 +179,8 @@ namespace InfinityWorldChess.RoleDomain
             for (int i = 0; i < FormSkills.Length; i++)
             {
                 var accessor = FormSkills[i];
-                if (accessor is null) continue;
-
-                var skill = accessor.Value;
+                var skill = accessor?.Value;
+                if (skill is null)continue;
                 SetSkill(skill);
                 role.FormSkill.TryAddLearnedSkill(skill);
                 role.FormSkill.Set(skill, (byte)(i / SharedConsts.FormSkillTypeCount),
@@ -190,7 +189,8 @@ namespace InfinityWorldChess.RoleDomain
 
             foreach (IObjectAccessor<IPassiveSkill> accessor in LearnedPassiveSkills)
             {
-                var skill = accessor.Value;
+                var skill = accessor?.Value;
+                if (skill is null)continue;
                 SetSkill(skill);
                 role.PassiveSkill.TryAddLearnedSkill(skill);
             }
@@ -198,24 +198,24 @@ namespace InfinityWorldChess.RoleDomain
             for (int i = 0; i < PassiveSkills.Length; i++)
             {
                 var accessor = PassiveSkills[i];
-                if (accessor is null) continue;
-
-                var skill = accessor.Value;
+                var skill = accessor?.Value;
+                if (skill is null)continue;
                 role.PassiveSkill.TryAddLearnedSkill(skill);
                 role.PassiveSkill[i, role] = skill;
             }
 
-            foreach (IObjectAccessor<IItem> item in Items)
+            foreach (IObjectAccessor<IItem> accessor in Items)
             {
-                role.Item.Add(item.Value);
+                var item = accessor?.Value;
+                if (item is null)continue;
+                role.Item.Add(accessor.Value);
             }
 
             for (int i = 0; i < Equipments.Length; i++)
             {
                 var equipmentAccessor = Equipments[i];
-                if (equipmentAccessor is null) continue;
-
-                IEquipment equipment = equipmentAccessor.Value;
+                IEquipment equipment = equipmentAccessor?.Value;
+                if (equipment is null)continue;
                 role.Item.Add(equipment);
                 role.Equipment[(byte)i, role] = equipment;
             }

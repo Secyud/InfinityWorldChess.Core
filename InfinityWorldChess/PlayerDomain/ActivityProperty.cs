@@ -17,7 +17,6 @@ namespace InfinityWorldChess.PlayerDomain
 			{
 				writer.WriteObject(activityGroup);
 			}
-			
 		}
 
 		public void Load(IArchiveReader reader)
@@ -37,6 +36,7 @@ namespace InfinityWorldChess.PlayerDomain
 			group.CurrentActivity = activity;
 			activity.State = ActivityState.Received;
 			activity.StartActivity(group);
+			Add(group);
 		}
 	}
 }

@@ -12,14 +12,14 @@ namespace InfinityWorldChess.BattleTemplates
 {
     public class Battle : IBattleDescriptor,IObjectAccessor<IBattleDescriptor>
     {
-        [field: S]public string ResourceId { get; set; }
-        [field: S] public int SizeX { get; set; }
-        [field: S] public int SizeZ { get; set; }
-        [field: S] public IBattleVictoryCondition VictoryCondition { get; set; }
-        [field: S] public string Description { get;set; }
-        [field: S] public string Name { get; set;}
-        [field: S] public IObjectAccessor<Sprite> Icon { get; set;}
-        [field: S] public List<BattleCampSetting> BattleCampSettings { get; } = new();
+        [field: S(0)]public string ResourceId { get; set; }
+        [field: S(2)] public int SizeX { get; set; }
+        [field: S(2)] public int SizeZ { get; set; }
+        [field: S(3)] public IBattleVictoryCondition VictoryCondition { get; set; }
+        [field: S(1)] public string Description { get;set; }
+        [field: S(0)] public string Name { get; set;}
+        [field: S(4)] public IObjectAccessor<Sprite> Icon { get; set;}
+        [field: S(3)] public List<BattleCampSetting> BattleCampSettings { get; } = new();
         public virtual WorldCell Cell => GameScope.Instance.Player.Role.Position;
         
         public void OnBattleFinished()

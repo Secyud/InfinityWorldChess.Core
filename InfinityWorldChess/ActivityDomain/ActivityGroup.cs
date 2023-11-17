@@ -39,6 +39,7 @@ namespace InfinityWorldChess.ActivityDomain
                 if (state == ActivityState.Received)
                 {
                     CurrentActivity = Activities[i];
+                    CurrentActivity.StartActivity(this);
                 }
             }
         }

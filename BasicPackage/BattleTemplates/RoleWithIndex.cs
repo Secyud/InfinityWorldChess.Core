@@ -6,7 +6,7 @@ namespace InfinityWorldChess.BattleTemplates
 {
     public class RoleWithIndex
     {
-        [field: S] public IObjectAccessor<Role> RoleAccessor { get; set; }
-        [field: S] public int  Index { get; set; }
+        [field: S(1)] public IObjectAccessor<Role> RoleAccessor { get; set; }
+        [field: S(0)] public int  Index { get; set; }
     }
 }

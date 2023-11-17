@@ -3,6 +3,7 @@
 using System.Collections.Generic;
 using InfinityWorldChess.GameDomain.WorldMapDomain;
 using InfinityWorldChess.RoleDomain;
+using Secyud.Ugf.HexMapExtensions;
 using Secyud.Ugf.TableComponents.ButtonComponents;
 using Secyud.Ugf.UgfHexMap;
 using UnityEngine;
@@ -49,8 +50,16 @@ namespace InfinityWorldChess.GameDomain.WorldCellDomain
                     break;
             }
         }
-        
-        
+
+        public override void CreateMap()
+        {
+            base.CreateMap();
+            if (!this.IsValid())
+            {
+                EnableHighlight(Color.black);
+            }
+        }
+
         public WorldCellMessage Message => GameScope.Instance.World.GetMessage(Index) ;
     }
 }

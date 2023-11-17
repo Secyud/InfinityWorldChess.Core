@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using InfinityWorldChess.BuffDomain;
+using Secyud.Ugf.HexMapExtensions;
 using Secyud.Ugf.UgfHexMap;
 using UnityEngine;
 
@@ -85,6 +86,15 @@ namespace InfinityWorldChess.BattleDomain
                 < 2 << 2 => Color.yellow,
                 _        => Color.yellow
             });
+        }
+        
+        public override void CreateMap()
+        {
+            base.CreateMap();
+            if (!this.IsValid())
+            {
+                EnableHighlight(Color.black);
+            }
         }
     }
 }

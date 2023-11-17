@@ -74,6 +74,12 @@ namespace InfinityWorldChess.PlayerDomain
             }
 
             Activity.Load(reader);
+            
+            var worldSetting = GameScope.Instance.World.WorldSetting;
+            foreach (IBundle bundle in worldSetting.PlayBundles)
+            {
+                bundle.OnGameLoading();
+            }
         }
 
         public virtual IEnumerator OnGameSaving()
@@ -98,7 +104,11 @@ namespace InfinityWorldChess.PlayerDomain
 
             Activity.Save(writer);
             
-            GameScope.Instance.World.WorldSetting.PreparePlayer(this);
+            var worldSetting = GameScope.Instance.World.WorldSetting;
+            foreach (IBundle bundle in worldSetting.PlayBundles)
+            {
+                bundle.OnGameSaving();
+            }
         }
 
         public virtual IEnumerator OnGameCreation()
@@ -126,7 +136,12 @@ namespace InfinityWorldChess.PlayerDomain
                 }
             }
             
-            GameScope.Instance.World.WorldSetting.PreparePlayer(this);
+            var worldSetting = GameScope.Instance.World.WorldSetting;
+            worldSetting.PreparePlayer(this);
+            foreach (IBundle bundle in worldSetting.PlayBundles)
+            {
+                bundle.OnGameCreation();
+            }
         }
     }
 }

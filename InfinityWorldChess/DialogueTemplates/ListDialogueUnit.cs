@@ -44,14 +44,8 @@ namespace InfinityWorldChess.DialogueTemplates
             else
             {
                 _currentIndex = 0;
-                if (FinishDialogueAction is not null)
-                {
-                    FinishDialogueAction.Invoke();
-                }
-                else
-                {
-                    InteractionScope.Instance.DialogueService.CloseDialoguePanel();
-                }
+                InteractionScope.Instance.DialogueService.CloseDialoguePanel();
+                FinishDialogueAction?.Invoke();
             }
         }
 
