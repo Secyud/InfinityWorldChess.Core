@@ -2,13 +2,13 @@
 
 namespace InfinityWorldChess.SkillDomain.SkillRangeDomain.Target
 {
-    public class CircleTargetRange :StartEndRange, ISkillCastResult
+    public class RoundAngleTargetRange :StartEndRange, ISkillCastResult
     {
         public override string Description => "圆形";
         
         public ISkillRange GetCastResultRange(BattleRole role, BattleCell castPosition,IActiveSkill skill)
         {
-            return SkillRange.Circle(Start, End, castPosition.Coordinates);
+            return SkillRange.RoundAngle(Start, End, castPosition.Coordinates);
         }
     }
 }

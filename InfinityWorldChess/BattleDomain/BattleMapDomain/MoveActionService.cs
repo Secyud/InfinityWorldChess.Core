@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using InfinityWorldChess.MessageDomain;
 using InfinityWorldChess.RoleDomain;
 using Secyud.Ugf.DependencyInjection;
 using Secyud.Ugf.HexMap;
@@ -33,10 +34,8 @@ namespace InfinityWorldChess.BattleDomain
             if (context.ReleasableCells.Contains(cell))
             {
                 HexUnit unit = context.Role.Unit;
-                _service.FindPath(unit.Location as BattleCell, 
-                    cell, unit);
-                context.InRangeCells = _service.GetPath()
-                    .Cast<BattleCell>().ToList();
+                _service.FindPath(unit.Location as BattleCell, cell, unit);
+                context.InRangeCells = _service.GetPath().Cast<BattleCell>().ToList();
             }
             else
             {
@@ -52,6 +51,8 @@ namespace InfinityWorldChess.BattleDomain
             float distance = cell.DistanceTo(unit.Location);
             role.ExecutionValue -= (int)(distance / role.Role.BodyPart.Nimble.RealValue * 100);
             _service.Travel();
+            OnApply();
+            MessageScope.Instance.AddMessage("移动至"+cell.Coordinates);
         }
 
         public void OnTrig()
@@ -75,7 +76,7 @@ namespace InfinityWorldChess.BattleDomain
             RoleBodyPart nimble = role.Role.BodyPart.Nimble;
             int execution = role.ExecutionValue;
 
-            byte rg = (byte)Math.Min(nimble.RealValue * execution / 100, 10);
+            byte rg = (byte)Math.Min(nimble.RealValue * execution / 10, 10);
 
             HexGrid grid = BattleScope.Instance.Map;
             List<BattleCell> cells = new();
@@ -86,6 +87,11 @@ namespace InfinityWorldChess.BattleDomain
             {
                 HexCoordinates tmp = coordinate;
 
+                for (int j = 0; j < i; j++)
+                {
+                    tmp += HexDirection.W;
+                }
+                
                 for (int j = 0; j < 6; j++)
                 {
                     HexDirection direction = (HexDirection)(j % 6);

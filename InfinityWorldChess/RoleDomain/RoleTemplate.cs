@@ -132,13 +132,6 @@ namespace InfinityWorldChess.RoleDomain
                 AvatarElement element = Avatar[i];
                 role.Basic.Avatar[i] = element ?? new AvatarElement();
             }
-
-
-            RoleGameContext roleGameContext = GameScope.Instance.Role;
-            roleGameContext[role.Id] = role;
-            HexCell cell = GameScope.Instance.Map.Value.GetCell(PositionIndex);
-            role.Position = cell as WorldCell;
-
             byte living, kiling, nimble, defend;
 
             {

@@ -10,16 +10,17 @@ namespace InfinityWorldChess.BattleDomain
         protected override void Awake()
         {
             base.Awake();
-            FormSkillContainer formSkill = 
-                Context.Role.NextFormSkills[CellIndex];
-            SetSkill(formSkill.FormSkill);
             _actionService = U.Get<CoreSkillActionService>();
         }
 
+        protected override IActiveSkill Skill => CoreSkill?.CoreSkill;
+
+        protected CoreSkillContainer CoreSkill => Context.Role.NextCoreSkills[CellIndex];
+        
         public void OnClick()
         {
             Context.MapAction = _actionService;
-            _actionService.CoreSkill = Context.Role.NextCoreSkills[CellIndex];
+            _actionService.CoreSkill = CoreSkill;
         }
     }
 }

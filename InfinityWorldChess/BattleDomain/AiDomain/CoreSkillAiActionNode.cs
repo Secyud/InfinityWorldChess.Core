@@ -43,17 +43,17 @@ namespace InfinityWorldChess.BattleDomain
                 }
             }
 
-            HexDirection direction = _cell.DirectionTo(_battleRole.Unit.Location);
+            HexDirection direction = _battleRole.Unit.DirectionTo(_cell);
             float distanceMin = float.MaxValue;
             float add = float.MaxValue;
             foreach (BattleRole chess in BattleScope.Instance.Context.Roles)
             {
                 if (chess == _battleRole)
                     continue;
-                float distance = _battleRole.Unit.Location.DistanceTo(chess.Unit.Location);
+                float distance = _battleRole.Unit.DistanceTo(chess.Unit);
                 if (distance < distanceMin)
                 {
-                    HexDirection d = chess.Unit.Location.DirectionTo(_battleRole.Unit.Location);
+                    HexDirection d =_battleRole.Unit.DirectionTo(chess.Unit);
 
                     int dd = Math.Abs(d - direction);
                     distanceMin = distance;

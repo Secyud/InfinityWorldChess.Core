@@ -9,6 +9,9 @@ using InfinityWorldChess.RoleDomain;
 using Secyud.Ugf.DependencyInjection;
 using Secyud.Ugf.Modularity;
 using System.IO;
+using InfinityWorldChess.GameDomain;
+using InfinityWorldChess.SkillDomain;
+using Secyud.Ugf;
 using UnityEngine;
 
 #endregion
@@ -18,7 +21,7 @@ namespace InfinityWorldChess
     [DependsOn(
         typeof(InfinityWorldChessModule)
     )]
-    public class BasicPackageModule : IUgfModule, IPostConfigure,IOnInitialization
+    public class BasicPackageModule : IUgfModule, IPostConfigure, IOnInitialization
     {
         public void ConfigureGame(ConfigurationContext context)
         {
@@ -34,7 +37,6 @@ namespace InfinityWorldChess
             // );
             RegisterItem(context);
             RegisterAvatar(context);
-
         }
 
         private void RegisterAvatar(ConfigurationContext context)
@@ -53,7 +55,7 @@ namespace InfinityWorldChess
             ItemFilters filters = context.Get<ItemFilters>();
 
             filters.RegisterList(ItemFilterToggleType.GetGroup());
-            
+
             ItemSorters sorters = context.Get<ItemSorters>();
 
             sorters.RegisterList(new ItemSorterType());
@@ -71,6 +73,17 @@ namespace InfinityWorldChess
             //U.Get<ManufacturingGameContext>().OnGameLoading();
             //U.Get<ManufacturingGameContext>().OnGameSaving();
             //U.Get<ManufacturingGameContext>().OnGameCreation();
+
+            if (!SharedConsts.LoadGame)
+            {
+                var role = GameScope.Instance.Player.Role;
+                var coreSkill = U.Tm.ConstructFromResource<CoreSkill>("基础招式_砸");
+                role.CoreSkill.TryAddLearnedSkill(coreSkill);
+                role.CoreSkill.Set(coreSkill, 0, 1);
+                coreSkill = U.Tm.ConstructFromResource<CoreSkill>("基础招式_抓");
+                role.CoreSkill.TryAddLearnedSkill(coreSkill);
+                role.CoreSkill.Set(coreSkill, 0, 0);
+            }
 
             return null;
         }

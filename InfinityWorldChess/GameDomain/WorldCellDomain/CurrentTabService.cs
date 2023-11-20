@@ -1,4 +1,5 @@
-﻿using Secyud.Ugf.DependencyInjection;
+﻿using InfinityWorldChess.InteractionDomain;
+using Secyud.Ugf.DependencyInjection;
 using Secyud.Ugf.TabComponents;
 
 namespace InfinityWorldChess.GameDomain.WorldCellDomain
@@ -20,6 +21,9 @@ namespace InfinityWorldChess.GameDomain.WorldCellDomain
 
                 _cell = value;
                 RefreshCurrentTab();
+
+                InteractionScope.Instance.SetSelectRole(null);
+
             }
         }
     }

@@ -10,6 +10,7 @@ using InfinityWorldChess.GameDomain;
 using InfinityWorldChess.GameDomain.WorldCellDomain;
 using InfinityWorldChess.GameDomain.WorldMapDomain;
 using InfinityWorldChess.InteractionDomain;
+using InfinityWorldChess.MessageDomain;
 using InfinityWorldChess.PlayerDomain;
 using InfinityWorldChess.RoleDomain;
 using Secyud.Ugf;
@@ -59,6 +60,7 @@ namespace InfinityWorldChess
             IUgfApplication app = context.Get<IUgfApplication>();
             app.DependencyManager.CreateScope<GameScope>();
             app.DependencyManager.CreateScope<InteractionScope>();
+            app.DependencyManager.CreateScope<MessageScope>();
             yield return null;
         }
 
@@ -92,6 +94,7 @@ namespace InfinityWorldChess
         {
             U.M.DestroyScope<GameScope>();
             U.M.DestroyScope<InteractionScope>();
+            U.M.DestroyScope<MessageScope>();
         }
 
         public int GameInitializeStep { get; } = 30;

@@ -2,15 +2,15 @@
 
 namespace InfinityWorldChess.SkillDomain.SkillRangeDomain.Target
 {
-    public class WideHalfCircleTargetRange :TargetWithoutTetragonalSymmetry, ISkillCastResult
+    public class AcuteAngleTargetRange : TargetWithoutTetragonalSymmetry,   ISkillCastResult
     {
-        public override string Description => "半圆";
-
+        public override string Description => "锐角";
+        
         public ISkillRange GetCastResultRange(BattleRole role, BattleCell castPosition,IActiveSkill skill)
         {
             var center = GetCenter(role, castPosition);
-
-            return SkillRange.WideHalfCircle(Start, End, center.Item1, center.Item2);
+            
+            return SkillRange.AcuteAngle(Start, End,center.Item1,center.Item2 );
         }
     }
 }

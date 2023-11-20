@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using InfinityWorldChess.MessageDomain;
 using InfinityWorldChess.SkillDomain;
 using Secyud.Ugf.DependencyInjection;
 
@@ -62,6 +63,7 @@ namespace InfinityWorldChess.BattleDomain
                 BattleRole role = context.Role;
                 BattleScope.Instance.Map.StartBroadcast(role, cell,
                     FormSkill.FormSkill.UnitPlay?.Value);
+                MessageScope.Instance.AddMessage(FormSkill.FormSkill.Name);
             }
         }
 
@@ -72,9 +74,9 @@ namespace InfinityWorldChess.BattleDomain
 
             role.SetFormSkillCall((byte)(FormSkill.EquipCode / 4));
 
-            BattleCell selfCell = role.Unit.Location as BattleCell;
+            var selfCell = role.Unit.Location;
             if (selfCell != _skillCastCell)
-                role.Direction = _skillCastCell.DirectionTo(selfCell);
+                role.Direction = selfCell.DirectionTo(_skillCastCell);
             FormSkill.FormSkill.ConditionCast(role);
             ISkillRange skillRange =
                 FormSkill.FormSkill.GetCastResultRange(role, _skillCastCell);

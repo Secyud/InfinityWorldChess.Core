@@ -16,10 +16,10 @@ namespace InfinityWorldChess.BattleDomain
         [Flags]
         public enum State
         {
-            Releasable = 0x08,
-            InRange = 0x04,
-            Selected = 0x02,
-            Hovered = 0x01
+            Releasable = 0x01,
+            InRange = 0x02,
+            Selected = 0x04,
+            Hovered = 0x08
         }
 
         private State _state;
@@ -58,7 +58,7 @@ namespace InfinityWorldChess.BattleDomain
 
         public int ResourceLevel { get; set; } = -1;
 
-        private void SetState(State state,bool value)
+        private void SetState(State state, bool value)
         {
             if (value)
             {
@@ -71,8 +71,13 @@ namespace InfinityWorldChess.BattleDomain
 
             SetHighlight();
         }
+
         public void SetHighlight()
         {
+#if DEBUG
+            Debug.Log($"Index: {Index}, State: {_state}");
+#endif
+
             if (_state == 0)
             {
                 DisableHighlight();
@@ -81,13 +86,13 @@ namespace InfinityWorldChess.BattleDomain
 
             EnableHighlight((int)_state switch
             {
-                < 2      => Color.red,
-                < 2 << 1 => Color.green,
-                < 2 << 2 => Color.yellow,
-                _        => Color.yellow
+                >= 8 => Color.cyan,
+                >= 4 => Color.yellow,
+                >= 2 => Color.green,
+                _    => Color.red
             });
         }
-        
+
         public override void CreateMap()
         {
             base.CreateMap();

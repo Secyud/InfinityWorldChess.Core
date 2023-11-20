@@ -3,6 +3,8 @@
 using InfinityWorldChess.GameDomain;
 using Secyud.Ugf.DependencyInjection;
 using Secyud.Ugf.HexMap;
+using Secyud.Ugf.HexMapExtensions;
+using Secyud.Ugf.HexUtilities;
 using Secyud.Ugf.UgfHexMap;
 
 #endregion
@@ -14,10 +16,15 @@ namespace InfinityWorldChess.BattleDomain
     {
         public override float GetSpeed(HexUnit unit)
         {
-            BattleRole role = BattleScope.Instance.GetChess(unit);
-            if (role is null) return 1;
+            return 1;
+        }
 
-            return role.GetSpeed();
+        public override float GetMoveCost(UgfCell fromCell, UgfCell toCell, HexDirection direction)
+        {
+            if (fromCell.IsValid() && toCell.IsValid())
+                return 1;
+
+            return -1;
         }
     }
 }

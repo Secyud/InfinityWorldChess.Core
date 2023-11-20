@@ -42,7 +42,7 @@ namespace InfinityWorldChess.BattleDomain
                     _hoverCell.Hovered = true;
                 }
 
-                MapAction.OnHover(_hoverCell);
+                MapAction?.OnHover(_hoverCell);
                 HoverCellService.Refresh();
             }
         }

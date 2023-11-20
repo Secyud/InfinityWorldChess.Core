@@ -26,13 +26,13 @@ namespace InfinityWorldChess.SkillDomain.SkillRangeDomain
 			return new SkillRange(cells);
 		}
 
-		public static SkillRange Circle(byte start, byte end,
+		public static SkillRange RoundAngle(byte start, byte end,
 			HexCoordinates center,bool includeUnit = true)
 		{
 			return GetArcRange(start, end, center, HexDirection.Ne, 6,includeUnit);
 		}
 
-		public static SkillRange WideHalfCircle(byte start, byte end, HexCoordinates center, HexDirection direction)
+		public static SkillRange ReflexAngle(byte start, byte end, HexCoordinates center, HexDirection direction)
 		{
 			return GetArcRange(
 				start, end, center,
@@ -48,14 +48,14 @@ namespace InfinityWorldChess.SkillDomain.SkillRangeDomain
 		/// <param name="center"></param>
 		/// <param name="direction"></param>
 		/// <returns></returns>
-		public static SkillRange HalfCircle(byte start, byte end, HexCoordinates center, HexDirection direction)
+		public static SkillRange FlatAngle(byte start, byte end, HexCoordinates center, HexDirection direction)
 		{
 			return GetArcRange(start, end, center,
 				(HexDirection)(((int)direction + 5) % 6), 3
 			);
 		}
 
-		public static SkillRange ObtuseTriangle(byte start, byte end, HexCoordinates center, HexDirection direction)
+		public static SkillRange ObtuseAngle(byte start, byte end, HexCoordinates center, HexDirection direction)
 		{
 			return GetArcRange(start, end, center,
 				(HexDirection)(((int)direction + 5) % 6), 2
@@ -70,7 +70,7 @@ namespace InfinityWorldChess.SkillDomain.SkillRangeDomain
 		/// <param name="center"></param>
 		/// <param name="direction"></param>
 		/// <returns></returns>
-		public static SkillRange AcuteTriangle(byte start, byte end, HexCoordinates center, HexDirection direction)
+		public static SkillRange AcuteAngle(byte start, byte end, HexCoordinates center, HexDirection direction)
 		{
 			return GetArcRange(start, end, center, direction, 1);
 		}
@@ -112,20 +112,25 @@ namespace InfinityWorldChess.SkillDomain.SkillRangeDomain
 
 			if (!includeUnit)
 			{
-				for (int i = 0; i < cells.Count; )
-				{
-					if (cells[i].Unit)
-					{
-						cells.RemoveAt(i);
-					}
-					else
-					{
-						i++;
-					}
-				}
+				RemoveUnit(cells);
 			}
 			
 			return new SkillRange(cells.ToArray());
+		}
+
+		private static void RemoveUnit(IList<BattleCell> cells)
+		{
+			for (int i = 0; i < cells.Count; )
+			{
+				if (cells[i].Unit)
+				{
+					cells.RemoveAt(i);
+				}
+				else
+				{
+					i++;
+				}
+			}
 		}
 	}
 }

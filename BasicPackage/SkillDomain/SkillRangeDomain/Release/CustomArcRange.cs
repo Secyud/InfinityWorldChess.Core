@@ -3,7 +3,7 @@ using Secyud.Ugf.DataManager;
 
 namespace InfinityWorldChess.SkillDomain.SkillRangeDomain.Release
 {
-    public class CustomArcRance:ISkillCastPosition
+    public class CustomArcRange:ISkillCastPosition
     {
         [field:S] public byte Start { get; set; }
         [field:S] public byte End { get; set; }

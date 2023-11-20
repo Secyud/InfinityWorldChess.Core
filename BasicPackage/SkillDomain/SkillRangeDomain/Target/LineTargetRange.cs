@@ -8,7 +8,7 @@ namespace InfinityWorldChess.SkillDomain.SkillRangeDomain.Target
         public ISkillRange GetCastResultRange(BattleRole role, BattleCell castPosition,IActiveSkill skill)
         {
             return SkillRange.Line(Start, End, castPosition.Coordinates, 
-                castPosition.DirectionTo(role.Unit.Location));
+                role.Unit.Location.DirectionTo(castPosition));
         }
     }
 }

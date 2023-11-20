@@ -10,7 +10,7 @@ namespace InfinityWorldChess.SkillFunctions.Move
 
         public void Cast(BattleRole role, BattleCell releasePosition, ISkillRange range, IActiveSkill skill)
         {
-            HexDirection direction = releasePosition.DirectionTo(role.Unit.Location);
+            HexDirection direction = role.Unit.Location.DirectionTo(releasePosition);
             role.Unit.Location = releasePosition;
             role.Direction = direction;
         }

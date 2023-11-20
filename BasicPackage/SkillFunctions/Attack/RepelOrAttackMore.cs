@@ -16,9 +16,9 @@ namespace InfinityWorldChess.SkillFunctions.Attack
         {
             base.PostInteraction(interaction);
             HexCell lC = interaction.LaunchChess.Unit.Location;
-            HexCell rC = interaction.TargetChess.Unit.Location;
-            HexDirection direction = rC.DirectionTo(lC);
-            HexCell neighbour = rC.GetNeighbor(direction);
+            HexCell tC = interaction.TargetChess.Unit.Location;
+            HexDirection direction = lC.DirectionTo(tC);
+            HexCell neighbour = tC.GetNeighbor(direction);
             if (neighbour && !neighbour.Unit)
                 interaction.TargetChess.Unit.Location = neighbour;
             else if (interaction.TargetChess is ICanDefend defender)

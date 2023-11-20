@@ -1,5 +1,6 @@
 using InfinityWorldChess.ActivityAccessors;
 using InfinityWorldChess.ActivityDomain;
+using InfinityWorldChess.MessageDomain;
 using InfinityWorldChess.Ugf;
 using Secyud.Ugf.DataManager;
 using UnityEngine;
@@ -25,6 +26,8 @@ namespace InfinityWorldChess.NormalTriggers
             
             activity.State = CurrentSuccess ? ActivityState.Success : ActivityState.Failed;
             activity.FinishActivity(group);
+            
+            MessageScope.Instance.AddMessage($"任务完成：{activity.Name}");
 
             activity = group.Activities
                 .Find(u => u.ResourceId == ActivityId);
@@ -39,6 +42,8 @@ namespace InfinityWorldChess.NormalTriggers
             group.CurrentActivity = activity;
             activity.StartActivity(group);
             activity.State = ActivityState.Received;
+            
+            MessageScope.Instance.AddMessage($"获取任务：{activity.Name}");
         }
     }
 }

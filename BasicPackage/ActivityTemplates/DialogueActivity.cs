@@ -1,10 +1,11 @@
 ﻿using InfinityWorldChess.ActivityDomain;
-using InfinityWorldChess.DialogueAccessors;
 using InfinityWorldChess.DialogueDomain;
 using InfinityWorldChess.InteractionDomain;
 using InfinityWorldChess.RoleDomain;
+using InfinityWorldChess.Ugf;
 using Secyud.Ugf;
 using Secyud.Ugf.DataManager;
+using UnityEngine;
 
 namespace InfinityWorldChess.ActivityTemplates
 {
@@ -16,6 +17,14 @@ namespace InfinityWorldChess.ActivityTemplates
 
         private RoleActivityDialogueProperty Property =>
             RoleAccessor?.Value?.GetProperty<RoleActivityDialogueProperty>();
+
+        public override void SetContent(Transform transform)
+        {
+            base.SetContent(transform);
+
+            Role role = RoleAccessor.Value;
+            transform.AddParagraph($"找到{role?.ShowName}{role?.Position.Coordinates}，与之对话。");
+        }
 
         public override void StartActivity(ActivityGroup group)
         {
