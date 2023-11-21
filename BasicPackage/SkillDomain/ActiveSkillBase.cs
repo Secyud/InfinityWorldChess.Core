@@ -27,12 +27,11 @@ namespace InfinityWorldChess.SkillDomain
         [field: S(260)] public IInteractionAction PostInteraction { get; set; }
         [field: S(261)] public ISkillAction PostSkill { get; set; }
 
+        public BattleRole Role { get; private set; }
+        public BattleCell Cell { get; private set; }
+        public ISkillRange Range { get; private set; }
+        public ISkillTarget Targets { get; private set; }
 
-        public BattleRole Role { get; set; }
-        public BattleCell Cell { get; set; }
-        public ISkillRange Range { get; set; }
-        public IActiveSkill Skill { get; set; }
-        public ISkillTarget Targets { get; set; }
         public byte Living { get; set; }
         public byte Kiling { get; set; }
         public byte Nimble { get; set; }
@@ -88,7 +87,6 @@ namespace InfinityWorldChess.SkillDomain
             Role = role;
             Cell = releasePosition;
             Range = range;
-            Skill = skill;
             Targets = TargetGetter.GetTargetInRange(role, range);
 
             SetAttached(PreSkill);
@@ -113,11 +111,10 @@ namespace InfinityWorldChess.SkillDomain
             Role = null;
             Cell = null;
             Range = null;
-            Skill = null;
             Targets = null;
         }
 
-        private void SetAttached(ISkillAttached attached)
+        private void SetAttached(IActiveSkillAttached attached)
         {
             if (attached is not null)
             {

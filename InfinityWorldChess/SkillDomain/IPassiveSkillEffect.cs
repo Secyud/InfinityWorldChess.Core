@@ -1,11 +1,11 @@
-﻿using InfinityWorldChess.RoleDomain;
+﻿using InfinityWorldChess.BuffDomain;
+using InfinityWorldChess.GlobalDomain;
+using InfinityWorldChess.RoleDomain;
 using Secyud.Ugf;
 
 namespace InfinityWorldChess.SkillDomain
 {
-    public interface IPassiveSkillEffect:IHasDescription
+    public interface IPassiveSkillEffect:IHasContent,IEquippable<Role>
     {
-        void Equip(Role role,IPassiveSkill skill = null);
-        void UnEquip(Role role,IPassiveSkill skill = null);
     }
 }

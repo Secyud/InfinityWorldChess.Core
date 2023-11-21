@@ -17,7 +17,7 @@ namespace InfinityWorldChess.SkillFunctions
         [field: S(4)] public IObjectAccessor<Sprite> Icon { get; set; }
 
         // the effect of buff
-        [field: S(5)] public IEffectEffect BuffEffect { get; set; }
+        [field: S(5)] public IBuffEffect BuffEffect { get; set; }
 
         // decided when buff remove, null if not remove
         [field: S(6)] public EffectRecorder EffectRecorder { get; set; }

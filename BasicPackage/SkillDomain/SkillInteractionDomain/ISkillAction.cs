@@ -3,7 +3,7 @@ using Secyud.Ugf;
 
 namespace InfinityWorldChess.SkillDomain
 {
-    public interface ISkillAction:IHasContent,ISkillAttached
+    public interface ISkillAction:IHasContent,IActiveSkillAttached
     {
         void Invoke(BattleRole battleChess, BattleCell releasePosition);
     }

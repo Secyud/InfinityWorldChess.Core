@@ -8,7 +8,7 @@ using Secyud.Ugf.Archiving;
 
 namespace InfinityWorldChess.SkillDomain
 {
-	public interface IActiveSkill : IHasContent,IDataResource,IHasSaveIndex,
+	public interface IActiveSkill : IDataResource,IHasSaveIndex,
 		ISkillCastCondition,  IActiveSkillEffect,ISkillCastPosition,ISkillCastResult,ISkill
 	{
 		

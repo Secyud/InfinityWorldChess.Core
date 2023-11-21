@@ -4,7 +4,7 @@ using InfinityWorldChess.BuffDomain;
 
 namespace InfinityWorldChess.SkillFunctions
 {
-    public abstract class TriggerEffect : IEffectEffect
+    public abstract class TriggerEffect : IBuffEffect
     {
         protected BattleContext Context => BattleScope.Instance.Context;
         

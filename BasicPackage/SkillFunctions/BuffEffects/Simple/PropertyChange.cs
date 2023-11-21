@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace InfinityWorldChess.SkillFunctions
 {
-    public class PropertyChange : IEffectEffect, IHasContent
+    public class PropertyChange : IBuffEffect, IHasContent
     {
         [field: S] public int Value { get; set; }
         [field: S] public byte Type { get; set; }

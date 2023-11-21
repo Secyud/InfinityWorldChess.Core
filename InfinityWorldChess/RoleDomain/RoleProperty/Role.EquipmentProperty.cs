@@ -52,7 +52,7 @@ namespace InfinityWorldChess.RoleDomain
                     IEquipment current = _equipments[location];
                     if (current is not null)
                     {
-                        current.UnEquip(role);
+                        current.UnInstall(role);
                         _equipments[location] = null;
                     }
 
@@ -60,7 +60,7 @@ namespace InfinityWorldChess.RoleDomain
                         return;
 
                     _equipments[location] = value;
-                    value.Equip(role);
+                    value.Install(role);
                 }
             }
 

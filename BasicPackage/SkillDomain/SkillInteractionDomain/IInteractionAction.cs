@@ -2,7 +2,7 @@
 
 namespace InfinityWorldChess.SkillDomain
 {
-    public interface IInteractionAction:IHasContent,ISkillAttached
+    public interface IInteractionAction:IHasContent,IActiveSkillAttached
     {
         void Invoke(SkillInteraction interaction);
     }

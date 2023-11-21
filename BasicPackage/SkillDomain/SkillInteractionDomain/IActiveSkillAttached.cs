@@ -1,6 +1,6 @@
 ﻿namespace InfinityWorldChess.SkillDomain
 {
-    public interface ISkillAttached
+    public interface IActiveSkillAttached
     {
         ActiveSkillBase Skill { get; set; }
     }

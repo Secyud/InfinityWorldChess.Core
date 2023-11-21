@@ -1,4 +1,5 @@
-﻿using InfinityWorldChess.GameDomain;
+﻿using System;
+using InfinityWorldChess.GameDomain;
 using InfinityWorldChess.RoleDomain;
 using InfinityWorldChess.Ugf;
 using Secyud.Ugf;
@@ -12,20 +13,27 @@ namespace InfinityWorldChess.SkillDomain
     {
         [field: S(0)] public string ResourceId { get; set; }
         [field: S(1)] public int Score { get; set; }
-        [field: S(255)] public IPassiveSkillEffect Effect { get; set; }
         [field: S(254)] public IObjectAccessor<SkillAnim> UnitPlay { get; set; }
         [field: S(0)] public string Name { get; set; }
         [field: S(2)] public string Description { get; set; }
         [field: S(254)] public IObjectAccessor<Sprite> Icon { get; set; }
+        [field: S(255)] public IPassiveSkillAttached Effect { get; set; }
 
-        public void Equip(Role role,IPassiveSkill skill)
+        public Role Role { get; set; }
+
+        public void Install(Role target)
         {
-            Effect?.Equip( role,this);
+            if (Effect is not null)
+            {
+                Role = target;
+                Effect.Skill = this;
+                Effect.Install(target);
+            }
         }
 
-        public void UnEquip(Role role,IPassiveSkill skill)
+        public void UnInstall(Role target)
         {
-            Effect?.UnEquip(role,this);
+            Effect?.UnInstall(target);
         }
 
         public void SetContent(Transform transform)
@@ -40,7 +48,7 @@ namespace InfinityWorldChess.SkillDomain
 
         protected virtual void SetHideContent(Transform transform)
         {
-            transform.AddParagraph($"效果：{Effect.Description}。");
+            Effect?.SetContent(transform);
         }
 
         public byte Living { get; set; }
@@ -48,6 +56,14 @@ namespace InfinityWorldChess.SkillDomain
         public byte Nimble { get; set; }
         public byte Defend { get; set; }
 
+        public byte this[int i] => i switch
+        {
+            0 => Living,
+            1 => Kiling,
+            2 => Nimble,
+            3 => Defend,
+            _ => 0
+        };
 
         public virtual void Save(IArchiveWriter writer)
         {

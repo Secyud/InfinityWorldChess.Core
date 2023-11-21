@@ -30,16 +30,20 @@ namespace InfinityWorldChess.ItemTemplates
 
         public int SaveIndex { get; set; }
 
-        public void Equip(Role role)
+        public void Install(Role role)
         {
             foreach (IBuff<Role> buff in RoleBuff)
+            {
                 buff.Install(role);
+            }
         }
 
-        public void UnEquip(Role role)
+        public void UnInstall(Role role)
         {
             foreach (IBuff<Role> buff in RoleBuff)
+            {
                 buff.UnInstall(role);
+            }
         }
 
         public void InitBattle(BattleRole role)

@@ -72,15 +72,15 @@ namespace InfinityWorldChess.RoleDomain
                                 if (i == location)
                                     return;
 
-                                _equippedSkills[i].UnEquip(role);
+                                _equippedSkills[i].UnInstall(role);
                                 _equippedSkills[i] = null;
                                 break;
                             }
 
                     IPassiveSkill skill = _equippedSkills[location];
 
-                    skill?.UnEquip(role);
-                    value?.Equip(role);
+                    skill?.UnInstall(role);
+                    value?.Install(role);
 
                     _equippedSkills[location] = value;
                 }
