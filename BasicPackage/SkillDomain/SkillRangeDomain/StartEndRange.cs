@@ -1,22 +1,14 @@
-﻿using InfinityWorldChess.Ugf;
-using Secyud.Ugf;
-using Secyud.Ugf.DataManager;
-using UnityEngine;
+﻿using Secyud.Ugf.DataManager;
 
-namespace InfinityWorldChess.SkillDomain.SkillRangeDomain
+namespace InfinityWorldChess.SkillDomain
 {
-    public class StartEndRange : IHasContent
+    public class StartEndRange 
     {
         [field: S(-1)] public byte Start { get; set; }
         [field: S(-1)] public byte End { get; set; }
 
         protected virtual string SeLabel => $"({Start},{End})";
 
-        public virtual string Description => null;
-
-        public virtual void SetContent(Transform transform)
-        {
-            transform.AddParagraph(Description + SeLabel);
-        }
+        protected virtual string Description => null;
     }
 }

@@ -1,11 +1,12 @@
 ﻿using System.Linq;
 using InfinityWorldChess.BattleDomain;
+using InfinityWorldChess.Ugf;
+using UnityEngine;
 
-namespace InfinityWorldChess.SkillDomain.SkillTargetDomain
+namespace InfinityWorldChess.SkillDomain
 {
-    public class TeammatesTarget:ISkillTargetInRange
+    public class TeammatesTarget : ISkillTargetInRange
     {
-        public string Description => "友军";
         public ISkillTarget GetTargetInRange(BattleRole battleChess, ISkillRange range)
         {
             return new SkillTarget(
@@ -16,6 +17,11 @@ namespace InfinityWorldChess.SkillDomain.SkillTargetDomain
                 where c?.Camp == battleChess.Camp
                 select c
             );
+        }
+
+        public void SetContent(Transform transform)
+        {
+            transform.AddParagraph("目标：友军。");
         }
     }
 }

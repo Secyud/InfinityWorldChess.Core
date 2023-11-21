@@ -11,6 +11,7 @@ namespace InfinityWorldChess.ItemDomain.EquipmentDomain
 		public int Antique { get; set; }
 
 		public byte TypeCode { get; }
+		public byte Location { get; }
 
 		public int[] Property { get; }
 	}

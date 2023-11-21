@@ -1,7 +1,6 @@
 ﻿using System;
 using InfinityWorldChess.BattleDomain;
 using InfinityWorldChess.GameDomain;
-using InfinityWorldChess.SkillDomain.SkillRangeDomain;
 using InfinityWorldChess.Ugf;
 using Secyud.Ugf;
 using Secyud.Ugf.Archiving;
@@ -21,8 +20,19 @@ namespace InfinityWorldChess.SkillDomain
         [field: S(255)] public ISkillCastCondition Condition { get; set; }
         [field: S(255)] public ISkillCastPosition Position { get; set; }
         [field: S(255)] public ISkillCastResult Result { get; set; }
-        [field: S(255)] public IActiveSkillEffect SkillEffect { get; set; }
+        [field: S(256)] public ISkillTargetInRange TargetGetter { get; set; }
+        [field: S(257)] public ISkillAction PreSkill { get; set; }
+        [field: S(258)] public IInteractionAction PreInteraction { get; set; }
+        [field: S(259)] public IInteractionAction OnInteraction { get; set; }
+        [field: S(260)] public IInteractionAction PostInteraction { get; set; }
+        [field: S(261)] public ISkillAction PostSkill { get; set; }
 
+
+        public BattleRole Role { get; set; }
+        public BattleCell Cell { get; set; }
+        public ISkillRange Range { get; set; }
+        public IActiveSkill Skill { get; set; }
+        public ISkillTarget Targets { get; set; }
         public byte Living { get; set; }
         public byte Kiling { get; set; }
         public byte Nimble { get; set; }
@@ -40,11 +50,15 @@ namespace InfinityWorldChess.SkillDomain
 
         protected virtual void SetHideContent(Transform transform)
         {
-            if (Condition is not null)
-                transform.AddParagraph($"释放要求：{Condition.Description}。");
-            transform.AddParagraph($"释放范围：{Position.Description}。");
-            transform.AddParagraph($"目标范围：{Result.Description}。");
-            transform.AddParagraph($"效果：{SkillEffect.Description}。");
+            Condition?.SetContent(transform);
+            Position?.SetContent(transform);
+            Result?.SetContent(transform);
+            TargetGetter?.SetContent(transform);
+            PreSkill?.SetContent(transform);
+            PreInteraction?.SetContent(transform);
+            OnInteraction?.SetContent(transform);
+            PostInteraction?.SetContent(transform);
+            PostSkill?.SetContent(transform);
         }
 
         public virtual string CheckCastCondition(BattleRole chess, IActiveSkill skill)
@@ -59,21 +73,56 @@ namespace InfinityWorldChess.SkillDomain
 
         public virtual ISkillRange GetCastPositionRange(BattleRole role, IActiveSkill skill)
         {
-            if (Position is null)
-                return new SkillRange(Array.Empty<BattleCell>());
-            return Position.GetCastPositionRange(role, skill);
+            return Position?.GetCastPositionRange(role, skill)
+                   ?? new SkillRange(Array.Empty<BattleCell>());
         }
 
         public virtual ISkillRange GetCastResultRange(BattleRole role, BattleCell castPosition, IActiveSkill skill)
         {
-            if (Result is null)
-                return new SkillRange(Array.Empty<BattleCell>());
-            return Result.GetCastResultRange(role, castPosition, skill);
+            return Result?.GetCastResultRange(role, castPosition, skill)
+                   ?? new SkillRange(Array.Empty<BattleCell>());
         }
 
         public virtual void Cast(BattleRole role, BattleCell releasePosition, ISkillRange range, IActiveSkill skill)
         {
-            SkillEffect?.Cast(role, releasePosition, range, this);
+            Role = role;
+            Cell = releasePosition;
+            Range = range;
+            Skill = skill;
+            Targets = TargetGetter.GetTargetInRange(role, range);
+
+            SetAttached(PreSkill);
+            SetAttached(PreInteraction);
+            SetAttached(OnInteraction);
+            SetAttached(PostInteraction);
+            SetAttached(PostSkill);
+
+            PreSkill?.Invoke(role, releasePosition);
+            foreach (BattleRole enemy in Targets.Value)
+            {
+                SkillInteraction interaction = SkillInteraction.Create(role, enemy);
+                PreInteraction?.Invoke(interaction);
+                interaction.BeforeHit();
+                OnInteraction?.Invoke(interaction);
+                interaction.AfterHit();
+                PostInteraction?.Invoke(interaction);
+            }
+
+            PostSkill?.Invoke(role, releasePosition);
+
+            Role = null;
+            Cell = null;
+            Range = null;
+            Skill = null;
+            Targets = null;
+        }
+
+        private void SetAttached(ISkillAttached attached)
+        {
+            if (attached is not null)
+            {
+                attached.Skill = this;
+            }
         }
 
         public virtual void Save(IArchiveWriter writer)

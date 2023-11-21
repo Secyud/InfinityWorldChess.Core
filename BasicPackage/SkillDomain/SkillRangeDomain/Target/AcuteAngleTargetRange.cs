@@ -1,10 +1,10 @@
 ﻿using InfinityWorldChess.BattleDomain;
 
-namespace InfinityWorldChess.SkillDomain.SkillRangeDomain.Target
+namespace InfinityWorldChess.SkillDomain.Target
 {
     public class AcuteAngleTargetRange : TargetWithoutTetragonalSymmetry,   ISkillCastResult
     {
-        public override string Description => "锐角";
+        protected override string Description => "锐角";
         
         public ISkillRange GetCastResultRange(BattleRole role, BattleCell castPosition,IActiveSkill skill)
         {

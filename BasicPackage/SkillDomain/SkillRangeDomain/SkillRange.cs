@@ -10,7 +10,7 @@ using Secyud.Ugf.HexUtilities;
 
 #endregion
 
-namespace InfinityWorldChess.SkillDomain.SkillRangeDomain
+namespace InfinityWorldChess.SkillDomain
 {
 	public class SkillRange : ISkillRange, IObjectAccessor<BattleCell[]>
 	{

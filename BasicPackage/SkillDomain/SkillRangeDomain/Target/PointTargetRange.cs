@@ -1,6 +1,8 @@
 ﻿using InfinityWorldChess.BattleDomain;
+using InfinityWorldChess.Ugf;
+using UnityEngine;
 
-namespace InfinityWorldChess.SkillDomain.SkillRangeDomain.Target
+namespace InfinityWorldChess.SkillDomain.Target
 {
     public class PointTargetRange:ISkillCastResult
     {
@@ -8,6 +10,11 @@ namespace InfinityWorldChess.SkillDomain.SkillRangeDomain.Target
         public ISkillRange GetCastResultRange(BattleRole role, BattleCell castPosition, IActiveSkill skill = null)
         {
             return SkillRange.GetFixedRange(castPosition);
+        }
+
+        public void SetContent(Transform transform)
+        {
+            transform.AddParagraph("释放目标：单点。");
         }
     }
 }

@@ -6,7 +6,7 @@ using Secyud.Ugf.AssetComponents;
 using Secyud.Ugf.AssetLoading;
 using UnityEngine;
 
-namespace InfinityWorldChess.SkillDomain.SkillPlayDomain
+namespace InfinityWorldChess.SkillDomain
 {
     public class SkillPlayContainer : PrefabContainer<SkillAnim>
     {

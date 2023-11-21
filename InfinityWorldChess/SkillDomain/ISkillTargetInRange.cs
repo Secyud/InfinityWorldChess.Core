@@ -3,7 +3,7 @@ using Secyud.Ugf;
 
 namespace InfinityWorldChess.SkillDomain
 {
-    public interface ISkillTargetInRange:IHasDescription
+    public interface ISkillTargetInRange:IHasContent
     {
         ISkillTarget GetTargetInRange(BattleRole battleChess, ISkillRange range);
     }

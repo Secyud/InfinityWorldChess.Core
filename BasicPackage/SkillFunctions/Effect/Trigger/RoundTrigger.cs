@@ -1,43 +1,45 @@
 using InfinityWorldChess.BattleDomain;
-using InfinityWorldChess.BuffDomain;
+using InfinityWorldChess.Ugf;
 using Secyud.Ugf.DataManager;
+using UnityEngine;
 
-namespace InfinityWorldChess.SkillFunctions.Effect
+namespace InfinityWorldChess.SkillFunctions
 {
     /// <summary>
     /// be careful, time should be a large number.
     /// </summary>
-    public class RoundTrigger : BuffTriggerBase
+    public class RoundTrigger : ActionableTrigger
     {
-        [field:S] private int Time { get; set; }
+        [field: S(0)] public int Time { get; set; }
 
-        private float _timeRecord;
-        public override string Description => $"每{Time}时序触发," + base.Description;
+        protected float TimeRecord { get; set; }
 
-        public override void Install(BattleRole target, IBuff<BattleRole> buff)
+        public override void Install(BattleRole target)
         {
-            base.Install(target, buff);
-            BattleScope.Instance.Context.RoundBeginAction += EffectCheck;
-            _timeRecord = BattleScope.Instance.Context.TotalTime;
+            TimeRecord = Context.TotalTime;
+            Context.RoundBeginAction += CalculateEffect;
         }
 
-        public override void UnInstall(BattleRole target, IBuff<BattleRole> buff)
+        public override void UnInstall(BattleRole target)
         {
-            base.UnInstall(target, buff);
-            BattleScope.Instance.Context.RoundBeginAction -= EffectCheck;
+            Context.RoundBeginAction -= CalculateEffect;
         }
 
-        private void EffectCheck()
+        private void CalculateEffect()
         {
-            float currentTime = BattleScope.Instance.Context.TotalTime;
-            while (currentTime > _timeRecord + Time)
+            float currentTime = Context.TotalTime;
+            while (currentTime > TimeRecord + Time)
             {
-                foreach (ITriggerEffect e in Effects)
-                {
-                    e.Active();
-                }
-                _timeRecord += Time;
+                Active();
+                TimeRecord += Time;
             }
+        }
+
+        public override void SetContent(Transform transform)
+        {
+            transform.AddParagraph($"每{Time}时序触发。");
+
+            base.SetContent(transform);
         }
     }
 }

@@ -3,7 +3,7 @@ using Secyud.Ugf;
 
 namespace InfinityWorldChess.SkillDomain
 {
-	public interface ISkillCastResult:IHasDescription
+	public interface ISkillCastResult:IHasContent
 	{
 		ISkillRange GetCastResultRange(BattleRole role, BattleCell castPosition,IActiveSkill skill = null);
 	}

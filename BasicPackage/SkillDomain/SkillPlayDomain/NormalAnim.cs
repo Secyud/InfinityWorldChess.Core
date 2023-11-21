@@ -1,4 +1,4 @@
-namespace InfinityWorldChess.SkillDomain.SkillPlayDomain
+namespace InfinityWorldChess.SkillDomain
 {
     public class NormalAnim:SkillAnim
     {

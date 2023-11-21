@@ -2,7 +2,7 @@
 using InfinityWorldChess.RoleDomain;
 using InfinityWorldChess.SkillDomain;
 
-namespace InfinityWorldChess.SkillFunctions.Passive
+namespace InfinityWorldChess.SkillFunctions
 {
     public class AddProperty:BattlePassive
     {

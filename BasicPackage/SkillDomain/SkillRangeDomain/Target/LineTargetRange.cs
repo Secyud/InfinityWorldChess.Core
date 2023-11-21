@@ -1,14 +1,15 @@
 ﻿using InfinityWorldChess.BattleDomain;
 
-namespace InfinityWorldChess.SkillDomain.SkillRangeDomain.Target
+namespace InfinityWorldChess.SkillDomain.Target
 {
-    public class LineTargetRange : StartEndRange, ISkillCastResult
+    public class LineTargetRange : TargetWithoutTetragonalSymmetry, ISkillCastResult
     {
-        public override string Description => "直线";
-        public ISkillRange GetCastResultRange(BattleRole role, BattleCell castPosition,IActiveSkill skill)
+        protected override string Description => "直线";
+
+        public ISkillRange GetCastResultRange(BattleRole role, BattleCell castPosition, IActiveSkill skill)
         {
-            return SkillRange.Line(Start, End, castPosition.Coordinates, 
-                role.Unit.Location.DirectionTo(castPosition));
+            var center = GetCenter(role, castPosition);
+            return SkillRange.Line(Start, End, center.Item1, center.Item2);
         }
     }
 }

@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using InfinityWorldChess.BattleDomain;
+using InfinityWorldChess.Ugf;
+using UnityEngine;
 
-namespace InfinityWorldChess.SkillDomain.SkillTargetDomain
+namespace InfinityWorldChess.SkillDomain
 {
     public class SelfAndEnemyTarget : ISkillTargetInRange
     {
-        public string Description => "敌人及自身";
         public ISkillTarget GetTargetInRange(BattleRole battleChess, ISkillRange range)
         {
             List<BattleRole> r =
@@ -17,6 +18,10 @@ namespace InfinityWorldChess.SkillDomain.SkillTargetDomain
                     where c?.Camp != battleChess.Camp || c == battleChess
                     select c).ToList();
             return new SkillTarget(r);
+        }
+        public void SetContent(Transform transform)
+        {
+            transform.AddParagraph("目标：敌人及自身。");
         }
     }
 }

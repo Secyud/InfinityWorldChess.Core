@@ -7,12 +7,7 @@ using Secyud.Ugf;
 
 namespace InfinityWorldChess.BuffDomain
 {
-    public interface IBuff<TTarget> : IHasId<int>
+    public interface IBuff<TTarget> : IEquippable<TTarget>, IOverlayable<TTarget>, IHasId<int>
     {
-        void Install([NotNull] TTarget target);
-
-        void UnInstall([NotNull] TTarget target);
-
-        void Overlay([NotNull] IBuff<TTarget> finishBuff);
     }
 }

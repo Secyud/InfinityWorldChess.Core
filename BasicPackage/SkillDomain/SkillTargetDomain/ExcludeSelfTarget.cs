@@ -1,11 +1,12 @@
 ﻿using System.Linq;
 using InfinityWorldChess.BattleDomain;
+using InfinityWorldChess.Ugf;
+using UnityEngine;
 
-namespace InfinityWorldChess.SkillDomain.SkillTargetDomain
+namespace InfinityWorldChess.SkillDomain
 {
     public class ExcludeSelfTarget:ISkillTargetInRange
     {
-        public string Description => "除自身外所有人";
         public ISkillTarget GetTargetInRange(BattleRole battleChess, ISkillRange range)
         {
             return new SkillTarget(
@@ -13,6 +14,10 @@ namespace InfinityWorldChess.SkillDomain.SkillTargetDomain
                 where cell.Unit
                 select cell.Unit.Get<BattleRole>()
             );
+        }
+        public void SetContent(Transform transform)
+        {
+            transform.AddParagraph("目标：除自身外所有人。");
         }
     }
 }

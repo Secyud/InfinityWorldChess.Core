@@ -1,17 +1,24 @@
 ﻿using InfinityWorldChess.BattleDomain;
+using InfinityWorldChess.Ugf;
 using Secyud.Ugf.DataManager;
+using UnityEngine;
 
-namespace InfinityWorldChess.SkillDomain.SkillRangeDomain.Release
+namespace InfinityWorldChess.SkillDomain.Release
 {
-    public class RoundAngleReleaseRange :StartEndRange,  ISkillCastPosition
+    public class RoundAngleReleaseRange : StartEndRange, ISkillCastPosition
     {
-        [field:S] public bool IncludeUnit { get; set; }
-        public override string Description => "圆形";
+        [field: S] public bool IncludeUnit { get; set; }
+        protected override string Description => "圆形";
 
-        public ISkillRange GetCastPositionRange(BattleRole role,IActiveSkill skill)
+        public ISkillRange GetCastPositionRange(BattleRole role, IActiveSkill skill)
         {
             return SkillRange.RoundAngle(
-                Start, End, role.Unit.Location.Coordinates,IncludeUnit);
+                Start, End, role.Unit.Location.Coordinates, IncludeUnit);
+        }
+
+        public void SetContent(Transform transform)
+        {
+            transform.AddParagraph($"释放范围：圆形({Start}-{End})");
         }
     }
 }

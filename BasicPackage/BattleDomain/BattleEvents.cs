@@ -1,7 +1,7 @@
 #region
 
 using InfinityWorldChess.BuffDomain;
-using InfinityWorldChess.SkillDomain.SkillInteractionDomain;
+using InfinityWorldChess.SkillDomain;
 
 #endregion
 

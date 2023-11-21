@@ -1,10 +1,10 @@
 ﻿using InfinityWorldChess.BattleDomain;
 
-namespace InfinityWorldChess.SkillDomain.SkillRangeDomain.Target
+namespace InfinityWorldChess.SkillDomain.Target
 {
     public class ReflexAngleTargetRange :TargetWithoutTetragonalSymmetry, ISkillCastResult
     {
-        public override string Description => "半圆";
+        protected override string Description => "半圆";
 
         public ISkillRange GetCastResultRange(BattleRole role, BattleCell castPosition,IActiveSkill skill)
         {

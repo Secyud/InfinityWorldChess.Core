@@ -5,7 +5,7 @@ using InfinityWorldChess.BuffDomain;
 
 #endregion
 
-namespace InfinityWorldChess.SkillDomain.SkillInteractionDomain
+namespace InfinityWorldChess.SkillDomain
 {
 	/// <summary>
 	/// SkillInteraction handle the skill with target.
@@ -27,7 +27,7 @@ namespace InfinityWorldChess.SkillDomain.SkillInteractionDomain
 		public BattleRole TargetChess { get; set; }
 
 
-		public static SkillInteraction Get(BattleRole launch, BattleRole target)
+		public static SkillInteraction Create(BattleRole launch, BattleRole target)
 		{
 			return new SkillInteraction
 			{

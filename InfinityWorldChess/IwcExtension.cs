@@ -10,7 +10,7 @@ namespace InfinityWorldChess
     {
         public static bool CanSet(this IEquipment equipment, byte location)
         {
-            return equipment.TypeCode == location;
+            return equipment.Location == location;
         }
     }
 }

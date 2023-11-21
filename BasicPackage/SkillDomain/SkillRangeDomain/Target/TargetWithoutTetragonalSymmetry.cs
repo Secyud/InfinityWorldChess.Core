@@ -1,12 +1,15 @@
 ﻿using System;
 using InfinityWorldChess.BattleDomain;
+using InfinityWorldChess.Ugf;
+using Secyud.Ugf;
 using Secyud.Ugf.DataManager;
 using Secyud.Ugf.HexMap;
 using Secyud.Ugf.HexUtilities;
+using UnityEngine;
 
-namespace InfinityWorldChess.SkillDomain.SkillRangeDomain.Target
+namespace InfinityWorldChess.SkillDomain.Target
 {
-    public class TargetWithoutTetragonalSymmetry : StartEndRange
+    public abstract class TargetWithoutTetragonalSymmetry : StartEndRange,IHasContent
     {
         [field: S(0)] public bool FixCenter { get; set; }
         [field: S(1)] public sbyte LocationBiasX { get; set; }
@@ -46,6 +49,11 @@ namespace InfinityWorldChess.SkillDomain.SkillRangeDomain.Target
 
             return new Tuple<HexCoordinates, HexDirection>(coordinates,
                 (HexDirection)((int)(direction + DirectionBias) % 6));
+        }
+
+        public void SetContent(Transform transform)
+        {
+            transform.AddParagraph("释放目标：" + Description + SeLabel);
         }
     }
 }

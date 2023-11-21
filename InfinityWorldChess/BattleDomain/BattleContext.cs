@@ -8,7 +8,7 @@ namespace InfinityWorldChess.BattleDomain
     [Registry(DependScope = typeof(BattleScope))]
     public class BattleContext : IRegistry
     {
-        public float TotalTime { get; set; }
+        public int TotalTime { get; set; }
 
         public BattleFlowState State { get; set; } = BattleFlowState.OnCalculation;
 

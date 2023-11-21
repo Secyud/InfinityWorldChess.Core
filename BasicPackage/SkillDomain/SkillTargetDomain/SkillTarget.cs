@@ -7,7 +7,7 @@ using Secyud.Ugf;
 
 #endregion
 
-namespace InfinityWorldChess.SkillDomain.SkillTargetDomain
+namespace InfinityWorldChess.SkillDomain
 {
 	public class SkillTarget : ISkillTarget, IObjectAccessor<BattleRole[]>
 	{

@@ -38,7 +38,7 @@ namespace InfinityWorldChess.ItemDomain.EquipmentDomain
 
         private bool ValidEquipment(IItem item)
         {
-            return item is IEquipment e && e.TypeCode == Index;
+            return item is IEquipment e && e.Location == Index;
         }
 
         private void SetEquipment(IItem item)

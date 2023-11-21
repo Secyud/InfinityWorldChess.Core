@@ -1,7 +1,7 @@
 using Secyud.Ugf.UgfHexMap;
 using UnityEngine;
 
-namespace InfinityWorldChess.SkillDomain.SkillPlayDomain
+namespace InfinityWorldChess.SkillDomain
 {
     public class TargetAnim:SkillAnim
     {

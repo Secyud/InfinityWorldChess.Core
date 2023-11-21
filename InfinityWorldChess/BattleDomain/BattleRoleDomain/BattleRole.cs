@@ -39,7 +39,7 @@ namespace InfinityWorldChess.BattleDomain
 
         public bool PlayerControl { get; set; }
 
-        public float Time { get; set; }
+        public int Time { get; set; }
 
         public BattleCamp Camp { get; set; }
 
@@ -197,10 +197,12 @@ namespace InfinityWorldChess.BattleDomain
             return true;
         }
 
-        public float GetTimeAdd()
+        public int GetTimeAdd()
         {
             const float factor = SharedConsts.BattleTimeFactor;
-            return factor + 4 * factor * factor / (factor + Role.BodyPart[BodyType.Nimble].MaxValue);
+            float ret = factor + 4 * factor * factor / 
+                (factor + Role.BodyPart[BodyType.Nimble].MaxValue);
+            return Math.Max((int)ret, 1);
         }
 
         public void SetHighlight()

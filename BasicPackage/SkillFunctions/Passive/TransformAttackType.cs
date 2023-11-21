@@ -1,10 +1,9 @@
 ﻿using InfinityWorldChess.BattleDomain;
 using InfinityWorldChess.BuffDomain;
-using InfinityWorldChess.SkillDomain.AttackDomain;
-using InfinityWorldChess.SkillDomain.SkillInteractionDomain;
+using InfinityWorldChess.SkillDomain;
 using Secyud.Ugf.DataManager;
 
-namespace InfinityWorldChess.SkillFunctions.Passive
+namespace InfinityWorldChess.SkillFunctions
 {
     public class TransformAttackType : BattlePassive, IActionable<SkillInteraction>
     {

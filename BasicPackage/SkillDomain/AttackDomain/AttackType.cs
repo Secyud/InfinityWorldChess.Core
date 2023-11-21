@@ -1,4 +1,4 @@
-﻿namespace InfinityWorldChess.SkillDomain.AttackDomain
+﻿namespace InfinityWorldChess.SkillDomain
 {
 	public enum AttackType
 	{

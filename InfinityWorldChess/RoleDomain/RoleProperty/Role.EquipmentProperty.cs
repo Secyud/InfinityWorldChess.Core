@@ -17,7 +17,7 @@ namespace InfinityWorldChess.RoleDomain
         public void SetEquipment(IEquipment equipment)
         {
             TryRemoveEquipment(equipment);
-            Equipment[equipment.TypeCode, this] = equipment;
+            Equipment[equipment.Location, this] = equipment;
         }
 
         public void TryRemoveEquipment(IEquipment equipment)

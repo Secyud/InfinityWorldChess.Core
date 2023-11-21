@@ -66,7 +66,7 @@ namespace InfinityWorldChess.BattleDomain
 
             BattleRole battleRole =
                 _context.Roles.First(u => !u.Dead);
-            float min = float.MaxValue;
+            int min = int.MaxValue;
             foreach (BattleRole r in _context.Roles)
             {
                 if (!r.Dead && r.Time < min)
