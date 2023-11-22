@@ -6,7 +6,7 @@ using UnityEngine;
 namespace InfinityWorldChess.SkillFunctions
 {
     /// <summary>
-    /// be careful, time should be a large number.
+    /// provide trigger in round calculate.
     /// </summary>
     public class RoundTrigger : BuffActionTrigger
     {

@@ -8,7 +8,7 @@ namespace InfinityWorldChess.SkillFunctions
     public abstract class BuffInteractionTrigger : TriggerEffect, IHasContent, IBuffInteractionEffect
     {
         [field: S] public IBuffInteractionEffect Effect { get; set; }
-        [field: S] public ITriggerLimit Limit { get; set; }
+        [field: S] public ILimitCondition Limit { get; set; }
 
         public int Priority => Effect?.Priority ?? 0;
 
@@ -25,6 +25,11 @@ namespace InfinityWorldChess.SkillFunctions
 
         public virtual void SetContent(Transform transform)
         {
+            if (Limit is IHasContent limitContent)
+            {
+                limitContent.SetContent(transform);
+            }
+            
             if (Effect is IHasContent content)
             {
                 content.SetContent(transform);

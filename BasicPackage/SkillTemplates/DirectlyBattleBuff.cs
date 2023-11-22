@@ -1,3 +1,4 @@
+using InfinityWorldChess.SkillDomain;
 using InfinityWorldChess.SkillFunctions;
 using Secyud.Ugf;
 using Secyud.Ugf.DataManager;

@@ -1,7 +1,6 @@
 using InfinityWorldChess.BuffDomain;
-using InfinityWorldChess.SkillDomain;
 
-namespace InfinityWorldChess.SkillFunctions
+namespace InfinityWorldChess.SkillDomain
 {
     public interface IBuffInteractionEffect:IActionable<SkillInteraction>,IBuffAttached
     {

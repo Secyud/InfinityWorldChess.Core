@@ -1,5 +1,6 @@
 using InfinityWorldChess.BattleDomain;
 using InfinityWorldChess.BuffDomain;
+using InfinityWorldChess.SkillDomain;
 using Secyud.Ugf;
 using Secyud.Ugf.DataManager;
 using UnityEngine;
@@ -10,7 +11,7 @@ namespace InfinityWorldChess.SkillFunctions
     {
         [field: S] public int RemoveValue { get; set; }
 
-        public int Remain => BelongBuff?.BuffRecord ?? 0 / RemoveValue;
+        protected int Remain => BelongBuff?.BuffRecord ?? 0 / RemoveValue;
 
         protected BattleContext Context => BattleScope.Instance.Context;
 

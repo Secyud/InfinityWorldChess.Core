@@ -15,7 +15,7 @@ namespace InfinityWorldChess.SkillDomain
         public override int Id => -1;
         public float Attack { get; set; }
         public AttackType AttackType { get; set; }
-        public float Penetration { get; set; } = 10;
+        public float Penetration { get; set; }
         public float AttackFixedValue { get; set; }
 
         /// <summary>

@@ -1,4 +1,4 @@
-namespace InfinityWorldChess.SkillFunctions
+namespace InfinityWorldChess.SkillDomain
 {
     public interface IBuffActionEffect:IBuffAttached
     {

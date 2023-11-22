@@ -1,6 +1,6 @@
 ﻿namespace InfinityWorldChess.SkillDomain
 {
-	public enum AttackType
+	public enum AttackType:byte
 	{
 		Physical, Magical, Mental
 	}

@@ -1,5 +1,6 @@
 using InfinityWorldChess.BattleDomain;
 using InfinityWorldChess.BuffDomain;
+using InfinityWorldChess.SkillDomain;
 using InfinityWorldChess.SkillFunctions;
 using InfinityWorldChess.Ugf;
 using Secyud.Ugf;

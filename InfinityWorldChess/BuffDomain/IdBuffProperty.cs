@@ -37,7 +37,9 @@ namespace InfinityWorldChess.BuffDomain
         {
             if (TryGetValue(buff.Id, out IBuff<TTarget> oBuff))
             {
-                oBuff.Overlay(buff);
+                oBuff.UnInstall(Target);
+                buff.Overlay(oBuff);
+                buff.Install(Target);
             }
             else
             {

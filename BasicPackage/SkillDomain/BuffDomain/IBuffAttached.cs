@@ -1,6 +1,4 @@
-using InfinityWorldChess.BuffDomain;
-
-namespace InfinityWorldChess.SkillFunctions
+namespace InfinityWorldChess.SkillDomain
 {
     public interface IBuffAttached
     {

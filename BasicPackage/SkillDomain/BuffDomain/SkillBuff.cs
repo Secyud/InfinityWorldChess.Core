@@ -1,12 +1,12 @@
 using InfinityWorldChess.BattleDomain;
 using InfinityWorldChess.BuffDomain;
-using InfinityWorldChess.RoleDomain;
+using InfinityWorldChess.SkillFunctions;
 using InfinityWorldChess.Ugf;
 using Secyud.Ugf;
 using Secyud.Ugf.DataManager;
 using UnityEngine;
 
-namespace InfinityWorldChess.SkillFunctions
+namespace InfinityWorldChess.SkillDomain
 {
     public class SkillBuff : IBuffShowable<BattleRole>
     {

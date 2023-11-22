@@ -9,7 +9,7 @@ namespace InfinityWorldChess.SkillFunctions
     /// <summary>
     /// all attack skill should add attack action to interaction
     /// </summary>
-    [ID("F1807254-E937-3ED1-9C8F-218EB2EB7075")]
+    [ID("976e4a11-19d0-3847-d162-c18a7ecc48cf")]
     public class AttackWithSetting : AttackInteraction
     {
         private const float Pb = 2048f;
@@ -26,14 +26,14 @@ namespace InfinityWorldChess.SkillFunctions
             IBuffProperty property = BelongSkill ?? BelongBuff?.Property;
 
             AttackRecordBuff attackRecord = interaction.GetOrAddAttack();
-            attackRecord.Attack = interaction.LaunchChess?.AttackValue ?? 0;
-            attackRecord.Defend = interaction.TargetChess?.DefendValue ?? 0;
-            
+            attackRecord.Attack += interaction.LaunchChess?.AttackValue ?? 0;
+            attackRecord.Defend += interaction.TargetChess?.DefendValue ?? 0;
+
             if (property is not null)
             {
                 attackRecord.AttackFactor += AttackBaseFactor + 4 * (1 - Pb / (Mathf.Max(0, property.Kiling) + Pb));
                 attackRecord.AttackFixedValue += FixedAttackValue * property.Living;
-                
+
                 if (property is ActiveSkillBase skillBase)
                 {
                     attackRecord.TargetCount = skillBase.Targets?.Value.Length ?? 0;
@@ -45,7 +45,7 @@ namespace InfinityWorldChess.SkillFunctions
                     attackRecord.DamageFactor -= 0.5f;
                 }
             }
-            
+
             base.Invoke(interaction);
         }
     }
