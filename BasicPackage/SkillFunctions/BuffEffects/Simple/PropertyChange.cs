@@ -13,7 +13,7 @@ namespace InfinityWorldChess.SkillFunctions
     {
         [field: S] public int Value { get; set; }
         [field: S] public byte Type { get; set; }
-        public SkillBuff Buff { get; set; }
+        public SkillBuff BelongBuff { get; set; }
 
         private BattleProperty Property { get; set; }
         private BodyType BodyType => (BodyType)Type;
@@ -40,10 +40,6 @@ namespace InfinityWorldChess.SkillFunctions
             Property[BodyType] += Value - effect.Value;
 
             effect.Value = Value;
-        }
-
-        public void SetProperty(IBuffProperty property)
-        {
         }
 
         public void SetContent(Transform transform)

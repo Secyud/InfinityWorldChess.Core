@@ -8,19 +8,21 @@ using UnityEngine;
 
 namespace InfinityWorldChess.SkillFunctions
 {
-    public class BuffWithContent
+    public abstract class BuffWithContent
     {
         [field: S] public IObjectAccessor<SkillBuff> Buff { get; set; }
 
         private SkillBuff _buffTemplate;
         protected SkillBuff BuffTemplate => _buffTemplate ??= Buff?.Value;
 
-        public void InstallBuff(BattleRole battleChess, IBuffProperty property)
+        protected void InstallBuff(BattleRole target,BattleRole origin, IBuffProperty property)
         {
+            if (target is null) return;
+
             SkillBuff buff = Buff?.Value;
             if (buff is null) return;
-            buff.SetProperty(property);
-            battleChess.Buff.Install(buff);
+            buff.SetProperty(property,origin);
+            target.Buff.Install(buff);
         }
 
         public virtual void SetContent(Transform transform)

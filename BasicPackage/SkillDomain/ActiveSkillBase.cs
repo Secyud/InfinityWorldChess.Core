@@ -21,11 +21,11 @@ namespace InfinityWorldChess.SkillDomain
         [field: S(255)] public ISkillCastPosition Position { get; set; }
         [field: S(255)] public ISkillCastResult Result { get; set; }
         [field: S(256)] public ISkillTargetInRange TargetGetter { get; set; }
-        [field: S(257)] public ISkillAction PreSkill { get; set; }
-        [field: S(258)] public IInteractionAction PreInteraction { get; set; }
-        [field: S(259)] public IInteractionAction OnInteraction { get; set; }
-        [field: S(260)] public IInteractionAction PostInteraction { get; set; }
-        [field: S(261)] public ISkillAction PostSkill { get; set; }
+        [field: S(257)] public ISkillActionEffect PreSkill { get; set; }
+        [field: S(258)] public ISkillInteractionEffect PreInteraction { get; set; }
+        [field: S(259)] public ISkillInteractionEffect OnInteraction { get; set; }
+        [field: S(260)] public ISkillInteractionEffect PostInteraction { get; set; }
+        [field: S(261)] public ISkillActionEffect PostSkill { get; set; }
 
         public BattleRole Role { get; private set; }
         public BattleCell Cell { get; private set; }
@@ -108,17 +108,14 @@ namespace InfinityWorldChess.SkillDomain
 
             PostSkill?.Invoke(role, releasePosition);
 
-            Role = null;
             Cell = null;
-            Range = null;
-            Targets = null;
         }
 
         private void SetAttached(IActiveSkillAttached attached)
         {
             if (attached is not null)
             {
-                attached.Skill = this;
+                attached.BelongSkill = this;
             }
         }
 

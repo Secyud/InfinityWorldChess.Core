@@ -8,7 +8,7 @@ namespace InfinityWorldChess.SkillFunctions
     /// <summary>
     /// be careful, time should be a large number.
     /// </summary>
-    public class RoundTrigger : ActionableTrigger
+    public class RoundTrigger : BuffActionTrigger
     {
         [field: S(0)] public int Time { get; set; }
 

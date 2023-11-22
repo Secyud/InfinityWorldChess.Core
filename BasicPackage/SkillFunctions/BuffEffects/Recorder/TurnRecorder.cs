@@ -23,7 +23,7 @@ namespace InfinityWorldChess.SkillFunctions
 
         protected override void CalculateRemove()
         {
-            if (Buff.Role == Context.Role)
+            if (BelongBuff.Target == Context.Role)
             {
                 base.CalculateRemove();
             }

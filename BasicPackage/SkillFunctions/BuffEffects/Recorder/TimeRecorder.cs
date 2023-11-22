@@ -27,10 +27,10 @@ namespace InfinityWorldChess.SkillFunctions
 
         protected override void CalculateRemove()
         {
-            Buff.BuffRecord -= (Context.TotalTime - TimeRecord) * RemoveValue;
-            if (TimeRecord <= 0 && Buff.Role is not null)
+            BelongBuff.BuffRecord -= (Context.TotalTime - TimeRecord) * RemoveValue;
+            if (TimeRecord <= 0 && BelongBuff.Target is not null)
             {
-                Buff.Role.Buff.UnInstall(Buff.Id);
+                BelongBuff.Target.Buff.UnInstall(BelongBuff.Id);
                 return;
             }
 

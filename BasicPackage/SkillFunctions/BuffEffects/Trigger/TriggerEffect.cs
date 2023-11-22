@@ -17,7 +17,7 @@ namespace InfinityWorldChess.SkillFunctions
 
         protected SkillBuff SkillBuff { get; set; }
 
-        public virtual SkillBuff Buff
+        public virtual SkillBuff BelongBuff
         {
             get => SkillBuff;
             set => SkillBuff = value;
@@ -45,15 +45,6 @@ namespace InfinityWorldChess.SkillFunctions
         /// <param name="overlay"></param>
         public virtual void Overlay(IBuff<BattleRole> overlay)
         {
-        }
-
-        /// <summary>
-        /// set skill to set effect
-        /// </summary>
-        /// <param name="property"></param>
-        public void SetProperty(IBuffProperty property)
-        {
-            ExtraAction = null;
         }
     }
 }

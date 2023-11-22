@@ -2,6 +2,6 @@
 {
     public interface IActiveSkillAttached
     {
-        ActiveSkillBase Skill { get; set; }
+        ActiveSkillBase BelongSkill { get; set; }
     }
 }

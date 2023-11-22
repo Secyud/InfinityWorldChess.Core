@@ -1,4 +1,5 @@
-﻿using InfinityWorldChess.BuffDomain;
+﻿using InfinityWorldChess.BattleDomain;
+using InfinityWorldChess.BuffDomain;
 using InfinityWorldChess.Ugf;
 using UnityEngine;
 
@@ -11,11 +12,21 @@ namespace InfinityWorldChess.SkillFunctions
             transform.AddParagraph($"(剩余{Remain}次)");
         }
 
-        public override void SetProperty(IBuffProperty skill)
+        public override void Install(BattleRole target)
         {
-            if (Buff.BuffEffect is TriggerEffect trigger)
+            base.Install(target);
+            if (BelongBuff.BuffEffect is TriggerEffect trigger)
             {
                 trigger.ExtraAction += CalculateRemove;
+            }
+        }
+
+        public override void UnInstall(BattleRole target)
+        {
+            base.UnInstall(target);
+            if (BelongBuff.BuffEffect is TriggerEffect trigger)
+            {
+                trigger.ExtraAction -= CalculateRemove;
             }
         }
     }

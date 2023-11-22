@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace InfinityWorldChess.SkillFunctions
 {
-    public class InteractTrigger : InteractionTrigger
+    public class InteractTrigger : BuffInteractionTrigger
     {
         [field:S] public byte InteractionType { get; set; }
         

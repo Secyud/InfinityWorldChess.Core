@@ -1,5 +1,6 @@
 using InfinityWorldChess.BattleDomain;
 using InfinityWorldChess.BuffDomain;
+using InfinityWorldChess.RoleDomain;
 using InfinityWorldChess.Ugf;
 using Secyud.Ugf;
 using Secyud.Ugf.DataManager;
@@ -22,18 +23,20 @@ namespace InfinityWorldChess.SkillFunctions
         // decided when buff remove, null if not remove
         [field: S(6)] public EffectRecorder EffectRecorder { get; set; }
 
-        public BattleRole Role { get; set; }
+        public BattleRole Target { get; set; }
+        public BattleRole Origin { get; set; }
+        public IBuffProperty Property { get; private set; }
 
         public virtual void Install(BattleRole target)
         {
-            Role = target;
+            Target = target;
             BuffEffect?.Install(target);
             EffectRecorder?.Install(target);
         }
 
         public virtual void UnInstall(BattleRole target)
         {
-            Role = null;
+            Target = null;
             BuffEffect?.UnInstall(target);
             EffectRecorder?.UnInstall(target);
         }
@@ -43,18 +46,19 @@ namespace InfinityWorldChess.SkillFunctions
             BuffEffect?.Overlay(finishBuff);
         }
 
-        public virtual void SetProperty(IBuffProperty skill)
+        public virtual void SetProperty(IBuffProperty property,BattleRole origin)
         {
-            SetAttach(BuffEffect, skill);
-            SetAttach(EffectRecorder, skill);
+            SetAttach(BuffEffect);
+            SetAttach(EffectRecorder);
+            Property = property;
+            Origin = origin;
         }
 
-        private void SetAttach(IBuffAttached attached, IBuffProperty property)
+        private void SetAttach(IBuffAttached attached)
         {
             if (attached is not null)
             {
-                attached.Buff = this;
-                attached.SetProperty(property);
+                attached.BelongBuff = this;
             }
         }
 

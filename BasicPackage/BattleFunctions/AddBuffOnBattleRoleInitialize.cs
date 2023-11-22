@@ -19,7 +19,7 @@ namespace InfinityWorldChess.BattleFunctions
         public void OnBattleInitialize(BattleRole chess)
         { 
             SkillBuff buff = Buff.Value;
-            buff.SetProperty(Property);
+            buff.SetProperty(Property,chess);
             chess.Buff.Install(buff);
         }
 

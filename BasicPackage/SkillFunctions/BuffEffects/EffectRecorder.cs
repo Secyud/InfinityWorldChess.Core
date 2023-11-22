@@ -10,11 +10,11 @@ namespace InfinityWorldChess.SkillFunctions
     {
         [field: S] public int RemoveValue { get; set; }
 
-        public int Remain => Buff?.BuffRecord ?? 0 / RemoveValue;
+        public int Remain => BelongBuff?.BuffRecord ?? 0 / RemoveValue;
 
         protected BattleContext Context => BattleScope.Instance.Context;
 
-        public SkillBuff Buff { get; set; }
+        public SkillBuff BelongBuff { get; set; }
 
         public virtual void Install(BattleRole target)
         {
@@ -24,26 +24,22 @@ namespace InfinityWorldChess.SkillFunctions
         {
         }
 
-        public virtual void SetProperty(IBuffProperty property)
-        {
-        }
-
         public virtual void SetContent(Transform transform)
         {
         }
 
         protected virtual void CalculateRemove()
         {
-            if (Buff.Role is null)
+            if (BelongBuff.Target is null)
             {
                 return;
             }
 
-            Buff.BuffRecord -= RemoveValue;
+            BelongBuff.BuffRecord -= RemoveValue;
 
-            if (Buff.BuffRecord <= 0)
+            if (BelongBuff.BuffRecord <= 0)
             {
-                Buff.Role.Buff.UnInstall(Buff.Id);
+                BelongBuff.Target.Buff.UnInstall(BelongBuff.Id);
             }
         }
     }
