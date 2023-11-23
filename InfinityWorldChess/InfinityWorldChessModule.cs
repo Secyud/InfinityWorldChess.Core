@@ -27,18 +27,18 @@ namespace InfinityWorldChess
         typeof(UgfCoreModule),
         typeof(UgfHexMapModule)
     )]
-    public class InfinityWorldChessModule : IUgfModule, IPostConfigure,
+    public class InfinityWorldChessModule : IUgfModule, IOnPostConfigure,
         IOnPreInitialization, IOnInitialization, IOnPostInitialization, IOnArchiving
     {
         public const string AssetBundleName = "infinityworldchess";
         
-        public void ConfigureGame(ConfigurationContext context)
+        public void Configure(ConfigurationContext context)
         {
             context.Manager.AddAssembly(typeof(InfinityWorldChessModule).Assembly);
             context.AddResource<InfinityWorldChessResource>();
         }
 
-        public void PostConfigureGame(ConfigurationContext context)
+        public void PostConfigure(ConfigurationContext context)
         {
             //RegisterWorldModel(context.Get<WorldGlobalService>(), context.Get<IwcAssets>());
             WorldCellRoleDefaultButtons.RegistrarButtons(context.Get<InteractionButtons>());

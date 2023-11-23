@@ -21,15 +21,15 @@ namespace InfinityWorldChess
     [DependsOn(
         typeof(InfinityWorldChessModule)
     )]
-    public class BasicPackageModule : IUgfModule, IPostConfigure, IOnInitialization
+    public class BasicPackageModule : IUgfModule, IOnPostConfigure, IOnInitialization
     {
-        public void ConfigureGame(ConfigurationContext context)
+        public void Configure(ConfigurationContext context)
         {
             context.Get<IDependencyRegistrar>().AddAssembly(typeof(BasicPackageModule).Assembly);
             context.AddResource<BasicPackageResource>();
         }
 
-        public void PostConfigureGame(ConfigurationContext context)
+        public void PostConfigure(ConfigurationContext context)
         {
             // context.Get<InteractionGlobalService>().FreeInteractions.RegisterList(
             //     new ChatInteraction(),

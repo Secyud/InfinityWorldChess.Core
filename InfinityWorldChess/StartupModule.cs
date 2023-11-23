@@ -10,13 +10,13 @@ using Secyud.Ugf.Modularity;
 namespace InfinityWorldChess
 {
 	[DependsOn(typeof(InfinityWorldChessModule))]
-	public class StartupModule : IUgfModule,IPostConfigure
+	public class StartupModule : IUgfModule,IOnPostConfigure
 	{
-		public void ConfigureGame(ConfigurationContext context)
+		public void Configure(ConfigurationContext context)
 		{
 		}
 
-		public void PostConfigureGame(ConfigurationContext context)
+		public void PostConfigure(ConfigurationContext context)
 		{
 			IDependencyManager manager = context.Get<IDependencyManager>();
 			manager.CreateScope<GlobalScope>();
