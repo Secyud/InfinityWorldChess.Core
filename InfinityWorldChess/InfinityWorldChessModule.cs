@@ -35,7 +35,7 @@ namespace InfinityWorldChess
         public void Configure(ConfigurationContext context)
         {
             context.Manager.AddAssembly(typeof(InfinityWorldChessModule).Assembly);
-            context.AddResource<InfinityWorldChessResource>();
+            context.AddStringResource<InfinityWorldChessResource>();
         }
 
         public void PostConfigure(ConfigurationContext context)

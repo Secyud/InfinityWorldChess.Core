@@ -27,7 +27,7 @@ namespace InfinityWorldChess
         public void Configure(ConfigurationContext context)
         {
             context.Get<IDependencyRegistrar>().AddAssembly(typeof(BasicPackageModule).Assembly);
-            context.AddResource<BasicPackageResource>();
+            context.AddStringResource<BasicPackageResource>();
         }
 
         public void PostConfigure(ConfigurationContext context)
