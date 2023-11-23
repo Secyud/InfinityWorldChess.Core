@@ -18,7 +18,7 @@ namespace InfinityWorldChess.RoleFunctions
 
         public override void Invoke(Role role)
         {
-            if (U.Tm.ConstructFromResource(ClassId, Name)
+            if (U.Tm.ReadObjectFromResource(ClassId, Name)
                 is not TItem item)
             {
                 U.LogError($"unable to read resource {Name};");

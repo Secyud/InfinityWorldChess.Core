@@ -9,6 +9,7 @@ using InfinityWorldChess.GameDomain.WorldCellDomain;
 using InfinityWorldChess.GameDomain.WorldMapDomain;
 using Secyud.Ugf;
 using Secyud.Ugf.Archiving;
+using Secyud.Ugf.DataManager;
 using Secyud.Ugf.DependencyInjection;
 using Secyud.Ugf.HexMap;
 
@@ -81,7 +82,9 @@ namespace InfinityWorldChess.RoleDomain
             string path = GameScope.Instance.World.WorldSetting
                 .GetDataDirectory("roles.binary");
 
-            List<RoleTemplate> roles = U.Tm.ConstructListFromFile<RoleTemplate>(path);
+            using FileStream stream = File.OpenRead(path);
+            
+            List<RoleTemplate> roles = stream.ReadResourceObjects<RoleTemplate>();
 
             foreach (RoleTemplate template in roles)
             {

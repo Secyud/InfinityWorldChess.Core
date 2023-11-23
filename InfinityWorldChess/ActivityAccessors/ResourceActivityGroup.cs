@@ -9,6 +9,6 @@ namespace InfinityWorldChess.ActivityAccessors
         [field:S] private string GroupId { get; set; }
 
         public virtual ActivityGroup Value => 
-            U.Tm.ConstructFromResource<ActivityGroup>(GroupId);
+            U.Tm.ReadObjectFromResource<ActivityGroup>(GroupId);
     }
 }

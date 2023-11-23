@@ -12,6 +12,6 @@ namespace InfinityWorldChess.Ugf
         protected abstract Guid TypeId { get; }
         
         public virtual TResource Value =>
-            U.Tm.ConstructFromResource(TypeId, ResourceId) as TResource;
+            U.Tm.ReadObjectFromResource(TypeId, ResourceId) as TResource;
     }
 }

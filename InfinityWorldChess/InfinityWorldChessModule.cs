@@ -46,7 +46,9 @@ namespace InfinityWorldChess
 
             TypeManager tm = context.Get<TypeManager>();
             string path = Path.Combine(U.Path, "Data/Resource/te.binary");
-            tm.ReadResource(path);
+
+            using FileStream file = File.OpenRead(path);
+            tm.LoadResourcesFromStream(file);
             
             
             ChatRegister chat = context.Get<ChatRegister>() ;

@@ -12,6 +12,7 @@ using System.IO;
 using InfinityWorldChess.GameDomain;
 using InfinityWorldChess.SkillDomain;
 using Secyud.Ugf;
+using Secyud.Ugf.DataManager;
 using UnityEngine;
 
 #endregion
@@ -77,10 +78,10 @@ namespace InfinityWorldChess
             if (!SharedConsts.LoadGame)
             {
                 var role = GameScope.Instance.Player.Role;
-                var coreSkill = U.Tm.ConstructFromResource<CoreSkill>("基础招式_砸");
+                var coreSkill = U.Tm.ReadObjectFromResource<CoreSkill>("基础招式_砸");
                 role.CoreSkill.TryAddLearnedSkill(coreSkill);
                 role.CoreSkill.Set(coreSkill, 0, 1);
-                coreSkill = U.Tm.ConstructFromResource<CoreSkill>("基础招式_抓");
+                coreSkill = U.Tm.ReadObjectFromResource<CoreSkill>("基础招式_抓");
                 role.CoreSkill.TryAddLearnedSkill(coreSkill);
                 role.CoreSkill.Set(coreSkill, 0, 0);
             }
@@ -88,6 +89,6 @@ namespace InfinityWorldChess
             return null;
         }
 
-        public int GameInitializeStep { get; }
+        public int GameInitializeStep => 0x1000;
     }
 }

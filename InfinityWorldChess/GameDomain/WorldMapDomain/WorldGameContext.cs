@@ -8,6 +8,7 @@ using InfinityWorldChess.GameDomain.WorldCellDomain;
 using Secyud.Ugf;
 using Secyud.Ugf.Archiving;
 using Secyud.Ugf.AssetComponents;
+using Secyud.Ugf.DataManager;
 using Secyud.Ugf.DependencyInjection;
 using Secyud.Ugf.HexMap;
 
@@ -44,6 +45,7 @@ namespace InfinityWorldChess.GameDomain.WorldMapDomain
             WorldMessage.TryGetValue(index, out WorldCellMessage msg);
             return msg;
         }
+
         public WorldCellMessage GetMessageById(int id)
         {
             WorldIndexById.TryGetValue(id, out WorldCellMessage msg);
@@ -77,34 +79,14 @@ namespace InfinityWorldChess.GameDomain.WorldMapDomain
 
         public virtual IEnumerator OnGameLoading()
         {
+            using (FileStream stream = File.OpenRead(SavePath))
+            using (DefaultArchiveReader reader = new(stream))
             {
-                using FileStream stream = File.OpenRead(SavePath);
-                using DefaultArchiveReader reader = new(stream);
-
                 string resourceId = reader.ReadString();
-                WorldSetting = U.Tm.ConstructFromResource<WorldSetting>(resourceId);
+                WorldSetting = U.Tm.ReadObjectFromResource<WorldSetting>(resourceId);
             }
-            
-            {
-                string path = WorldSetting.GetDataDirectory("map.binary");
 
-                using FileStream stream = File.OpenRead(path);
-                using DefaultArchiveReader reader = new(stream);
-
-                Map.Load(reader);
-
-                path = WorldSetting.GetDataDirectory("regions.binary");
-
-                List<WorldCellMessage> messages = U.Tm.ConstructListFromFile<WorldCellMessage>(path);
-
-                foreach (WorldCellMessage message in messages)
-                {
-                    AddMessage(message);
-                    if (U.AddStep())
-                        yield return null;
-                }
-            }
-            
+            return LoadWorld();
         }
 
         public virtual IEnumerator OnGameSaving()
@@ -113,34 +95,41 @@ namespace InfinityWorldChess.GameDomain.WorldMapDomain
             using DefaultArchiveWriter writer = new(stream);
 
             writer.Write(WorldSetting.ResourceId);
-            
+
             if (U.AddStep())
                 yield return null;
         }
-        
+
         public virtual IEnumerator OnGameCreation()
         {
             string settingName = GameCreatorScope.Instance.WorldMessageSetting.WorldName;
-            WorldSetting = U.Tm.ConstructFromResource<WorldSetting>(settingName);
+            WorldSetting = U.Tm.ReadObjectFromResource<WorldSetting>(settingName);
 
-            string path = WorldSetting.GetDataDirectory("map.binary");
+            return LoadWorld();
+        }
 
-            using FileStream stream = File.OpenRead(path);
-            using DefaultArchiveReader reader = new(stream);
-
-            Map.Load(reader);
-
-            path = WorldSetting.GetDataDirectory("regions.binary");
-
-            List<WorldCellMessage> messages = U.Tm.ConstructListFromFile<WorldCellMessage>(path);
-
-            foreach (WorldCellMessage message in messages)
+        private IEnumerator LoadWorld()
+        {
+            using (FileStream stream = File.OpenRead(
+                       WorldSetting.GetDataDirectory("map.binary")))
+            using (DefaultArchiveReader reader = new(stream))
             {
-                AddMessage(message);
+                Map.Load(reader);
             }
 
-            if (U.AddStep())
-                yield return null;
+            using (FileStream stream = File.OpenRead(
+                       WorldSetting.GetDataDirectory("regions.binary")))
+            {
+                List<WorldCellMessage> messages =
+                    stream.ReadResourceObjects<WorldCellMessage>();
+
+                foreach (WorldCellMessage message in messages)
+                {
+                    AddMessage(message);
+                    if (U.AddStep())
+                        yield return null;
+                }
+            }
         }
     }
 }

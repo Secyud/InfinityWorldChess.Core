@@ -9,6 +9,7 @@ using InfinityWorldChess.GameDomain;
 using InfinityWorldChess.GameDomain.WorldCellDomain;
 using Secyud.Ugf;
 using Secyud.Ugf.Collections;
+using Secyud.Ugf.DataManager;
 using Secyud.Ugf.DependencyInjection;
 using Secyud.Ugf.HexMap;
 
@@ -87,7 +88,7 @@ namespace InfinityWorldChess.RoleDomain
             {
                 foreach ((string name, Guid id) in resourceIndexes)
                 {
-                    if (U.Tm.ConstructFromResource(id, name) is not TItem item)
+                    if (U.Tm.ReadObjectFromResource(id, name) is not TItem item)
                         continue;
                     itemList.Add(item);
 
@@ -95,7 +96,7 @@ namespace InfinityWorldChess.RoleDomain
 
                     for (int i = 0; i < count; i++)
                     {
-                        itemList.Add(U.Tm.ConstructFromResource(id, name) as TItem);
+                        itemList.Add(U.Tm.ReadObjectFromResource(id, name) as TItem);
                     }
                 }
 
