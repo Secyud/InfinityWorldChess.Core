@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using InfinityWorldChess.ActivityDomain;
 using Secyud.Ugf;
 using Secyud.Ugf.DataManager;

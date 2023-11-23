@@ -1,5 +1,3 @@
-using InfinityWorldChess.ActivityTemplates;
-
 namespace InfinityWorldChess.ActivityDomain
 {
     public interface IActivityTrigger

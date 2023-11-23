@@ -8,23 +8,22 @@ using UnityEngine;
 
 namespace InfinityWorldChess.MainMenuDomain
 {
-	public class MainMenuPanel : MonoBehaviour
-	{
-		
-		public void OnEnterGameClick()
-		{
-			ArchivingScope.Instance.OpenGameLoadPanel();
-		}
+    public class MainMenuPanel : MonoBehaviour
+    {
+        public void OnEnterGameClick()
+        {
+            ArchivingScope.Instance.OpenGameLoadPanel();
+        }
 
 
-		public void OnSettingsClick()
-		{
-			U.Log("Settings");
-		}
+        public void OnSettingsClick()
+        {
+            U.Log("Settings");
+        }
 
-		public void OnExitGameClick()
-		{
-			U.Get<MainMenuScope>().ExitGame();
-		}
-	}
+        public void OnExitGameClick()
+        {
+            U.Get<MainMenuScope>().ExitGame();
+        }
+    }
 }

@@ -1,13 +1,10 @@
 using System.Collections.Generic;
 using InfinityWorldChess.BuffDomain;
-using InfinityWorldChess.GameDomain;
-using InfinityWorldChess.GameDomain.WorldCellDomain;
 using InfinityWorldChess.ItemDomain;
 using InfinityWorldChess.ItemDomain.EquipmentDomain;
 using InfinityWorldChess.SkillDomain;
 using Secyud.Ugf;
 using Secyud.Ugf.DataManager;
-using Secyud.Ugf.HexMap;
 
 namespace InfinityWorldChess.RoleDomain
 {

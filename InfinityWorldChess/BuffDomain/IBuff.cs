@@ -1,6 +1,5 @@
 #region
 
-using JetBrains.Annotations;
 using Secyud.Ugf;
 
 #endregion

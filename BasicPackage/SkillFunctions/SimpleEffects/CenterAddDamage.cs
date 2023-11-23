@@ -1,4 +1,3 @@
-using InfinityWorldChess.BattleDomain;
 using InfinityWorldChess.SkillDomain;
 using InfinityWorldChess.Ugf;
 using Secyud.Ugf.DataManager;

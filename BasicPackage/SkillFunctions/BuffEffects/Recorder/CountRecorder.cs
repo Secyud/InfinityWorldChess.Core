@@ -1,5 +1,4 @@
 ﻿using InfinityWorldChess.BattleDomain;
-using InfinityWorldChess.BuffDomain;
 using InfinityWorldChess.Ugf;
 using UnityEngine;
 

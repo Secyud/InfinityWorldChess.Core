@@ -1,5 +1,4 @@
-﻿using System;
-using InfinityWorldChess.GameDomain;
+﻿using InfinityWorldChess.GameDomain;
 using InfinityWorldChess.RoleDomain;
 using InfinityWorldChess.Ugf;
 using Secyud.Ugf;

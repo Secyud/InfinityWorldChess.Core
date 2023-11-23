@@ -1,7 +1,6 @@
 #region
 
 using InfinityWorldChess.GlobalDomain;
-using Secyud.Ugf;
 using Secyud.Ugf.Archiving;
 
 #endregion

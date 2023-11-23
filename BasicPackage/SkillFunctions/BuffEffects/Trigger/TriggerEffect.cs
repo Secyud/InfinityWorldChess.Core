@@ -2,7 +2,6 @@ using System;
 using InfinityWorldChess.BattleDomain;
 using InfinityWorldChess.BuffDomain;
 using InfinityWorldChess.SkillDomain;
-using Secyud.Ugf.DataManager;
 
 namespace InfinityWorldChess.SkillFunctions
 {
