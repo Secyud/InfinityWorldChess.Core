@@ -15,7 +15,9 @@ namespace InfinityWorldChess.SkillDomain
         [field: S(0)] public string Name { get; set; }
         [field: S(2)] public string Description { get; set; }
         [field: S(1)] public int Score { get; set; }
-        [field: S(254)] public IObjectAccessor<SkillAnim> UnitPlay { get; set; }
+        [field: S(15)] public byte ConditionCode { get; set; }
+        [field: S(15)] public byte ConditionMask { get; set; }
+        [field: S(254)] public IObjectAccessor<SkillAnimBase> UnitPlay { get; set; }
         [field: S(254)] public IObjectAccessor<Sprite> Icon { get; set; }
         [field: S(255)] public ISkillCastCondition Condition { get; set; }
         [field: S(255)] public ISkillCastPosition Position { get; set; }
@@ -87,7 +89,7 @@ namespace InfinityWorldChess.SkillDomain
             Role = role;
             Cell = releasePosition;
             Range = range;
-            Targets = TargetGetter.GetTargetInRange(role, range);
+            Targets = TargetGetter?.GetTargetInRange(role, range);
 
             SetAttached(PreSkill);
             SetAttached(PreInteraction);
@@ -96,16 +98,18 @@ namespace InfinityWorldChess.SkillDomain
             SetAttached(PostSkill);
 
             PreSkill?.Invoke(role, releasePosition);
-            foreach (BattleRole enemy in Targets.Value)
+            if (Targets is not null)
             {
-                SkillInteraction interaction = SkillInteraction.Create(role, enemy);
-                PreInteraction?.Invoke(interaction);
-                interaction.BeforeHit();
-                OnInteraction?.Invoke(interaction);
-                interaction.AfterHit();
-                PostInteraction?.Invoke(interaction);
+                foreach (BattleRole enemy in Targets.Value)
+                {
+                    SkillInteraction interaction = SkillInteraction.Create(role, enemy);
+                    PreInteraction?.Invoke(interaction);
+                    interaction.BeforeHit();
+                    OnInteraction?.Invoke(interaction);
+                    interaction.AfterHit();
+                    PostInteraction?.Invoke(interaction);
+                }
             }
-
             PostSkill?.Invoke(role, releasePosition);
 
             Cell = null;

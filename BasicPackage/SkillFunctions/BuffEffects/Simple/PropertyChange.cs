@@ -14,6 +14,7 @@ namespace InfinityWorldChess.SkillFunctions
     {
         [field: S] public int Value { get; set; }
         [field: S] public byte Type { get; set; }
+        
         public SkillBuff BelongBuff { get; set; }
 
         private BattleProperty Property { get; set; }
@@ -29,6 +30,7 @@ namespace InfinityWorldChess.SkillFunctions
         {
             Property[BodyType] -= Value;
         }
+
 
         public void Overlay(IBuff<BattleRole> finishBuff)
         {

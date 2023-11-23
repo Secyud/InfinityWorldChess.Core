@@ -19,9 +19,7 @@ namespace InfinityWorldChess.MainMenuDomain
 
 		public void OnSettingsClick()
 		{
-#if UNITY_EDITOR
-			Debug.Log("Settings");
-#endif
+			U.Log("Settings");
 		}
 
 		public void OnExitGameClick()

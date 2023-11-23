@@ -84,7 +84,7 @@ namespace InfinityWorldChess.RoleDomain
         {
             if (!File.Exists(path))
             {
-                Debug.LogWarning($"Avatar resource doesn't exist: {path}");
+                U.LogWarning($"Avatar resource doesn't exist: {path}");
                 return;
             }
 

@@ -40,7 +40,7 @@ namespace InfinityWorldChess.SkillFunctions.InteractionLimits
 
         public void SetContent(Transform transform)
         {
-            transform.AddParagraph($"如果释放的技能名称中包含{NameContain}，则");
+            transform.AddParagraph($"如果当前释放的技能名称中包含{NameContain}，则");
         }
     }
 }

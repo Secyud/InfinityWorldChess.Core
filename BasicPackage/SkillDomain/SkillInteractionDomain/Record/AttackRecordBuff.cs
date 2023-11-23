@@ -49,6 +49,8 @@ namespace InfinityWorldChess.SkillDomain
         /// </summary>
         public float TotalDamage { get; private set; }
 
+        public bool Attacked { get; private set; } = false;
+
         public float RunDamage(ICanDefend target)
         {
             float penetration = I(Penetration);
@@ -59,6 +61,7 @@ namespace InfinityWorldChess.SkillDomain
             target.HealthValue -= damage;
             float realDamage = damage + Math.Min(target.HealthValue, 0);
             TotalDamage += realDamage;
+            Attacked = true;
             return realDamage;
         }
     }

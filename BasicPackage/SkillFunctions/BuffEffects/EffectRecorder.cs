@@ -9,7 +9,7 @@ namespace InfinityWorldChess.SkillFunctions
 {
     public abstract class EffectRecorder : IEquippable<BattleRole>, IBuffAttached, IHasContent
     {
-        [field: S] public int RemoveValue { get; set; }
+        [field: S] public int RemoveValue { get; set; } = 1;
 
         protected int Remain => BelongBuff?.BuffRecord ?? 0 / RemoveValue;
 

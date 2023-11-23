@@ -66,7 +66,7 @@ namespace InfinityWorldChess
 			if (handle.IsValid())
 				return handle.Result;
 			
-			Debug.LogError($"Cannot find resource: {name}");
+			U.LogError($"Cannot find resource: {name}");
 			
 			return null;
 #else

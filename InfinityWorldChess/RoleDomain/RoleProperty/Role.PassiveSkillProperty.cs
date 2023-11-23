@@ -3,6 +3,7 @@
 using InfinityWorldChess.SkillDomain;
 using System.Collections.Generic;
 using System.Linq;
+using Secyud.Ugf;
 using Secyud.Ugf.Archiving;
 using UnityEngine;
 
@@ -38,7 +39,7 @@ namespace InfinityWorldChess.RoleDomain
             {
                 if (_learnedSkills.Any(u => u.ResourceId == skill.ResourceId))
                 {
-                    Debug.LogWarning($"{skill.ResourceId} is already exist;");
+                    U.LogWarning($"{skill.ResourceId} is already exist;");
                     return false;
                 }
 

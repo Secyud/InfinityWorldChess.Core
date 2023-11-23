@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace InfinityWorldChess.SkillDomain
 {
-    public class TargetAnim:SkillAnim
+    public class TargetAnim:SkillAnimBase
     {
         [SerializeField] private GameObject TargetObject;
         [SerializeField] private bool Role;

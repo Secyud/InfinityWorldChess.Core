@@ -11,9 +11,10 @@ namespace InfinityWorldChess.SkillDomain
 		public float TreatFactor { get; set; } = 1f;
 		public float RecoverFactor { get; set; } = 1f;
 		public float RestrainFactor { get; set; } = 0f;
-		public float TotalRecover { get; set; }
-		
 		public int TargetCount { get; set; }
+		public float TotalRecover { get;private set; }
+		public bool IsRecovered { get; private set; } 
+		
 		
 		public float RunRecover(ICanDefend target)
 		{
@@ -23,6 +24,7 @@ namespace InfinityWorldChess.SkillDomain
 			target.HealthValue += recover;
 			float totalRecover = recover + Math.Min(target.HealthValue, 0);
 			TotalRecover += totalRecover;
+			IsRecovered = true;
 			return totalRecover;
 		}
 	}

@@ -2,13 +2,14 @@ using System;
 using InfinityWorldChess.BattleDomain;
 using InfinityWorldChess.BuffDomain;
 using InfinityWorldChess.SkillDomain;
+using Secyud.Ugf.DataManager;
 
 namespace InfinityWorldChess.SkillFunctions
 {
     public abstract class TriggerEffect : IBuffEffect
     {
         protected BattleContext Context => BattleScope.Instance.Context;
-        
+
         public event Action ExtraAction;
 
         protected void ExtraActionInvoke()

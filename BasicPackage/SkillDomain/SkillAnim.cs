@@ -3,11 +3,10 @@ using UnityEngine;
 
 namespace InfinityWorldChess.SkillDomain
 {
-    public class SkillAnimAnim : SkillAnim
+    public class SkillAnim : SkillAnimBase
     {
         [SerializeField] private AnimationCurve Curve;
         [SerializeField] private bool ControlRole;
-
 
         private Transform _animTransform;
         private Vector3 _s;

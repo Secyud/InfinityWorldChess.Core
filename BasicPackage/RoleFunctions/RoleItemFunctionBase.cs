@@ -22,9 +22,7 @@ namespace InfinityWorldChess.RoleFunctions
             if (U.Tm.ConstructFromResource(ClassId, Name)
                 is not TItem item)
             {
-#if DEBUG
-                Debug.LogError($"unable to read resource {Name};");
-#endif
+                U.LogError($"unable to read resource {Name};");
                 return;
             }
 

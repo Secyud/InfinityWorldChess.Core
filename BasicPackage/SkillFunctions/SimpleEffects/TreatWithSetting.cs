@@ -26,14 +26,14 @@ namespace InfinityWorldChess.SkillFunctions
 
             if (property is not null)
             {
-                TreatRecordBuff attackRecord = interaction.GetOrAddTreat();
-                attackRecord.TreatFactor += TreatBaseFactor + 4 *
+                TreatRecordBuff treatRecord = interaction.GetOrAddTreat();
+                treatRecord.TreatFactor += TreatBaseFactor + 4 *
                     (1 - Pb / (Mathf.Max(0, property.Kiling) + Pb));
-                attackRecord.Treat = interaction.LaunchChess?.AttackValue ?? 0;
+                treatRecord.Treat = interaction.LaunchChess?.AttackValue ?? 0;
 
                 if (property is ActiveSkillBase skill)
                 {
-                    attackRecord.TargetCount = skill.Targets?.Value.Length ?? 0;
+                    treatRecord.TargetCount = skill.Targets?.Value.Length ?? 0;
                 }
             }
 

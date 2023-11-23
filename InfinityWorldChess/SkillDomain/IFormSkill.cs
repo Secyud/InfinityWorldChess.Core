@@ -1,9 +1,9 @@
 namespace InfinityWorldChess.SkillDomain
 {
-	public interface IFormSkill : IActiveSkill
-	{
-		public byte Type { get;set; }
+    public interface IFormSkill : IActiveSkill
+    {
+        public byte Type { get; }
 
-		public byte State { get; set;}
-	}
+        public byte State { get; }
+    }
 }

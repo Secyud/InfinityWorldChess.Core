@@ -11,6 +11,8 @@ namespace InfinityWorldChess.SkillDomain
 	public interface IActiveSkill : IDataResource,IHasSaveIndex,
 		ISkillCastCondition,  IActiveSkillEffect,ISkillCastPosition,ISkillCastResult,ISkill
 	{
-		
+		byte ConditionCode { get;  }
+
+		byte ConditionMask { get;  }
 	}
 }

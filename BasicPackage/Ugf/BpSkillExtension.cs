@@ -30,7 +30,7 @@ namespace InfinityWorldChess.Ugf
             return interaction.TypeBuff.Get<TreatRecordBuff>();
         }
 
-        public static bool FitWeapon(this ICoreSkill coreSkill, BattleRole chess)
+        public static bool FitWeapon(this IActiveSkill coreSkill, BattleRole chess)
         {
             byte tc = chess.Role.Equipment[BodyType.Kiling]?.TypeCode ?? 0;
             return ((tc ^ coreSkill.ConditionCode) & coreSkill.ConditionMask) == 0;

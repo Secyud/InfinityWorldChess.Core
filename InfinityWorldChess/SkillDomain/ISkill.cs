@@ -6,6 +6,6 @@ namespace InfinityWorldChess.SkillDomain
 {
     public interface ISkill:IShowable,IHasScore,IBuffProperty
     {
-        IObjectAccessor<SkillAnim> UnitPlay { get; set; }
+        IObjectAccessor<SkillAnimBase> UnitPlay { get; set; }
     }
 }

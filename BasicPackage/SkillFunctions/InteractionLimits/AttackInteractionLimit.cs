@@ -9,8 +9,12 @@ namespace InfinityWorldChess.SkillFunctions.InteractionLimits
     {
         public bool CheckLimit(object sender)
         {
-            return sender is SkillInteraction interaction &&
-                   interaction.GetAttack() is not null;
+            if (sender is not SkillInteraction interaction)
+            {
+                return false;
+            }
+            AttackRecordBuff attackRecord = interaction.GetAttack();
+            return attackRecord.Attacked;
         }
 
         public void SetContent(Transform transform)

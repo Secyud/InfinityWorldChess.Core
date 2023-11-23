@@ -6,6 +6,7 @@ namespace InfinityWorldChess.BattleDomain
     public abstract class BattleRecordProperty: IBuff<BattleRole>
     {
         public int Id => -1;
+        public byte BuffLevel => 0;
         
         public virtual void Install(BattleRole target)
         {
@@ -14,6 +15,7 @@ namespace InfinityWorldChess.BattleDomain
         public virtual void UnInstall(BattleRole target)
         {
         }
+
 
         public virtual void Overlay(IBuff<BattleRole> finishBuff)
         {

@@ -40,7 +40,7 @@ namespace InfinityWorldChess.SkillFunctions
         public void Invoke(BattleRole battleChess, BattleCell releasePosition)
         {
             if (Limit is not null &&
-                !Limit.CheckLimit(BelongSkill))
+                !Limit.CheckLimit(battleChess))
             {
                 return;
             }

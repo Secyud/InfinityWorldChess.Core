@@ -39,10 +39,10 @@ namespace InfinityWorldChess.SkillFunctions
                     attackRecord.TargetCount = skillBase.Targets?.Value.Length ?? 0;
                 }
 
-                if (property is not ICoreSkill coreSkill ||
-                    !coreSkill.FitWeapon(interaction.LaunchChess))
+                if (property is IActiveSkill activeSkill &&
+                    !activeSkill.FitWeapon(interaction.LaunchChess))
                 {
-                    attackRecord.DamageFactor -= 0.5f;
+                    attackRecord.DamageFactor += 0.5f;
                 }
             }
 

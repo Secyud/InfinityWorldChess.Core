@@ -2,6 +2,7 @@ using InfinityWorldChess.ActivityAccessors;
 using InfinityWorldChess.ActivityDomain;
 using InfinityWorldChess.MessageDomain;
 using InfinityWorldChess.Ugf;
+using Secyud.Ugf;
 using Secyud.Ugf.DataManager;
 using UnityEngine;
 
@@ -33,9 +34,7 @@ namespace InfinityWorldChess.NormalTriggers
                 .Find(u => u.ResourceId == ActivityId);
             if (activity is null)
             {
-#if DEBUG
-                Debug.LogError($"Cannot find activity({ActivityId}) in group({group.Name}).");
-#endif
+                U.LogError($"Cannot find activity({ActivityId}) in group({group.Name}).");
                 return;
             }
 

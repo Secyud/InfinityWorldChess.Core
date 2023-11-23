@@ -9,6 +9,8 @@ namespace InfinityWorldChess.SkillDomain
 {
     public abstract class SkillInteractionBuffBase : IBuff<SkillInteraction>
     {
+        public byte BuffLevel => 0;
+        
         public virtual void Install(SkillInteraction target)
         {
         }
@@ -16,6 +18,7 @@ namespace InfinityWorldChess.SkillDomain
         public virtual void UnInstall(SkillInteraction target)
         {
         }
+
 
         public virtual void Overlay(IBuff<SkillInteraction> finishBuff)
         {

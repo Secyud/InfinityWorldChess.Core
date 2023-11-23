@@ -71,7 +71,7 @@ namespace InfinityWorldChess.Ugf
 			}
 			catch (Exception)
 			{
-				Debug.LogError($"Deserialize List<string> From Json Failed! GetPath: {path}");
+				U.LogError($"Deserialize List<string> From Json Failed! GetPath: {path}");
 				return new List<string>();
 			}
 		}

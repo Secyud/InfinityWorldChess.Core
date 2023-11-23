@@ -164,6 +164,10 @@ namespace InfinityWorldChess.BattleDomain
             }
         }
 
+        /// <summary>
+        /// 将变招状态置于变招类型。
+        /// </summary>
+        /// <param name="type"></param>
         public void SetFormSkillCall(byte type)
         {
             CurrentState = type;

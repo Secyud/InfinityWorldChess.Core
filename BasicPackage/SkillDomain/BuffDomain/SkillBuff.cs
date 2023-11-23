@@ -8,12 +8,14 @@ using UnityEngine;
 
 namespace InfinityWorldChess.SkillDomain
 {
+    [ID("be8e28a4-2a16-6404-78f3-dbd3a2d1c6f7")]
     public class SkillBuff : IBuffShowable<BattleRole>
     {
         [field: S(0)] public int Id { get; set; }
         [field: S(1)] public string Name { get; set; }
         [field: S(2)] public bool Visible { get; set; }
         [field: S(2)] public int BuffRecord { get; set; }
+        [field: S(2)] public byte BuffLevel { get; set;}
         [field: S(3)] public string Description { get; set; }
         [field: S(4)] public IObjectAccessor<Sprite> Icon { get; set; }
 

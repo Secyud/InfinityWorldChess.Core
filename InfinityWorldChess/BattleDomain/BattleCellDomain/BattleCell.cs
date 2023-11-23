@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using InfinityWorldChess.BuffDomain;
+using Secyud.Ugf;
 using Secyud.Ugf.HexMapExtensions;
 using Secyud.Ugf.UgfHexMap;
 using UnityEngine;
@@ -74,9 +75,7 @@ namespace InfinityWorldChess.BattleDomain
 
         public void SetHighlight()
         {
-#if DEBUG
-            Debug.Log($"Index: {Index}, State: {_state}");
-#endif
+            U.Log($"Index: {Index}, State: {_state}");
 
             if (_state == 0)
             {
