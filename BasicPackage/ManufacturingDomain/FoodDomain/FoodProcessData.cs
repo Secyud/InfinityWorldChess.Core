@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using InfinityWorldChess.BuffDomain;
 using InfinityWorldChess.ItemDomain;
 using InfinityWorldChess.ItemDomain.FoodDomain;
 using InfinityWorldChess.ItemTemplates;

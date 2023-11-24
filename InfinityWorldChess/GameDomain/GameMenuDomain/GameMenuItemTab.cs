@@ -31,11 +31,11 @@ namespace InfinityWorldChess.GameDomain.GameMenuDomain
             PlayerGameContext player = GameScope.Instance.Player;
             TableButtonDelegate<IItem> itd = ItemTable
                 .AutoSetButtonTable<IItem,ItemSorters,ItemFilters,PlayerItemButtons>(
-                    player.Role.Item);
+                    player.Role.Item.All());
             ItemQuantityComponent.SetItem(itd.TableDelegate);
 
             BuffTable.AutoSetTable(
-                player.Role.IdBuffs.GetVisibleBuff());
+                player.Role.Buffs.AllVisible());
 
             EquipmentEditor.Bind(player.Role);
         }

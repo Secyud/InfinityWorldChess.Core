@@ -1,5 +1,8 @@
 ﻿using System;
 using InfinityWorldChess.BattleDomain;
+using InfinityWorldChess.BattleInteractionDomain;
+using InfinityWorldChess.BuffDomain;
+using InfinityWorldChess.FunctionDomain;
 using InfinityWorldChess.GameDomain;
 using InfinityWorldChess.Ugf;
 using Secyud.Ugf;
@@ -23,11 +26,11 @@ namespace InfinityWorldChess.SkillDomain
         [field: S(255)] public ISkillCastPosition Position { get; set; }
         [field: S(255)] public ISkillCastResult Result { get; set; }
         [field: S(256)] public ISkillTargetInRange TargetGetter { get; set; }
-        [field: S(257)] public ISkillActionEffect PreSkill { get; set; }
-        [field: S(258)] public ISkillInteractionEffect PreInteraction { get; set; }
-        [field: S(259)] public ISkillInteractionEffect OnInteraction { get; set; }
-        [field: S(260)] public ISkillInteractionEffect PostInteraction { get; set; }
-        [field: S(261)] public ISkillActionEffect PostSkill { get; set; }
+        [field: S(257)] public IActionable<BattleRole> PreSkill { get; set; }
+        [field: S(258)] public IActionable<BattleInteraction> PreInteraction { get; set; }
+        [field: S(259)] public IActionable<BattleInteraction> OnInteraction { get; set; }
+        [field: S(260)] public IActionable<BattleInteraction> PostInteraction { get; set; }
+        [field: S(261)] public IActionable<BattleRole> PostSkill { get; set; }
 
         public BattleRole Role { get; private set; }
         public BattleCell Cell { get; private set; }
@@ -55,11 +58,12 @@ namespace InfinityWorldChess.SkillDomain
             Position?.SetContent(transform);
             Result?.SetContent(transform);
             TargetGetter?.SetContent(transform);
-            PreSkill?.SetContent(transform);
-            PreInteraction?.SetContent(transform);
-            OnInteraction?.SetContent(transform);
-            PostInteraction?.SetContent(transform);
-            PostSkill?.SetContent(transform);
+
+            PreSkill.TrySetContent(transform);
+            PreInteraction.TrySetContent(transform);
+            OnInteraction.TrySetContent(transform);
+            PostInteraction.TrySetContent(transform);
+            PostSkill.TrySetContent(transform);
         }
 
         public virtual string CheckCastCondition(BattleRole chess, IActiveSkill skill)
@@ -91,18 +95,18 @@ namespace InfinityWorldChess.SkillDomain
             Range = range;
             Targets = TargetGetter?.GetTargetInRange(role, range);
 
-            SetAttached(PreSkill);
-            SetAttached(PreInteraction);
-            SetAttached(OnInteraction);
-            SetAttached(PostInteraction);
-            SetAttached(PostSkill);
+            this.Attach(PreSkill);
+            this.Attach(PreInteraction);
+            this.Attach(OnInteraction);
+            this.Attach(PostInteraction);
+            this.Attach(PostSkill);
 
-            PreSkill?.Invoke(role, releasePosition);
+            PreSkill?.Invoke(role);
             if (Targets is not null)
             {
                 foreach (BattleRole enemy in Targets.Value)
                 {
-                    SkillInteraction interaction = SkillInteraction.Create(role, enemy);
+                    BattleInteraction interaction = BattleInteraction.Create(role, enemy);
                     PreInteraction?.Invoke(interaction);
                     interaction.BeforeHit();
                     OnInteraction?.Invoke(interaction);
@@ -110,17 +114,8 @@ namespace InfinityWorldChess.SkillDomain
                     PostInteraction?.Invoke(interaction);
                 }
             }
-            PostSkill?.Invoke(role, releasePosition);
-
+            PostSkill?.Invoke(role);
             Cell = null;
-        }
-
-        private void SetAttached(IActiveSkillAttached attached)
-        {
-            if (attached is not null)
-            {
-                attached.BelongSkill = this;
-            }
         }
 
         public virtual void Save(IArchiveWriter writer)

@@ -18,7 +18,7 @@ namespace InfinityWorldChess.DialogueDomain
             
             GameScope.Instance.Role.MainOperationRole = Target;
             
-            DialogueUnit unit = new()
+            CustomDialogueUnit unit = new()
             {
                 Text = "你找我干什么？",
                 RoleAccessor = new RoleDirectly
@@ -27,10 +27,9 @@ namespace InfinityWorldChess.DialogueDomain
                 }
             };
             
-            foreach (IDialogueAction item in register.Items
-                         .Where(item => item.VisibleFor(Target)))
+            foreach (IDialogueFunction item in register.Items)
             {
-                unit.ActionList.Add(item);
+                item.SetDialogue(unit);
             }
             service.Panel.SetInteraction(unit);
         }

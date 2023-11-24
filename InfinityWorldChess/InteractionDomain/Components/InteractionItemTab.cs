@@ -28,7 +28,7 @@ namespace InfinityWorldChess.InteractionDomain
             Role role = _service.InteractionRole;
 
             TableButtonDelegate<IItem> itd = ItemTable.AutoSetButtonTable
-                <IItem,ItemSorters,ItemFilters,PlayerItemButtons>(role.Item);
+                <IItem,ItemSorters,ItemFilters,PlayerItemButtons>(role.Item.All());
             ItemQuantityComponent.SetItem(itd.TableDelegate);
 
             EquipmentEditor.Bind(role);

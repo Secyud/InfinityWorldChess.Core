@@ -71,7 +71,7 @@ namespace InfinityWorldChess.ManufacturingDomain.EquipmentDomain
 
         public virtual IList<IItem> GetItemProvider()
         {
-            return GameScope.Instance.Player.Role.Item;
+            return GameScope.Instance.Player.Role.Item.All();
         }
     }
 }

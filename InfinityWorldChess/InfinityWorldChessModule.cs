@@ -52,7 +52,7 @@ namespace InfinityWorldChess
             
             
             ChatRegister chat = context.Get<ChatRegister>() ;
-            chat.Register(new ActivityListDialogue());
+            chat.Register(new ActivityDialogueChat());
         }
 
 

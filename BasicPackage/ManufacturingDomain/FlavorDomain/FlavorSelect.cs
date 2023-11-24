@@ -32,9 +32,6 @@ namespace InfinityWorldChess.ManufacturingDomain.FlavorDomain
             {
                 Occupied[cell.Index] = null;
                 Cells[cell.Index].Image.color = Color.white;
-
-                IList<IItem> itemProvider = GetFlow().GetItemProvider();
-                itemProvider.Add(raw);
             }
         }
 
@@ -47,9 +44,6 @@ namespace InfinityWorldChess.ManufacturingDomain.FlavorDomain
 
             Occupied[cell.Index] = raw;
             Cells[cell.Index].Image.color = raw.Color;
-
-            IList<IItem> itemProvider = GetFlow().GetItemProvider();
-            itemProvider.Remove(raw);
         }
 
         private void CellHoverAction(ManufacturingCell cell)
@@ -69,13 +63,6 @@ namespace InfinityWorldChess.ManufacturingDomain.FlavorDomain
 
         private void ClearBoard()
         {
-            IList<IItem> itemProvider = GetFlow().GetItemProvider();
-            foreach (FlavorRaw raw in Occupied)
-            {
-                if (raw is not null)
-                    itemProvider.Add(raw);
-            }
-
             Layout.PrepareLayout();
             RectTransform content = Layout.PrepareLayout();
             Occupied = new FlavorRaw[BasicConsts.FlavorTime];
@@ -93,7 +80,7 @@ namespace InfinityWorldChess.ManufacturingDomain.FlavorDomain
 
         protected override IList<IItem> GetSelectList()
         {
-            return GameScope.Instance.Player.Role.Item
+            return GameScope.Instance.Player.Role.Item.All()
                 .Where(u => u is FlavorRaw)
                 .ToList();
         }

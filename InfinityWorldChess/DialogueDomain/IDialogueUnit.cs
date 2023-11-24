@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using InfinityWorldChess.FunctionDomain;
 using InfinityWorldChess.RoleDomain;
 using Secyud.Ugf;
 
@@ -7,10 +8,10 @@ namespace InfinityWorldChess.DialogueDomain
 	public interface IDialogueUnit
 	{
 		// for the selection of dialogue
-		IList<IDialogueAction> ActionList { get; }
+		IList<DialogueOption> OptionList { get; }
 
 		// for default continue chat action
-		IDialogueAction DefaultAction { get; }
+		IActionable DefaultAction { get; }
 		
 		// the saying text for current role
 		string Text { get; }

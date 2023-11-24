@@ -1,10 +1,10 @@
-using InfinityWorldChess.SkillDomain;
+using InfinityWorldChess.BattleBuffDomain;
 using Secyud.Ugf;
 
 namespace InfinityWorldChess.SkillTemplates
 {
-    public class DirectlyBattleBuff:SkillBuff,IObjectAccessor<SkillBuff>
+    public class DirectlyBattleBuff:BattleRoleBuff,IObjectAccessor<BattleRoleBuff>
     {
-        public SkillBuff Value => this;
+        public BattleRoleBuff Value => this;
     }
 }

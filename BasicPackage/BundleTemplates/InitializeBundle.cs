@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using InfinityWorldChess.BundleDomain;
+using InfinityWorldChess.FunctionDomain;
 using InfinityWorldChess.Ugf;
 using Secyud.Ugf;
 using Secyud.Ugf.DataManager;
@@ -12,7 +13,7 @@ namespace InfinityWorldChess.BundleTemplates
         [field: S] public string Description { get; set; }
         [field: S] public string Name { get; set; }
         [field: S] public IObjectAccessor<Sprite> Icon { get; set; }
-        [field: S] public List<ITrigger> Triggers { get; } = new();
+        [field: S] public List<IActionable> Triggers { get; } = new();
 
         
         public void SetContent(Transform transform)
@@ -22,7 +23,7 @@ namespace InfinityWorldChess.BundleTemplates
 
         public void OnGameCreation()
         {
-            foreach (ITrigger trigger in Triggers)
+            foreach (IActionable trigger in Triggers)
             {
                 trigger.Invoke();
             }

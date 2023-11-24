@@ -1,4 +1,6 @@
-﻿using InfinityWorldChess.GameDomain;
+﻿using InfinityWorldChess.BuffDomain;
+using InfinityWorldChess.FunctionDomain;
+using InfinityWorldChess.GameDomain;
 using InfinityWorldChess.RoleDomain;
 using InfinityWorldChess.Ugf;
 using Secyud.Ugf;
@@ -16,16 +18,16 @@ namespace InfinityWorldChess.SkillDomain
         [field: S(0)] public string Name { get; set; }
         [field: S(2)] public string Description { get; set; }
         [field: S(254)] public IObjectAccessor<Sprite> Icon { get; set; }
-        [field: S(255)] public IPassiveSkillAttached Effect { get; set; }
+        [field: S(255)] public IEquippable<Role> Effect { get; set; }
 
-        public Role Role { get; set; }
-
+        public Role Role { get; private set; }
+        
         public void Install(Role target)
         {
+            Role = target;
             if (Effect is not null)
             {
-                Role = target;
-                Effect.Skill = this;
+                this.Attach(Effect);
                 Effect.Install(target);
             }
         }
@@ -47,7 +49,10 @@ namespace InfinityWorldChess.SkillDomain
 
         protected virtual void SetHideContent(Transform transform)
         {
-            Effect?.SetContent(transform);
+            if (Effect is IHasContent content)
+            {
+                content.SetContent(transform);
+            }
         }
 
         public byte Living { get; set; }

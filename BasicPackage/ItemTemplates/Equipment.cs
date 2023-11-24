@@ -2,7 +2,6 @@
 
 using System.Collections.Generic;
 using InfinityWorldChess.BattleDomain;
-using InfinityWorldChess.BuffDomain;
 using InfinityWorldChess.ItemDomain.EquipmentDomain;
 using InfinityWorldChess.RoleDomain;
 using InfinityWorldChess.Ugf;
@@ -15,19 +14,16 @@ namespace InfinityWorldChess.ItemTemplates
 {
     public class Equipment : CustomizableItem<Equipment>, IEquipment, IArchivable
     {
+
         public readonly List<IBuff<Role>> RoleBuff = new();
         public readonly List<IBuff<BattleRole>> BattleRoleBuff = new();
 
-
+        public string ResourceId { get; set; }
         public int Antique { get; set; }
-
         public int Score { get; set; }
-
         public byte TypeCode { get; set; }
         public byte Location { get; set; }
-
         public int[] Property { get; } = new int[SharedConsts.EquipmentPropertyCount];
-
         public int SaveIndex { get; set; }
 
         public void Install(Role role)

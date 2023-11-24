@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace InfinityWorldChess.ManufacturingDomain
 {
-	public abstract class ManufacturingPropertyBase<TProcess> : RoleProperty, IArchivable
+	public abstract class ManufacturingPropertyBase<TProcess> : IRoleProperty, IArchivable
 		where TProcess : class
 	{
 		public readonly List<TProcess> LearnedProcesses = new();

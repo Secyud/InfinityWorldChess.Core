@@ -15,7 +15,7 @@ namespace InfinityWorldChess.BattleDomain
         [SerializeField] private Table BuffContent;
         [SerializeField] private AvatarEditor Avatar;
 
-        private TableDelegate<IBuffShowable<BattleRole>> _buffDelegate;
+        private TableDelegate<IBattleRoleBuff> _buffDelegate;
 
         protected override void ClearUi()
         {
@@ -26,8 +26,7 @@ namespace InfinityWorldChess.BattleDomain
         {
             gameObject.SetActive(true);
             Avatar.OnInitialize(Property.Role.Basic);
-            _buffDelegate = BuffContent.AutoSetTable<IBuffShowable<BattleRole>>(
-                null);
+            _buffDelegate = BuffContent.AutoSetTable<IBattleRoleBuff>(null);
         }
 
         private void LateUpdate()
@@ -39,8 +38,10 @@ namespace InfinityWorldChess.BattleDomain
             Energy.SetValue(Property.EnergyValue, Property.MaxEnergyValue);
             Execution.SetValue(Property.ExecutionValue, SharedConsts.MaxExecutionValue);
             _buffDelegate.Items.Clear();
-            foreach (IBuffShowable<BattleRole> buff in Property.Buff.GetVisibleBuff())
+            foreach (IBattleRoleBuff buff in Property.Buffs.All())
+            {
                 _buffDelegate.Items.Add(buff);
+            }
             BuffContent.Refresh();
         }
 

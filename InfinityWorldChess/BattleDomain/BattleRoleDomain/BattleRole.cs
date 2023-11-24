@@ -3,6 +3,7 @@
 using System;
 using System.Linq;
 using InfinityWorldChess.BuffDomain;
+using InfinityWorldChess.FunctionDomain;
 using InfinityWorldChess.RoleDomain;
 using InfinityWorldChess.SkillDomain;
 using Secyud.Ugf;
@@ -21,7 +22,6 @@ namespace InfinityWorldChess.BattleDomain
         private float _health, _energy;
         private int _execution;
 
-        public TypeBuffProperty<BattleRole> TypeBuff { get; }
 
         public CoreSkillContainer[] NextCoreSkills { get; } =
             new CoreSkillContainer[SharedConsts.CoreSkillCodeCount];
@@ -43,7 +43,8 @@ namespace InfinityWorldChess.BattleDomain
 
         public BattleCamp Camp { get; set; }
 
-        public IdBuffProperty<BattleRole> Buff { get; }
+        public BuffCollection<BattleRole,IBattleRoleBuff> Buffs { get; }
+        public PropertyCollection<BattleRole,IBattleRoleProperty> Properties { get; }
 
         public void OnDying()
         {
@@ -135,8 +136,8 @@ namespace InfinityWorldChess.BattleDomain
             Role.CoreSkill.GetGroup(CurrentLayer, 0, NextCoreSkills);
             Role.FormSkill.GetGroup(CurrentState, NextFormSkills);
             UnitPlay = role.PassiveSkill[0]?.UnitPlay;
-            TypeBuff = new TypeBuffProperty<BattleRole>(this);
-            Buff = new IdBuffProperty<BattleRole>(this);
+            Properties = new PropertyCollection<BattleRole, IBattleRoleProperty>(this);
+            Buffs = new BuffCollection<BattleRole, IBattleRoleBuff>(this);
         }
 
         public void InitValue(float health, float energy, int execution)
@@ -257,20 +258,8 @@ namespace InfinityWorldChess.BattleDomain
             EnergyRecover = maxEnergy / 16;
             ExecutionRecover = execution;
 
-            foreach (IOnBattleRoleInitialize b in Role.IdBuffs.BattleInitializes)
-                b.OnBattleInitialize(this);
-        }
-
-        public TPropertyBuff GetProperty<TPropertyBuff>()
-            where TPropertyBuff : class, IBuff<BattleRole>
-        {
-            return TypeBuff.GetOrInstall<TPropertyBuff>();
-        }
-
-        public TPropertyBuff TryGetProperty<TPropertyBuff>()
-            where TPropertyBuff : class, IBuff<BattleRole>
-        {
-            return TypeBuff.Get<TPropertyBuff>();
+            foreach (IActionable<BattleRole> b in Role.Buffs.BattleInitializes)
+                b.Invoke(this);
         }
     }
 }

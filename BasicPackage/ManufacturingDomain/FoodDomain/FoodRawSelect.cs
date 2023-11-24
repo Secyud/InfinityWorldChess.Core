@@ -12,7 +12,7 @@ namespace InfinityWorldChess.ManufacturingDomain.FoodDomain
     {
         protected override IList<IItem> GetSelectList()
         {
-            return GameScope.Instance.Player.Role.Item.Where(u => u is FoodRaw).ToList();
+            return GameScope.Instance.Player.Role.Item.All().Where(u => u is FoodRaw).ToList();
         }
         
         
@@ -26,7 +26,7 @@ namespace InfinityWorldChess.ManufacturingDomain.FoodDomain
 
         private void ClearBoard()
         {
-            GameScope.Instance.Player.Role.Item.Remove(SelectedItem);
+            GameScope.Instance.Player.Role.Item.Remove(SelectedItem,1);
             ChangeSelect(null);
         }
 

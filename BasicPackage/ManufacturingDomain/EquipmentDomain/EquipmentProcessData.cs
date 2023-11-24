@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using InfinityWorldChess.BuffDomain;
 using InfinityWorldChess.ItemTemplates;
 
 namespace InfinityWorldChess.ManufacturingDomain.EquipmentDomain

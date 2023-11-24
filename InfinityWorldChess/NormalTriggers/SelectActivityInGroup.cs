@@ -1,7 +1,8 @@
 using InfinityWorldChess.ActivityAccessors;
 using InfinityWorldChess.ActivityDomain;
+using InfinityWorldChess.BuffDomain;
+using InfinityWorldChess.FunctionDomain;
 using InfinityWorldChess.MessageDomain;
-using InfinityWorldChess.Ugf;
 using Secyud.Ugf;
 using Secyud.Ugf.DataManager;
 
@@ -11,7 +12,7 @@ namespace InfinityWorldChess.NormalTriggers
     /// always exist when you need to trigger
     /// next activity in a group.
     /// </summary>
-    public class SelectActivityInGroup : ITrigger
+    public class SelectActivityInGroup : IActionable
     {
         [field: S] private PlayerActivityGroup GroupAccessor { get; set; }
         [field: S] private string ActivityId { get; set; }

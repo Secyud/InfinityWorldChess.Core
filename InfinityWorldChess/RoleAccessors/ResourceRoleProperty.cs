@@ -5,9 +5,9 @@ using Secyud.Ugf.DataManager;
 
 namespace InfinityWorldChess.RoleAccessors
 {
-    public class ResourceRoleProperty:ResourceAccessor<RoleProperty>
+    public class ResourceRoleProperty:ResourceAccessor<IRoleProperty>
     {
-        [field: S,TypeLimit(typeof(RoleProperty))]
+        [field: S,TypeLimit(typeof(IRoleProperty))]
         public Guid ClassId { get; set; }
         protected override Guid TypeId => ClassId;
     }

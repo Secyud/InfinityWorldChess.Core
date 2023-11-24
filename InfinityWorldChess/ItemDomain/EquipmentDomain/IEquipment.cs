@@ -1,6 +1,7 @@
 #region
 
 using InfinityWorldChess.BuffDomain;
+using InfinityWorldChess.FunctionDomain;
 using InfinityWorldChess.RoleDomain;
 
 #endregion

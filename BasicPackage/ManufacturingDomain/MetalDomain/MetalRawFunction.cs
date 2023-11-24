@@ -18,7 +18,7 @@ namespace InfinityWorldChess.ManufacturingDomain.MetalDomain
         protected override IList<IItem> GetSelectList()
         {
             return GameScope.Instance.Player.Role
-                .Item
+                .Item.All()
                 .Where(u=>u is MetalEquipmentRaw)
                 .ToList();
         }

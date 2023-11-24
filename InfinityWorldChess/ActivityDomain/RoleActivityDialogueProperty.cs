@@ -1,33 +1,34 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using InfinityWorldChess.DialogueDomain;
+using InfinityWorldChess.FunctionDomain;
+using InfinityWorldChess.GlobalDomain;
 using InfinityWorldChess.RoleDomain;
 
 namespace InfinityWorldChess.ActivityDomain
 {
-    public sealed class RoleActivityDialogueProperty:RoleProperty
+    public sealed class RoleActivityDialogueProperty : IRoleProperty, ILimitable
     {
-        private readonly List<IDialogueAction> _actions = new();
+        public List<DialogueOption> DialogueActions { get; } = new();
 
-        public IReadOnlyList<IDialogueAction> DialogueActions => _actions;
-        
-        public void AddAction(IDialogueAction action)
+        public bool CheckUseful()
         {
-            _actions.Add(action);
+            return DialogueActions.Any();
         }
 
-        public void RemoveAction(IDialogueAction action)
+        public void Install(Role target)
         {
-            _actions.Remove(action);
-            if (!_actions.Any())
-            {
-                Role.RemoveProperty<RoleActivityDialogueProperty>();
-            }
         }
 
-        public override bool CheckNeeded()
+        public void UnInstall(Role target)
         {
-            return _actions.Any();
         }
+
+        public void Overlay(IOverlayable<Role> otherOverlayable)
+        {
+        }
+
+        public Type Id => GetType();
     }
 }

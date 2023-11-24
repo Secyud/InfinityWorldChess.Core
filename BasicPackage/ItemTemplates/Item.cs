@@ -12,6 +12,7 @@ namespace InfinityWorldChess.ItemTemplates
         [field: S] public string Description { get; set; }
         [field: S] public IObjectAccessor<Sprite> Icon { get; set; }
         [field: S] public int Score { get; set; }
+        [field: S] public string ResourceId { get; set; }
         public int SaveIndex { get; set; }
 
         public virtual void SetContent(Transform transform)

@@ -88,8 +88,8 @@ namespace InfinityWorldChess.RoleDomain
 
         [field: S(22)] public float ValueView { get; set; }
         [field: S(22)] public float WorldView { get; set; }
-        [field: S(23)] public List<IObjectAccessor<IBuff<Role>>> RoleBuffs { get; } = new();
-        [field: S(24)] public List<IObjectAccessor<RoleProperty>> ExtraProperties { get; } = new();
+        [field: S(23)] public List<IObjectAccessor<IRoleBuff>> RoleBuffs { get; } = new();
+        [field: S(24)] public List<IObjectAccessor<IRoleProperty>> ExtraProperties { get; } = new();
 
 
         public Role GenerateRole()
@@ -210,14 +210,14 @@ namespace InfinityWorldChess.RoleDomain
                 role.Equipment[(byte)i, role] = equipment;
             }
 
-            foreach (IObjectAccessor<RoleProperty> extraProperty in ExtraProperties)
+            foreach (IObjectAccessor<IRoleProperty> extraProperty in ExtraProperties)
             {
-                role.ReplaceProperty(extraProperty.Value);
+                role.Properties.Install(extraProperty.Value);
             }
 
-            foreach (IObjectAccessor<IBuff<Role>> buff in RoleBuffs)
+            foreach (IObjectAccessor<IRoleBuff> buff in RoleBuffs)
             {
-                role.IdBuffs.Install(buff.Value);
+                role.Buffs.Install(buff.Value);
             }
             
             return role;

@@ -35,7 +35,7 @@ namespace InfinityWorldChess.RoleDomain
 
         public void AutoEquipEquipment()
         {
-            List<IEquipment> equipments = Item.TryFindCast<IItem, IEquipment>();
+            List<IEquipment> equipments = Item.All().TryFindCast<IItem, IEquipment>();
             Equipment.AutoEquip(equipments, this);
         }
 
@@ -90,8 +90,7 @@ namespace InfinityWorldChess.RoleDomain
                 {
                     this[i, role] = null;
                     int index = reader.ReadInt32();
-                    if (index >= 0 && role.Item.Count > index &&
-                        role.Item[index] is IEquipment equipment)
+                    if (index >= 0 && role.Item[index] is IEquipment equipment)
                     {
                         this[i, role] = equipment;
                     }

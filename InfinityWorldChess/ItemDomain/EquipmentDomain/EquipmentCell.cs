@@ -26,7 +26,7 @@ namespace InfinityWorldChess.ItemDomain.EquipmentDomain
             {
                 GlobalScope.Instance.OpenSelect().AutoSetSingleSelectTable
                     <IItem, ItemSorters, ItemFilters>(
-                        Editor.Property.Item.Where(ValidEquipment).ToList(),
+                        Editor.Property.Item.All().Where(ValidEquipment).ToList(),
                         SetEquipment
                     );
             }

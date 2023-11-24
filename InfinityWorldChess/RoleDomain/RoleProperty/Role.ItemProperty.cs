@@ -16,17 +16,27 @@ namespace InfinityWorldChess.RoleDomain
     {
         public ItemProperty Item { get; } = new();
 
-        public class ItemProperty : IList<IItem>, IArchivable
+        public class ItemProperty : IArchivable
         {
-           private readonly List<IItem> _items = new();
+            private readonly List<IItem> _items = new();
+            private readonly SortedDictionary<string,IOverloadedItem> _oItems = new();
             public int Award { get; set; }
 
             public void Save(IArchiveWriter writer)
             {
                 writer.Write(_items.Count);
-                for (int i = 0; i < Count; i++)
+                for (int i = 0; i < _items.Count; i++)
                 {
-                    IItem item = this[i];
+                    IItem item = _items[i];
+                    writer.WriteObject(item);
+                    item.SaveIndex = i;
+                }
+
+                List<IOverloadedItem> oItemList = _oItems.Values.ToList();
+                writer.Write(oItemList.Count);
+                for (int i = 0; i < oItemList.Count; i++)
+                {
+                    IOverloadedItem item = oItemList[i];
                     writer.WriteObject(item);
                     item.SaveIndex = i;
                 }
@@ -36,48 +46,39 @@ namespace InfinityWorldChess.RoleDomain
 
             public void Load(IArchiveReader reader)
             {
-                Clear();
+                _items.Clear();
+                _oItems.Clear();
                 int count = reader.ReadInt32();
-
                 for (int i = 0; i < count; i++)
                 {
                     IItem item = reader.ReadObject<IItem>();
                     item!.SaveIndex = i;
-                    this.AddLast(item);
+                    Add(item);
+                }
+                count = reader.ReadInt32();
+                for (int i = 0; i < count; i++)
+                {
+                    IOverloadedItem item = reader.ReadObject<IOverloadedItem>();
+                    item!.SaveIndex = i;
+                    Add(item);
                 }
 
                 Award = reader.ReadInt32();
             }
-
-            public IEnumerator<IItem> GetEnumerator() => _items.GetEnumerator();
-
-            IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable)_items).GetEnumerator();
-
+            
             public void Add(IItem item)
             {
                 if (item is IOverloadedItem oItem)
                 {
-                    Type type = item.GetType();
-                    string name = item.Name;
-                    IOverloadedItem min = _items
-                        .Where(u => u.GetType() == type && u.Name == name)
-                        .Cast<IOverloadedItem>()
-                        .OrderBy(u=>u.Quantity)
-                        .FirstOrDefault();
-                    
-                    if (min is not null)
+                    _oItems.TryGetValue(item.ResourceId, out IOverloadedItem existItem);
+
+                    if (existItem is not null)
                     {
-                        min.Quantity +=  oItem.Quantity;
-                        if (min.Quantity > SharedConsts.MaxOverloadedCount)
-                        {
-                            oItem.Quantity = min.Quantity - SharedConsts.MaxOverloadedCount;
-                            min.Quantity = SharedConsts.MaxOverloadedCount;
-                            _items.AddLast(oItem);
-                        }
+                        existItem.Quantity += oItem.Quantity;
                     }
                     else
                     {
-                        _items.AddLast(oItem);
+                        _oItems[item.ResourceId] = oItem;
                     }
                 }
                 else
@@ -86,36 +87,19 @@ namespace InfinityWorldChess.RoleDomain
                 }
             }
 
-            public bool Remove(IItem item)
+            public bool Remove(IItem item,int count)
             {
-                if (item is IOverloadedItem oItem)
+                if (item is IOverloadedItem)
                 {
-                    Type type = item.GetType();
-                    string name = item.Name;
-                    List<IOverloadedItem> items = _items
-                        .Where(u => u.GetType() == type && u.Name == name)
-                        .Cast<IOverloadedItem>()
-                        .OrderByDescending(u=>u.Quantity)
-                        .ToList();
-                    int count = oItem.Quantity;
+                    _oItems.TryGetValue(item.ResourceId, out IOverloadedItem existItem);
 
-                    while (count!=0)
+                    if (existItem is not null)
                     {
-                        if (!items.Any())
+                        existItem.Quantity -= count;
+
+                        if (existItem.Quantity <= 0)
                         {
-                            return false;
-                        }
-                        IOverloadedItem min = items.Last();
-                        items.RemoveAt(items.Count - 1);
-                        min.Quantity -=  count;
-                        if (min.Quantity <= 0)
-                        {
-                            count = - min.Quantity;
-                            _items.Remove(min);
-                        }
-                        else
-                        {
-                            count = 0;
+                            _oItems.Remove(item.ResourceId);
                         }
                     }
                 }
@@ -126,39 +110,14 @@ namespace InfinityWorldChess.RoleDomain
 
                 return true;
             }
+
+            public IItem this[int i] => i < _items.Count ? _items[i] : null;
             
-            public void Clear()
+            public IList<IItem> All()
             {
-                _items.Clear();
-            }
-
-            public bool Contains(IItem item) => _items.Contains(item);
-
-            public void CopyTo(IItem[] array, int arrayIndex)
-            {
-                _items.CopyTo(array, arrayIndex);
-            }
-
-            public int Count => _items.Count;
-
-            public bool IsReadOnly => ((ICollection<IItem>)_items).IsReadOnly;
-
-            public int IndexOf(IItem item) => _items.IndexOf(item);
-
-            public void Insert(int index, IItem item)
-            {
-                _items.Insert(index, item);
-            }
-
-            public void RemoveAt(int index)
-            {
-                _items.RemoveAt(index);
-            }
-
-            public IItem this[int index]
-            {
-                get => _items[index];
-                set => _items[index] = value;
+                List<IItem> ret = _oItems.Values.Cast<IItem>().ToList();
+                ret.AddRange(_items);
+                return ret;
             }
         }
     }

@@ -3,6 +3,7 @@
 using InfinityWorldChess.BattleDomain;
 using InfinityWorldChess.BuffDomain;
 using System.Collections.Generic;
+using InfinityWorldChess.FunctionDomain;
 
 #endregion
 
@@ -10,14 +11,14 @@ namespace InfinityWorldChess.RoleDomain
 {
 	public partial class Role
 	{
-		private RoleIdBuffProperty _idBuffs ;
-		public RoleIdBuffProperty IdBuffs => _idBuffs ??= new RoleIdBuffProperty(this);
+		private RoleBuffProperty _buffs ;
+		public RoleBuffProperty Buffs => _buffs ??= new RoleBuffProperty(this);
 
-		public class RoleIdBuffProperty : IdBuffProperty<Role>
+		public class RoleBuffProperty : BuffCollection<Role,IRoleBuff>
 		{
-			public List<IOnBattleRoleInitialize> BattleInitializes { get; } = new();
+			public List<IActionable<BattleRole>> BattleInitializes { get; } = new();
 
-			public RoleIdBuffProperty(Role target) : base(target)
+			public RoleBuffProperty(Role target) : base(target)
 			{
 			}
 		}

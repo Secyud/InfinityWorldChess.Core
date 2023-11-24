@@ -1,7 +1,8 @@
 #region
 
-using InfinityWorldChess.BuffDomain;
-using InfinityWorldChess.SkillDomain;
+using System.Collections.Generic;
+using InfinityWorldChess.BattleInteractionDomain;
+using InfinityWorldChess.FunctionDomain;
 
 #endregion
 
@@ -13,13 +14,10 @@ namespace InfinityWorldChess.BattleDomain
 	/// </summary>
 	public sealed class BattleEvents : BattleRecordProperty
 	{
-		public ActionableContainer<SkillInteraction> PrepareLaunch { get; } = new();
-
-		public ActionableContainer<SkillInteraction> PrepareReceive { get; } = new();
-
-		public ActionableContainer<SkillInteraction> LaunchCallback { get; } = new();
-
-		public ActionableContainer<SkillInteraction> ReceiveCallback { get; } = new();
+		public HashSet<IActionable<BattleInteraction>> PrepareLaunch { get; } = new();
+		public HashSet<IActionable<BattleInteraction>> PrepareReceive { get; } = new();
+		public HashSet<IActionable<BattleInteraction>> LaunchCallback { get; } = new();
+		public HashSet<IActionable<BattleInteraction>> ReceiveCallback { get; } = new();
 
 		public override void Install(BattleRole target)
 		{

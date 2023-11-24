@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using InfinityWorldChess.BattleDomain;
-using InfinityWorldChess.BuffDomain;
 using InfinityWorldChess.ItemDomain;
 using InfinityWorldChess.ItemDomain.FoodDomain;
 using InfinityWorldChess.RoleDomain;
@@ -13,6 +12,7 @@ namespace InfinityWorldChess.ItemTemplates
 	public class Drag: CustomizableItem<Drag>,
 		IItem, IEdible, IEdibleInBattle, IHasFlavor,IArchivable
 	{
+		public string ResourceId { get; set; }
 		public readonly List<IBuff<Role>> RoleBuffs = new();
 		public readonly List<IBuff<BattleRole>> BattleRoleBuffs = new();
 

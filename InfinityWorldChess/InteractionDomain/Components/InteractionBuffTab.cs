@@ -1,4 +1,5 @@
-﻿using InfinityWorldChess.RoleDomain;
+﻿using InfinityWorldChess.GlobalDomain;
+using InfinityWorldChess.RoleDomain;
 using InfinityWorldChess.Ugf;
 using Secyud.Ugf.TabComponents;
 using Secyud.Ugf.TableComponents;
@@ -24,7 +25,7 @@ namespace InfinityWorldChess.InteractionDomain
         {
             Role role = _service.InteractionRole;
 
-            BuffTable.AutoSetTable(role.IdBuffs.GetVisibleBuff());
+            BuffTable.AutoSetTable(role.Buffs.AllVisible());
             BodyPartEditor.Bind(role.BodyPart);
         }
     }

@@ -28,6 +28,8 @@ namespace InfinityWorldChess.BattleDomain
             }
 
             Bind(chess);
+            
+            RefreshState();
         }
     }
 }

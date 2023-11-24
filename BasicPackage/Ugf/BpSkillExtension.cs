@@ -1,6 +1,7 @@
 ﻿#region
 
 using InfinityWorldChess.BattleDomain;
+using InfinityWorldChess.BattleInteractionDomain;
 using InfinityWorldChess.RoleDomain;
 using InfinityWorldChess.SkillDomain;
 
@@ -10,24 +11,24 @@ namespace InfinityWorldChess.Ugf
 {
     public static class BpSkillExtension
     {
-        public static AttackRecordBuff GetOrAddAttack(this SkillInteraction interaction)
+        public static AttackRecordProperty GetOrAddAttack(this BattleInteraction interaction)
         {
-            return interaction.TypeBuff.GetOrInstall<AttackRecordBuff>();
+            return interaction.Properties.GetOrCreate<AttackRecordProperty>();
         }
 
-        public static AttackRecordBuff GetAttack(this SkillInteraction interaction)
+        public static AttackRecordProperty GetAttack(this BattleInteraction interaction)
         {
-            return interaction.TypeBuff.Get<AttackRecordBuff>();
+            return interaction.Properties.Get<AttackRecordProperty>();
         }
 
-        public static TreatRecordBuff GetOrAddTreat(this SkillInteraction interaction)
+        public static TreatRecordProperty GetOrAddTreat(this BattleInteraction interaction)
         {
-            return interaction.TypeBuff.GetOrInstall<TreatRecordBuff>();
+            return interaction.Properties.GetOrCreate<TreatRecordProperty>();
         }
 
-        public static TreatRecordBuff GetTreat(this SkillInteraction interaction)
+        public static TreatRecordProperty GetTreat(this BattleInteraction interaction)
         {
-            return interaction.TypeBuff.Get<TreatRecordBuff>();
+            return interaction.Properties.Get<TreatRecordProperty>();
         }
 
         public static bool FitWeapon(this IActiveSkill coreSkill, BattleRole chess)

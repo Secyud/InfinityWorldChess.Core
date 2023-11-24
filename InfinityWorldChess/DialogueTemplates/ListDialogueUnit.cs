@@ -1,44 +1,32 @@
 using System.Collections.Generic;
 using InfinityWorldChess.DialogueDomain;
+using InfinityWorldChess.FunctionDomain;
 using InfinityWorldChess.InteractionDomain;
 using InfinityWorldChess.RoleDomain;
-using InfinityWorldChess.Ugf;
 using Secyud.Ugf;
 using Secyud.Ugf.DataManager;
 
 namespace InfinityWorldChess.DialogueTemplates
 {
-    public class ListDialogueUnit : IDialogueUnit, IDialogueAction, IObjectAccessor<IDialogueUnit>
+    public class ListDialogueUnit : IDialogueUnit, IObjectAccessor<IDialogueUnit>, IActionable
     {
-        [field: S(1)] public IObjectAccessor<Role> RoleAccessor { get; set; }
-        [field: S(0)] public string Text { get; set; }
-        [field: S(2)] public List<DialogueTuple> List { get; } = new();
-        [field: S(3)] public ITrigger FinishDialogueAction { get; set; }
+        [field: S(1)] public List<IDialogueUnit> Dialogues { get; } = new();
+        [field: S(2)] public IActionable FinishDialogueAction { get; set; }
 
         private int _currentIndex = 0;
-        public IList<IDialogueAction> ActionList => null;
-        public IDialogueAction DefaultAction => this;
-
-        public string ActionText => null;
-
-        public bool VisibleFor(Role role)
-        {
-            return true;
-        }
+        private IDialogueUnit _currentDialogue;
+        public IList<DialogueOption> OptionList => null;
+        public IActionable DefaultAction => this;
+        public string Text => _currentDialogue?.Text;
+        public IObjectAccessor<Role> RoleAccessor => _currentDialogue?.RoleAccessor;
+        public IDialogueUnit Value => this;
 
         public void Invoke()
         {
-            if (_currentIndex < List.Count)
+            if (_currentIndex < Dialogues.Count)
             {
-                DialogueTuple tuple = List[_currentIndex];
-                DialogueUnit unit = new()
-                {
-                    Text = tuple.Text,
-                    DefaultAction = this,
-                    RoleAccessor = tuple.RoleAccessor ?? RoleAccessor
-                };
-
-                InteractionScope.Instance.DialogueService.Panel.SetInteraction(unit);
+                _currentDialogue = Dialogues[_currentIndex];
+                InteractionScope.Instance.DialogueService.Panel.SetInteraction(this);
                 _currentIndex++;
             }
             else
@@ -48,7 +36,5 @@ namespace InfinityWorldChess.DialogueTemplates
                 FinishDialogueAction?.Invoke();
             }
         }
-
-        public IDialogueUnit Value => this;
     }
 }

@@ -1,6 +1,8 @@
 using InfinityWorldChess.ActivityAccessors;
+using InfinityWorldChess.BuffDomain;
+using InfinityWorldChess.FunctionDomain;
+using InfinityWorldChess.GlobalDomain;
 using InfinityWorldChess.PlayerDomain;
-using InfinityWorldChess.Ugf;
 using Secyud.Ugf;
 using Secyud.Ugf.DataManager;
 
@@ -10,7 +12,7 @@ namespace InfinityWorldChess.NormalTriggers
     /// if you want to add activity to role,
     /// use this trigger.
     /// </summary>
-    public class AddActivityGroupToPlayer:ITrigger
+    public class AddActivityGroupToPlayer : IActionable
     {
         [field: S] private ResourceActivityGroup GroupAccessor { get; set; }
         

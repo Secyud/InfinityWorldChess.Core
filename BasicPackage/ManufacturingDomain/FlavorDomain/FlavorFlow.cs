@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using InfinityWorldChess.GameDomain;
 using InfinityWorldChess.ItemDomain;
+using InfinityWorldChess.RoleDomain;
 using InfinityWorldChess.Ugf;
 using Secyud.Ugf.LayoutComponents;
 using UnityEngine;
@@ -19,11 +20,15 @@ namespace InfinityWorldChess.ManufacturingDomain.FlavorDomain
         {
             if (!_checkActions.Values.All(u => u.Invoke()))
                 return;
-            IList<IItem> itemProvider = GetItemProvider();
+            
+            Role.ItemProperty itemProvider = GetItemProvider();
+            
             itemProvider.Add(GetFlavor());
 
             foreach (Action action in _clearActions.Values)
+            {
                 action.Invoke();
+            }
             
             "制造成功。".CreateTipFloatingOnCenter();
         }
@@ -69,7 +74,7 @@ namespace InfinityWorldChess.ManufacturingDomain.FlavorDomain
             _checkActions[index] = action;
         }
 
-        public virtual IList<IItem> GetItemProvider()
+        public virtual Role.ItemProperty GetItemProvider()
         {
             return GameScope.Instance.Player.Role.Item;
         }

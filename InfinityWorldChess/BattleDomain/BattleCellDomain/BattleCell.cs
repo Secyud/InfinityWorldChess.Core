@@ -27,7 +27,14 @@ namespace InfinityWorldChess.BattleDomain
 
         public List<BattleRole> Roles { get; } = new();
 
-        public Dictionary<int, IBuff<BattleCell>> CheckerBuffs { get; } = new();
+
+        private BuffCollection<BattleCell, IBattleCellBuff> _buffs;
+        public BuffCollection<BattleCell, IBattleCellBuff> Buffs => 
+            _buffs ??= new BuffCollection<BattleCell, IBattleCellBuff>(this);
+
+        private PropertyCollection<BattleCell, IBattleCellProperty> _properties;
+        public PropertyCollection<BattleCell, IBattleCellProperty> Properties => 
+            _properties ??= new PropertyCollection<BattleCell, IBattleCellProperty>(this);
 
         internal bool Releasable
         {

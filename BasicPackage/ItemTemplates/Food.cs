@@ -2,7 +2,6 @@
 
 using System.Collections.Generic;
 using InfinityWorldChess.BattleDomain;
-using InfinityWorldChess.BuffDomain;
 using InfinityWorldChess.ItemDomain;
 using InfinityWorldChess.ItemDomain.FoodDomain;
 using InfinityWorldChess.RoleDomain;
@@ -21,8 +20,8 @@ namespace InfinityWorldChess.ItemTemplates
         public readonly List<IBuff<BattleRole>> BattleRoleBuffs = new();
 
         public int Score { get; set; }
-
         public int SaveIndex { get; set; }
+        public string ResourceId { get; set; }
 
         protected override Food Target => this;
 
@@ -62,6 +61,5 @@ namespace InfinityWorldChess.ItemTemplates
             transform.AddMouthFeelInfo(this);
             transform.AddListShown("效果", Values);
         }
-
     }
 }

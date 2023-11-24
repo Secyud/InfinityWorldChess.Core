@@ -2,6 +2,7 @@
 using InfinityWorldChess.BattleDomain;
 using InfinityWorldChess.BattleFunctions;
 using InfinityWorldChess.DialogueDomain;
+using InfinityWorldChess.FunctionDomain;
 using InfinityWorldChess.RoleDomain;
 using InfinityWorldChess.Ugf;
 using Secyud.Ugf;
@@ -10,16 +11,18 @@ using UnityEngine;
 
 namespace InfinityWorldChess.ActivityTemplates
 {
-    public class BattleActivity : ActivityBase,IActivityTrigger, IDialogueAction
+    public class BattleActivity : ActivityBase,IActivityTrigger,IActionable
     {
         [field: S(4)] public IObjectAccessor<Role> RoleAccessor { get; set; }
         [field: S(4)] public IObjectAccessor<IBattleDescriptor> BattleAccessor { get; set; }
         [field: S(3)] public string ActionText { get; set; }
-        [field: S(5)] public BattleTrigger NextActivity { get; set; }
+        [field: S(5)] public BattleActionable NextActivity { get; set; }
 
         private RoleActivityDialogueProperty Property =>
-            RoleAccessor?.Value?.GetProperty<RoleActivityDialogueProperty>();
+            RoleAccessor?.Value?.Properties.Get<RoleActivityDialogueProperty>();
 
+
+        private DialogueOption _option;
 
         public override void SetContent(Transform transform)
         {
@@ -43,17 +46,23 @@ namespace InfinityWorldChess.ActivityTemplates
         
         public void StartActivity(ActivityGroup group, IActivity activity)
         {
-            Property?.AddAction(this);
+            if (_option is not null)
+            {
+                Property?.DialogueActions.Remove(_option);
+            }
+
+            _option = new DialogueOption
+            {
+                Actionable = this,
+                ShowText = ActionText
+            };
+            
+            Property?.DialogueActions.Add(_option);
         }
 
         public void FinishActivity(ActivityGroup group, IActivity activity)
         {
-            Property?.RemoveAction(this);
-        }
-
-        public bool VisibleFor(Role role)
-        {
-            return true;
+            Property?.DialogueActions.Remove(_option);
         }
 
         public void Invoke()

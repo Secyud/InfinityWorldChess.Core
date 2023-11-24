@@ -11,7 +11,7 @@ namespace InfinityWorldChess.ManufacturingDomain.WoodDomain
         protected override IList<IItem> GetSelectList()
         {
             return GameScope.Instance.Player.Role
-                .Item
+                .Item.All()
                 .Where(u => u is WoodEquipmentRaw)
                 .ToList();
         }

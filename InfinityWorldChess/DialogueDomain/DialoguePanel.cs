@@ -2,6 +2,7 @@
 
 using System.Collections.Generic;
 using System.Ugf.Collections.Generic;
+using InfinityWorldChess.FunctionDomain;
 using InfinityWorldChess.InteractionDomain;
 using InfinityWorldChess.RoleDomain;
 using InfinityWorldChess.Ugf;
@@ -39,11 +40,11 @@ namespace InfinityWorldChess.DialogueDomain
                 SetCurrentRole(unit.RoleAccessor?.Value);
                 SayingText.Invoke(unit.Text);
                 SetDefaultAction(unit.DefaultAction);
-                SetActionList(unit.ActionList);
+                SetActionList(unit.OptionList);
             }
         }
 
-        private void SetDefaultAction(IDialogueAction action)
+        private void SetDefaultAction(IActionable action)
         {
             NextButton.Clear();
             NextButton.Bind(action is null ? Die : action.Invoke);
@@ -54,7 +55,7 @@ namespace InfinityWorldChess.DialogueDomain
             Destroy(gameObject);
         }
 
-        private void SetActionList(IList<IDialogueAction> actions)
+        private void SetActionList(IList<DialogueOption> actions)
         {
             if (actions.IsNullOrEmpty())
             {
@@ -67,9 +68,9 @@ namespace InfinityWorldChess.DialogueDomain
 
                 for (int index = 0; index < actions.Count; index++)
                 {
-                    IDialogueAction action = actions[index];
+                    DialogueOption action = actions[index];
                     SelectOptionCell cell = SelectPrefab.Instantiate(content);
-                    cell.OnInitialize(index, action.Invoke, action.ActionText);
+                    cell.OnInitialize(index, action.Invoke, action.ShowText);
                 }
             }
         }
