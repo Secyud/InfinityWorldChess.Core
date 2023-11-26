@@ -14,7 +14,7 @@ namespace InfinityWorldChess
         public const int FormSkillStateCount = 3;
         public const int FormSkillTypeCount = 3;
         public const int FormSkillCount = FormSkillStateCount * FormSkillTypeCount;
-        public const int EquipmentPropertyCount = 4;
+        
         public const int MaxOverloadedCount = 99999;
 
         public const int MaxChessResourceLevel = 5;

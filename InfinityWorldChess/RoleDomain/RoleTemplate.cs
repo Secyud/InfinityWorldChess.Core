@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using InfinityWorldChess.BuffDomain;
 using InfinityWorldChess.ItemDomain;
 using InfinityWorldChess.ItemDomain.EquipmentDomain;
 using InfinityWorldChess.SkillDomain;
@@ -52,9 +51,7 @@ namespace InfinityWorldChess.RoleDomain
 
         [field: S(17)] public List<IObjectAccessor<IItem>> Items { get; } = new();
 
-        [field: S(18)]
-        public IObjectAccessor<IEquipment>[] Equipments { get; } =
-            new IObjectAccessor<IEquipment>[SharedConsts.MaxBodyPartsCount];
+        [field: S(18)] public IObjectAccessor<IEquipment> Equipment { get; set; } 
 
         // 认知
         [field: S(19)] public float Recognize { get; set; }
@@ -201,14 +198,7 @@ namespace InfinityWorldChess.RoleDomain
                 role.Item.Add(accessor.Value);
             }
 
-            for (int i = 0; i < Equipments.Length; i++)
-            {
-                var equipmentAccessor = Equipments[i];
-                IEquipment equipment = equipmentAccessor?.Value;
-                if (equipment is null)continue;
-                role.Item.Add(equipment);
-                role.Equipment[(byte)i, role] = equipment;
-            }
+            role.SetEquipment(Equipment?.Value);
 
             foreach (IObjectAccessor<IRoleProperty> extraProperty in ExtraProperties)
             {

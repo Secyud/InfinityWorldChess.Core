@@ -2,6 +2,7 @@
 
 using Secyud.Ugf.BasicComponents;
 using System;
+using InfinityWorldChess.BuffDomain;
 using UnityEngine;
 
 #endregion
@@ -13,29 +14,31 @@ namespace InfinityWorldChess.ItemDomain.EquipmentDomain
 		[SerializeField] private SImage[] Cells;
 
 
-		public void OnInitialize(int[] property)
+		public void OnInitialize(IAttachProperty property)
 		{
 			if (property is null)
 				return;
 
-			for (int i = 0; i < SharedConsts.EquipmentPropertyCount; i++)
-				Cells[i].color = IntToColor(property[i]);
+			
+			Cells[0].color = IntToColor(property.Living);
+			Cells[1].color = IntToColor(property.Kiling);
+			Cells[2].color = IntToColor(property.Nimble);
+			Cells[3].color = IntToColor(property.Defend);
 		}
 
 		private const float LOG = 2.6859453246115805f;
 
 		private static readonly Color[] Colors =
 		{
-			new(0.5f, 0.5f, 0.5f), new(1, 1, 1),
-			new(0, 1, 0), new(0, 1, 1),
-			new(0, 0, 1), new(1, 0, 1),
-			new(1, 0, 0), new(1, 1, 0),
-			new(0, 0, 0)
+			 new(1, 1, 1), new(0, 1, 0),
+			 new(0, 1, 1), new(0, 0, 1),
+			 new(1, 0, 1), new(1, 0, 0),
+			 new(1, 1, 0), new(0, 0, 0)
 		};
 
-		private static Color IntToColor(int i)
+		private static Color IntToColor(byte i)
 		{
-			float scaled = (float)Math.Log(Math.Max(1, i)) / LOG;
+			float scaled = i / 37.0f;
 			Color color0 = Colors[(int)scaled];
 			Color color1 = Colors[(int)scaled + 1];
 			float fraction = scaled - (int)scaled;

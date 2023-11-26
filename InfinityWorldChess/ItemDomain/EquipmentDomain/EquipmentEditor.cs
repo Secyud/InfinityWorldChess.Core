@@ -1,7 +1,11 @@
 #region
 
+using System.Linq;
+using InfinityWorldChess.GlobalDomain;
 using InfinityWorldChess.RoleDomain;
+using InfinityWorldChess.Ugf;
 using Secyud.Ugf.EditorComponents;
+using UnityEngine;
 
 #endregion
 
@@ -9,32 +13,44 @@ namespace InfinityWorldChess.ItemDomain.EquipmentDomain
 {
     public class EquipmentEditor : EditorBase<Role>
     {
-        private EquipmentCell[] _equipmentCells;
-
-        private void Awake()
-        {
-            _equipmentCells = new EquipmentCell[SharedConsts.MaxBodyPartsCount];
-        }
-
-        public void SetCell(EquipmentCell cell)
-        {
-            _equipmentCells[cell.CellIndex] = cell;
-        }
+        [SerializeField] private ShownCell Cell;
 
         protected override void InitData()
         {
-            foreach (EquipmentCell c in _equipmentCells)
-            {
-                c.BindEquipment(Property.Equipment[c.Index]);
-            }
+            Cell.BindShowable(Property.Equipment.Get());
         }
 
         protected override void ClearUi()
         {
-            foreach (EquipmentCell c in _equipmentCells)
+            Cell.BindShowable(null);
+        }
+
+        public void OnEquipmentCellClick()
+        {
+            if (Property.Equipment.Get() is null)
             {
-                c.BindEquipment(null);
+                GlobalScope.Instance.OpenSelect().AutoSetSingleSelectTable
+                    <IItem, ItemSorters, ItemFilters>(
+                        Property.Item.All().Where(ValidEquipment).ToList(),
+                        SetEquipment
+                    );
             }
+            else
+            {
+                SetEquipment(null);
+            }
+        }
+
+        private bool ValidEquipment(IItem arg)
+        {
+            return arg is IEquipment;
+        }
+
+        private void SetEquipment(IItem item)
+        {
+            IEquipment equipment = item as IEquipment;
+            Property.SetEquipment(equipment);
+            Cell.BindShowable(equipment);
         }
     }
 }

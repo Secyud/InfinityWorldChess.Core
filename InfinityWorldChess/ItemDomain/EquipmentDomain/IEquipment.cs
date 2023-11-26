@@ -8,13 +8,10 @@ using InfinityWorldChess.RoleDomain;
 
 namespace InfinityWorldChess.ItemDomain.EquipmentDomain
 {
-	public interface IEquipment : IItem, IEquippable<Role>
+	public interface IEquipment : IItem, IEquippable<Role>,IAttachProperty
 	{
-		public int Antique { get; set; }
-
 		public byte TypeCode { get; }
+		
 		public byte Location { get; }
-
-		public int[] Property { get; }
 	}
 }

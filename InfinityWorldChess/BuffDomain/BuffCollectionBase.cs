@@ -81,7 +81,7 @@ namespace InfinityWorldChess.BuffDomain
             List<TBuff> buffs = InnerDictionary
                 .Values
                 .Where(b => b is IArchivable)
-                .Where(b=> b is not ILimitable waste || waste.CheckUseful())
+                .Where(b=> b is not ILimitable limitable || limitable.CheckUseful())
                 .ToList();
 
             writer.Write(buffs.Count);

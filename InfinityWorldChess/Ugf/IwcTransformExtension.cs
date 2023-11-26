@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Ugf;
 using System.Ugf.Collections.Generic;
+using InfinityWorldChess.BuffDomain;
 using TMPro;
 using UnityEngine;
 
@@ -75,7 +76,7 @@ namespace InfinityWorldChess.Ugf
             }
         }
 
-        public static void AddShapeProperty(this Transform transform, int[] property, string title = "形状")
+        public static void AddShapeProperty(this Transform transform, IAttachProperty property, string title = "形状")
         {
             transform.AddTitle3(title);
             PropertyRect e = IwcAssets.Instance.PropertyRect.Instantiate(transform);
@@ -130,8 +131,6 @@ namespace InfinityWorldChess.Ugf
         {
             transform.AddTitle3("详情");
 
-            transform.AddParagraph($"古董: {equipment.Antique}".Point());
-
             string text = ("位置: " +
                            (equipment.Location % 4) switch
                            {
@@ -156,8 +155,6 @@ namespace InfinityWorldChess.Ugf
             text += (equipment.TypeCode & 0b10) > 0 ? " 远程" : " 近战";
             text += (equipment.TypeCode & 0b1) > 0 ? " 变体" : " 普通";
             transform.AddParagraph(text);
-
-            transform.AddShapeProperty(equipment.Property);
         }
 
         public static void AddCoreSkillInfo(this Transform content, ICoreSkill coreSkill)

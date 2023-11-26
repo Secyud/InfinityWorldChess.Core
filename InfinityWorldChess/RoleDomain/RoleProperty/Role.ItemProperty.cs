@@ -102,6 +102,10 @@ namespace InfinityWorldChess.RoleDomain
                             _oItems.Remove(item.ResourceId);
                         }
                     }
+                    else
+                    {
+                        return false;
+                    }
                 }
                 else
                 {
