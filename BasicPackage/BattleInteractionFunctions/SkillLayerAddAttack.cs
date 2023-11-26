@@ -8,7 +8,7 @@ using Secyud.Ugf;
 using Secyud.Ugf.DataManager;
 using UnityEngine;
 
-namespace InfinityWorldChess.BattleRoleFunctions
+namespace InfinityWorldChess.BattleInteractionFunctions
 {
     public class SkillLayerAddAttack : IActionable<BattleInteraction>, IHasContent,IHasPriority
     {

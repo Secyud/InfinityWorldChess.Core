@@ -1,80 +1,83 @@
 #region
 
 using System.Collections.Generic;
-using InfinityWorldChess.BattleDomain;
+using InfinityWorldChess.BuffDomain;
+using InfinityWorldChess.FunctionDomain;
 using InfinityWorldChess.ItemDomain.EquipmentDomain;
 using InfinityWorldChess.RoleDomain;
 using InfinityWorldChess.Ugf;
 using Secyud.Ugf.Archiving;
+using Secyud.Ugf.DataManager;
 using UnityEngine;
 
 #endregion
 
 namespace InfinityWorldChess.ItemTemplates
 {
-    public class Equipment : CustomizableItem<Equipment>, IEquipment, IArchivable
+    public class Equipment : Item, IEquipment,IAttachProperty
     {
-
-        public readonly List<IBuff<Role>> RoleBuff = new();
-        public readonly List<IBuff<BattleRole>> BattleRoleBuff = new();
-
-        public string ResourceId { get; set; }
-        public int Antique { get; set; }
-        public int Score { get; set; }
-        public byte TypeCode { get; set; }
-        public byte Location { get; set; }
-        public int[] Property { get; } = new int[SharedConsts.EquipmentPropertyCount];
-        public int SaveIndex { get; set; }
-
+        [field:S(64)]public  List<IEquippable<Role>> Effects { get; } = new();
+        [field:S(5)]public byte TypeCode { get; set; }
+        [field:S(5)]public byte Location { get; set; }
+        [field:S(6)]public byte Living { get; set; }
+        [field:S(6)]public byte Kiling { get; set; }
+        [field:S(6)]public byte Nimble { get; set; }
+        [field:S(6)]public byte Defend { get; set; }
+        
         public void Install(Role role)
         {
-            foreach (IBuff<Role> buff in RoleBuff)
+            foreach (IEquippable<Role> equippable in Effects)
             {
-                buff.Install(role);
+                this.Attach(equippable);
+                equippable.Install(role);
             }
         }
 
         public void UnInstall(Role role)
         {
-            foreach (IBuff<Role> buff in RoleBuff)
+            foreach (IEquippable<Role> equippable in Effects)
             {
-                buff.UnInstall(role);
+                equippable.UnInstall(role);
             }
         }
 
-        public void InitBattle(BattleRole role)
-        {
-            foreach (IBuff<BattleRole> buff in BattleRoleBuff)
-                buff.UnInstall(role);
-        }
-
-        protected override Equipment Target => this;
-
-        public override void Save(IArchiveWriter writer)
-        {
-            writer.Write(Antique);
-            writer.Write(TypeCode);
-            writer.Write(Location);
-            for (int i = 0; i < SharedConsts.EquipmentPropertyCount; i++)
-                writer.Write(Property[i]);
-            base.Save(writer);
-        }
-
-        public override void Load(IArchiveReader reader)
-        {
-            Antique = reader.ReadInt32();
-            TypeCode = reader.ReadByte();
-            Location = reader.ReadByte();
-            for (int i = 0; i < SharedConsts.EquipmentPropertyCount; i++)
-                Property[i] = reader.ReadInt32();
-            base.Load(reader);
-        }
-
-        public void SetContent(Transform transform)
+        public override void SetContent(Transform transform)
         {
             transform.AddItemHeader(this);
             transform.AddEquipmentProperty(this);
-            transform.AddListShown("装备特效", Values);
+            SetEffectContent(transform);
         }
+        protected void SetEffectContent(Transform transform)
+        {
+            transform.AddTitle2("装备效果：");
+            
+            foreach (IEquippable<Role> equippable in Effects)
+            {
+                equippable.TrySetContent(transform);
+            }
+        }
+
+        
+
+        protected void SaveEffects(IArchiveWriter writer)
+        {
+            writer.Write(Effects.Count);
+            foreach (IEquippable<Role> actionable in Effects)
+            {
+                writer.WriteObject(actionable);
+            }
+        }
+
+        protected void LoadEffects(IArchiveReader reader)
+        {
+            Effects.Clear();
+
+            int count = reader.ReadInt32();
+            for (int i = 0; i < count; i++)
+            {
+                Effects.Add(reader.ReadObject<IEquippable<Role>>());
+            }
+        }
+        
     }
 }

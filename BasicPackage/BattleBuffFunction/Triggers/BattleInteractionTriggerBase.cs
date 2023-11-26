@@ -15,9 +15,18 @@ namespace InfinityWorldChess.BattleBuffFunction
     public abstract class BattleInteractionTriggerBase : IBuffEffect, IPropertyAttached,
         IActionable<BattleInteraction>, IHasContent, ITriggerable
     {
+        private IAttachProperty _property;
         [field: S] public byte InteractionType { get; set; }
 
-        public IAttachProperty Property { get; set; }
+        public IAttachProperty Property
+        {
+            get => _property;
+            set
+            {
+                _property = value;
+                Attached(_property);
+            }
+        }
 
         protected HashSet<IActionable<BattleInteraction>> Container { get; set; }
 
@@ -26,6 +35,11 @@ namespace InfinityWorldChess.BattleBuffFunction
         public virtual void Invoke(BattleInteraction interaction)
         {
             ExtraActions?.Invoke();
+        }
+
+        public virtual void Attached(IAttachProperty property)
+        {
+            
         }
 
         public virtual void Install(BattleRole target)

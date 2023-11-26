@@ -8,7 +8,7 @@ using Secyud.Ugf.HexMap;
 using Secyud.Ugf.HexUtilities;
 using UnityEngine;
 
-namespace InfinityWorldChess.BattleRoleFunctions
+namespace InfinityWorldChess.BattleInteractionFunctions
 {
     /// <summary>
     /// 击退一格，若失败，则再攻击一次

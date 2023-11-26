@@ -5,7 +5,7 @@ using InfinityWorldChess.Ugf;
 using Secyud.Ugf.DataManager;
 using UnityEngine;
 
-namespace InfinityWorldChess.BattleRoleFunctions
+namespace InfinityWorldChess.BattleInteractionFunctions
 {
     /// <summary>
     /// all treat skill should add treat action to interaction

@@ -2,7 +2,7 @@
 
 using InfinityWorldChess.ItemDomain.EquipmentDomain;
 using InfinityWorldChess.ItemTemplates;
-using InfinityWorldChess.ManufacturingDomain;
+using InfinityWorldChess.ManufacturingDomain.Equipments;
 using Secyud.Ugf.TableComponents.SorterComponents;
 
 #endregion
@@ -15,11 +15,11 @@ namespace InfinityWorldChess.ItemDomain
 		{
 			return target switch
 			{
-				IEquipment => 1,
-				Food => 2,
-				Drag => 3,
-				SkillBook => 4,
-				Manufacturable => 5,
+				Equipment => 1,
+				Consumable => 2,
+				ReadableItem => 4,
+				EquipmentMaterial => 5,
+				EquipmentBlueprint => 6,
 				_ => 0
 			};
 		}

@@ -2,9 +2,9 @@
 
 using InfinityWorldChess.ItemDomain.EquipmentDomain;
 using InfinityWorldChess.ItemDomain.FoodDomain;
-using InfinityWorldChess.ManufacturingDomain;
 using System;
 using InfinityWorldChess.ItemTemplates;
+using InfinityWorldChess.ManufacturingDomain.Equipments;
 using Secyud.Ugf.TableComponents.FilterComponents;
 
 #endregion
@@ -35,8 +35,9 @@ namespace InfinityWorldChess.ItemDomain
 				{
 					new ItemFilterToggleType<IEquipment>(),
 					new ItemFilterToggleType<IEdible>(),
-					new ItemFilterToggleType<SkillBook>(),
-					new ItemFilterToggleType<Manufacturable>(),
+					new ItemFilterToggleType<ReadableItem>(),
+					new ItemFilterToggleType<EquipmentMaterial>(),
+					new ItemFilterToggleType<EquipmentBlueprint>(),
 				}
 			};
 		}

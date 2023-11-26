@@ -6,7 +6,7 @@ using Secyud.Ugf;
 using Secyud.Ugf.HexMap;
 using UnityEngine;
 
-namespace InfinityWorldChess.BattleRoleFunctions
+namespace InfinityWorldChess.BattleInteractionFunctions
 {
     /// <summary>
     /// run an attack.

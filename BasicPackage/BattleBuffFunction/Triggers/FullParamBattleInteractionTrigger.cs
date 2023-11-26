@@ -12,14 +12,17 @@ namespace InfinityWorldChess.BattleBuffFunction
         
         public override void Invoke(BattleInteraction interaction)
         {
-            Property.Attach(Limit);
-            Property.Attach(Actionable);
-            
             if (Limit is null || Limit.CheckUseful(interaction))
             {
                 Actionable?.Invoke(interaction);
                 base.Invoke(interaction);
             }
+        }
+
+        public override void Attached(IAttachProperty property)
+        {
+            Property.Attach(Limit);
+            Property.Attach(Actionable);
         }
     }
 }

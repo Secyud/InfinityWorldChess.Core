@@ -33,7 +33,7 @@ namespace InfinityWorldChess.Ugf
 
         public static bool FitWeapon(this IActiveSkill coreSkill, BattleRole chess)
         {
-            byte tc = chess.Role.Equipment[BodyType.Kiling]?.TypeCode ?? 0;
+            byte tc = chess.Role.Equipment.Get()?.TypeCode ?? 0;
             return ((tc ^ coreSkill.ConditionCode) & coreSkill.ConditionMask) == 0;
         }
     }
