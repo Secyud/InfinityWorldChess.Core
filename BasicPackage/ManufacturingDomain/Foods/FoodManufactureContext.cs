@@ -1,3 +1,4 @@
+using InfinityWorldChess.ManufacturingDomain.Drags;
 using Secyud.Ugf.DependencyInjection;
 using Secyud.Ugf.ObserverComponents;
 
@@ -46,19 +47,19 @@ namespace InfinityWorldChess.ManufacturingDomain.Foods
 
         public ObservedService SelectedBlueprintService { get; } = new();
         
-        private FoodProcessContainer[] _processes;
+        private DragMaterialContainer[] _dragMaterials;
 
-        public FoodProcessContainer[] Processes
+        public DragMaterialContainer[] DragMaterials
         {
-            get => _processes;
+            get => _dragMaterials;
             set
             {
-                if (_processes == value)
+                if (_dragMaterials == value)
                 {
                     return;
                 }
 
-                _processes = value;
+                _dragMaterials = value;
 
                 ProcessesService.Refresh();
             }

@@ -11,46 +11,45 @@ using Secyud.Ugf.Archiving;
 
 namespace InfinityWorldChess.ManufacturingDomain.Foods
 {
-	public class FoodManufacturingProperty : IRoleProperty, IArchivable,ILimitable
-	{
-		public List<FoodProcess> LearnedProcesses { get; } = new();
+    public sealed class FoodManufacturingProperty : IRoleProperty, IArchivable, ILimitable
+    {
+        public List<FoodBlueprint> LearnedBlueprints { get; } = new();
 
-		public virtual void Save(IArchiveWriter writer)
-		{
-			writer.Write(LearnedProcesses.Count);
-			foreach (FoodProcess process in LearnedProcesses)
-			{
-				writer.WriteObject(process);
-			}
-		}
+        public void Save(IArchiveWriter writer)
+        {
+            writer.Write(LearnedBlueprints.Count);
+            foreach (FoodBlueprint blueprint in LearnedBlueprints)
+            {
+                writer.WriteObject(blueprint);
+            }
+        }
 
-		public virtual void Load(IArchiveReader reader)
-		{
-			int count = reader.ReadInt32();
-			for (int i = 0; i < count; i++)
-			{
-				LearnedProcesses.Add(reader.ReadObject<FoodProcess>());
-			}
-		}
-		
-		public bool CheckUseful()
-		{
-			return LearnedProcesses.Any();
-		}
+        public void Load(IArchiveReader reader)
+        {
+            int count = reader.ReadInt32();
+            for (int i = 0; i < count; i++)
+            {
+                LearnedBlueprints.Add(reader.ReadObject<FoodBlueprint>());
+            }
+        }
 
-		public void Install(Role target)
-		{
-			
-		}
+        public bool CheckUseful()
+        {
+            return LearnedBlueprints.Any();
+        }
 
-		public void UnInstall(Role target)
-		{
-		}
+        public void Install(Role target)
+        {
+        }
 
-		public void Overlay(IOverlayable<Role> otherOverlayable)
-		{
-		}
+        public void UnInstall(Role target)
+        {
+        }
 
-		public Type Id => typeof(FoodManufacturingProperty);
-	}
+        public void Overlay(IOverlayable<Role> otherOverlayable)
+        {
+        }
+
+        public Type Id => typeof(FoodManufacturingProperty);
+    }
 }

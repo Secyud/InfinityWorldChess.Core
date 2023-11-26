@@ -52,7 +52,7 @@ namespace InfinityWorldChess.Ugf
 			_ensurePopupInstance.InitializeOnCenter();
 			_ensurePopupInstance.GetComponent<Ensure>().EnsureAction += ensureAction;
 			RectTransform ret = _ensurePopupInstance.PrepareLayout();
-			ret.AddTitle1(tips);
+			ret.AddParagraph(tips);
 			return ret;
 		}
 

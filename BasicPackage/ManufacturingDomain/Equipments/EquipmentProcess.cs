@@ -26,7 +26,7 @@ namespace InfinityWorldChess.ManufacturingDomain.Equipments
         public void Process(CustomEquipment equipment, EquipmentMaterial material)
         {
             material.Attach(Effect);
-            Effect.Invoke(equipment);
+            Effect?.Invoke(equipment);
         }
 
         public void Save(IArchiveWriter writer)

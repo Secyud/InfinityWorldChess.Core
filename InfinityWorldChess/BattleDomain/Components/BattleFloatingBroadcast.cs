@@ -45,7 +45,7 @@ namespace InfinityWorldChess.BattleDomain
         public void AddBroadcast(IActiveSkill skill)
         {
             Transform f = Instantiate(FloatingTemplate, Trigger.PrepareLayout());
-            f.AddTitle1(skill.Name);
+            f.AddTitle2(skill.Name);
             _transforms.AddLast(new Tuple<Transform, float>(f, _timeRecord + ShowTime));
         }
     }

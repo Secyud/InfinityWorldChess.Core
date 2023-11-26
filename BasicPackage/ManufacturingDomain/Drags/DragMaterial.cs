@@ -22,13 +22,19 @@ namespace InfinityWorldChess.ManufacturingDomain.Drags
         [field: S(7)] public byte Length { get; set; }
 
         [field: S(31)] public IObjectAccessor<Sprite> Cell { get; set; }
-        [field: S(33)] public IActionable<CustomDrag> Effect { get; set; }
-        public int Quantity { get; set; }
+        [field: S(33)] public IActionable<CustomDrag> DragEffect { get; set; }
+        [field: S(33)] public IActionable<CustomFood> FoodEffect { get; set; }
+        public int Quantity { get; set; } = 1;
 
-        public void Process(CustomDrag drag)
+        public void ProcessDrag(CustomDrag drag)
         {
-            this.Attach(Effect);
-            Effect.Invoke(drag);
+            this.Attach(FoodEffect);
+            DragEffect?.Invoke(drag);
+        }
+        public void ProcessFood(CustomFood food)
+        {
+            this.Attach(FoodEffect);
+            FoodEffect?.Invoke(food);
         }
 
         public override void SetContent(Transform transform)
@@ -36,6 +42,8 @@ namespace InfinityWorldChess.ManufacturingDomain.Drags
             base.SetContent(transform);
             transform.AddParagraph($"占用格数：{Length}");
             transform.AddShapeProperty(this);
+            DragEffect.TrySetContent(transform);
+            FoodEffect.TrySetContent(transform);
         }
     }
 }

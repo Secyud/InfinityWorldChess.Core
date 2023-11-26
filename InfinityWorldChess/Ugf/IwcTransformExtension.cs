@@ -52,7 +52,7 @@ namespace InfinityWorldChess.Ugf
 
         public static void AddSimpleShown(this Transform transform, IShowable shown)
         {
-            transform.AddTitle1(shown.Name);
+            transform.AddTitle2(shown.Name);
             if (shown.Description.IsNullOrEmpty())
                 return;
 
@@ -66,7 +66,7 @@ namespace InfinityWorldChess.Ugf
             if (result is null || !result.Any())
                 return;
 
-            transform.AddTitle2(title);
+            transform.AddTitle3(title);
             foreach (string str in result.Select(
                          item =>
                              $"<size=18><color=#202000ff><b>【{U.T.Translate(item.Name)}】</b> {U.T.Translate(item.Description)}</color></size>"

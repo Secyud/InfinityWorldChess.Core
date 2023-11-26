@@ -76,6 +76,9 @@ namespace InfinityWorldChess.ManufacturingDomain.Drags
                     player.Item.Remove(counter);
                 }
 
+                _selectedMaterial = null;
+                Material.BindShowable(null);
+
                 player.Item.Add(drag);
 
                 tip = "成功打造装备!";
@@ -259,7 +262,7 @@ namespace InfinityWorldChess.ManufacturingDomain.Drags
 
             foreach (DragMaterialContainer container in _context.Materials)
             {
-                container?.Material?.Process(customDrag);
+                container?.Material?.ProcessDrag(customDrag);
             }
 
             return customDrag;
