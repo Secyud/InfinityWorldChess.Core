@@ -1,38 +1,38 @@
 namespace InfinityWorldChess.ManufacturingDomain.Drags
 {
-    public class DragProcessContainer
+    public class DragMaterialContainer
     {
         public byte Position { get;}
         public bool Occupied { get; set; }
         // position
-        public byte ProcessP { get; set; }
+        public byte MaterialP { get; set; }
         // length
-        public byte ProcessL { get; set; }
-        public DragProcess Process { get; set; }
+        public byte MaterialL { get; set; }
+        public DragMaterial Material { get; set; }
 
-        public DragProcessContainer(byte position)
+        public DragMaterialContainer(byte position)
         {
             Position = position;
         }
 
-        public void SetProcess(DragProcess process, byte startPosition)
+        public void SetProcess(DragMaterial process, byte startPosition)
         {
             if (startPosition == Position)
             {
-                Process = process;
+                Material = process;
             }
 
             if (process is null)
             {
-                ProcessL = 0;
-                ProcessP = 0;
+                MaterialL = 0;
+                MaterialP = 0;
                 Occupied = false;
             }
             else
             {
                 
-                ProcessL = process.Length;
-                ProcessP = startPosition;
+                MaterialL = process.Length;
+                MaterialP = startPosition;
                 Occupied = true;
             }
         }

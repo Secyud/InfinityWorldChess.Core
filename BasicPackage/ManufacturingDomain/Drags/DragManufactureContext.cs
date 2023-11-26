@@ -6,26 +6,6 @@ namespace InfinityWorldChess.ManufacturingDomain.Drags
     [Registry(DependScope = typeof(DragManufactureScope))]
     public class DragManufactureContext:IRegistry
     {
-        private DragMaterial _selectedMaterial;
-
-        public DragMaterial SelectedMaterial
-        {
-            get => _selectedMaterial;
-            set
-            {
-                if (_selectedMaterial == value)
-                {
-                    return;
-                }
-
-                _selectedMaterial = value;
-
-                SelectedMaterialService.Refresh();
-            }
-        }
-
-        public ObservedService SelectedMaterialService { get; } = new();
-        
         private DragBlueprint _selectedBlueprint;
 
         public DragBlueprint SelectedBlueprint
@@ -46,19 +26,19 @@ namespace InfinityWorldChess.ManufacturingDomain.Drags
 
         public ObservedService SelectedBlueprintService { get; } = new();
         
-        private DragProcessContainer[] _processes;
+        private DragMaterialContainer[] _materials;
 
-        public DragProcessContainer[] Processes
+        public DragMaterialContainer[] Materials
         {
-            get => _processes;
+            get => _materials;
             set
             {
-                if (_processes == value)
+                if (_materials == value)
                 {
                     return;
                 }
 
-                _processes = value;
+                _materials = value;
 
                 ProcessesService.Refresh();
             }
@@ -66,6 +46,5 @@ namespace InfinityWorldChess.ManufacturingDomain.Drags
         public ObservedService ProcessesService { get; } = new();
 
         public bool IsForging { get; internal set; } = false;
-
     }
 }

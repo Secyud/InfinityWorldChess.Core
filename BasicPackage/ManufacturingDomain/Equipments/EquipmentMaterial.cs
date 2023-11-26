@@ -25,6 +25,7 @@ namespace InfinityWorldChess.ManufacturingDomain.Equipments
         {
             base.SetContent(transform);
             transform.AddShapeProperty(this);
+            transform.AddParagraph($"拥有格数{Length}");
         }
 
         public void StartEquipmentManufacturing(CustomEquipment equipment)
@@ -37,5 +38,7 @@ namespace InfinityWorldChess.ManufacturingDomain.Equipments
             this.Attach(FinishEffects);
             FinishEffects?.Invoke(equipment);
         }
+        
+        
     }
 }

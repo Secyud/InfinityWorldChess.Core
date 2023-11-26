@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Ugf.Collections.Generic;
-using InfinityWorldChess.BuffDomain;
 using InfinityWorldChess.GameDomain;
 using InfinityWorldChess.GlobalDomain;
 using InfinityWorldChess.ItemDomain;
@@ -24,12 +23,24 @@ namespace InfinityWorldChess.ManufacturingDomain.Equipments
         [SerializeField] private ManufacturingCell CellTemplate;
 
         private EquipmentProcess _selectedProcess;
-        private List<EquipmentProcess> _processes;
-        
+        private EquipmentManufacturingProperty _property;
+
+        public EquipmentManufacturingProperty Property
+        {
+            get
+            {
+                return _property ??= GameScope.Instance.Player.Role.Properties
+                                         .Get<EquipmentManufacturingProperty>() ??
+                                     new EquipmentManufacturingProperty();
+            }
+            set => _property = value;
+        }
+
         private void Awake()
         {
             _context = EquipmentManufactureScope.Instance.Context;
         }
+
         public void ShowEquipmentMessage()
         {
             string tip = CheckGenerateAccessible();
@@ -44,6 +55,7 @@ namespace InfinityWorldChess.ManufacturingDomain.Equipments
                 tip.CreateTipFloatingOnCenter();
             }
         }
+
         public void ForgeAndArchiveEquipment()
         {
             string tip = CheckGenerateAccessible();
@@ -55,9 +67,7 @@ namespace InfinityWorldChess.ManufacturingDomain.Equipments
                 CustomEquipment equipment = GenerateEquipment();
                 _context.IsForging = false;
                 player.Item.Remove(_context.SelectedMaterial, 1);
-                _context.SelectedMaterial = null;
-                player.Item.Remove(_context.SelectedBlueprint, 1);
-                _context.SelectedBlueprint = null;
+                SelectMaterial(null);
                 player.Item.Add(equipment);
 
                 tip = "成功打造装备!";
@@ -65,6 +75,7 @@ namespace InfinityWorldChess.ManufacturingDomain.Equipments
 
             tip.CreateTipFloatingOnCenter();
         }
+
         public void SelectMaterialClick()
         {
             IList<IItem> items = GameScope.Instance.Player.Role.Item.All();
@@ -76,102 +87,90 @@ namespace InfinityWorldChess.ManufacturingDomain.Equipments
                         EquipmentMaterialFilters>
                     (materials, SelectMaterial);
         }
+
         private void SelectMaterial(EquipmentMaterial material)
         {
             _context.SelectedMaterial = material;
             Material.BindShowable(material);
 
-            if (material is null)
+            int length = material?.Length ?? 0;
+            int count = CellContent.RectTransform.childCount;
+
+            if (count == length) return;
+
+            EquipmentProcessContainer[] containers = new EquipmentProcessContainer[length];
+
+            if (count < length)
             {
-                _context.Processes = null;
+                for (int i = 0; i < count; i++)
+                {
+                    containers[i] = _context.Processes[i];
+                }
+
+                for (int i = count; i < length; i++)
+                {
+                    containers[i] = new EquipmentProcessContainer((byte)i);
+                    ManufacturingCell cell = CellTemplate.Instantiate(CellContent.RectTransform);
+                    cell.CellIndex = i;
+                    cell.Operation = this;
+                }
             }
             else
             {
-                int count = CellContent.RectTransform.childCount;
-
-                if (count == material.Length)
+                for (int i = 0; i < length; i++)
                 {
-                    return;
+                    containers[i] = _context.Processes[i];
                 }
 
-                EquipmentProcessContainer[] containers = new EquipmentProcessContainer[material.Length];
-
-                if (count < material.Length)
+                for (int i = length; i < count; i++)
                 {
-                    for (int i = 0; i < count; i++)
-                    {
-                        containers[i] = _context.Processes[i];
-                    }
-
-                    for (int i = count; i < material.Length; i++)
-                    {
-                        containers[i] = new EquipmentProcessContainer((byte)i);
-                        ManufacturingCell cell = CellTemplate.Instantiate(CellContent.RectTransform);
-                        cell.CellIndex = i;
-                        cell.Operation = this;
-                    }
+                    Transform trans = CellContent.RectTransform.GetChild(i);
+                    Destroy(trans.gameObject);
                 }
-                else
-                { 
-                    for (int i = 0; i < material.Length; i++)
-                    {
-                        containers[i] = _context.Processes[i];
-                    }
-
-                    for (int i = material.Length; i <count ; i++)
-                    {
-                        Transform trans = CellContent.RectTransform.GetChild(i);
-                        Destroy(trans.gameObject);
-                    }
-                }
-
-                _context.Processes = containers;
-
-                CellContent.enabled = true;
             }
+
+            _context.Processes = containers;
+
+            CellContent.enabled = true;
         }
+
         public void SelectBlueprintClick()
         {
-            IList<IItem> items = GameScope.Instance.Player.Role.Item.All();
-            List<EquipmentBlueprint> materials = items.TryFindCast<IItem, EquipmentBlueprint>();
             GlobalScope.Instance.OpenSelect()
                 .AutoSetSingleSelectTable<
                         EquipmentBlueprint,
                         EquipmentBlueprintSorters,
                         EquipmentBlueprintFilters>
-                    (materials, SelectBlueprint);
+                    (Property.LearnedBlueprints, SelectBlueprint);
         }
+
         private void SelectBlueprint(EquipmentBlueprint blueprint)
         {
             _context.SelectedBlueprint = blueprint;
             Blueprint.BindShowable(blueprint);
         }
+
         public void SelectProcessClick()
         {
-            if (_processes is null)
-            {
-                PropertyCollection<Role, IRoleProperty> properties = GameScope.Instance.Player.Role.Properties;
-                _processes = properties
-                    .Get<EquipmentManufacturingProperty>()?
-                    .LearnedProcesses ?? new List<EquipmentProcess>();
-            }
-
             GlobalScope.Instance.OpenSelect()
                 .AutoSetSingleSelectTable<
                         EquipmentProcess,
                         EquipmentProcessSorters,
                         EquipmentProcessFilters>
-                    (_processes, SelectProcess);
+                    (Property.LearnedProcesses, SelectProcess);
         }
+
         private void SelectProcess(EquipmentProcess process)
         {
             _selectedProcess = process;
             Process.BindShowable(process);
         }
+
         public void OnLeftClick(int index)
         {
-            SelectProcess(index,_selectedProcess);
+            SelectProcess(index, _selectedProcess);
         }
+
         public void OnHover(int index)
         {
             var container = _context.Processes[index];
@@ -181,10 +180,12 @@ namespace InfinityWorldChess.ManufacturingDomain.Equipments
                 container.Process.CreateAutoCloseFloatingOnMouse();
             }
         }
+
         public void OnRightClick(int index)
         {
             SelectProcess(index, null);
         }
+
         private void SelectProcess(int index, EquipmentProcess process)
         {
             int start;
@@ -203,21 +204,23 @@ namespace InfinityWorldChess.ManufacturingDomain.Equipments
                 end = process.Length + index;
                 start = index;
             }
-            
+
             for (int i = start; i < end; i++)
             {
                 Transform cellTransform = CellContent.RectTransform.GetChild(i);
                 ManufacturingCell cell = cellTransform.GetComponent<ManufacturingCell>();
                 cell.BindShowable(process);
+                cell.Icon.Sprite = process?.Cell?.Value;
 
                 if (_context.Processes[i].Occupied)
                 {
                     SelectProcess(i, null);
                 }
-                
-                _context.Processes[i].SetProcess(process,(byte)index);
+
+                _context.Processes[i].SetProcess(process, (byte)index);
             }
         }
+
         private string CheckGenerateAccessible()
         {
             if (_context.SelectedMaterial is null)
@@ -232,6 +235,7 @@ namespace InfinityWorldChess.ManufacturingDomain.Equipments
 
             return null;
         }
+
         private CustomEquipment GenerateEquipment()
         {
             CustomEquipment customEquipment = _context.SelectedBlueprint.InitEquipment();

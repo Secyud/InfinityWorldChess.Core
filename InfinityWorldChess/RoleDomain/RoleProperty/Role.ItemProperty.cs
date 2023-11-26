@@ -114,7 +114,42 @@ namespace InfinityWorldChess.RoleDomain
 
                 return true;
             }
+            
+            public void Add(ItemCounter counter)
+            {
+                _oItems.TryGetValue(counter.Item.ResourceId, out IOverloadedItem existItem);
 
+                if (existItem is not null)
+                {
+                    existItem.Quantity += counter.Item.Quantity;
+                }
+                else
+                {
+                    _oItems[counter.Item.ResourceId] = counter.Item;
+                }
+            }
+            
+            public bool Remove(ItemCounter counter)
+            {
+                _oItems.TryGetValue(counter.Item.ResourceId, out IOverloadedItem existItem);
+
+                if (existItem is not null)
+                {
+                    existItem.Quantity -= counter.Count;
+
+                    if (existItem.Quantity <= 0)
+                    {
+                        _oItems.Remove(counter.Item.ResourceId);
+                    }
+
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            
             public IItem this[int i] => i < _items.Count ? _items[i] : null;
             
             public IList<IItem> All()

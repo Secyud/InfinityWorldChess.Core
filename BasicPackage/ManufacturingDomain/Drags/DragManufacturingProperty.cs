@@ -13,12 +13,12 @@ namespace InfinityWorldChess.ManufacturingDomain.Drags
 {
 	public class DragManufacturingProperty : IRoleProperty, IArchivable,ILimitable
 	{
-		public List<DragProcess> LearnedProcesses { get; } = new();
+		public List<DragBlueprint> LearnedBlueprints { get; } = new();
 
 		public virtual void Save(IArchiveWriter writer)
 		{
-			writer.Write(LearnedProcesses.Count);
-			foreach (DragProcess process in LearnedProcesses)
+			writer.Write(LearnedBlueprints.Count);
+			foreach (DragBlueprint process in LearnedBlueprints)
 			{
 				writer.WriteObject(process);
 			}
@@ -29,13 +29,13 @@ namespace InfinityWorldChess.ManufacturingDomain.Drags
 			int count = reader.ReadInt32();
 			for (int i = 0; i < count; i++)
 			{
-				LearnedProcesses.Add(reader.ReadObject<DragProcess>());
+				LearnedBlueprints.Add(reader.ReadObject<DragBlueprint>());
 			}
 		}
 		
 		public bool CheckUseful()
 		{
-			return LearnedProcesses.Any();
+			return LearnedBlueprints.Any();
 		}
 
 		public void Install(Role target)
