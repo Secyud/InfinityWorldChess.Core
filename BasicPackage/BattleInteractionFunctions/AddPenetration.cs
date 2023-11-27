@@ -9,6 +9,7 @@ using UnityEngine;
 
 namespace InfinityWorldChess.BattleInteractionFunctions
 {
+    [ID("0F062155-47DE-A9EA-93E2-BDCA7EFB8FD5")]
     public class AddPenetration : IActionable<BattleInteraction>,
         IHasContent,IPropertyAttached,IHasPriority
     {

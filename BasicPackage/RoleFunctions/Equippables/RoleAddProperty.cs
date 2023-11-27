@@ -8,6 +8,7 @@ using UnityEngine;
 
 namespace InfinityWorldChess.RoleFunctions
 {
+    [ID("9AF58D20-1D76-14A8-3283-9DCF21B4E749")]
     public class RoleAddProperty : IEquippable<Role>,IHasContent
     {
         [field: S] public float LivingFactor { get; set; }

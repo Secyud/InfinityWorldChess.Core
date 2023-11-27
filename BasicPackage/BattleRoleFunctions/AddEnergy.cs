@@ -7,6 +7,7 @@ using UnityEngine;
 
 namespace InfinityWorldChess.BattleRoleFunctions
 {
+    [ID("02CA9FAD-3644-C429-596D-FB16080A0B63")]
     public class AddEnergy : IActionable<BattleRole>, IPropertyAttached
     {
         [field: S] public float Factor { get; set; }

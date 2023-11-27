@@ -10,8 +10,7 @@ using UnityEngine;
 
 namespace InfinityWorldChess.BattleInteractionFunctions
 {
-    public class MultiAttackFactor : IActionable<BattleInteraction>,
-        IHasContent, IHasPriority
+    public class MultiAttackFactor : IActionable<BattleInteraction>, IHasContent, IHasPriority
     {
         [field: S] public float Factor { get; set; }
         [field: S] public bool IsYang { get; set; }
