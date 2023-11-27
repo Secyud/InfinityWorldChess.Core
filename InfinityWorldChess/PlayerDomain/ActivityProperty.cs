@@ -29,14 +29,18 @@ namespace InfinityWorldChess.PlayerDomain
 			}
 		}
 
-		public void AddReceivedActivity(ActivityGroup group,int startIndex = 0)
+		public new void Add(ActivityGroup group)
 		{
-			group.State = ActivityState.Received;
-			IActivity activity = group.Activities[startIndex];
-			group.CurrentActivity = activity;
-			activity.State = ActivityState.Received;
-			activity.StartActivity(group);
-			Add(group);
+			if (group is not null)
+			{
+				base.Add(group);
+				group.InstallFrom();
+			}
+		}
+		public new void Remove(ActivityGroup group)
+		{
+			base.Remove(group);
+			group?.UnInstallFrom();
 		}
 	}
 }

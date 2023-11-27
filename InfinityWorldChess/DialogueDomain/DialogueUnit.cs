@@ -1,13 +1,12 @@
 ﻿using System.Collections.Generic;
-using InfinityWorldChess.DialogueDomain;
 using InfinityWorldChess.FunctionDomain;
 using InfinityWorldChess.RoleDomain;
 using Secyud.Ugf;
 using Secyud.Ugf.DataManager;
 
-namespace InfinityWorldChess.DialogueTemplates
+namespace InfinityWorldChess.DialogueDomain
 {
-    public class CustomDialogueUnit : IDialogueUnit, IObjectAccessor<IDialogueUnit>
+    public class DialogueUnit : IDialogueUnit, IObjectAccessor<IDialogueUnit>
     {
         [field: S(5)] public IList<DialogueOption> OptionList { get; } = new List<DialogueOption>();
         [field: S(4)] public IActionable DefaultAction { get; set; }

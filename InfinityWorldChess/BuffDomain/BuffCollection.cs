@@ -5,7 +5,7 @@ using Secyud.Ugf;
 namespace InfinityWorldChess.BuffDomain
 {
     public class BuffCollection<TTarget, TBuff> : BuffCollectionBase<TTarget, TBuff, int, int>
-        where TBuff : class, IEquippable<TTarget>, IOverlayable<TTarget>, IHasId<int>
+        where TBuff : class, IInstallable<TTarget>, IOverlayable<TTarget>, IHasId<int>
     {
         public BuffCollection(TTarget target) : base(target)
         {

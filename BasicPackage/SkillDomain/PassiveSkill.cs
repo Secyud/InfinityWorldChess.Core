@@ -18,23 +18,23 @@ namespace InfinityWorldChess.SkillDomain
         [field: S(0)] public string Name { get; set; }
         [field: S(2)] public string Description { get; set; }
         [field: S(254)] public IObjectAccessor<Sprite> Icon { get; set; }
-        [field: S(255)] public IEquippable<Role> Effect { get; set; }
+        [field: S(255)] public IInstallable<Role> Effect { get; set; }
 
         public Role Role { get; private set; }
         
-        public void Install(Role target)
+        public void InstallFrom(Role target)
         {
             Role = target;
             if (Effect is not null)
             {
                 this.TryAttach(Effect);
-                Effect.Install(target);
+                Effect.InstallFrom(target);
             }
         }
 
-        public void UnInstall(Role target)
+        public void UnInstallFrom(Role target)
         {
-            Effect?.UnInstall(target);
+            Effect?.UnInstallFrom(target);
         }
 
         public void SetContent(Transform transform)

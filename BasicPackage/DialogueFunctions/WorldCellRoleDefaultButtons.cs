@@ -1,8 +1,7 @@
 using InfinityWorldChess.BattleDomain;
-using InfinityWorldChess.DialogueDomain;
 using InfinityWorldChess.InteractionDomain;
 
-namespace InfinityWorldChess.GameDomain.WorldCellDomain
+namespace InfinityWorldChess.DialogueFunctions
 {
     public class WorldCellRoleDefaultButtons
     {

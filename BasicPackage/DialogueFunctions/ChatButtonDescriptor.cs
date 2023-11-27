@@ -1,12 +1,11 @@
-using System.Linq;
-using InfinityWorldChess.DialogueTemplates;
+using InfinityWorldChess.DialogueDomain;
 using InfinityWorldChess.GameDomain;
 using InfinityWorldChess.RoleAccessors;
 using InfinityWorldChess.RoleDomain;
 using Secyud.Ugf;
 using Secyud.Ugf.TableComponents.ButtonComponents;
 
-namespace InfinityWorldChess.DialogueDomain
+namespace InfinityWorldChess.DialogueFunctions
 {
     public class ChatButtonDescriptor : ButtonDescriptor<Role>
     {
@@ -18,7 +17,7 @@ namespace InfinityWorldChess.DialogueDomain
             
             GameScope.Instance.Role.MainOperationRole = Target;
             
-            CustomDialogueUnit unit = new()
+            DialogueUnit unit = new()
             {
                 Text = "你找我干什么？",
                 RoleAccessor = new RoleDirectly

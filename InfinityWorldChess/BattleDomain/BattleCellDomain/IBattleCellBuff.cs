@@ -4,7 +4,7 @@ using Secyud.Ugf;
 
 namespace InfinityWorldChess.BattleDomain
 {
-    public interface IBattleCellBuff: IEquippable<BattleCell>, IOverlayable<BattleCell>, IHasId<int>
+    public interface IBattleCellBuff: IInstallable<BattleCell>, IOverlayable<BattleCell>, IHasId<int>
     {
         
     }

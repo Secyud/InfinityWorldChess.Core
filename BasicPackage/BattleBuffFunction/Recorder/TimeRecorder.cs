@@ -8,13 +8,13 @@ namespace InfinityWorldChess.BattleBuffFunction
     {
         protected int TimeRecord { get; set; }
 
-        public override void Install(BattleRole target)
+        public override void InstallFrom(BattleRole target)
         {
             TimeRecord = Context.TotalTime;
             Context.RoundBeginAction += CalculateRemove;
         }
 
-        public override void UnInstall(BattleRole target)
+        public override void UnInstallFrom(BattleRole target)
         {
             Context.RoundBeginAction -= CalculateRemove;
         }

@@ -4,7 +4,7 @@ using Secyud.Ugf;
 
 namespace InfinityWorldChess.RoleDomain
 {
-    public interface IRoleBuff : IEquippable<Role>, IOverlayable<Role>, IHasId<int>
+    public interface IRoleBuff : IInstallable<Role>, IOverlayable<Role>, IHasId<int>
     {
     }
 }

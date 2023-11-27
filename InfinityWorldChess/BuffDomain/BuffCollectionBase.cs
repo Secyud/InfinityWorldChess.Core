@@ -12,7 +12,7 @@ using Secyud.Ugf.Archiving;
 namespace InfinityWorldChess.BuffDomain
 {
     public abstract class BuffCollectionBase<TTarget, TBuff, TIndex, TKey>
-        where TBuff : class, IEquippable<TTarget>, IOverlayable<TTarget>, IHasId<TIndex>
+        where TBuff : class, IInstallable<TTarget>, IOverlayable<TTarget>, IHasId<TIndex>
     {
         protected abstract IDictionary<TKey, TBuff> InnerDictionary { get; }
         protected virtual TTarget Target { get; }
@@ -35,7 +35,7 @@ namespace InfinityWorldChess.BuffDomain
                 TBuff oBuff = this[iBuff.Id];
                 if (value is null)
                 {
-                    oBuff?.UnInstall(Target);
+                    oBuff?.UnInstallFrom(Target);
                     InnerDictionary.Remove(GetKey(index));
                 }
                 else
@@ -43,7 +43,7 @@ namespace InfinityWorldChess.BuffDomain
                     if (oBuff is null)
                     {
                         this[iBuff.Id] = iBuff;
-                        iBuff.Install(Target);
+                        iBuff.InstallFrom(Target);
                     }
                     else if (iBuff is not IHasPriority iPriority)
                     {
@@ -51,9 +51,9 @@ namespace InfinityWorldChess.BuffDomain
                     else if (oBuff is not IHasPriority oPriority ||
                              iPriority.Priority > oPriority.Priority)
                     {
-                        oBuff.UnInstall(Target);
+                        oBuff.UnInstallFrom(Target);
                         iBuff.Overlay(oBuff);
-                        iBuff.Install(Target);
+                        iBuff.InstallFrom(Target);
                     }
                     else
                     {
@@ -116,7 +116,7 @@ namespace InfinityWorldChess.BuffDomain
         {
             foreach (TBuff buff in InnerDictionary.Values)
             {
-                buff.UnInstall(Target);
+                buff.UnInstallFrom(Target);
             }
 
             InnerDictionary.Clear();

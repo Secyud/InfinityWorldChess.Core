@@ -12,18 +12,18 @@ namespace InfinityWorldChess.BattleBuffFunction
             transform.AddParagraph($"(剩余{Remain}次)");
         }
 
-        public override void Install(BattleRole target)
+        public override void InstallFrom(BattleRole target)
         {
-            base.Install(target);
+            base.InstallFrom(target);
             if (Origin.Effect is ITriggerable trigger)
             {
                 trigger.ExtraActions += CalculateRemove;
             }
         }
 
-        public override void UnInstall(BattleRole target)
+        public override void UnInstallFrom(BattleRole target)
         {
-            base.UnInstall(target);
+            base.UnInstallFrom(target);
             if (Origin.Effect is ITriggerable trigger)
             {
                 trigger.ExtraActions -= CalculateRemove;

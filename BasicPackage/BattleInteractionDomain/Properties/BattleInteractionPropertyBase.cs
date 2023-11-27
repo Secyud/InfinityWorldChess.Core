@@ -9,15 +9,15 @@ using Secyud.Ugf;
 namespace InfinityWorldChess.BattleInteractionDomain
 {
     public abstract class BattleInteractionPropertyBase :
-        IEquippable<BattleInteraction>,IOverlayable<BattleInteraction>,IHasId<Type>
+        IInstallable<BattleInteraction>,IOverlayable<BattleInteraction>,IHasId<Type>
     {
         public virtual Type Id => GetType();
         
-        public virtual void Install(BattleInteraction target)
+        public virtual void InstallFrom(BattleInteraction target)
         {
         }
 
-        public virtual void UnInstall(BattleInteraction target)
+        public virtual void UnInstallFrom(BattleInteraction target)
         {
         }
 

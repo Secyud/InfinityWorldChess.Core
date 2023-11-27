@@ -1,4 +1,5 @@
 using InfinityWorldChess.ActivityDomain;
+using InfinityWorldChess.ActivityFunctions;
 using InfinityWorldChess.DialogueDomain;
 using InfinityWorldChess.DialogueTemplates;
 using InfinityWorldChess.FunctionDomain;
@@ -14,7 +15,7 @@ namespace InfinityWorldChess.DialogueFunctions
         {
             Role role = GameScope.Instance.Role.MainOperationRole;
             RoleActivityDialogueProperty property = role?.Properties.Get<RoleActivityDialogueProperty>();
-            CustomDialogueUnit ret = new()
+            DialogueUnit ret = new()
             {
                 DefaultAction = new CloseCurrentDialogue()
             };

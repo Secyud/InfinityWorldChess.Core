@@ -7,9 +7,9 @@ using UnityEngine;
 
 namespace InfinityWorldChess.Ugf
 {
-    public abstract class ListEquippableBase<TTarget> :IEquippable<TTarget>, IPropertyAttached,IHasContent
+    public abstract class ListInstallableBase<TTarget> :IInstallable<TTarget>, IPropertyAttached,IHasContent
     {
-        [field: S] public List<IEquippable<TTarget>> Equippables { get; } = new();
+        [field: S] public List<IInstallable<TTarget>> Equippables { get; } = new();
 
         public IAttachProperty Property
         {
@@ -31,18 +31,18 @@ namespace InfinityWorldChess.Ugf
             }
         }
 
-        public void Install(TTarget target)
+        public void InstallFrom(TTarget target)
         {
             foreach (var equippable in Equippables)
             {
-                equippable.Install(target);
+                equippable.InstallFrom(target);
             }
         }
-        public void UnInstall(TTarget target)
+        public void UnInstallFrom(TTarget target)
         {
             foreach (var equippable in Equippables)
             {
-                equippable.UnInstall(target);
+                equippable.UnInstallFrom(target);
             }
         }
     }

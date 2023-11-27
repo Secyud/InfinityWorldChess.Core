@@ -6,12 +6,12 @@ namespace InfinityWorldChess.BattleBuffFunction
 {
     public class TurnRecorder : BuffRecorderBase
     {
-        public override void Install(BattleRole target)
+        public override void InstallFrom(BattleRole target)
         {
             Context.RoundBeginAction += CalculateRemove;
         }
 
-        public override void UnInstall(BattleRole target)
+        public override void UnInstallFrom(BattleRole target)
         {
             Context.RoundBeginAction -= CalculateRemove;
         }

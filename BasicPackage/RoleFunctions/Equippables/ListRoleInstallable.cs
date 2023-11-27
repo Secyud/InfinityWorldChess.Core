@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace InfinityWorldChess.RoleFunctions
 {
-    public class ListRoleEquippable : ListEquippableBase<Role>
+    public class ListRoleInstallable : ListInstallableBase<Role>
     {
     }
 }

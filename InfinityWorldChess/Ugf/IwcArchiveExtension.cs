@@ -1,15 +1,13 @@
 ﻿#region
 
 using InfinityWorldChess.BuffDomain;
-using InfinityWorldChess.ItemDomain.FoodDomain;
-using InfinityWorldChess.SkillDomain;
 using Secyud.Ugf.Archiving;
 
 #endregion
 
 namespace InfinityWorldChess.Ugf
 {
-    public static class BpArchiveExtension
+    public static class IwcArchiveExtension
     {
         public static void SaveProperty(this IAttachProperty property, IArchiveWriter writer)
         {

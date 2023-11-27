@@ -5,7 +5,7 @@ using Secyud.Ugf;
 
 namespace InfinityWorldChess.SkillDomain
 {
-    public interface IPassiveSkillEffect:IHasContent,IEquippable<Role>
+    public interface IPassiveSkillEffect:IHasContent,IInstallable<Role>
     {
     }
 }

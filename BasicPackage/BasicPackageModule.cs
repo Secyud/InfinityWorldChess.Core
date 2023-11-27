@@ -9,7 +9,13 @@ using InfinityWorldChess.RoleDomain;
 using Secyud.Ugf.DependencyInjection;
 using Secyud.Ugf.Modularity;
 using System.IO;
+using InfinityWorldChess.ActivityDomain;
+using InfinityWorldChess.ActivityFunctions;
+using InfinityWorldChess.DialogueDomain;
+using InfinityWorldChess.DialogueFunctions;
 using InfinityWorldChess.GameDomain;
+using InfinityWorldChess.GameDomain.WorldCellDomain;
+using InfinityWorldChess.InteractionDomain;
 using InfinityWorldChess.SkillDomain;
 using Secyud.Ugf;
 using Secyud.Ugf.DataManager;
@@ -66,6 +72,11 @@ namespace InfinityWorldChess
                 new EquipmentButtonDescriptor(),
                 new ItemNormalButtonReading()
             );
+            
+            WorldCellRoleDefaultButtons.RegistrarButtons(context.Get<InteractionButtons>());
+            
+            ChatRegister chat = context.Get<ChatRegister>() ;
+            chat.Register(new ActivityDialogueChat());
         }
 
         public IEnumerator OnGameInitializing(GameInitializeContext context)

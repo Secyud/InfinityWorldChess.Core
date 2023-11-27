@@ -1,14 +1,13 @@
 using System.Linq;
 using InfinityWorldChess.DialogueDomain;
 using InfinityWorldChess.DialogueFunctions;
-using InfinityWorldChess.DialogueTemplates;
 using InfinityWorldChess.RoleDomain;
 
-namespace InfinityWorldChess.ActivityDomain
+namespace InfinityWorldChess.ActivityFunctions
 {
     public class ActivityDialogueChat : IDialogueFunction
     {
-        public void SetDialogue(CustomDialogueUnit dialogueUnit)
+        public void SetDialogue(DialogueUnit dialogueUnit)
         {
             Role role = dialogueUnit.RoleAccessor.Value;
 

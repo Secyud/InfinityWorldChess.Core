@@ -10,7 +10,7 @@ using UnityEngine;
 namespace InfinityWorldChess.RoleFunctions
 {
     [ID("8BA74C93-5B48-E9E9-9F27-01B0FC09B094")]
-    public class RoleBattleInitialize : IEquippable<Role>, IHasContent, IPropertyAttached
+    public class RoleBattleInitialize : IInstallable<Role>, IHasContent, IPropertyAttached
     {
         [field: S] public IActionable<BattleRole> Initialize { get; set; }
 
@@ -25,12 +25,12 @@ namespace InfinityWorldChess.RoleFunctions
             Initialize.TrySetContent(transform);
         }
 
-        public void Install(Role target)
+        public void InstallFrom(Role target)
         {
             target.Buffs.BattleInitializes.Add(Initialize);
         }
 
-        public void UnInstall(Role target)
+        public void UnInstallFrom(Role target)
         {
             target.Buffs.BattleInitializes.Remove(Initialize);
         }

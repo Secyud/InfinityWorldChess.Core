@@ -6,7 +6,7 @@ namespace InfinityWorldChess.BattleDomain
 {
     public interface IBattleRoleBuff :
         IShowable, IHasId<int>,
-        IEquippable<BattleRole>,
+        IInstallable<BattleRole>,
         IOverlayable<BattleRole>,
         IPropertyAttached
     {

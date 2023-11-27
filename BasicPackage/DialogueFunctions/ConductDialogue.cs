@@ -1,13 +1,15 @@
 ﻿using InfinityWorldChess.DialogueAccessors;
+using InfinityWorldChess.DialogueDomain;
 using InfinityWorldChess.FunctionDomain;
 using InfinityWorldChess.InteractionDomain;
+using Secyud.Ugf;
 using Secyud.Ugf.DataManager;
 
 namespace InfinityWorldChess.DialogueFunctions
 {
     public class ConductDialogue:IActionable
     {
-        [field: S] public ResourceDialogueUnit UnitAccessor { get; set; }
+        [field: S] public IObjectAccessor<IDialogueUnit> UnitAccessor { get; set; }
         
         public void Invoke()
         {

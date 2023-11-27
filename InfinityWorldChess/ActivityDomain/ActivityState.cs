@@ -5,9 +5,9 @@ namespace InfinityWorldChess.ActivityDomain
     [Serializable]
     public enum ActivityState
     {
-        NotReceived,
-        Failed,
-        Received,
-        Success,
+        NotReceived = 0,
+        Failed = 1,
+        Received = 2,
+        Success = 3,
     }
 }

@@ -86,7 +86,7 @@ namespace InfinityWorldChess.BattleDomain
             }
         }
 
-        public override void Install(BattleRole target)
+        public override void InstallFrom(BattleRole target)
         {
             _roleBodyPart = target.Role.BodyPart;
         }

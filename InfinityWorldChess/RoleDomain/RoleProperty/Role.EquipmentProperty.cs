@@ -48,14 +48,14 @@ namespace InfinityWorldChess.RoleDomain
                     return;
                 if (_equipment is not null)
                 {
-                    _equipment.UnInstall(role);
+                    _equipment.UnInstallFrom(role);
                     role.Item.Add(_equipment);
                 }
 
                 _equipment = equipment;
                 if (_equipment is not null)
                 {
-                    _equipment.Install(role);
+                    _equipment.InstallFrom(role);
                     role.Item.Remove(_equipment, 1);
                 }
             }

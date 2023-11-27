@@ -15,11 +15,11 @@ namespace InfinityWorldChess.BattleBuffFunction
         protected BattleContext Context => BattleScope.Instance.Context;
 
 
-        public virtual void Install(BattleRole target)
+        public virtual void InstallFrom(BattleRole target)
         {
         }
 
-        public virtual void UnInstall(BattleRole target)
+        public virtual void UnInstallFrom(BattleRole target)
         {
         }
 

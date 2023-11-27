@@ -20,13 +20,13 @@ namespace InfinityWorldChess.BattleBuffFunction
         private BattleProperty Property { get; set; }
         private BodyType BodyType => (BodyType)Type;
 
-        public void Install(BattleRole target)
+        public void InstallFrom(BattleRole target)
         {
             Property = target.Properties.GetOrCreate<BattleProperty>();
             Property[BodyType] += Value;
         }
 
-        public void UnInstall(BattleRole target)
+        public void UnInstallFrom(BattleRole target)
         {
             Property[BodyType] -= Value;
         }

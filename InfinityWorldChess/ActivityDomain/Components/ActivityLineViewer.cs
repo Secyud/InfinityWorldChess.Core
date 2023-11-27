@@ -14,7 +14,7 @@ namespace InfinityWorldChess.ActivityDomain
         protected override void InitData()
         {
             Name.Invoke(Property.Name);
-            State.Invoke(Property.State);
+            State.Invoke((ActivityState)Property.Living);
         }
 
         public void OnClick()

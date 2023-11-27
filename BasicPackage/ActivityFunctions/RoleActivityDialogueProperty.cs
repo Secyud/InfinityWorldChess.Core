@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using InfinityWorldChess.DialogueDomain;
 using InfinityWorldChess.FunctionDomain;
-using InfinityWorldChess.GlobalDomain;
 using InfinityWorldChess.RoleDomain;
 
-namespace InfinityWorldChess.ActivityDomain
+namespace InfinityWorldChess.ActivityFunctions
 {
     public sealed class RoleActivityDialogueProperty : IRoleProperty, ILimitable
     {
@@ -17,11 +16,11 @@ namespace InfinityWorldChess.ActivityDomain
             return DialogueActions.Any();
         }
 
-        public void Install(Role target)
+        public void InstallFrom(Role target)
         {
         }
 
-        public void UnInstall(Role target)
+        public void UnInstallFrom(Role target)
         {
         }
 

@@ -51,13 +51,13 @@ namespace InfinityWorldChess.BattleBuffFunction
             }
         }
         
-        public void Install(BattleRole target)
+        public void InstallFrom(BattleRole target)
         {
             TimeRecord = Context.TotalTime;
             Context.RoundBeginAction += Invoke;
         }
 
-        public void UnInstall(BattleRole target)
+        public void UnInstallFrom(BattleRole target)
         {
             Context.RoundBeginAction -= Invoke;
         }

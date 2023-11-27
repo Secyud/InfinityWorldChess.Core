@@ -8,11 +8,11 @@ namespace InfinityWorldChess.BattleDomain
     {
         public virtual Type Id => GetType();
         
-        public virtual void Install(BattleRole target)
+        public virtual void InstallFrom(BattleRole target)
         {
         }
 
-        public virtual void UnInstall(BattleRole target)
+        public virtual void UnInstallFrom(BattleRole target)
         {
         }
 

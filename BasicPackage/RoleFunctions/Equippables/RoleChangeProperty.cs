@@ -9,7 +9,7 @@ using UnityEngine;
 namespace InfinityWorldChess.RoleFunctions
 {
     [ID("9AF58D20-1D76-14A8-3283-9DCF21B4E749")]
-    public class RoleChangeProperty : IEquippable<Role>, IHasContent, IPropertyAttached
+    public class RoleChangeProperty : IInstallable<Role>, IHasContent, IPropertyAttached
     {
         [field: S] public float LivingFactor { get; set; }
         [field: S] public float KilingFactor { get; set; }
@@ -34,7 +34,7 @@ namespace InfinityWorldChess.RoleFunctions
                 $"改变四维属性, {LivingFactor:P0}[生], {KilingFactor:P0}[杀], {NimbleFactor:P0}[灵], {DefendFactor:P0}[御]。");
         }
 
-        public void Install(Role target)
+        public void InstallFrom(Role target)
         {
             for (int i = 0; i < SharedConsts.MaxBodyPartsCount; i++)
             {
@@ -43,7 +43,7 @@ namespace InfinityWorldChess.RoleFunctions
             }
         }
 
-        public void UnInstall(Role target)
+        public void UnInstallFrom(Role target)
         {
             for (int i = 0; i < SharedConsts.MaxBodyPartsCount; i++)
             {

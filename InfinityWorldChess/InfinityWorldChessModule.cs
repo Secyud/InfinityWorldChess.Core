@@ -41,18 +41,15 @@ namespace InfinityWorldChess
         public void PostConfigure(ConfigurationContext context)
         {
             //RegisterWorldModel(context.Get<WorldGlobalService>(), context.Get<IwcAssets>());
-            WorldCellRoleDefaultButtons.RegistrarButtons(context.Get<InteractionButtons>());
+            
             context.Get<WorldCellButtons>().Register(new TravelButtonDescriptor());
 
             TypeManager tm = context.Get<TypeManager>();
             string path = Path.Combine(U.Path, "Data/Resource/te.binary");
 
             using FileStream file = File.OpenRead(path);
-            tm.LoadResourcesFromStream(file);
+            tm.AddResourcesFromStream(file);
             
-            
-            ChatRegister chat = context.Get<ChatRegister>() ;
-            chat.Register(new ActivityDialogueChat());
         }
 
 

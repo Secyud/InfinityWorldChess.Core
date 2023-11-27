@@ -1,18 +1,28 @@
+using InfinityWorldChess.BuffDomain;
+using InfinityWorldChess.FunctionDomain;
+using InfinityWorldChess.RoleDomain;
 using Secyud.Ugf;
 using Secyud.Ugf.Archiving;
 
 namespace InfinityWorldChess.ActivityDomain
 {
-    public interface IActivity:IShowable,IHasContent,IDataResource
+    /// <summary>
+    /// activity is an equippable of role.
+    /// install means role access the activity.
+    /// triggers will be added;
+    ///
+    /// uninstall means role finished the activity.
+    /// activity is attached to activity group.
+    ///
+    /// the four property mean different thing.
+    /// living means state.
+    /// kiling means difficulty.
+    /// nimble means index in group.
+    /// defend 
+    /// </summary>
+    public interface IActivity:IInstallable,IShowable,IHasContent,IDataResource,IPropertyAttached,IAttachProperty
     {
-        ActivityState State { get; set; }
-        /// <summary>
-        /// add activity trigger,
-        /// it will run when received
-        /// the activity or game initialize
-        /// </summary>
-        /// <param name="group"></param>
-        void StartActivity(ActivityGroup group);
-        void FinishActivity(ActivityGroup group);
+        
+        
     }
 }

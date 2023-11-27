@@ -4,7 +4,7 @@ using Secyud.Ugf;
 
 namespace InfinityWorldChess.BattleBuffFunction
 {
-    public interface IBuffRecorder: IEquippable<BattleRole>, IHasContent
+    public interface IBuffRecorder: IInstallable<BattleRole>, IHasContent
     {
         
     }

@@ -16,7 +16,7 @@ namespace InfinityWorldChess.ItemTemplates
 {
     public class Equipment : Item, IEquipment,IAttachProperty
     {
-        [field:S(64)]public  List<IEquippable<Role>> Effects { get; } = new();
+        [field:S(64)]public  List<IInstallable<Role>> Effects { get; } = new();
         [field:S(5)]public byte TypeCode { get; set; }
         [field:S(5)]public byte Location { get; set; }
         [field:S(6)]public byte Living { get; set; }
@@ -24,20 +24,20 @@ namespace InfinityWorldChess.ItemTemplates
         [field:S(6)]public byte Nimble { get; set; }
         [field:S(6)]public byte Defend { get; set; }
         
-        public void Install(Role role)
+        public void InstallFrom(Role role)
         {
-            foreach (IEquippable<Role> equippable in Effects)
+            foreach (IInstallable<Role> equippable in Effects)
             {
                 this.TryAttach(equippable);
-                equippable.Install(role);
+                equippable.InstallFrom(role);
             }
         }
 
-        public void UnInstall(Role role)
+        public void UnInstallFrom(Role role)
         {
-            foreach (IEquippable<Role> equippable in Effects)
+            foreach (IInstallable<Role> equippable in Effects)
             {
-                equippable.UnInstall(role);
+                equippable.UnInstallFrom(role);
             }
         }
 
@@ -51,7 +51,7 @@ namespace InfinityWorldChess.ItemTemplates
         {
             transform.AddTitle2("装备效果：");
             
-            foreach (IEquippable<Role> equippable in Effects)
+            foreach (IInstallable<Role> equippable in Effects)
             {
                 equippable.TrySetContent(transform);
             }
@@ -62,7 +62,7 @@ namespace InfinityWorldChess.ItemTemplates
         protected void SaveEffects(IArchiveWriter writer)
         {
             writer.Write(Effects.Count);
-            foreach (IEquippable<Role> actionable in Effects)
+            foreach (IInstallable<Role> actionable in Effects)
             {
                 writer.WriteObject(actionable);
             }
@@ -75,7 +75,7 @@ namespace InfinityWorldChess.ItemTemplates
             int count = reader.ReadInt32();
             for (int i = 0; i < count; i++)
             {
-                Effects.Add(reader.ReadObject<IEquippable<Role>>());
+                Effects.Add(reader.ReadObject<IInstallable<Role>>());
             }
         }
         

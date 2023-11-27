@@ -1,12 +1,10 @@
 using InfinityWorldChess.ActivityAccessors;
-using InfinityWorldChess.BuffDomain;
 using InfinityWorldChess.FunctionDomain;
-using InfinityWorldChess.GlobalDomain;
 using InfinityWorldChess.PlayerDomain;
 using Secyud.Ugf;
 using Secyud.Ugf.DataManager;
 
-namespace InfinityWorldChess.NormalTriggers
+namespace InfinityWorldChess.ActivityFunctions
 {
     /// <summary>
     /// if you want to add activity to role,
@@ -19,7 +17,7 @@ namespace InfinityWorldChess.NormalTriggers
         public void Invoke()
         {
             PlayerGameContext context = U.Get<PlayerGameContext>();
-            context.Activity.AddReceivedActivity(GroupAccessor.Value);
+            context.Activity.Add(GroupAccessor.Value);
         }
     }
 }

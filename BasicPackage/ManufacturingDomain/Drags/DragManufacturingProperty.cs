@@ -38,12 +38,12 @@ namespace InfinityWorldChess.ManufacturingDomain.Drags
 			return LearnedBlueprints.Any();
 		}
 
-		public void Install(Role target)
+		public void InstallFrom(Role target)
 		{
 			
 		}
 
-		public void UnInstall(Role target)
+		public void UnInstallFrom(Role target)
 		{
 		}
 

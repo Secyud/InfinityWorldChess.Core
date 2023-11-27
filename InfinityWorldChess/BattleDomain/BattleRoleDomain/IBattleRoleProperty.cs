@@ -5,7 +5,7 @@ using Secyud.Ugf;
 
 namespace InfinityWorldChess.BattleDomain
 {
-    public interface IBattleRoleProperty : IEquippable<BattleRole>, IOverlayable<BattleRole>, IHasId<Type>
+    public interface IBattleRoleProperty : IInstallable<BattleRole>, IOverlayable<BattleRole>, IHasId<Type>
     {
     }
 }

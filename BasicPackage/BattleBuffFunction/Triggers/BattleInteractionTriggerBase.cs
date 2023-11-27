@@ -42,7 +42,7 @@ namespace InfinityWorldChess.BattleBuffFunction
             
         }
 
-        public virtual void Install(BattleRole target)
+        public virtual void InstallFrom(BattleRole target)
         {
             BattleEvents events = target.Properties.GetOrCreate<BattleEvents>();
             Container = InteractionType switch
@@ -56,7 +56,7 @@ namespace InfinityWorldChess.BattleBuffFunction
             Container?.Add(this);
         }
 
-        public virtual void UnInstall(BattleRole target)
+        public virtual void UnInstallFrom(BattleRole target)
         {
             Container?.Remove(this);
         }

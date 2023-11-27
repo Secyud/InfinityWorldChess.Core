@@ -3,7 +3,7 @@ using InfinityWorldChess.FunctionDomain;
 
 namespace InfinityWorldChess.BattleBuffDomain
 {
-    public interface IBuffEffect : IEquippable<BattleRole>,IOverlayable<BattleRole>
+    public interface IBuffEffect : IInstallable<BattleRole>,IOverlayable<BattleRole>
     {
     }
 }

@@ -6,14 +6,14 @@ using UnityEngine.Events;
 
 namespace InfinityWorldChess.ActivityDomain
 {
-    public class ActivityGroupLineViewer:EditorBase<ActivityGroup>
+    public class ActivityGroupLineViewer : EditorBase<ActivityGroup>
     {
         [SerializeField] private UnityEvent<string> Name;
         [SerializeField] private UnityEvent<ActivityState> State;
         [SerializeField] private LayoutGroupTrigger Content;
         [SerializeField] private ActivityLineViewer Prefab;
 
-        public ActivityPanel  Panel { get; set; }
+        public ActivityPanel Panel { get; set; }
 
         public bool Collapsed
         {
@@ -28,8 +28,8 @@ namespace InfinityWorldChess.ActivityDomain
                     Panel.ListContent.Record = 4;
                     if (value)
                     {
-                        foreach (IActivity activity in Property.Activities
-                                     .Where(activity => activity.State != ActivityState.NotReceived))
+                        foreach (IActivity activity in Property.Activities.Where(
+                                     activity => activity.Living > 0))
                         {
                             ActivityLineViewer instance = Prefab.Instantiate(content);
                             instance.Group = this;
@@ -39,7 +39,7 @@ namespace InfinityWorldChess.ActivityDomain
                 }
             }
         }
-        
+
         protected override void InitData()
         {
             Name.Invoke(Property.Name);

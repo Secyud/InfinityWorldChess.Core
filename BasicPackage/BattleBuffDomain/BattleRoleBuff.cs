@@ -38,16 +38,16 @@ namespace InfinityWorldChess.BattleBuffDomain
             }
         }
 
-        public virtual void Install(BattleRole target)
+        public virtual void InstallFrom(BattleRole target)
         {
-            Effect?.Install(target);
-            Recorder?.Install(target);
+            Effect?.InstallFrom(target);
+            Recorder?.InstallFrom(target);
         }
 
-        public virtual void UnInstall(BattleRole target)
+        public virtual void UnInstallFrom(BattleRole target)
         {
-            Effect?.UnInstall(target);
-            Recorder?.UnInstall(target);
+            Effect?.UnInstallFrom(target);
+            Recorder?.UnInstallFrom(target);
         }
 
 
