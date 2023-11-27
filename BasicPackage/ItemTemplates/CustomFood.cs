@@ -1,6 +1,5 @@
 #region
 
-using InfinityWorldChess.ItemDomain.FoodDomain;
 using InfinityWorldChess.Ugf;
 using Secyud.Ugf.Archiving;
 using UnityEngine;
@@ -9,31 +8,39 @@ using UnityEngine;
 
 namespace InfinityWorldChess.ItemTemplates
 {
-    public sealed class CustomFood : Consumable, IHasFlavor, IHasMouthfeel
+    public sealed class CustomFood : Consumable
     {
-        public float[] FlavorLevel { get; } = new float[BasicConsts.FlavorCount];
-        public float[] MouthFeelLevel { get; } = new float[BasicConsts.MouthFeelCount];
-
+        public float ColorLevel { get; set; }
+        public float SmellLevel { get; set; }
+        public float TasteLevel { get; set; }
         public override void Save(IArchiveWriter writer)
         {
-            
-            this.SaveMouthFeel(writer);
-            this.SaveFlavors(writer);
+            writer.Write(ColorLevel);
+            writer.Write(SmellLevel);
+            writer.Write(TasteLevel);
             SaveActions(writer);
+            SaveShown(writer);
+            this.SaveProperty(writer);
         }
 
         public override void Load(IArchiveReader reader)
         {
-            this.LoadMouthFeel(reader);
-            this.LoadFlavors(reader);
+            ColorLevel = reader.ReadSingle();
+            SmellLevel = reader.ReadSingle();
+            TasteLevel = reader.ReadSingle();
             LoadActions(reader);
+            LoadShown(reader);
+            this.LoadProperty(reader);
         }
 
         public override void SetContent(Transform transform)
         {
             base.SetContent(transform);
-            transform.AddFlavorInfo(this);
-            transform.AddMouthFeelInfo(this);
+            transform.AddParagraph(
+                "色: " + ColorLevel +
+                " 香: " + SmellLevel +
+                " 味: " + TasteLevel 
+            );
             SetEffectContent(transform);
         }
     }

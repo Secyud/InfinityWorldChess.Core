@@ -11,7 +11,7 @@ using UnityEngine;
 
 namespace InfinityWorldChess.ItemTemplates
 {
-    public class Consumable : Item, IEdible, IEdibleInBattle, IAttachProperty
+    public class  Consumable : Item, IEdible, IEdibleInBattle, IAttachProperty
     {
         [field: S(64)] public List<IActionable<Role>> EffectsInWorld { get; } = new();
         [field: S(64)] public List<IActionable<BattleRole>> EffectsInBattle { get; } = new();

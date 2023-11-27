@@ -71,13 +71,13 @@ namespace InfinityWorldChess.SkillDomain
 
         public virtual void Save(IArchiveWriter writer)
         {
-            this.SaveSkill(writer);
+            this.SaveProperty(writer);
             this.SaveResource(writer);
         }
 
         public virtual void Load(IArchiveReader reader)
         {
-            this.LoadSkill(reader);
+            this.LoadProperty(reader);
             this.LoadResource(reader);
         }
 
