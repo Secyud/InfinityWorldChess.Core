@@ -2,28 +2,31 @@
 using InfinityWorldChess.BuffDomain;
 using InfinityWorldChess.FunctionDomain;
 using InfinityWorldChess.RoleDomain;
-using InfinityWorldChess.SkillDomain;
+using InfinityWorldChess.Ugf;
 using Secyud.Ugf;
 using Secyud.Ugf.DataManager;
 using UnityEngine;
 
 namespace InfinityWorldChess.RoleFunctions
 {
-    public class RoleBattleInitialize: IEquippable<Role>,IHasContent
+    [ID("8BA74C93-5B48-E9E9-9F27-01B0FC09B094")]
+    public class RoleBattleInitialize : IEquippable<Role>, IHasContent, IPropertyAttached
     {
-        [field:S] public IActionable<BattleRole> Initialize { get; set; }
-        public PassiveSkill Skill { get; set; }
+        [field: S] public IActionable<BattleRole> Initialize { get; set; }
+
+        public IAttachProperty Property
+        {
+            get => null;
+            set => value.TryAttach(Initialize);
+        }
+
         public void SetContent(Transform transform)
         {
-            if (Initialize is IHasContent content)
-            {
-                content.SetContent(transform);
-            }
+            Initialize.TrySetContent(transform);
         }
 
         public void Install(Role target)
         {
-            Skill.Attach(Initialize);
             target.Buffs.BattleInitializes.Add(Initialize);
         }
 

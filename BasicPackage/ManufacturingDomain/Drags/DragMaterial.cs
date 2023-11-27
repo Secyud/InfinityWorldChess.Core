@@ -28,12 +28,12 @@ namespace InfinityWorldChess.ManufacturingDomain.Drags
 
         public void ProcessDrag(CustomDrag drag)
         {
-            this.Attach(FoodEffect);
+            this.TryAttach(FoodEffect);
             DragEffect?.Invoke(drag);
         }
         public void ProcessFood(CustomFood food)
         {
-            this.Attach(FoodEffect);
+            this.TryAttach(FoodEffect);
             FoodEffect?.Invoke(food);
         }
 

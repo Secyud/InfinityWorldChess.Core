@@ -1,6 +1,6 @@
-﻿using InfinityWorldChess.FunctionDomain;
+﻿using InfinityWorldChess.BuffDomain;
+using InfinityWorldChess.FunctionDomain;
 using InfinityWorldChess.RoleDomain;
-using InfinityWorldChess.SkillDomain;
 using InfinityWorldChess.Ugf;
 using Secyud.Ugf;
 using Secyud.Ugf.DataManager;
@@ -9,18 +9,16 @@ using UnityEngine;
 namespace InfinityWorldChess.RoleFunctions
 {
     [ID("9AF58D20-1D76-14A8-3283-9DCF21B4E749")]
-    public class RoleAddProperty : IEquippable<Role>,IHasContent
+    public class RoleChangeProperty : IEquippable<Role>, IHasContent, IPropertyAttached
     {
         [field: S] public float LivingFactor { get; set; }
         [field: S] public float KilingFactor { get; set; }
         [field: S] public float NimbleFactor { get; set; }
         [field: S] public float DefendFactor { get; set; }
+        public IAttachProperty Property { get; set; }
 
-        public PassiveSkill Skill { get; set; }
-        private readonly int[] _properties = new int[SharedConsts.MaxBodyPartsCount];
+        private readonly int[] _propertyChanged = new int[SharedConsts.MaxBodyPartsCount];
 
-        private Role.BodyPartProperty Body => Skill.Role.BodyPart;
-        
         public float this[int i] => i switch
         {
             0 => LivingFactor,
@@ -29,17 +27,19 @@ namespace InfinityWorldChess.RoleFunctions
             3 => DefendFactor,
             _ => 0
         };
+
         public void SetContent(Transform transform)
         {
-            transform.AddParagraph("增加四维属性{}。");
+            transform.AddParagraph(
+                $"改变四维属性, {LivingFactor:P0}[生], {KilingFactor:P0}[杀], {NimbleFactor:P0}[灵], {DefendFactor:P0}[御]。");
         }
 
         public void Install(Role target)
         {
             for (int i = 0; i < SharedConsts.MaxBodyPartsCount; i++)
             {
-                _properties[i] = (int)(Skill[i] * this[i]);
-                Body[(BodyType)i].MaxValue += _properties[i];
+                _propertyChanged[i] = (int)(Property.Get(i) * this[i]);
+                target.BodyPart[(BodyType)i].MaxValue += _propertyChanged[i];
             }
         }
 
@@ -47,7 +47,7 @@ namespace InfinityWorldChess.RoleFunctions
         {
             for (int i = 0; i < SharedConsts.MaxBodyPartsCount; i++)
             {
-                Body[(BodyType)i].MaxValue -= _properties[i];
+                target.BodyPart[(BodyType)i].MaxValue -= _propertyChanged[i];
             }
         }
     }

@@ -1,15 +1,16 @@
 ﻿using System.Collections.Generic;
+using InfinityWorldChess.BattleDomain;
 using InfinityWorldChess.BuffDomain;
 using InfinityWorldChess.FunctionDomain;
-using InfinityWorldChess.RoleDomain;
 using InfinityWorldChess.Ugf;
 using Secyud.Ugf;
 using Secyud.Ugf.DataManager;
 using UnityEngine;
 
-namespace InfinityWorldChess.RoleFunctions
+namespace InfinityWorldChess.BattleRoleFunctions
 {
-    public class ListRoleEquippable : ListEquippableBase<Role>
+    public class ListBattleRoleAction: ListActionableBase<BattleRole>
     {
+
     }
 }

@@ -10,6 +10,7 @@ using UnityEngine;
 
 namespace InfinityWorldChess.BattleInteractionFunctions
 {
+    [ID("2AE87919-3323-45A8-0ADB-0F81BE177FC6")]
     public class CenterAddDamage : IActionable<BattleInteraction>,
         IHasContent, IPropertyAttached,IHasPriority
     {

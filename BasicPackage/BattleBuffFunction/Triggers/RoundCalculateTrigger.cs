@@ -22,7 +22,15 @@ namespace InfinityWorldChess.BattleBuffFunction
         [field: S] public ILimitable Limit { get; set; }
         [field: S(0)] public int Time { get; set; }
 
-        public IAttachProperty Property { get; set; }
+        public IAttachProperty Property
+        {
+            get => null;
+            set
+            {
+                value.TryAttach(Limit);
+                value.TryAttach(Actionable);
+            }
+        }
 
         public event Action ExtraActions;
         protected float TimeRecord { get; set; }
@@ -32,8 +40,6 @@ namespace InfinityWorldChess.BattleBuffFunction
             float currentTime = Context.TotalTime;
             while (currentTime > TimeRecord + Time)
             {
-                Property.Attach(Limit);
-                Property.Attach(Actionable);
             
                 if (Limit is null || Limit.CheckUseful())
                 {

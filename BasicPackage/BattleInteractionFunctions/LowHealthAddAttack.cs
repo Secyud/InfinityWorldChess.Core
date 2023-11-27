@@ -9,6 +9,7 @@ using UnityEngine;
 
 namespace InfinityWorldChess.BattleInteractionFunctions
 {
+    [ID("1192A36C-5697-D24C-9B42-71E3F2755433")]
     public class LowHealthAddAttack : IActionable<BattleInteraction>, IHasContent,IHasPriority
     {
         [field: S] public float Factor { get; set; }

@@ -16,8 +16,18 @@ namespace InfinityWorldChess.BattleBuffFunction
         [field: S(260)] public IActionable<BattleInteraction> PostInteraction { get; set; }
 
         public BattleRoleBuff Origin { get; set; }
-        public IAttachProperty Property { get; set; }
-        
+
+        public IAttachProperty Property
+        {
+            get => null;
+            set
+            {
+                value.TryAttach(PreInteraction);
+                value.TryAttach(OnInteraction);
+                value.TryAttach(PostInteraction);
+            }
+        }
+
         // to avoid self call
         private bool _triggerState;
 
@@ -36,10 +46,6 @@ namespace InfinityWorldChess.BattleBuffFunction
             }
 
             _triggerState = true;
-
-            Property.Attach(PreInteraction);
-            Property.Attach(OnInteraction);
-            Property.Attach(PostInteraction);
             
             BattleInteraction interaction = BattleInteraction
                 .Create(Origin.Origin, Origin.Target);

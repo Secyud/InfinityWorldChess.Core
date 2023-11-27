@@ -32,12 +32,12 @@ namespace InfinityWorldChess.ManufacturingDomain.Equipments
 
         public void StartEquipmentManufacturing(CustomEquipment equipment)
         {
-            this.Attach(StartEffects);
+            this.TryAttach(StartEffects);
             StartEffects?.Invoke(equipment);
         }
         public void FinishEquipmentManufacturing(CustomEquipment equipment)
         {
-            this.Attach(FinishEffects);
+            this.TryAttach(FinishEffects);
             FinishEffects?.Invoke(equipment);
         }
         

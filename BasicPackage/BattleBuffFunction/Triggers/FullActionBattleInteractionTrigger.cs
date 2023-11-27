@@ -21,8 +21,8 @@ namespace InfinityWorldChess.BattleBuffFunction
 
         public override void Attached(IAttachProperty property)
         {
-            Property.Attach(Limit);
-            Property.Attach(Actionable);
+            property.TryAttach(Limit);
+            property.TryAttach(Actionable);
         }
     }
 }

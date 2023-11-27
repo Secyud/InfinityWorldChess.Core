@@ -24,7 +24,7 @@ namespace InfinityWorldChess.ItemTemplates
         {
             foreach (IActionable<Role> buff in EffectsInWorld)
             {
-                this.Attach(buff);
+                this.TryAttach(buff);
                 buff.Invoke(role);
             }
         }
@@ -33,7 +33,7 @@ namespace InfinityWorldChess.ItemTemplates
         {
             foreach (IActionable<BattleRole> buff in EffectsInBattle)
             {
-                this.Attach(buff);
+                this.TryAttach(buff);
                 buff.Invoke(role);
             }
         }

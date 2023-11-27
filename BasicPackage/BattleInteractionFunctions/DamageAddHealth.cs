@@ -11,6 +11,7 @@ namespace InfinityWorldChess.BattleInteractionFunctions
     /// <summary>
     /// 吸血
     /// </summary>
+    [ID("269F220D-5407-C9C8-9BD1-65D19DBFD261")]
     public class DamageAddHealth : IActionable<BattleInteraction>, IHasContent,IHasPriority
     {
         [field: S] private float Factor { get; set; }

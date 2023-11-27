@@ -35,12 +35,12 @@ namespace InfinityWorldChess.ManufacturingDomain.Foods
 
         public void StartFoodManufacturing(CustomFood food)
         {
-            this.Attach(StartEffects);
+            this.TryAttach(StartEffects);
             StartEffects?.Invoke(food);
         }
         public void FinishFoodManufacturing(CustomFood food)
         {
-            this.Attach(FinishEffects);
+            this.TryAttach(FinishEffects);
             FinishEffects?.Invoke(food);
         }
     }

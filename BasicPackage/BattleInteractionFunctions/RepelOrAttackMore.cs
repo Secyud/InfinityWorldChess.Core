@@ -4,6 +4,7 @@ using InfinityWorldChess.FunctionDomain;
 using InfinityWorldChess.GlobalDomain;
 using InfinityWorldChess.Ugf;
 using Secyud.Ugf;
+using Secyud.Ugf.DataManager;
 using Secyud.Ugf.HexMap;
 using Secyud.Ugf.HexUtilities;
 using UnityEngine;
@@ -13,6 +14,7 @@ namespace InfinityWorldChess.BattleInteractionFunctions
     /// <summary>
     /// 击退一格，若失败，则再攻击一次
     /// </summary>
+    [ID("B00074E4-5E59-2176-37E3-E08FFD980BF5")]
     public class RepelOrAttackMore : IActionable<BattleInteraction>, IHasContent,IHasPriority
     {
         public int Priority => 0x8000;

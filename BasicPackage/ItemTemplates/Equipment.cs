@@ -28,7 +28,7 @@ namespace InfinityWorldChess.ItemTemplates
         {
             foreach (IEquippable<Role> equippable in Effects)
             {
-                this.Attach(equippable);
+                this.TryAttach(equippable);
                 equippable.Install(role);
             }
         }

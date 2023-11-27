@@ -7,8 +7,9 @@ using Secyud.Ugf.DataManager;
 using Secyud.Ugf.HexMap;
 using UnityEngine;
 
-namespace InfinityWorldChess.BattleRoleFunctions
+namespace InfinityWorldChess.BattleInteractionFunctions
 {
+    [ID("C6E92AB6-B9A3-6DB8-47D9-D6738F6604FB")]
     public class DistanceAddDamage : IActionable<BattleInteraction>, IHasContent, IHasPriority
     {
         [field: S] public float Factor { get; set; }

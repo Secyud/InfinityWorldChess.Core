@@ -20,72 +20,72 @@ namespace InfinityWorldChess.RoleDomain
         [field: S(7)] public byte BirthHour { get; set; }
         [field: S(8)] public bool Female { get; set; }
 
-        [field: S(9)]
+        [field: S(18)]
         public AvatarElement[] Avatar { get; } =
             new AvatarElement[SharedConsts.AvatarElementCount];
 
-        [field: S(10)] public int Living { get; set; }
-        [field: S(10)] public int Kiling { get; set; }
-        [field: S(10)] public int Nimble { get; set; }
-        [field: S(10)] public int Defend { get; set; }
-        [field: S(10)] public byte SkillPoint { get; set; }
+        [field: S(9)] public int Living { get; set; }
+        [field: S(9)] public int Kiling { get; set; }
+        [field: S(9)] public int Nimble { get; set; }
+        [field: S(9)] public int Defend { get; set; }
+        [field: S(9)] public byte SkillPoint { get; set; }
 
 
-        [field: S(11)] public List<IObjectAccessor<ICoreSkill>> LearnedCoreSkills { get; } = new();
+        [field: S(17)] public List<IObjectAccessor<ICoreSkill>> LearnedCoreSkills { get; } = new();
 
-        [field: S(12)]
+        [field: S(18)]
         public IObjectAccessor<ICoreSkill>[] CoreSkills { get; } =
             new IObjectAccessor<ICoreSkill>[SharedConsts.CoreSkillCount];
 
-        [field: S(13)] public List<IObjectAccessor<IFormSkill>> LearnedFormSkills { get; } = new();
+        [field: S(19)] public List<IObjectAccessor<IFormSkill>> LearnedFormSkills { get; } = new();
 
-        [field: S(14)]
+        [field: S(20)]
         public IObjectAccessor<IFormSkill>[] FormSkills { get; } =
             new IObjectAccessor<IFormSkill>[SharedConsts.FormSkillCount];
 
-        [field: S(15)] public List<IObjectAccessor<IPassiveSkill>> LearnedPassiveSkills { get; } = new();
+        [field: S(21)] public List<IObjectAccessor<IPassiveSkill>> LearnedPassiveSkills { get; } = new();
 
-        [field: S(16)]
+        [field: S(22)]
         public IObjectAccessor<IPassiveSkill>[] PassiveSkills { get; } =
             new IObjectAccessor<IPassiveSkill>[SharedConsts.PassiveSkillCount];
 
-        [field: S(17)] public List<IObjectAccessor<IItem>> Items { get; } = new();
+        [field: S(23)] public List<IObjectAccessor<IItem>> Items { get; } = new();
 
-        [field: S(18)] public IObjectAccessor<IEquipment> Equipment { get; set; } 
+        [field: S(16)] public IObjectAccessor<IEquipment> Equipment { get; set; } 
 
         // 认知
-        [field: S(19)] public float Recognize { get; set; }
+        [field: S(10)] public float Recognize { get; set; }
 
         // 稳定 
-        [field: S(19)] public float Stability { get; set; }
+        [field: S(10)] public float Stability { get; set; }
 
         // 能力 
-        [field: S(19)] public float Confident { get; set; }
+        [field: S(10)] public float Confident { get; set; }
 
         // 效益
-        [field: S(19)] public float Efficient { get; set; }
+        [field: S(10)] public float Efficient { get; set; }
 
         // 合群
-        [field: S(20)] public float Gregarious { get; set; }
+        [field: S(11)] public float Gregarious { get; set; }
 
         // 利他
-        [field: S(20)] public float Altruistic { get; set; }
+        [field: S(11)] public float Altruistic { get; set; }
 
         // 理性 
-        [field: S(21)] public float Rationality { get; set; }
+        [field: S(12)] public float Rationality { get; set; }
 
         // 远见
-        [field: S(21)] public float Foresighted { get; set; }
+        [field: S(12)] public float Foresighted { get; set; }
 
         // 渊博
-        [field: S(21)] public float Intelligent { get; set; }
+        [field: S(12)] public float Intelligent { get; set; }
 
-        [field: S(22)] public float AreaView { get; set; }
-        [field: S(22)] public float LifeView { get; set; }
+        [field: S(13)] public float AreaView { get; set; }
+        [field: S(13)] public float LifeView { get; set; }
 
-        [field: S(22)] public float ValueView { get; set; }
-        [field: S(22)] public float WorldView { get; set; }
-        [field: S(23)] public List<IObjectAccessor<IRoleBuff>> RoleBuffs { get; } = new();
+        [field: S(13)] public float ValueView { get; set; }
+        [field: S(13)] public float WorldView { get; set; }
+        [field: S(25)] public List<IObjectAccessor<IRoleBuff>> RoleBuffs { get; } = new();
         [field: S(24)] public List<IObjectAccessor<IRoleProperty>> ExtraProperties { get; } = new();
 
 

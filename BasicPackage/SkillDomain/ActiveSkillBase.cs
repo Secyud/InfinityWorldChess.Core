@@ -95,11 +95,11 @@ namespace InfinityWorldChess.SkillDomain
             Range = range;
             Targets = TargetGetter?.GetTargetInRange(role, range);
 
-            this.Attach(PreSkill);
-            this.Attach(PreInteraction);
-            this.Attach(OnInteraction);
-            this.Attach(PostInteraction);
-            this.Attach(PostSkill);
+            this.TryAttach(PreSkill);
+            this.TryAttach(PreInteraction);
+            this.TryAttach(OnInteraction);
+            this.TryAttach(PostInteraction);
+            this.TryAttach(PostSkill);
 
             PreSkill?.Invoke(role);
             if (Targets is not null)

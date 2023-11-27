@@ -27,7 +27,7 @@ namespace InfinityWorldChess.SkillDomain
             Role = target;
             if (Effect is not null)
             {
-                this.Attach(Effect);
+                this.TryAttach(Effect);
                 Effect.Install(target);
             }
         }

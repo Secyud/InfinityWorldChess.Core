@@ -24,7 +24,7 @@ namespace InfinityWorldChess.BattleBuffFunction
             set
             {
                 _property = value;
-                Attached(_property);
+                Attached(value);
             }
         }
 

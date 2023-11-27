@@ -8,6 +8,7 @@ using UnityEngine;
 
 namespace InfinityWorldChess.BattleInteractionFunctions
 {
+    [ID("c32a9205-1b69-757e-cdfd-e44cb6040571")]
     public class MinusDefendFactor: IActionable<BattleInteraction>, IHasContent,IHasPriority
     {
         [field: S] public float Factor { get; set; }

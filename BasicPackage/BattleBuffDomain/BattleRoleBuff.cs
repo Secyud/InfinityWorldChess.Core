@@ -11,7 +11,7 @@ using UnityEngine;
 namespace InfinityWorldChess.BattleBuffDomain
 {
     [ID("be8e28a4-2a16-6404-78f3-dbd3a2d1c6f7")]
-    public class BattleRoleBuff : IBattleRoleBuff, IHasPriority
+    public class BattleRoleBuff : IBattleRoleBuff, IHasPriority,IHasContent
     {
         [field: S(0)] public int Id { get; set; }
         [field: S(1)] public string Name { get; set; }
@@ -28,24 +28,24 @@ namespace InfinityWorldChess.BattleBuffDomain
 
         public BattleRole Target { get; set; }
         public BattleRole Origin { get; set; }
-        public IAttachProperty Property { get; set; }
+        public IAttachProperty Property
+        {
+            get=>null;
+            set
+            {
+                value.TryAttach(Effect);
+                value.TryAttach(Recorder);
+            }
+        }
 
         public virtual void Install(BattleRole target)
         {
-            InnerInstall(Recorder);
-            InnerInstall(Effect);
-            return;
-
-            void InnerInstall(IEquippable<BattleRole> equippable)
-            {
-                Property.Attach(equippable);
-                equippable?.Install(target);
-            }
+            Effect?.Install(target);
+            Recorder?.Install(target);
         }
 
         public virtual void UnInstall(BattleRole target)
         {
-            Target = null;
             Effect?.UnInstall(target);
             Recorder?.UnInstall(target);
         }

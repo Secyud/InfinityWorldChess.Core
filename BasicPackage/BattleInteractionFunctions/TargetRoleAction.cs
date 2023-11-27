@@ -19,7 +19,7 @@ namespace InfinityWorldChess.BattleInteractionFunctions
         public IAttachProperty Property
         {
             get => null;
-            set => value.Attach(RoleAction);
+            set => value.TryAttach(RoleAction);
         }
 
         public void Invoke(BattleInteraction target)
