@@ -25,7 +25,7 @@ namespace InfinityWorldChess.GameCreatorDomain
         {
             Table.AutoSetMultiSelectTable<IBiography, BiographySorters, BiographyFilters>(
                 U.Get<IBiographyGlobalService>().Biographies.Items,
-                GameCreatorScope.Instance.Biography);
+                GameCreatorScope.Instance.Context.Biography);
         }
 
         public override void RefreshTab()

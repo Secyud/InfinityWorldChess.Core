@@ -94,7 +94,7 @@ namespace InfinityWorldChess.GameDomain.WorldMapDomain
 
         public virtual IEnumerator OnGameCreation()
         {
-            string settingName = GameCreatorScope.Instance.WorldMessageSetting.WorldName;
+            string settingName = GameCreatorScope.Instance.Context.WorldMessageSetting.WorldName;
             WorldSetting = U.Tm.ReadObjectFromResource<WorldSetting>(settingName);
 
             return LoadWorld();

@@ -6,8 +6,8 @@ namespace InfinityWorldChess.ActivityDomain
     public enum ActivityState
     {
         NotReceived = 0,
-        Failed = 1,
-        Received = 2,
+        Received = 1,
+        Failed = 2,
         Success = 3,
     }
 }

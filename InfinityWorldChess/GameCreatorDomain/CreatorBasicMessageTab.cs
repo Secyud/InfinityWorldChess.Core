@@ -25,7 +25,7 @@ namespace InfinityWorldChess.GameCreatorDomain
 
         public override void RefreshTab()
         {
-            Role role = GameCreatorScope.Instance.Role;
+            Role role = GameCreatorScope.Instance.Context.Role;
 
             NameEditor.Bind(role.Basic);
             GenderEditor.Bind(role.Basic);

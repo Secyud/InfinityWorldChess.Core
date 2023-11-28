@@ -1,9 +1,4 @@
-﻿using System.Collections.Generic;
-using InfinityWorldChess.BiographyDomain;
-using InfinityWorldChess.BundleDomain;
-using InfinityWorldChess.GlobalDomain;
-using InfinityWorldChess.PlayerDomain;
-using InfinityWorldChess.RoleDomain;
+﻿using InfinityWorldChess.GlobalDomain;
 using Secyud.Ugf.AssetComponents;
 using Secyud.Ugf.DependencyInjection;
 
@@ -14,38 +9,8 @@ namespace InfinityWorldChess.GameCreatorDomain
     {
         private readonly IMonoContainer<GameCreatorPanel> _gameCreator;
 
-        public readonly Role Role = new()
-        {
-            BodyPart =
-            {
-                Living =
-                {
-                    MaxValue = 10,
-                    RealValue = 10
-                },
-                Kiling =
-                {
-                    MaxValue = 10,
-                    RealValue = 10
-                },
-                Nimble =
-                {
-                    MaxValue = 10,
-                    RealValue = 10
-                },
-                Defend =
-                {
-                    MaxValue = 10,
-                    RealValue = 10
-                }
-            }
-        };
-
-        public readonly List<IBundle> Bundles = new();
-        public readonly List<IBiography> Biography = new();
-        public readonly PlayerSetting PlayerSetting = new();
-        public readonly WorldMessageSetting WorldMessageSetting = new();
-
+        public GameCreatorContext Context => Get<GameCreatorContext>();
+        
         public static GameCreatorScope Instance { get; private set; }
      
         public GameCreatorScope(IwcAssets assets)

@@ -29,7 +29,7 @@ namespace InfinityWorldChess.GameCreatorDomain
         {
             Table.AutoSetMultiSelectTable<IBundle, BundleSorters, BundleFilters>(
                 U.Get<BundleGlobalService>().Bundles.Items,
-                GameCreatorScope.Instance.Bundles);
+                GameCreatorScope.Instance.Context.Bundles);
         }
     }
 }

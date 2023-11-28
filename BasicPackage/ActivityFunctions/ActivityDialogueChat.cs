@@ -13,9 +13,9 @@ namespace InfinityWorldChess.ActivityFunctions
 
             var property = role.Properties.Get<RoleActivityDialogueProperty>();
 
-            if (property.DialogueActions.Any())
+            if (property is not null && property.DialogueActions.Any())
             {
-                dialogueUnit.OptionList.Add(new DialogueOption()
+                dialogueUnit.OptionList.Add(new DialogueOption
                 {
                     Actionable = new ShowActivityInDialogue(),
                     ShowText = "任务"

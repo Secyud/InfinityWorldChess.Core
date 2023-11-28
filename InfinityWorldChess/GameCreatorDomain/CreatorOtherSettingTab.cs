@@ -16,8 +16,8 @@ namespace InfinityWorldChess.GameCreatorDomain
         {
             _service = GameCreatorScope.Instance.Get<CreatorTabService>();
             base.Awake();
-            PlayerSettingEditor.Bind(GameCreatorScope.Instance.PlayerSetting);
-            WorldSettingEditor.Bind(GameCreatorScope.Instance.WorldMessageSetting);
+            PlayerSettingEditor.Bind(GameCreatorScope.Instance.Context.PlayerSetting);
+            WorldSettingEditor.Bind(GameCreatorScope.Instance.Context.WorldMessageSetting);
         }
 
         public override void RefreshTab()

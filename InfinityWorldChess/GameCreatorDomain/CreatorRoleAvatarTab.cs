@@ -20,7 +20,7 @@ namespace InfinityWorldChess.GameCreatorDomain
 
         public override void RefreshTab()
         {
-            Role role = GameCreatorScope.Instance.Role;
+            Role role = GameCreatorScope.Instance.Context.Role;
             AvatarEditor.OnInitialize(role.Basic);
             AvatarSliders.RefreshMaxValue();
         }

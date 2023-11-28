@@ -26,7 +26,7 @@ namespace InfinityWorldChess.GameCreatorDomain
         {
             MultiSelectDelegate<IItem> d = Table.AutoSetMultiSelectTable<IItem, ItemSorters, ItemFilters>(
                 U.Get<IItemGlobalService>().List,
-                GameCreatorScope.Instance.Role.Item.All());
+                GameCreatorScope.Instance.Context.Role.Item.All());
             ItemQuantityComponent.SetItem(d.TableDelegate);
         }
         public override void RefreshTab()

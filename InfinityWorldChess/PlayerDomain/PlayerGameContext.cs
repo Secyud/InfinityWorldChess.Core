@@ -113,11 +113,11 @@ namespace InfinityWorldChess.PlayerDomain
 
         public virtual IEnumerator OnGameCreation()
         {
-            GameCreatorScope cs = GameCreatorScope.Instance;
+            GameCreatorContext cs = GameCreatorScope.Instance.Context;
 
             HexMetrics.InitializeHashGrid(cs.WorldMessageSetting.Seed);
 
-            Role = GameCreatorScope.Instance.Role;
+            Role = cs.Role;
 
             Bundles.AddRange(cs.Bundles);
 

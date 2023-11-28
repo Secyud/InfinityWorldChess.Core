@@ -20,6 +20,7 @@ namespace InfinityWorldChess.GameDomain.SystemMenuDomain
 			{
 				GameScope.Instance.CloseSystemMenu();
 				U.Factory.GameShutdown();
+				U.M.DestroyScope<GameScope>();
 				U.M.CreateScope<MainMenuScope>();
 			});
 		}
