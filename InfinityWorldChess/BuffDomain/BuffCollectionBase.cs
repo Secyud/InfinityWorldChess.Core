@@ -29,36 +29,36 @@ namespace InfinityWorldChess.BuffDomain
                 InnerDictionary.TryGetValue(GetKey(index), out TBuff buff);
                 return buff;
             }
-            set
+            protected set
             {
-                TBuff iBuff = value;
-                TBuff oBuff = this[iBuff.Id];
+                TBuff buff = this[index];
+
+                if (value == buff) return;
+
                 if (value is null)
                 {
-                    oBuff?.UnInstallFrom(Target);
+                    buff.UnInstallFrom(Target);
                     InnerDictionary.Remove(GetKey(index));
+                }
+                else if (buff is null)
+                {
+                    InnerDictionary[GetKey(index)] = value;
+                    value.InstallFrom(Target);
+                }
+                else if (value is not IHasPriority iPriority)
+                {
+                }
+                else if (buff is not IHasPriority oPriority ||
+                         iPriority.Priority > oPriority.Priority)
+                {
+                    InnerDictionary[GetKey(index)] = value;
+                    buff.UnInstallFrom(Target);
+                    value.Overlay(buff);
+                    value.InstallFrom(Target);
                 }
                 else
                 {
-                    if (oBuff is null)
-                    {
-                        this[iBuff.Id] = iBuff;
-                        iBuff.InstallFrom(Target);
-                    }
-                    else if (iBuff is not IHasPriority iPriority)
-                    {
-                    }
-                    else if (oBuff is not IHasPriority oPriority ||
-                             iPriority.Priority > oPriority.Priority)
-                    {
-                        oBuff.UnInstallFrom(Target);
-                        iBuff.Overlay(oBuff);
-                        iBuff.InstallFrom(Target);
-                    }
-                    else
-                    {
-                        oBuff.Overlay(iBuff);
-                    }
+                    buff.Overlay(value);
                 }
             }
         }
@@ -81,7 +81,7 @@ namespace InfinityWorldChess.BuffDomain
             List<TBuff> buffs = InnerDictionary
                 .Values
                 .Where(b => b is IArchivable)
-                .Where(b=> b is not ILimitable limitable || limitable.CheckUseful())
+                .Where(b => b is not ILimitable limitable || limitable.CheckUseful())
                 .ToList();
 
             writer.Write(buffs.Count);

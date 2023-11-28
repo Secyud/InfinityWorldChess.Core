@@ -1,5 +1,6 @@
 using InfinityWorldChess.BuffDomain;
 using InfinityWorldChess.FunctionDomain;
+using InfinityWorldChess.GlobalDomain;
 using Secyud.Ugf;
 
 namespace InfinityWorldChess.RoleDomain

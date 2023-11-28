@@ -94,8 +94,8 @@ namespace InfinityWorldChess.ActivityDomain
 
         public void InstallFrom()
         {
-            if (State == ActivityState.Received && 
-                Current < Activities.Count)
+            State = ActivityState.Received;
+            if (Current < Activities.Count)
             {
                 Activities[Current].InstallFrom();
                 Activities[Current].Living = (byte)ActivityState.Received;

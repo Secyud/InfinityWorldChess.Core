@@ -16,9 +16,7 @@ namespace InfinityWorldChess.DialogueTemplates
         [field: S(0)] public string Text { get; set; }
         [field: S(0)] public bool Player { get; set; }
 
-        public IObjectAccessor<Role> RoleAccessor => new RoleDirectly
-        {
-            Value = GameScope.Instance?.Role.MainOperationRole
-        };
+        public IObjectAccessor<Role> RoleAccessor =>
+            Player ? PlayerRoleAccessor.Instance : MainOperationRoleAccessor.Instance;
     }
 }
