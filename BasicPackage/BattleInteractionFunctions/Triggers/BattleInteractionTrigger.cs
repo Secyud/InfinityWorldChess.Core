@@ -5,18 +5,19 @@ using InfinityWorldChess.FunctionDomain;
 using InfinityWorldChess.Ugf;
 using Secyud.Ugf.DataManager;
 
-namespace InfinityWorldChess.BattleBuffFunction
+namespace InfinityWorldChess.BattleInteractionFunctions
 {
-    public class FullLimitBattleInteractionTrigger : BattleInteractionTriggerBase, IBuffAttached
+    [ID("14BA7BC2-325D-368D-FB65-D1D0D1B66EE2")]
+    public class BattleInteractionTrigger : BattleInteractionTriggerBase
     {
-        [field: S] public IActionable Actionable { get; set; }
-        [field: S] public ILimitable<BattleInteraction> Limit { get; set; }
-
+        [field: S] public IActionable<BattleInteraction> Actionable { get; set; }
+        [field: S] public ILimitable Limit { get; set; }
+        
         public override void Invoke(BattleInteraction interaction)
         {
-            if (Limit is null || Limit.CheckUseful(interaction))
+            if (Limit is null || Limit.CheckUseful())
             {
-                Actionable?.Invoke();
+                Actionable?.Invoke(interaction);
                 base.Invoke(interaction);
             }
         }

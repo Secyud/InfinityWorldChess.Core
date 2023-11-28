@@ -5,9 +5,10 @@ using InfinityWorldChess.FunctionDomain;
 using InfinityWorldChess.Ugf;
 using Secyud.Ugf.DataManager;
 
-namespace InfinityWorldChess.BattleBuffFunction
+namespace InfinityWorldChess.BattleInteractionFunctions
 {
-    public class FullParamBattleInteractionTrigger : BattleInteractionTriggerBase
+    [ID("8DB6A9A1-DE9C-4BD1-933D-F44547D8B3B2")]
+    public class BattleInteractionTriggerFull : BattleInteractionTriggerBase
     {
         [field: S] public IActionable<BattleInteraction> Actionable { get; set; }
         [field: S] public ILimitable<BattleInteraction> Limit { get; set; }

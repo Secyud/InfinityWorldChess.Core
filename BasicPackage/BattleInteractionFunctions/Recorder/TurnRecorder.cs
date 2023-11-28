@@ -1,16 +1,15 @@
 ﻿using InfinityWorldChess.BattleDomain;
 using InfinityWorldChess.Ugf;
+using Secyud.Ugf.DataManager;
 using UnityEngine;
 
-namespace InfinityWorldChess.BattleBuffFunction
+namespace InfinityWorldChess.BattleInteractionFunctions
 {
-    public class TimeRecorder : BuffRecorderBase
+    [ID("5828303A-2706-9A32-08E7-992C5DD65E01")]
+    public class TurnRecorder : BuffRecorderBase
     {
-        protected int TimeRecord { get; set; }
-
         public override void InstallFrom(BattleRole target)
         {
-            TimeRecord = Context.TotalTime;
             Context.RoundBeginAction += CalculateRemove;
         }
 
@@ -21,20 +20,15 @@ namespace InfinityWorldChess.BattleBuffFunction
 
         public override void SetContent(Transform transform)
         {
-            transform.AddParagraph($"(剩余{Remain}时序)");
+            transform.AddParagraph($"(持续{Remain}回合)");
         }
-
 
         protected override void CalculateRemove()
         {
-            Buff.BuffRecord -= (Context.TotalTime - TimeRecord) * RemoveValue;
-            if (TimeRecord <= 0 && Buff.Target is not null)
+            if (Buff.Target == Context.Role)
             {
-                Buff.Target.Buffs.UnInstall(Buff.Id);
-                return;
+                base.CalculateRemove();
             }
-
-            TimeRecord = Context.TotalTime;
         }
     }
 }

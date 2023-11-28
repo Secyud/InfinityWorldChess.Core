@@ -1,9 +1,9 @@
-using InfinityWorldChess.BattleBuffDomain;
+using InfinityWorldChess.BattleBuffFunction;
 using InfinityWorldChess.BattleDomain;
 using Secyud.Ugf.DataManager;
 using UnityEngine;
 
-namespace InfinityWorldChess.BattleBuffFunction
+namespace InfinityWorldChess.BattleInteractionFunctions
 {
     public abstract class BuffRecorderBase : IBuffRecorder,IBuffAttached
     {

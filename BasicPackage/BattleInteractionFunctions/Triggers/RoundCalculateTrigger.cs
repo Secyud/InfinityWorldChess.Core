@@ -1,5 +1,6 @@
 using System;
 using InfinityWorldChess.BattleBuffDomain;
+using InfinityWorldChess.BattleBuffFunction;
 using InfinityWorldChess.BattleDomain;
 using InfinityWorldChess.BuffDomain;
 using InfinityWorldChess.FunctionDomain;
@@ -8,11 +9,12 @@ using Secyud.Ugf;
 using Secyud.Ugf.DataManager;
 using UnityEngine;
 
-namespace InfinityWorldChess.BattleBuffFunction
+namespace InfinityWorldChess.BattleInteractionFunctions
 {
     /// <summary>
     /// provide trigger in round calculate.
     /// </summary>
+    [ID("69DD7F7A-1E43-180F-C4C2-41A2C1761F6E")]
     public class RoundCalculateTrigger :
         IBuffEffect, IPropertyAttached, IActionable, IHasContent,ITriggerable,IBuffAttached
     {

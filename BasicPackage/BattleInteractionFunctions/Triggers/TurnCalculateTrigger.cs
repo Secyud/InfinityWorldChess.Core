@@ -1,5 +1,6 @@
 using System;
 using InfinityWorldChess.BattleBuffDomain;
+using InfinityWorldChess.BattleBuffFunction;
 using InfinityWorldChess.BattleDomain;
 using InfinityWorldChess.BuffDomain;
 using InfinityWorldChess.FunctionDomain;
@@ -8,7 +9,7 @@ using Secyud.Ugf;
 using Secyud.Ugf.DataManager;
 using UnityEngine;
 
-namespace InfinityWorldChess.BattleBuffFunction
+namespace InfinityWorldChess.BattleInteractionFunctions
 {
     /// <summary>
     /// provide trigger in round calculate.

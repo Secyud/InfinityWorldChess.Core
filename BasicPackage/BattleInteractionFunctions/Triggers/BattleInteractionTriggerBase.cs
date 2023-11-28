@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using InfinityWorldChess.BattleBuffDomain;
+using InfinityWorldChess.BattleBuffFunction;
 using InfinityWorldChess.BattleDomain;
 using InfinityWorldChess.BattleInteractionDomain;
 using InfinityWorldChess.BuffDomain;
@@ -10,7 +11,7 @@ using Secyud.Ugf;
 using Secyud.Ugf.DataManager;
 using UnityEngine;
 
-namespace InfinityWorldChess.BattleBuffFunction
+namespace InfinityWorldChess.BattleInteractionFunctions
 {
     public abstract class BattleInteractionTriggerBase : IBuffEffect, IPropertyAttached,
         IActionable<BattleInteraction>, IHasContent, ITriggerable,IBuffAttached

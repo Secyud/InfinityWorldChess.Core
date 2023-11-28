@@ -11,7 +11,7 @@ namespace InfinityWorldChess.BattleRoleFunctions
     /// <summary>
     /// 延缓敌方行动时间
     /// </summary>
-    public class BattleRoleTimeChange : IActionable<BattleRole>,IHasContent,IPropertyAttached
+    public class ChangeRoleTime : IActionable<BattleRole>,IHasContent,IPropertyAttached
     {
         [field: S] public float Factor { get; set; }
         [field: S] public float Value { get; set; }

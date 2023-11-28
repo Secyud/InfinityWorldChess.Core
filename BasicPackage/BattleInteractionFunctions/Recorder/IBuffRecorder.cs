@@ -1,9 +1,8 @@
-using InfinityWorldChess.BattleBuffDomain;
 using InfinityWorldChess.BattleDomain;
 using InfinityWorldChess.FunctionDomain;
 using Secyud.Ugf;
 
-namespace InfinityWorldChess.BattleBuffFunction
+namespace InfinityWorldChess.BattleInteractionFunctions
 {
     public interface IBuffRecorder: IInstallable<BattleRole>, IHasContent
     {
