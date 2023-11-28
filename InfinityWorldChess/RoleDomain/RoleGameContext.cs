@@ -12,6 +12,7 @@ using Secyud.Ugf.Archiving;
 using Secyud.Ugf.DataManager;
 using Secyud.Ugf.DependencyInjection;
 using Secyud.Ugf.HexMap;
+using Secyud.Ugf.HexMapExtensions;
 
 #endregion
 
@@ -91,7 +92,8 @@ namespace InfinityWorldChess.RoleDomain
                 var role = template.GenerateRole();
                 
                 this[role.Id] = role;
-                HexCell cell = GameScope.Instance.Map.Value.GetCell(template.PositionIndex);
+                HexCell cell = GameScope.Instance.Map
+                    .Value[template.PositionX,template.PositionZ];
                 role.Position = cell as WorldCell;
             }
 

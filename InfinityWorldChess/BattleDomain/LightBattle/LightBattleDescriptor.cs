@@ -31,7 +31,7 @@ namespace InfinityWorldChess.BattleDomain
         public void OnBattleCreated()
         {
             BattleScope scope = BattleScope.Instance;
-            HexCell cell1 = scope.Map.GetCell(2, 2);
+            HexCell cell1 = scope.Map[2, 2];
             BattlePlayer = new BattleRole(Player)
             {
                 PlayerControl = true,
@@ -43,9 +43,7 @@ namespace InfinityWorldChess.BattleDomain
                 }
             };
             scope.AddRoleBattleChess(BattlePlayer, cell1);
-            int width = scope.Map.CellCountX;
-            int height = scope.Map.CellCountZ;
-            HexCell cell2 = scope.Map.GetCell(width - 3, height - 3);
+            HexCell cell2 = scope.Map[8, 8];
             BattleTarget = new BattleRole(Target)
             {
                 PlayerControl = false,

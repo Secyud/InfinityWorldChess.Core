@@ -10,7 +10,8 @@ namespace InfinityWorldChess.RoleDomain
     public class RoleTemplate
     {
         [field: S(-1)] public int Id { get; set; }
-        [field: S(0)] public int PositionIndex { get; set; }
+        [field: S(0)] public int PositionX { get; set; }
+        [field: S(0)] public int PositionZ { get; set; }
         [field: S(1)] public string LastName { get; set; }
         [field: S(2)] public string FirstName { get; set; }
         [field: S(3)] public string Description { get; set; }

@@ -15,8 +15,20 @@ namespace InfinityWorldChess.GameDomain.WorldCellDomain
     public class WorldCell : UgfCell
     {
         private byte _pathState;
+        private WorldCellMessage _message;
         public List<Role> InRoles { get; } = new();
         public List<ButtonDescriptor<WorldCell>> Buttons { get; } = new();
+
+        public WorldCellMessage Message
+        {
+            get => _message;
+            set
+            {
+                _message = value;
+
+                FeaturePrefab = value?.FeaturePrefab?.Value;
+            }
+        }
 
         public byte PathState
         {
@@ -59,7 +71,5 @@ namespace InfinityWorldChess.GameDomain.WorldCellDomain
                 EnableHighlight(Color.black);
             }
         }
-
-        public WorldCellMessage Message => GameScope.Instance.World.GetMessage(Index) ;
     }
 }

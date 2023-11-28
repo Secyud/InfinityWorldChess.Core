@@ -15,9 +15,9 @@ namespace InfinityWorldChess.FunctionDomain
 
     public interface IActionInstallTarget 
     {
-        void Install(IActionable installable);
+        void Install(IActionable actionable);
 
-        void UnInstall(IActionable installable);
+        void UnInstall(IActionable actionable);
     }
     public interface IActionInstallTarget<out TTarget>
     {

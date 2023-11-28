@@ -8,7 +8,7 @@ namespace InfinityWorldChess.RoleAccessors
 {
     public class TemplateRoleAccessor:ResourceAccessor<RoleTemplate>,IObjectAccessor<Role>
     {
-        [field:S] public Guid ClassId { get; set; }
+        [field:S,TypeLimit(typeof(RoleTemplate))] public Guid ClassId { get; set; }
         protected override Guid TypeId => ClassId;
         public new Role Value => base.Value.GenerateRole();
     }

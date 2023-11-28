@@ -10,6 +10,6 @@ namespace InfinityWorldChess.BattleTemplates
         [field: S(1)] public float R { get; set; }
         [field: S(1)] public float G { get; set; }
         [field: S(1)] public float B { get; set; }
-        [field: S(2)] public List<RoleWithIndex> CampRoles { get; } = new();
+        [field: S(2)] public List<RoleWithPosition> CampRoles { get; } = new();
     }
 }

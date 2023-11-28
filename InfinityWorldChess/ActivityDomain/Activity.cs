@@ -2,15 +2,12 @@ using InfinityWorldChess.BuffDomain;
 using InfinityWorldChess.FunctionDomain;
 using InfinityWorldChess.Ugf;
 using Secyud.Ugf;
-using Secyud.Ugf.Archiving;
 using Secyud.Ugf.DataManager;
 using UnityEngine;
 
 namespace InfinityWorldChess.ActivityDomain
 {
-    public class Activity :
-        IInstallable, IShowable, IHasContent, IDataResource,
-        IPropertyAttached, IAttachProperty
+    public class Activity :IActivity
     {
         [field: S(0)] public string Name { get; set; }
         [field: S(0)] public string ResourceId { get; set; }

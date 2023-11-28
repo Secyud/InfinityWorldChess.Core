@@ -6,25 +6,25 @@ using InfinityWorldChess.RoleDomain;
 using Secyud.Ugf;
 using Secyud.Ugf.DataManager;
 using Secyud.Ugf.HexMap;
+using Secyud.Ugf.HexMapExtensions;
 using UnityEngine;
 
 namespace InfinityWorldChess.BattleTemplates
 {
-    public class Battle : IBattleDescriptor,IObjectAccessor<IBattleDescriptor>
+    public class Battle : IBattleDescriptor, IObjectAccessor<IBattleDescriptor>
     {
-        [field: S(0)]public string ResourceId { get; set; }
+        [field: S(0)] public string ResourceId { get; set; }
         [field: S(2)] public int SizeX { get; set; }
         [field: S(2)] public int SizeZ { get; set; }
         [field: S(3)] public IBattleVictoryCondition VictoryCondition { get; set; }
-        [field: S(1)] public string Description { get;set; }
-        [field: S(0)] public string Name { get; set;}
-        [field: S(4)] public IObjectAccessor<Sprite> Icon { get; set;}
+        [field: S(1)] public string Description { get; set; }
+        [field: S(0)] public string Name { get; set; }
+        [field: S(4)] public IObjectAccessor<Sprite> Icon { get; set; }
         [field: S(3)] public List<BattleCampSetting> BattleCampSettings { get; } = new();
         public virtual WorldCell Cell => GameScope.Instance.Player.Role.Position;
-        
+
         public void OnBattleFinished()
         {
-            
         }
 
         public void OnBattleCreated()
@@ -35,29 +35,29 @@ namespace InfinityWorldChess.BattleTemplates
                 {
                     Name = setting.Name,
                     Index = setting.Index,
-                    Color = new Color(setting.R,setting.G,setting.B)
+                    Color = new Color(setting.R, setting.G, setting.B)
                 };
 
-                foreach (RoleWithIndex roleIndex in setting.CampRoles)
+                foreach (RoleWithPosition roleWithPosition in setting.CampRoles)
                 {
-                    Role role = roleIndex.RoleAccessor?.Value;
+                    Role role = roleWithPosition.RoleAccessor?.Value;
                     if (role is not null)
                     {
-                        AddBattleRole(role, roleIndex.Index, camp);
+                        AddBattleRole(role, roleWithPosition.PositionX,roleWithPosition.PositionZ, camp);
                     }
                 }
             }
-            
+
             VictoryCondition.SetCondition();
         }
 
         public bool Victory => VictoryCondition.Victory;
         public bool Defeated => VictoryCondition.Defeated;
 
-        private static void AddBattleRole(Role role,int index,BattleCamp camp)
+        private static void AddBattleRole(Role role, int x, int z, BattleCamp camp)
         {
             BattleScope scope = BattleScope.Instance;
-            HexCell cell = scope.Map.GetCell(index);
+            HexCell cell = scope.Map[x,z];
             BattleRole battleRole = new(role)
             {
                 PlayerControl = true,

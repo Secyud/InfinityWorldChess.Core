@@ -31,12 +31,11 @@ namespace InfinityWorldChess.GameDomain.WorldMapDomain
 
         public void AddMessage(WorldCellMessage message)
         {
-            WorldMessage[message.Index] = message;
             WorldIndexById[message.Id] = message;
             WorldCell cell = message.Cell;
             if (cell)
             {
-                cell.FeaturePrefab = message.FeaturePrefab?.Value;
+                cell.Message = message;
             }
         }
 
@@ -54,19 +53,12 @@ namespace InfinityWorldChess.GameDomain.WorldMapDomain
 
         public void RemoveMessage(WorldCellMessage message)
         {
-            if (WorldMessage.TryGetValue(message.Index, out WorldCellMessage msg))
+            WorldCell cell = message.Cell;
+            if (cell)
             {
-                if (msg == message)
-                {
-                    WorldCell cell = message.Cell;
-                    if (cell)
-                    {
-                        cell.FeaturePrefab = null;
-                    }
-                }
+                cell.Message = null;
             }
 
-            WorldMessage.Remove(message.Index);
             WorldMessage.Remove(message.Id);
         }
 
