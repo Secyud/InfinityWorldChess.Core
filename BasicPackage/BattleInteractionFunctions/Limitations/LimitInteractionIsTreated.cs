@@ -4,9 +4,9 @@ using InfinityWorldChess.Ugf;
 using Secyud.Ugf;
 using UnityEngine;
 
-namespace InfinityWorldChess.BattleBuffFunction
+namespace InfinityWorldChess.BattleInteractionFunctions
 {
-    public class TreatInteractionLimit : 
+    public class LimitInteractionIsTreated : 
         ILimitable<BattleInteraction>, IHasContent
     {
         public void SetContent(Transform transform)

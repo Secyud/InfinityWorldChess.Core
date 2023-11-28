@@ -12,7 +12,7 @@ using UnityEngine;
 
 namespace InfinityWorldChess.BattleInteractionFunctions
 {
-    public class DamageChangeEffect : IActionable<BattleInteraction>, IHasContent,IHasPriority
+    public class ChangeDamageFactor : IActionable<BattleInteraction>, IHasContent, IHasPriority
     {
         [field: S] public float Factor { get; set; }
 
@@ -20,23 +20,13 @@ namespace InfinityWorldChess.BattleInteractionFunctions
 
         public void Invoke(BattleInteraction interaction)
         {
-            AttackRecordProperty attack = interaction.GetAttack();
-            if (attack is not null)
-            {
-                attack.DamageFactor += Factor;
-            }
+            AttackRecordProperty attack = interaction.GetOrAddAttack();
+            attack.DamageFactor += Factor;
         }
 
         public void SetContent(Transform transform)
         {
-            if (Factor > 0)
-            {
-                transform.AddParagraph($"伤害增加{Factor:P0}。");
-            }
-            else if (Factor < 0)
-            {
-                transform.AddParagraph($"伤害减少{-Factor:P0}。");
-            }
+            transform.AddParagraph($"伤害{BPC.P(Factor)}。");
         }
     }
 }

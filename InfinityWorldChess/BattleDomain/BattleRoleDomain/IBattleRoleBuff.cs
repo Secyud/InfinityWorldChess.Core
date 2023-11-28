@@ -10,5 +10,8 @@ namespace InfinityWorldChess.BattleDomain
         IOverlayable<BattleRole>,
         IPropertyAttached
     {
+        BattleRole Target { get; set; }
+        BattleRole Origin { get; set; }
+        int BuffRecord { get; set; }
     }
 }

@@ -24,7 +24,7 @@ namespace InfinityWorldChess.RoleDomain
             private readonly List<ICoreSkill> _learnedSkills = new();
 
             private readonly CoreSkillContainer[] _equippedSkills =
-                new CoreSkillContainer[SharedConsts.CoreSkillCount];
+                new CoreSkillContainer[IWCC.CoreSkillCount];
 
             public IReadOnlyList<ICoreSkill> GetLearnedSkills()
             {
@@ -70,7 +70,7 @@ namespace InfinityWorldChess.RoleDomain
 
             public void GetGroup(byte maxLayer, byte preCode, CoreSkillContainer[] group)
             {
-                for (uint i = 0; i < SharedConsts.CoreSkillCodeCount; i++)
+                for (uint i = 0; i < IWCC.CoreSkillCodeCount; i++)
                 {
                     group[i] = _equippedSkills[GetIndex(maxLayer, (byte)(preCode + (i << maxLayer)))];
                 }
@@ -124,7 +124,7 @@ namespace InfinityWorldChess.RoleDomain
                 int bias = 0, layerLen = 1;
                 for (int i = 0; i < maxLayer; i++)
                 {
-                    layerLen *= SharedConsts.CoreSkillCodeCount;
+                    layerLen *= IWCC.CoreSkillCodeCount;
                     bias += layerLen;
                 }
 
@@ -165,7 +165,7 @@ namespace InfinityWorldChess.RoleDomain
                 }
 
 
-                const int count = SharedConsts.CoreSkillCodeCount * SharedConsts.CoreSkillCodeCount;
+                const int count = IWCC.CoreSkillCodeCount * IWCC.CoreSkillCodeCount;
 
                 for (byte i = 0; i < count; i++)
                 {
@@ -232,12 +232,12 @@ namespace InfinityWorldChess.RoleDomain
                     }
                     else
                     {
-                        int layerLen = SharedConsts.CoreSkillCodeCount, layer = 0, code = i;
+                        int layerLen = IWCC.CoreSkillCodeCount, layer = 0, code = i;
                         for (; code - layerLen > 0;)
                         {
                             code -= layerLen;
                             layer++;
-                            layerLen *= SharedConsts.CoreSkillCodeCount;
+                            layerLen *= IWCC.CoreSkillCodeCount;
                         }
 
                         _equippedSkills[i] = new CoreSkillContainer(

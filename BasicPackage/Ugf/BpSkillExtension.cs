@@ -1,8 +1,8 @@
 ﻿#region
 
+using InfinityWorldChess.BattleBuffFunction;
 using InfinityWorldChess.BattleDomain;
 using InfinityWorldChess.BattleInteractionDomain;
-using InfinityWorldChess.RoleDomain;
 using InfinityWorldChess.SkillDomain;
 
 #endregion
@@ -11,6 +11,14 @@ namespace InfinityWorldChess.Ugf
 {
     public static class BpSkillExtension
     {
+        public static void TryAttach(this IBattleRoleBuff buff, object attached)
+        {
+            if (attached is IBuffAttached buffAttached)
+            {
+                buffAttached.Buff = buff;
+            }
+        }
+        
         public static AttackRecordProperty GetOrAddAttack(this BattleInteraction interaction)
         {
             return interaction.Properties.GetOrCreate<AttackRecordProperty>();

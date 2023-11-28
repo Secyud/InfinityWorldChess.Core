@@ -1,4 +1,4 @@
-﻿using InfinityWorldChess.BattleBuffDomain;
+﻿using InfinityWorldChess.BattleDomain;
 using InfinityWorldChess.BattleInteractionDomain;
 using InfinityWorldChess.BuffDomain;
 using InfinityWorldChess.FunctionDomain;
@@ -9,13 +9,13 @@ using UnityEngine;
 
 namespace InfinityWorldChess.BattleBuffFunction
 {
-    public class ExtraBattleInteraction : IActionable,IPropertyAttached,IHasContent
+    public class ExtraBattleInteraction : IActionable,IPropertyAttached,IHasContent,IBuffAttached
     {
         [field: S(258)] public IActionable<BattleInteraction> PreInteraction { get; set; }
         [field: S(259)] public IActionable<BattleInteraction> OnInteraction { get; set; }
         [field: S(260)] public IActionable<BattleInteraction> PostInteraction { get; set; }
 
-        public BattleRoleBuff Origin { get; set; }
+        public IBattleRoleBuff Buff { get; set; }
 
         public IAttachProperty Property
         {
@@ -48,7 +48,7 @@ namespace InfinityWorldChess.BattleBuffFunction
             _triggerState = true;
             
             BattleInteraction interaction = BattleInteraction
-                .Create(Origin.Origin, Origin.Target);
+                .Create(Buff.Origin, Buff.Target);
             PreInteraction?.Invoke(interaction);
             interaction.BeforeHit();
             OnInteraction?.Invoke(interaction);

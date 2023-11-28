@@ -24,10 +24,10 @@ namespace InfinityWorldChess.BattleDomain
 
 
         public CoreSkillContainer[] NextCoreSkills { get; } =
-            new CoreSkillContainer[SharedConsts.CoreSkillCodeCount];
+            new CoreSkillContainer[IWCC.CoreSkillCodeCount];
 
         public FormSkillContainer[] NextFormSkills { get; } =
-            new FormSkillContainer[SharedConsts.FormSkillTypeCount];
+            new FormSkillContainer[IWCC.FormSkillTypeCount];
 
         public Role Role { get; }
 
@@ -76,7 +76,7 @@ namespace InfinityWorldChess.BattleDomain
         public int ExecutionValue
         {
             get => _execution;
-            set => _execution = Math.Min(value, SharedConsts.MaxExecutionValue);
+            set => _execution = Math.Min(value, IWCC.MaxExecutionValue);
         }
 
         public float HealthValue
@@ -204,7 +204,7 @@ namespace InfinityWorldChess.BattleDomain
 
         public int GetTimeAdd()
         {
-            const float factor = SharedConsts.BattleTimeFactor;
+            const float factor = IWCC.BattleTimeFactor;
             float ret = factor + 4 * factor * factor / 
                 (factor + Role.BodyPart[BodyType.Nimble].MaxValue);
             return Math.Max((int)ret, 1);

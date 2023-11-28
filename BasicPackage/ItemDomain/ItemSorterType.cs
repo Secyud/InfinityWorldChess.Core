@@ -1,6 +1,5 @@
 ﻿#region
 
-using InfinityWorldChess.ItemDomain.EquipmentDomain;
 using InfinityWorldChess.ItemTemplates;
 using InfinityWorldChess.ManufacturingDomain.Equipments;
 using Secyud.Ugf.TableComponents.SorterComponents;

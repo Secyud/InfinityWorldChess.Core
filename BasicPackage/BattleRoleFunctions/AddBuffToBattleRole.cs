@@ -1,6 +1,7 @@
 using InfinityWorldChess.BattleDomain;
 using InfinityWorldChess.BuffDomain;
 using InfinityWorldChess.FunctionDomain;
+using InfinityWorldChess.SkillDomain;
 using InfinityWorldChess.Ugf;
 using Secyud.Ugf;
 using UnityEngine;
@@ -21,6 +22,11 @@ namespace InfinityWorldChess.BattleRoleFunctions
 
             IBattleRoleBuff buff = Accessor?.Value;
             if (buff is null) return;
+            if (Property is ActiveSkillBase activeSkillBase)
+            {
+                buff.Origin = activeSkillBase.Role;
+            }
+            buff.Target = target;
             buff.Property = Property;
             target.Buffs.Install(buff);
         }

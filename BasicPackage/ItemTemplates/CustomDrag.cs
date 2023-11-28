@@ -1,5 +1,4 @@
-﻿using InfinityWorldChess.ItemDomain.FoodDomain;
-using InfinityWorldChess.Ugf;
+﻿using InfinityWorldChess.Ugf;
 using Secyud.Ugf.Archiving;
 using UnityEngine;
 

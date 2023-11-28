@@ -27,7 +27,7 @@ namespace InfinityWorldChess.RoleDomain
         public class PassiveSkillProperty
         {
             private readonly List< IPassiveSkill> _learnedSkills = new();
-            private readonly IPassiveSkill[] _equippedSkills = new IPassiveSkill[SharedConsts.PassiveSkillCount];
+            private readonly IPassiveSkill[] _equippedSkills = new IPassiveSkill[IWCC.PassiveSkillCount];
 
             public IReadOnlyList<IPassiveSkill> GetLearnedSkills()
             {
@@ -54,7 +54,7 @@ namespace InfinityWorldChess.RoleDomain
 
             public int Defend => _equippedSkills.Sum(u => u?.Defend ?? 0);
 
-            public int Length => SharedConsts.PassiveSkillCount;
+            public int Length => IWCC.PassiveSkillCount;
 
             public IPassiveSkill this[int location] => _equippedSkills[location];
 
@@ -66,7 +66,7 @@ namespace InfinityWorldChess.RoleDomain
                         return;
 
                     if (value is not null)
-                        for (int i = 0; i < SharedConsts.PassiveSkillCount; i++)
+                        for (int i = 0; i < IWCC.PassiveSkillCount; i++)
                             if (_equippedSkills[i] is not null && _equippedSkills[i] == value)
                             {
                                 if (i == location)
@@ -96,7 +96,7 @@ namespace InfinityWorldChess.RoleDomain
                     skill.SaveIndex = i;
                 }
 
-                for (int i = 0; i < SharedConsts.PassiveSkillCount; i++)
+                for (int i = 0; i < IWCC.PassiveSkillCount; i++)
                 {
                     writer.Write(_equippedSkills[i]?.SaveIndex ?? -1);
                 }
@@ -114,7 +114,7 @@ namespace InfinityWorldChess.RoleDomain
                 }
 
 
-                for (int i = 0; i < SharedConsts.PassiveSkillCount; i++)
+                for (int i = 0; i < IWCC.PassiveSkillCount; i++)
                 {
                     int index = reader.ReadInt32();
                     this[i, role] = index < 0 ? null : _learnedSkills[index];
@@ -125,16 +125,16 @@ namespace InfinityWorldChess.RoleDomain
             {
                 int minLevel = 0;
                 int record = 0;
-                IPassiveSkill[] tmp = new IPassiveSkill[SharedConsts.PassiveSkillCount];
+                IPassiveSkill[] tmp = new IPassiveSkill[IWCC.PassiveSkillCount];
                 foreach (IPassiveSkill skill in _learnedSkills
                              .Where(skill => skill.Score >= minLevel))
                 {
                     minLevel = skill.Score;
                     tmp[record] = skill;
-                    record = (record + 1) % SharedConsts.PassiveSkillCount;
+                    record = (record + 1) % IWCC.PassiveSkillCount;
                 }
 
-                for (int i = 0; i < SharedConsts.PassiveSkillCount; i++)
+                for (int i = 0; i < IWCC.PassiveSkillCount; i++)
                     this[i, role] = tmp[i];
             }
         }

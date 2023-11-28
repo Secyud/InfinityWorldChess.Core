@@ -22,7 +22,7 @@ namespace InfinityWorldChess.RoleDomain
 
         [field: S(18)]
         public AvatarElement[] Avatar { get; } =
-            new AvatarElement[SharedConsts.AvatarElementCount];
+            new AvatarElement[IWCC.AvatarElementCount];
 
         [field: S(9)] public int Living { get; set; }
         [field: S(9)] public int Kiling { get; set; }
@@ -35,19 +35,19 @@ namespace InfinityWorldChess.RoleDomain
 
         [field: S(18)]
         public IObjectAccessor<ICoreSkill>[] CoreSkills { get; } =
-            new IObjectAccessor<ICoreSkill>[SharedConsts.CoreSkillCount];
+            new IObjectAccessor<ICoreSkill>[IWCC.CoreSkillCount];
 
         [field: S(19)] public List<IObjectAccessor<IFormSkill>> LearnedFormSkills { get; } = new();
 
         [field: S(20)]
         public IObjectAccessor<IFormSkill>[] FormSkills { get; } =
-            new IObjectAccessor<IFormSkill>[SharedConsts.FormSkillCount];
+            new IObjectAccessor<IFormSkill>[IWCC.FormSkillCount];
 
         [field: S(21)] public List<IObjectAccessor<IPassiveSkill>> LearnedPassiveSkills { get; } = new();
 
         [field: S(22)]
         public IObjectAccessor<IPassiveSkill>[] PassiveSkills { get; } =
-            new IObjectAccessor<IPassiveSkill>[SharedConsts.PassiveSkillCount];
+            new IObjectAccessor<IPassiveSkill>[IWCC.PassiveSkillCount];
 
         [field: S(23)] public List<IObjectAccessor<IItem>> Items { get; } = new();
 
@@ -170,8 +170,8 @@ namespace InfinityWorldChess.RoleDomain
                 if (skill is null)continue;
                 SetSkill(skill);
                 role.FormSkill.TryAddLearnedSkill(skill);
-                role.FormSkill.Set(skill, (byte)(i / SharedConsts.FormSkillTypeCount),
-                    (byte)(i % SharedConsts.FormSkillTypeCount));
+                role.FormSkill.Set(skill, (byte)(i / IWCC.FormSkillTypeCount),
+                    (byte)(i % IWCC.FormSkillTypeCount));
             }
 
             foreach (IObjectAccessor<IPassiveSkill> accessor in LearnedPassiveSkills)

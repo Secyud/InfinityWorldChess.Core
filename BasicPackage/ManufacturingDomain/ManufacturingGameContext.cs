@@ -17,7 +17,7 @@ namespace InfinityWorldChess.ManufacturingDomain
     {
         public List<ManufacturingButtonDescriptor> ActivityButtons;
 
-        private static string FileName => SharedConsts.SaveFilePath(nameof(ManufacturingGameContext));
+        private static string FileName => IWCC.SaveFilePath(nameof(ManufacturingGameContext));
 
         public void OnGameLoading()
         {

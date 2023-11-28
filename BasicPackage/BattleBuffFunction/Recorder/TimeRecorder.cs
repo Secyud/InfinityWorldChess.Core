@@ -27,10 +27,10 @@ namespace InfinityWorldChess.BattleBuffFunction
 
         protected override void CalculateRemove()
         {
-            Origin.BuffRecord -= (Context.TotalTime - TimeRecord) * RemoveValue;
-            if (TimeRecord <= 0 && Origin.Target is not null)
+            Buff.BuffRecord -= (Context.TotalTime - TimeRecord) * RemoveValue;
+            if (TimeRecord <= 0 && Buff.Target is not null)
             {
-                Origin.Target.Buffs.UnInstall(Origin.Id);
+                Buff.Target.Buffs.UnInstall(Buff.Id);
                 return;
             }
 

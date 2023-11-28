@@ -13,7 +13,7 @@ using UnityEngine;
 namespace InfinityWorldChess.BattleBuffFunction
 {
     public abstract class BattleInteractionTriggerBase : IBuffEffect, IPropertyAttached,
-        IActionable<BattleInteraction>, IHasContent, ITriggerable
+        IActionable<BattleInteraction>, IHasContent, ITriggerable,IBuffAttached
     {
         private IAttachProperty _property;
         [field: S] public byte InteractionType { get; set; }
@@ -39,7 +39,6 @@ namespace InfinityWorldChess.BattleBuffFunction
 
         public virtual void Attached(IAttachProperty property)
         {
-            
         }
 
         public virtual void InstallFrom(BattleRole target)
@@ -77,6 +76,13 @@ namespace InfinityWorldChess.BattleBuffFunction
             };
 
             transform.AddParagraph("每次受到技能触发。");
+        }
+
+        public IBattleRoleBuff Buff { get => null; set=> SetBuff(value); }
+
+        protected virtual void SetBuff(IBattleRoleBuff buff)
+        {
+            
         }
     }
 }

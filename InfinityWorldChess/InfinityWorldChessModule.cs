@@ -64,7 +64,7 @@ namespace InfinityWorldChess
 
         public IEnumerator OnGameInitializing(GameInitializeContext context)
         {
-            if (SharedConsts.LoadGame)
+            if (IWCC.LoadGame)
             {
                 yield return LoadGame();
             }

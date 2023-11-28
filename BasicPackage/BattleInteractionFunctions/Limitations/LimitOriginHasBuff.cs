@@ -5,9 +5,9 @@ using Secyud.Ugf;
 using Secyud.Ugf.DataManager;
 using UnityEngine;
 
-namespace InfinityWorldChess.BattleBuffFunction
+namespace InfinityWorldChess.BattleInteractionFunctions
 {
-    public class OriginBuffLimit : ILimitable<BattleInteraction>, IHasContent
+    public class LimitOriginHasBuff : ILimitable<BattleInteraction>, IHasContent
     {
         [field: S] public int BuffId { get; set; }
         [field: S] public string BuffName { get; set; }

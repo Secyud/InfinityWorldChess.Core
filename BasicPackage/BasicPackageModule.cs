@@ -9,12 +9,10 @@ using InfinityWorldChess.RoleDomain;
 using Secyud.Ugf.DependencyInjection;
 using Secyud.Ugf.Modularity;
 using System.IO;
-using InfinityWorldChess.ActivityDomain;
 using InfinityWorldChess.ActivityFunctions;
 using InfinityWorldChess.DialogueDomain;
 using InfinityWorldChess.DialogueFunctions;
 using InfinityWorldChess.GameDomain;
-using InfinityWorldChess.GameDomain.WorldCellDomain;
 using InfinityWorldChess.InteractionDomain;
 using InfinityWorldChess.SkillDomain;
 using Secyud.Ugf;
@@ -86,7 +84,7 @@ namespace InfinityWorldChess
             //U.Get<ManufacturingGameContext>().OnGameSaving();
             //U.Get<ManufacturingGameContext>().OnGameCreation();
 
-            if (!SharedConsts.LoadGame)
+            if (!IWCC.LoadGame)
             {
                 var role = GameScope.Instance.Player.Role;
                 var coreSkill = U.Tm.ReadObjectFromResource<CoreSkill>("基础招式_砸");

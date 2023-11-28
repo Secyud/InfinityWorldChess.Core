@@ -17,7 +17,7 @@ namespace InfinityWorldChess.SkillDomain
             int layer = 0;
             int threshold = 2;
 
-            for (int i = 0; i < SharedConsts.CoreSkillLayerCount && code >= threshold; i++)
+            for (int i = 0; i < IWCC.CoreSkillLayerCount && code >= threshold; i++)
             {
                 code -= threshold;
                 layer++;

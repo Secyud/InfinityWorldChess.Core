@@ -10,7 +10,7 @@ using UnityEngine;
 
 namespace InfinityWorldChess.BattleInteractionFunctions
 {
-    public class OriginRoleAction: IActionable<BattleInteraction>, IPropertyAttached,
+    public class ActiveForOriginRole: IActionable<BattleInteraction>, IPropertyAttached,
         IHasContent, IHasPriority
     {
         [field:S]public int Priority { get; set; }

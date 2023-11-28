@@ -13,18 +13,17 @@ namespace InfinityWorldChess.BattleBuffFunction
     /// <summary>
     /// provide trigger in round calculate.
     /// </summary>
-    public class RoundCalculateTrigger :
+    public class TurnCalculateTrigger :
         IBuffEffect, IPropertyAttached, IActionable, IHasContent,ITriggerable,IBuffAttached
     {
         private BattleContext Context => BattleScope.Instance.Context;
         
         [field: S] public IActionable Actionable { get; set; }
         [field: S] public ILimitable Limit { get; set; }
-        [field: S(0)] public int Time { get; set; }
+        [field: S(0)] public int Turn { get; set; }
 
+        public int TurnRecord { get; set; }
         public event Action ExtraActions;
-        protected float TimeRecord { get; set; }
-        
         public IAttachProperty Property
         {
             get => null;
@@ -34,7 +33,6 @@ namespace InfinityWorldChess.BattleBuffFunction
                 value.TryAttach(Actionable);
             }
         }
-
         public IBattleRoleBuff Buff
         {
             get => null;
@@ -44,26 +42,24 @@ namespace InfinityWorldChess.BattleBuffFunction
                 value.TryAttach(Actionable);
             }
         }
-
         public void Invoke()
         {
-            float currentTime = Context.TotalTime;
-            while (currentTime > TimeRecord + Time)
-            {
+            TurnRecord += 1;
+            if (TurnRecord <= Turn)
+                return;
             
-                if (Limit is null || Limit.CheckUseful())
-                {
-                    Actionable?.Invoke();
-                    ExtraActions?.Invoke();
-                }
-
-                TimeRecord += Time;
+            TurnRecord = 0;
+            
+            if (Limit is null || Limit.CheckUseful())
+            {
+                Actionable?.Invoke();
+                ExtraActions?.Invoke();
             }
         }
         
         public void InstallFrom(BattleRole target)
         {
-            TimeRecord = Context.TotalTime;
+            TurnRecord = 0;
             Context.RoundBeginAction += Invoke;
         }
 
@@ -74,7 +70,7 @@ namespace InfinityWorldChess.BattleBuffFunction
         
         public void SetContent(Transform transform)
         {
-            transform.AddParagraph($"每{Time}时序触发。");
+            transform.AddParagraph($"每{Turn}回合触发。");
             Limit.TrySetContent(transform);
             Actionable.TrySetContent(transform);
         }

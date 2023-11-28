@@ -6,7 +6,7 @@ namespace InfinityWorldChess.SkillDomain
 {
 	public sealed class FormSkillView : SkillViewBase<FormSkillCell, FormSkillView>
 	{
-		protected override int CellCount => SharedConsts.FormSkillCount;
+		protected override int CellCount => IWCC.FormSkillCount;
 
 		public override void BindCell(FormSkillCell cell)
 		{
@@ -15,7 +15,7 @@ namespace InfinityWorldChess.SkillDomain
 		}
 		protected override void InitData()
 		{
-			for (int i = 0; i < SharedConsts.FormSkillCount; i++)
+			for (int i = 0; i < IWCC.FormSkillCount; i++)
 			{
 				Cells[i].Bind(Property.FormSkill[i]?.FormSkill);
 			}

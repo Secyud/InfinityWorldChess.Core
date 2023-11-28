@@ -4,12 +4,13 @@ using InfinityWorldChess.GlobalDomain;
 using InfinityWorldChess.Ugf;
 using Secyud.Ugf;
 using Secyud.Ugf.DataManager;
+using Secyud.Ugf.HexMap;
 using UnityEngine;
 
 namespace InfinityWorldChess.BattleInteractionFunctions
 {
-    [ID("c32a9205-1b69-757e-cdfd-e44cb6040571")]
-    public class MinusDefendFactor: IActionable<BattleInteraction>, IHasContent,IHasPriority
+    [ID("C6E92AB6-B9A3-6DB8-47D9-D6738F6604FB")]
+    public class ChangeDamageFactorByDistance : IActionable<BattleInteraction>, IHasContent, IHasPriority
     {
         [field: S] public float Factor { get; set; }
 
@@ -17,13 +18,15 @@ namespace InfinityWorldChess.BattleInteractionFunctions
 
         public void SetContent(Transform transform)
         {
-            transform.AddParagraph($"此攻击无视敌方{Factor:P0}防御。");
+            transform.AddParagraph($"每单位距离{BPC.P(Factor)}此招式伤害。");
         }
 
         public void Invoke(BattleInteraction interaction)
         {
+            HexUnit attackerUnit = interaction.Origin.Unit;
+            HexUnit defenderUnit = interaction.Target.Unit;
             AttackRecordProperty attackRecord = interaction.GetOrAddAttack();
-            attackRecord.DefendFactor -= Factor;
+            attackRecord.DamageFactor += Factor * attackerUnit.DistanceTo(defenderUnit);
         }
     }
 }

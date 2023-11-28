@@ -18,10 +18,10 @@ namespace InfinityWorldChess.RoleDomain
     public class RoleResourceManager : IRegistry
     {
         public readonly RegistrableDictionary<int, AvatarSpriteContainer>[] MaleAvatarResource =
-            new RegistrableDictionary<int, AvatarSpriteContainer>[SharedConsts.AvatarElementCount];
+            new RegistrableDictionary<int, AvatarSpriteContainer>[IWCC.AvatarElementCount];
 
         public readonly RegistrableDictionary<int, AvatarSpriteContainer>[] FemaleAvatarResource =
-            new RegistrableDictionary<int, AvatarSpriteContainer>[SharedConsts.AvatarElementCount];
+            new RegistrableDictionary<int, AvatarSpriteContainer>[IWCC.AvatarElementCount];
 
         public List<Tuple<string, Guid>> CoreSkills { get; } = new();
         public List<Tuple<string, Guid>> FormSkills { get; } = new();
@@ -46,7 +46,7 @@ namespace InfinityWorldChess.RoleDomain
             FirstNameBehindMale = Path.Combine(path, nameof(FirstNameBehindMale)).GetCharListFromPath();
             FirstNamesMale = Path.Combine(path, nameof(FirstNamesMale)).GetStringListFromPath();
             FirstNamesFemale = Path.Combine(path, nameof(FirstNamesFemale)).GetStringListFromPath();
-            for (int i = 0; i < SharedConsts.AvatarElementCount; i++)
+            for (int i = 0; i < IWCC.AvatarElementCount; i++)
             {
                 MaleAvatarResource[i] = new RegistrableDictionary<int, AvatarSpriteContainer>();
                 FemaleAvatarResource[i] = new RegistrableDictionary<int, AvatarSpriteContainer>();
@@ -91,7 +91,7 @@ namespace InfinityWorldChess.RoleDomain
             using FileStream stream = File.OpenRead(path);
             using BinaryReader reader = new(stream);
 
-            for (int i = 0; i < SharedConsts.AvatarElementCount; i++)
+            for (int i = 0; i < IWCC.AvatarElementCount; i++)
             {
                 string atlas = reader.ReadString();
 

@@ -10,7 +10,7 @@ using UnityEngine;
 
 namespace InfinityWorldChess.BattleInteractionFunctions
 {
-    public class AttackSetting:IHasPriority,
+    public class AttackInitSetting:IHasPriority,
         IActionable<BattleInteraction>,IHasContent
     {
         [field: S] public float Attack { get; set; }
@@ -24,7 +24,6 @@ namespace InfinityWorldChess.BattleInteractionFunctions
 
         public int Priority => -0x10001;
 
-        static float TOLERANCE => 0.00001f;
         
         public void SetContent(Transform transform)
         {
@@ -61,12 +60,12 @@ namespace InfinityWorldChess.BattleInteractionFunctions
                 str += "\r\n额外攻击: " + AttackFixedValue;
             }
 
-            if (Math.Abs(AttackFactor - 1) > TOLERANCE)
+            if (Math.Abs(AttackFactor - 1) > IWCC.T)
             {
                 str += "\r\n攻击倍率: " + AttackFactor;
             }
 
-            if (Math.Abs(DamageFactor - 1) > TOLERANCE)
+            if (Math.Abs(DamageFactor - 1) > IWCC.T)
             {
                 str += "\r\n伤害倍率: " + DamageFactor;
             }

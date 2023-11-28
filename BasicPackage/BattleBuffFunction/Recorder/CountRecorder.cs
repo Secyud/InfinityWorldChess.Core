@@ -1,4 +1,5 @@
-﻿using InfinityWorldChess.BattleDomain;
+﻿using InfinityWorldChess.BattleBuffDomain;
+using InfinityWorldChess.BattleDomain;
 using InfinityWorldChess.FunctionDomain;
 using InfinityWorldChess.Ugf;
 using UnityEngine;
@@ -15,7 +16,7 @@ namespace InfinityWorldChess.BattleBuffFunction
         public override void InstallFrom(BattleRole target)
         {
             base.InstallFrom(target);
-            if (Origin.Effect is ITriggerable trigger)
+            if (Buff is BattleRoleBuff { Effect: ITriggerable trigger })
             {
                 trigger.ExtraActions += CalculateRemove;
             }
@@ -24,7 +25,7 @@ namespace InfinityWorldChess.BattleBuffFunction
         public override void UnInstallFrom(BattleRole target)
         {
             base.UnInstallFrom(target);
-            if (Origin.Effect is ITriggerable trigger)
+            if (Buff is BattleRoleBuff { Effect: ITriggerable trigger })
             {
                 trigger.ExtraActions -= CalculateRemove;
             }

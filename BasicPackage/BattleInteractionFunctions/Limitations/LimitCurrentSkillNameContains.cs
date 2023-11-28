@@ -6,12 +6,12 @@ using Secyud.Ugf;
 using Secyud.Ugf.DataManager;
 using UnityEngine;
 
-namespace InfinityWorldChess.BattleBuffFunction
+namespace InfinityWorldChess.BattleInteractionFunctions
 {
     /// <summary>
     /// effect run if current skill name contains the str NameContain
     /// </summary>
-    public class CurrentSkillNameLimit : ILimitable, IHasContent
+    public class LimitCurrentSkillNameContains : ILimitable, IHasContent
     {
         [field: S] public string NameContain { get; set; }
 

@@ -14,7 +14,7 @@ namespace InfinityWorldChess.RoleDomain
         public class BasicProperty : IArchivable
         {
             public AvatarElement[] Avatar { get; } =
-                new AvatarElement[SharedConsts.AvatarElementCount];
+                new AvatarElement[IWCC.AvatarElementCount];
 
             public int BirthYear { get; set; }
             public byte BirthMonth { get; set; }
@@ -32,7 +32,7 @@ namespace InfinityWorldChess.RoleDomain
 
             public BasicProperty()
             {
-                for (int i = 0; i < SharedConsts.AvatarElementCount; i++)
+                for (int i = 0; i < IWCC.AvatarElementCount; i++)
                 {
                     Avatar[i] = new AvatarElement();
                 }

@@ -5,14 +5,15 @@ using UnityEngine;
 
 namespace InfinityWorldChess.BattleBuffFunction
 {
-    public abstract class BuffRecorderBase :IBuffRecorder
+    public abstract class BuffRecorderBase : IBuffRecorder,IBuffAttached
     {
         [field: S] public int RemoveValue { get; set; } = 1;
 
-        public BattleRoleBuff Origin { get; set; }
-        protected int Remain => Origin?.BuffRecord ?? 0 / RemoveValue;
+        public IBattleRoleBuff Buff { get; set; }
+        
+        protected int Remain => (Buff?.BuffRecord ?? 0) / RemoveValue;
 
-        protected BattleContext Context => BattleScope.Instance.Context;
+        protected static BattleContext Context => BattleScope.Instance.Context;
 
 
         public virtual void InstallFrom(BattleRole target)
@@ -29,16 +30,16 @@ namespace InfinityWorldChess.BattleBuffFunction
 
         protected virtual void CalculateRemove()
         {
-            if (Origin.Target is null)
+            if (Buff.Target is null)
             {
                 return;
             }
 
-            Origin.BuffRecord -= RemoveValue;
+            Buff.BuffRecord -= RemoveValue;
 
-            if (Origin.BuffRecord <= 0)
+            if (Buff.BuffRecord <= 0)
             {
-                Origin.Target.Buffs.UnInstall(Origin.Id);
+                Buff.Target.Buffs.UnInstall(Buff.Id);
             }
         }
     }

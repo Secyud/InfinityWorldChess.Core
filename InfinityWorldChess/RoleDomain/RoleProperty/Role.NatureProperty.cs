@@ -91,7 +91,7 @@ namespace InfinityWorldChess.RoleDomain
 
             public void Save(IArchiveWriter writer)
             {
-                for (int i = 0; i < SharedConsts.NatureCount; i++)
+                for (int i = 0; i < IWCC.NatureCount; i++)
                 {
                     writer.Write(this[i]);
                 }
@@ -99,7 +99,7 @@ namespace InfinityWorldChess.RoleDomain
 
             public void Load(IArchiveReader reader)
             {
-                for (int i = 0; i < SharedConsts.NatureCount; i++)
+                for (int i = 0; i < IWCC.NatureCount; i++)
                     this[i] = reader.ReadSingle();
             }
         }

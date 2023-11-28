@@ -31,7 +31,7 @@ namespace InfinityWorldChess.PlayerDomain
 
         public int SkillPoints { get; set; }
 
-        private static readonly string SavePath = SharedConsts.SaveFilePath(nameof(PlayerGameContext));
+        private static readonly string SavePath = IWCC.SaveFilePath(nameof(PlayerGameContext));
 
         public virtual HexUnit Unit
         {

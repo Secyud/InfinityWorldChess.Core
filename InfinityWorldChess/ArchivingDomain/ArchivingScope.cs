@@ -38,8 +38,8 @@ namespace InfinityWorldChess.ArchivingDomain
         public void SaveSlotMessage()
         {
             using FileStream stream = File.OpenWrite(
-                Path.Combine(SharedConsts.SavePath,
-                SharedConsts.SaveFolder.ToString(), "slot.binary"));
+                Path.Combine(IWCC.SavePath,
+                IWCC.SaveFolder.ToString(), "slot.binary"));
             using DefaultArchiveWriter writer = new (stream);
             GameScope.Instance.Player.Role.Basic.Save(writer);
         }

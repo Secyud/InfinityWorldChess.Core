@@ -1,6 +1,8 @@
+using InfinityWorldChess.BattleDomain;
 using InfinityWorldChess.BattleInteractionDomain;
 using InfinityWorldChess.BuffDomain;
 using InfinityWorldChess.FunctionDomain;
+using InfinityWorldChess.Ugf;
 using Secyud.Ugf.DataManager;
 
 namespace InfinityWorldChess.BattleBuffFunction
@@ -23,6 +25,12 @@ namespace InfinityWorldChess.BattleBuffFunction
         {
             property.TryAttach(Limit);
             property.TryAttach(Actionable);
+        }
+
+        protected override void SetBuff(IBattleRoleBuff buff)
+        {
+            buff.TryAttach(Limit);
+            buff.TryAttach(Actionable);
         }
     }
 }

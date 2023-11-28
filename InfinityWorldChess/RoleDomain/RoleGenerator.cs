@@ -135,7 +135,7 @@ namespace InfinityWorldChess.RoleDomain
                     }
                 };
 
-                for (int j = 0; j < SharedConsts.AvatarElementCount; j++)
+                for (int j = 0; j < IWCC.AvatarElementCount; j++)
                 {
                     role.Basic.Avatar[j] = new AvatarElement
                     {
@@ -148,7 +148,7 @@ namespace InfinityWorldChess.RoleDomain
                     };
                 }
 
-                for (int j = 0; j < SharedConsts.NatureCount; j++)
+                for (int j = 0; j < IWCC.NatureCount; j++)
                 {
                     role.Nature[j] = U.GetRandom(1000) - 500;
                 }
