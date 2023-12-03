@@ -13,8 +13,10 @@ namespace InfinityWorldChess.Ugf
 	{
 		public static void TryAdd(this List<BattleCell> cells, HexGrid grid, HexCoordinates coordinates)
 		{
-			BattleCell cell = grid.GetCell(coordinates) as BattleCell;
-			if (cell) cells.Add(cell);
+			if (grid.GetCell(coordinates) is BattleCell cell)
+			{
+				cells.Add(cell);
+			}
 		}
 	}
 }

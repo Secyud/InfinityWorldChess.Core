@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Secyud.Ugf.DependencyInjection;
+using Secyud.Ugf.HexMapExtensions;
 using Secyud.Ugf.ObserverComponents;
 
 namespace InfinityWorldChess.BattleDomain
@@ -30,14 +31,14 @@ namespace InfinityWorldChess.BattleDomain
                     return;
                 }
 
-                if (_hoverCell)
+                if (_hoverCell is not null )
                 {
                     _hoverCell.Hovered = false;
                 }
 
                 _hoverCell = value;
 
-                if (_hoverCell)
+                if (_hoverCell is not null )
                 {
                     _hoverCell.Hovered = true;
                 }
@@ -61,13 +62,13 @@ namespace InfinityWorldChess.BattleDomain
                     return;
                 }
 
-                if (_selectedCell)
+                if (_selectedCell is not null )
                 {
                     _selectedCell.Selected = false;
                 }
 
                 _selectedCell = value;
-                if (_selectedCell)
+                if (_selectedCell is not null )
                 {
                     _selectedCell.Selected = true;
                 }

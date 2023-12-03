@@ -38,7 +38,7 @@ namespace InfinityWorldChess.GameDomain.WorldCellDomain
             _showRoles.Clear();
 
             WorldCell cell = GameScope.Instance.Get<CurrentTabService>().Cell;
-            if (cell)
+            if (cell is not null )
             {
                 _showRoles.AddRange(cell.InRoles.Where(u => u != GameScope.Instance.Player.Role));
             }

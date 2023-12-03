@@ -23,6 +23,8 @@ namespace InfinityWorldChess.RoleDomain
 
             public bool Female { get; set; }
 
+            public int Level { get; set; }
+
             // 名
             public string FirstName { get; set; } = string.Empty;
 
@@ -50,6 +52,7 @@ namespace InfinityWorldChess.RoleDomain
                 writer.Write(BirthDay);
                 writer.Write(BirthHour);
                 writer.Write(Female);
+                writer.Write(Level);
                 writer.Write(FirstName);
                 writer.Write(LastName);
                 writer.Write(Description);
@@ -67,6 +70,7 @@ namespace InfinityWorldChess.RoleDomain
                 BirthDay = reader.ReadByte();
                 BirthHour = reader.ReadByte();
                 Female = reader.ReadBoolean();
+                Level = reader.ReadInt32();
                 FirstName = reader.ReadString();
                 LastName = reader.ReadString();
                 Description = reader.ReadString();

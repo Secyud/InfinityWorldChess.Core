@@ -7,7 +7,6 @@ using InfinityWorldChess.RoleDomain;
 using Secyud.Ugf;
 using Secyud.Ugf.AssetComponents;
 using Secyud.Ugf.DependencyInjection;
-using Secyud.Ugf.HexMap;
 using UnityEditor;
 using UnityEngine;
 
@@ -37,7 +36,7 @@ namespace InfinityWorldChess.GameDomain
         {
             Instance = this;
             Map.Create();
-            Map.Value.Initialize(U.Get<IHexGridDrawer>());
+            Map.Value.Initialize(U.Get<WorldHexGridDrawer>());
             Map.Value.transform.SetSiblingIndex(0);
         }
 

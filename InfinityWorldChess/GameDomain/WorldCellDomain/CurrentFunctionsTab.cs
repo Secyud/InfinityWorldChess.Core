@@ -1,4 +1,5 @@
 ﻿using Secyud.Ugf.BasicComponents;
+using Secyud.Ugf.HexMapExtensions;
 using Secyud.Ugf.TabComponents;
 using UnityEngine;
 
@@ -22,7 +23,7 @@ namespace InfinityWorldChess.GameDomain.WorldCellDomain
             ButtonGroup.Clear();
 
             WorldCell cell = _service.Cell;
-            if (cell)
+            if (cell is not null )
             {
                 ButtonGroup.OnInitialize(cell, cell.Buttons);
             }

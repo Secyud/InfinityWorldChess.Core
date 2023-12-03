@@ -26,5 +26,7 @@ namespace InfinityWorldChess.BattleDomain
 
             return -1;
         }
+
+        public override HexGrid Grid => BattleScope.Instance.Map;
     }
 }

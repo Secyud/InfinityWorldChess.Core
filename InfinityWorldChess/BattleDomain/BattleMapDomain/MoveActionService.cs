@@ -35,7 +35,10 @@ namespace InfinityWorldChess.BattleDomain
             {
                 HexUnit unit = context.Role.Unit;
                 _service.FindPath(unit.Location as BattleCell, cell, unit);
-                context.InRangeCells = _service.GetPath().Cast<BattleCell>().ToList();
+
+                IList<int> cellIndex = _service.GetPath();
+                context.InRangeCells =
+                    _service.GetPath().Select(u=>BattleScope.Instance.Map.GetCell(u) as BattleCell).ToList();
             }
             else
             {
@@ -109,9 +112,7 @@ namespace InfinityWorldChess.BattleDomain
 
             void TryAddCell(HexCoordinates c)
             {
-                BattleCell cell = grid.GetCell(c) as BattleCell;
-
-                if (!cell) return;
+                if (grid.GetCell(c) is not BattleCell cell) return;
 
                 Vector2 p2d = (c - role.Unit.Location.Coordinates).Position2D();
 

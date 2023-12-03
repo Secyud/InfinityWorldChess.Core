@@ -1,4 +1,5 @@
 ﻿using Secyud.Ugf.HexMap;
+using Secyud.Ugf.HexMapExtensions;
 
 namespace InfinityWorldChess.BattleDomain
 {
@@ -21,7 +22,7 @@ namespace InfinityWorldChess.BattleDomain
             HexCell cell = BattleScope.Instance.Context.SelectedCell;
             BattleRole chess = null;
 
-            if (cell && cell.Unit)
+            if (cell is not null  && cell.Unit)
             {
                 HexUnit unit = cell.Unit;
                 chess = BattleScope.Instance.GetChess(unit);

@@ -12,6 +12,7 @@ using Secyud.Ugf.Collections;
 using Secyud.Ugf.DataManager;
 using Secyud.Ugf.DependencyInjection;
 using Secyud.Ugf.HexMap;
+using Secyud.Ugf.HexMapExtensions;
 
 #endregion
 
@@ -43,7 +44,7 @@ namespace InfinityWorldChess.RoleDomain
             {
                 WorldCell cell = (WorldCell)hexCell;
 
-                if (cell.IsUnderwater)
+                if (cell.IsUnderwater || !cell.IsValid())
                     continue;
 
                 int randomValueMax = 4;

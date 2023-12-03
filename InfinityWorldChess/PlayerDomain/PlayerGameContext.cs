@@ -29,8 +29,6 @@ namespace InfinityWorldChess.PlayerDomain
 
         public Role Role { get; private set; }
 
-        public int SkillPoints { get; set; }
-
         private static readonly string SavePath = IWCC.SaveFilePath(nameof(PlayerGameContext));
 
         public virtual HexUnit Unit
@@ -55,8 +53,6 @@ namespace InfinityWorldChess.PlayerDomain
             int index = reader.ReadInt32();
             Role = new Role();
             Role.Load(reader, GameScope.Instance.Map.Value.GetCell(index) as WorldCell);
-
-            SkillPoints = reader.ReadInt32();
 
             PlayerSetting.Load(reader);
 
@@ -88,8 +84,7 @@ namespace InfinityWorldChess.PlayerDomain
             using DefaultArchiveWriter writer = new(stream);
             writer.Write(Role.Position.Index);
             Role.Save(writer);
-            writer.Write(SkillPoints);
-
+            
             PlayerSetting.Save(writer);
 
             writer.Write(Bundles.Count);

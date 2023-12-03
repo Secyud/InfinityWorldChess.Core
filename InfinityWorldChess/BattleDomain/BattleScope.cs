@@ -105,9 +105,11 @@ namespace InfinityWorldChess.BattleDomain
         public void AddRoleBattleChess(BattleRole chess, HexCell cell)
         {
             if (chess.Unit)
+            {
                 chess.Unit.Destroy();
+            }
             HexUnit unit = Object.Instantiate(_battleUnitPrefab.Value, Map.transform);
-
+            unit.Grid = Map;
             BattleRoleStateViewer viewer = _stateViewer.Instantiate(Map.Ui.transform);
             viewer.Bind(chess);
             viewer.TargetTrans = unit.transform;
@@ -158,7 +160,7 @@ namespace InfinityWorldChess.BattleDomain
                     {
                         HexCell cell = grid.GetCell(coordinate);
                         coordinate += j;
-                        if (cell && !cell.Unit)
+                        if (cell is not null && !cell.Unit)
                         {
                             BattleRole battleRole = new(role)
                             {

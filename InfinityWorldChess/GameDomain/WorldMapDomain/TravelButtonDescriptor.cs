@@ -19,13 +19,13 @@ namespace InfinityWorldChess.GameDomain.WorldMapDomain
 
         public override void Invoke()
         {
-            IList<WorldCell> path = WorldGameContext.Map.Path;
-            WorldMapFunctionService service = 
+            IList<int> path = WorldGameContext.Map.Path;
+            WorldMapFunctionService service =
                 U.Get<WorldMapFunctionService>();
             service.Travel();
-            WorldCell last = path.Last();
-            GameScope.Instance.Get<CurrentTabService>().Cell = last;
-            WorldGameContext.Map.Path = Array.Empty<WorldCell>();
+            int last = path.Last();
+            GameScope.Instance.Get<CurrentTabService>().Cell = WorldGameContext.Map.GetCell(last) as WorldCell;
+            WorldGameContext.Map.Path = Array.Empty<int>();
         }
 
         public override string Name => "旅行";

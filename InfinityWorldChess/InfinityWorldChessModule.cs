@@ -118,7 +118,9 @@ namespace InfinityWorldChess
             RoleGameContext role)
         {
             Role pr = player.Role;
-            HexUnit pu = world.WorldUnitPrefab.Instantiate(WorldGameContext.Map.transform);
+            HexUnit pu = world.WorldUnitPrefab
+                .Instantiate(WorldGameContext.Map.transform);
+            pu.Grid = GameScope.Instance.Map.Value;
             HexCell cell = pr.Position;
             WorldMap map = WorldGameContext.Map;
             player.Unit = pu;

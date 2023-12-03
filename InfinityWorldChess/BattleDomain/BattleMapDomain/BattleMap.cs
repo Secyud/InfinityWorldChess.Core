@@ -48,8 +48,10 @@ namespace InfinityWorldChess.BattleDomain
 
         public void AddBillBoard(HexCell cell, Transform t, float height = 10)
         {
-            LookAtConstraint c = BillBoardPrefab.Instantiate(cell.transform);
-            c.transform.localPosition = new Vector3(0, height, 0);
+            LookAtConstraint c = BillBoardPrefab.Instantiate();
+            Vector3 position = cell.Position;
+            position.y += height;
+            c.transform.localPosition = position;
             c.SetSource(0, new ConstraintSource
             {
                 sourceTransform = Camera.transform,

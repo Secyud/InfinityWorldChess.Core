@@ -13,11 +13,9 @@ namespace InfinityWorldChess.BattleDomain
     {
         [SerializeField] private Table ItemTable;
         [SerializeField] private UnityEvent<string> Award;
-        [SerializeField] private UnityEvent<string> SkillPoints;
 
         private List<IItem> _items;
         private int _award;
-        private int _skillPoints;
         private void Awake()
         {
             _items = new List<IItem>();
@@ -28,14 +26,11 @@ namespace InfinityWorldChess.BattleDomain
         {
             _items.AddRange(items);
             ItemTable.Refresh();
-            _skillPoints += skillPoints;
             _award += award;
             Award.Invoke(_award.ToString());
-            SkillPoints.Invoke(_skillPoints.ToString());
 
             PlayerGameContext player = GameScope.Instance.Player;
             player.Role.Item.Award += award;
-            player.SkillPoints += skillPoints;
             foreach (IItem item in items)
             {
                 player.Role.Item.Add(item); 

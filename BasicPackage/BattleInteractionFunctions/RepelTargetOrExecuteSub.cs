@@ -38,7 +38,7 @@ namespace InfinityWorldChess.BattleInteractionFunctions
             HexCell tC = interaction.Target.Unit.Location;
             HexDirection direction = lC.DirectionTo(tC);
             HexCell neighbour = tC.GetNeighbor(direction);
-            if (neighbour && !neighbour.Unit)
+            if (neighbour is not null  && !neighbour.Unit)
             {
                 interaction.Target.Unit.Location = neighbour;
             }

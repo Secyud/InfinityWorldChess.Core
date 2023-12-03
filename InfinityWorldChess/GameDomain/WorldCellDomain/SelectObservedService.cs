@@ -1,4 +1,5 @@
 ﻿using Secyud.Ugf.DependencyInjection;
+using Secyud.Ugf.HexMapExtensions;
 using Secyud.Ugf.ObserverComponents;
 using UnityEngine;
 
@@ -15,16 +16,10 @@ namespace InfinityWorldChess.GameDomain.WorldCellDomain
             internal set
             {
                 if (_cell == value) return;
-                if (_cell)
-                {
-                    _cell.SetHighlight();
-                }
+                _cell?.SetHighlight();
 
                 _cell = value;
-                if (_cell)
-                {
-                    _cell.EnableHighlight(Color.green);
-                }
+                _cell?.EnableHighlight(Color.green);
 
                 Refresh();
             }
@@ -39,16 +34,13 @@ namespace InfinityWorldChess.GameDomain.WorldCellDomain
             {
                 if (_hoverCell == value) return;
 
-                if (_hoverCell)
+                if (_hoverCell == _cell)
                 {
-                    if (_hoverCell == _cell)
-                    {
-                        _hoverCell.EnableHighlight(Color.green);
-                    }
-                    else
-                    {
-                        _hoverCell.SetHighlight();
-                    }
+                    _hoverCell?.EnableHighlight(Color.green);
+                }
+                else
+                {
+                    _hoverCell?.SetHighlight();
                 }
 
                 _hoverCell = value;

@@ -32,15 +32,9 @@ namespace InfinityWorldChess.RoleDomain
                 if (to == Position || role is null)
                     return;
 
-                if (Position)
-                {
-                    Position.InRoles.Remove(role);
-                }
+                Position?.InRoles.Remove(role);
 
-                if (to)
-                {
-                    to.InRoles.Add(role);
-                }
+                to?.InRoles.Add(role);
 
                 Position = to;
             }

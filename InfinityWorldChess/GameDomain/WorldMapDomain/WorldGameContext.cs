@@ -33,7 +33,7 @@ namespace InfinityWorldChess.GameDomain.WorldMapDomain
         {
             WorldIndexById[message.Id] = message;
             WorldCell cell = message.Cell;
-            if (cell)
+            if (cell is not null )
             {
                 cell.Message = message;
             }
@@ -54,7 +54,7 @@ namespace InfinityWorldChess.GameDomain.WorldMapDomain
         public void RemoveMessage(WorldCellMessage message)
         {
             WorldCell cell = message.Cell;
-            if (cell)
+            if (cell is not null )
             {
                 cell.Message = null;
             }
