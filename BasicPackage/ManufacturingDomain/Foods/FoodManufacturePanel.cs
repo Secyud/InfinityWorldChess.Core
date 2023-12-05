@@ -8,6 +8,7 @@ using InfinityWorldChess.ItemTemplates;
 using InfinityWorldChess.ManufacturingDomain.Drags;
 using InfinityWorldChess.RoleDomain;
 using InfinityWorldChess.Ugf;
+using Secyud.Ugf;
 using Secyud.Ugf.LayoutComponents;
 using UnityEngine;
 
@@ -45,6 +46,11 @@ namespace InfinityWorldChess.ManufacturingDomain.Foods
             _materialCounters = new();
         }
 
+        public void Close()
+        {
+            U.M.DestroyScope<FoodManufactureScope>();
+        }
+        
         public void ShowFoodMessage()
         {
             string tip = CheckGenerateAccessible();
@@ -60,7 +66,7 @@ namespace InfinityWorldChess.ManufacturingDomain.Foods
             }
         }
 
-        public void ForgeAndArchiveFood()
+        public void CreateAndArchiveFood()
         {
             string tip = CheckGenerateAccessible();
 

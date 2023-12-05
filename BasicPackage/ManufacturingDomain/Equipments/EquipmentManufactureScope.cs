@@ -26,8 +26,8 @@ namespace InfinityWorldChess.ManufacturingDomain.Equipments
 
         public override void Dispose()
         {
-            Instance = null;
             _manufacturePanel.Destroy();
+            Instance = null;
         }
     }
 }

@@ -37,7 +37,7 @@ namespace InfinityWorldChess.Ugf
 				_tipPopupInstance.Destroy();
 			_tipPopupInstance = IwcAssets.Instance.TipFloating.Value
 				.InstantiateOnCanvas();
-			_autoClosePopupInstance.InitializeOnCenter();
+			_tipPopupInstance.InitializeOnCenter();
 			RectTransform ret = _tipPopupInstance.PrepareLayout();
 			ret.AddTitle1(U.T.Translate(tips) );
 			return ret;

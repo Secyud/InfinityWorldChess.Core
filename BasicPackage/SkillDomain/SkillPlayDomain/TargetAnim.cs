@@ -16,7 +16,6 @@ namespace InfinityWorldChess.SkillDomain
 
             if (_instance)
                 Destroy(_instance);
-            Transform parent;
 
             _instance = Instantiate(TargetObject);
             _instance.transform.position = targetCell.Position;

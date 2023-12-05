@@ -1,9 +1,11 @@
-﻿using InfinityWorldChess.GameDomain.GameMenuDomain;
+﻿using InfinityWorldChess.BuffDomain;
+using InfinityWorldChess.GameDomain.GameMenuDomain;
 using InfinityWorldChess.GameDomain.SystemMenuDomain;
 using InfinityWorldChess.GameDomain.WorldMapDomain;
 using InfinityWorldChess.GlobalDomain;
 using InfinityWorldChess.PlayerDomain;
 using InfinityWorldChess.RoleDomain;
+using InfinityWorldChess.SkillDomain;
 using Secyud.Ugf;
 using Secyud.Ugf.AssetComponents;
 using Secyud.Ugf.DependencyInjection;
@@ -18,6 +20,8 @@ namespace InfinityWorldChess.GameDomain
         public readonly IMonoContainer<SystemMenuPanel> SystemMenu;
         public readonly IMonoContainer<GameMenuPanel> GameMenu;
         public readonly IMonoContainer<WorldMap> Map;
+        private readonly IMonoContainer<PointDivisionPanel> _pointPanel;
+
 
         public WorldGameContext World =>  Get<WorldGameContext>();
         public PlayerGameContext Player => Get<PlayerGameContext>();
@@ -30,6 +34,7 @@ namespace InfinityWorldChess.GameDomain
             SystemMenu = MonoContainer<SystemMenuPanel>.Create(assets);
             GameMenu = MonoContainer<GameMenuPanel>.Create(assets);
             Map = MonoContainer<WorldMap>.Create(assets, onCanvas: false);
+            _pointPanel = MonoContainer<PointDivisionPanel>.Create(assets);
         }
 
         public override void OnInitialize()
@@ -81,6 +86,12 @@ namespace InfinityWorldChess.GameDomain
             {
                 transform.GetChild(i).Destroy();
             }
+        }
+
+        public void OpenPointPanel(IAttachProperty property)
+        {
+            _pointPanel.Create();
+            _pointPanel.Value.Bind(property);
         }
 
         public void ExitGame()

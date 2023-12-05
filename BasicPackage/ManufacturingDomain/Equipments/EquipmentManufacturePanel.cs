@@ -6,6 +6,7 @@ using InfinityWorldChess.ItemDomain;
 using InfinityWorldChess.ItemTemplates;
 using InfinityWorldChess.RoleDomain;
 using InfinityWorldChess.Ugf;
+using Secyud.Ugf;
 using Secyud.Ugf.LayoutComponents;
 using UnityEngine;
 
@@ -41,6 +42,11 @@ namespace InfinityWorldChess.ManufacturingDomain.Equipments
             _context = EquipmentManufactureScope.Instance.Context;
         }
 
+        public void Close()
+        {
+            U.M.DestroyScope<EquipmentManufactureScope>();
+        }
+
         public void ShowEquipmentMessage()
         {
             string tip = CheckGenerateAccessible();
@@ -56,7 +62,7 @@ namespace InfinityWorldChess.ManufacturingDomain.Equipments
             }
         }
 
-        public void ForgeAndArchiveEquipment()
+        public void CreateAndArchiveEquipment()
         {
             string tip = CheckGenerateAccessible();
 

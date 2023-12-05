@@ -24,7 +24,7 @@ namespace InfinityWorldChess.GameDomain.WorldCellDomain
             WorldCell cell = GameScope.Instance.Get<SelectObservedService>().Cell;
             if (cell is not null )
             {
-                Position.Set(": " + cell.Coordinates);
+                Position.Set($": {cell.X},{cell.Z}" );
             }
             else
             {

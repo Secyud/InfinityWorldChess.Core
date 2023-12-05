@@ -23,11 +23,11 @@ namespace InfinityWorldChess.BattleTemplates
         [field: S(3)] public List<BattleCampSetting> BattleCampSettings { get; } = new();
         public virtual WorldCell Cell => GameScope.Instance.Player.Role.Position;
 
-        public void OnBattleFinished()
+        public virtual void OnBattleFinished()
         {
         }
 
-        public void OnBattleCreated()
+        public virtual void OnBattleCreated()
         {
             foreach (BattleCampSetting setting in BattleCampSettings)
             {
@@ -60,7 +60,7 @@ namespace InfinityWorldChess.BattleTemplates
             HexCell cell = scope.Map[x,z];
             BattleRole battleRole = new(role)
             {
-                PlayerControl = true,
+                PlayerControl = camp.Index == 0,
                 Camp = camp
             };
             scope.AddRoleBattleChess(battleRole, cell);

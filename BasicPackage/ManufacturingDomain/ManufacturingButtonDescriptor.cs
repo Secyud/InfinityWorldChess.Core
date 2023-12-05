@@ -16,7 +16,6 @@ namespace InfinityWorldChess.ManufacturingDomain
         private static readonly string[] Names = { "铁匠铺", "餐馆", "药铺" };
 
         public int Type { get; set; }
-
         public override string Name => Names[Type];
 
         public override bool Visible(WorldCell target) => true;

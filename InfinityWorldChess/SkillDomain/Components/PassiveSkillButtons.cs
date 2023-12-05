@@ -4,5 +4,9 @@ namespace InfinityWorldChess.SkillDomain
 {
 	public class PassiveSkillButtons : ButtonRegeditBase<IPassiveSkill>
 	{
+		public PassiveSkillButtons()
+		{
+			Register(new PassiveSkillPointDivisionButton());
+		}
 	}
 }

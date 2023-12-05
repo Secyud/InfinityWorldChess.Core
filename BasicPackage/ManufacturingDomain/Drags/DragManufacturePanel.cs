@@ -7,6 +7,7 @@ using InfinityWorldChess.ItemDomain;
 using InfinityWorldChess.ItemTemplates;
 using InfinityWorldChess.RoleDomain;
 using InfinityWorldChess.Ugf;
+using Secyud.Ugf;
 using Secyud.Ugf.LayoutComponents;
 using UnityEngine;
 
@@ -45,6 +46,10 @@ namespace InfinityWorldChess.ManufacturingDomain.Drags
             _materialCounters = new();
         }
 
+        public void Close()
+        {
+            U.M.DestroyScope<DragManufactureScope>();
+        }
         public void ShowDragMessage()
         {
             string tip = CheckGenerateAccessible();
@@ -60,7 +65,7 @@ namespace InfinityWorldChess.ManufacturingDomain.Drags
             }
         }
 
-        public void ForgeAndArchiveDrag()
+        public void CreateAndArchiveDrag()
         {
             string tip = CheckGenerateAccessible();
 
