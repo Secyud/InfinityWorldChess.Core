@@ -1,7 +1,6 @@
 #region
 
 using Secyud.Ugf.BasicComponents;
-using Secyud.Ugf.HexMapExtensions;
 using UnityEngine;
 
 #endregion
@@ -16,15 +15,15 @@ namespace InfinityWorldChess.GameDomain.WorldCellDomain
         private void Awake()
         {
             GameScope.Instance.Get<SelectObservedService>()
-                .AddObserverObject(nameof(SelectMessageViewer), Refresh,gameObject);
+                .AddObserverObject(nameof(SelectMessageViewer), Refresh, gameObject);
         }
 
         private void Refresh()
         {
             WorldCell cell = GameScope.Instance.Get<SelectObservedService>().Cell;
-            if (cell is not null )
+            if (cell is not null)
             {
-                Position.Set($": {cell.X},{cell.Z}" );
+                Position.Set($":({cell.X}, {cell.Z})");
             }
             else
             {

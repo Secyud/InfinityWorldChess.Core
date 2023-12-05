@@ -17,6 +17,8 @@ namespace InfinityWorldChess.BattleDomain
         private void Awake()
         {
             _context = BattleScope.Instance.Context;
+            _coreSkillActionService = U.Get<CoreSkillActionService>();
+            _formSkillActionService = U.Get<FormSkillActionService>();
         }
 
         public void OnCoreSkillReset()

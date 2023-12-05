@@ -38,7 +38,7 @@ namespace InfinityWorldChess.SkillDomain
         {
             return Loader
                 .LoadAsset<GameObject>("SkillPlay/" + AssetName + ".prefab")
-                .GetComponent<SkillAnimBase>();
+                ?.GetComponent<SkillAnimBase>();
         }
 
 

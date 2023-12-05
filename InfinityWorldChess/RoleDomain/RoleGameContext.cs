@@ -6,13 +6,11 @@ using System.IO;
 using System.Linq;
 using InfinityWorldChess.GameDomain;
 using InfinityWorldChess.GameDomain.WorldCellDomain;
-using InfinityWorldChess.GameDomain.WorldMapDomain;
 using Secyud.Ugf;
 using Secyud.Ugf.Archiving;
 using Secyud.Ugf.DataManager;
 using Secyud.Ugf.DependencyInjection;
 using Secyud.Ugf.HexMap;
-using Secyud.Ugf.HexMapExtensions;
 
 #endregion
 
@@ -42,14 +40,13 @@ namespace InfinityWorldChess.RoleDomain
             using FileStream stream = File.OpenRead(SavePath);
             using DefaultArchiveReader reader = new(stream);
 
-            WorldMap map = GameScope.Instance.Map.Value;
             Clear();
             int count = reader.ReadInt32();
 
             for (int i = 0; i < count; i++)
             {
                 Role role = new();
-                WorldCell cell = map.GetCell(reader.ReadInt32()) as WorldCell;
+                WorldCell cell = GameScope.Instance.GetCell(reader.ReadInt32());
                 role.Load(reader, cell);
                 this[role.Id] = role;
                 if (U.AddStep())
@@ -84,17 +81,17 @@ namespace InfinityWorldChess.RoleDomain
                 .GetDataDirectory("roles.binary");
 
             using FileStream stream = File.OpenRead(path);
-            
+
             List<RoleTemplate> roles = stream.ReadResourceObjects<RoleTemplate>();
 
             foreach (RoleTemplate template in roles)
             {
                 var role = template.GenerateRole();
-                
+
                 this[role.Id] = role;
-                HexCell cell = GameScope.Instance.Map
-                    .Value[template.PositionX,template.PositionZ];
-                role.Position = cell as WorldCell;
+                role.Position = GameScope.Instance.GetCellR(
+                    template.PositionX,
+                    template.PositionZ);
             }
 
             if (U.AddStep())

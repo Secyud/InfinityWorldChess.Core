@@ -1,4 +1,3 @@
-using InfinityWorldChess.GameDomain;
 using Secyud.Ugf.Collections;
 using Secyud.Ugf.DependencyInjection;
 

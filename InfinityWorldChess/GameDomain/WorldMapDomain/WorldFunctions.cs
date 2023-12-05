@@ -22,8 +22,9 @@ namespace InfinityWorldChess.GameDomain.WorldMapDomain
 		
 		public void ResetCamera()
 		{
-			WorldGameContext.Map.MapCamera.SetTargetPosition(
-				GameScope.Instance.Player.Unit.transform.position
+			GameScope scope = GameScope.Instance;
+			scope.Map.MapCamera.SetTargetPosition(
+				scope.Player.Unit.transform.position
 			);
 		}
 		

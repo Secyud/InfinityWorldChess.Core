@@ -1,5 +1,3 @@
-using InfinityWorldChess.FunctionDomain;
-
 namespace InfinityWorldChess.BuffDomain
 {
     public static class BuffExtension

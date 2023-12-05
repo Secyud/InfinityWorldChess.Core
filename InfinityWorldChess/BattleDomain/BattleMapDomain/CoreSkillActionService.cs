@@ -7,7 +7,7 @@ using Secyud.Ugf.DependencyInjection;
 namespace InfinityWorldChess.BattleDomain
 {
     [Registry(DependScope = typeof(BattleScope))]
-    public class CoreSkillActionService : IBattleMapActionService,IRegistry
+    public class CoreSkillActionService : IBattleMapActionService, IRegistry
     {
         private BattleCell _skillCastCell;
         private CoreSkillContainer _coreSkill;
@@ -18,12 +18,17 @@ namespace InfinityWorldChess.BattleDomain
             get => _coreSkill;
             set
             {
-                _coreSkill = value;
+                _coreSkill = value?.CoreSkill.CheckCastCondition(
+                        BattleScope.Instance.Context.Role) is not null
+                    ? null
+                    : value;
+
                 if (_apply)
                 {
                     BattleContext context = BattleScope.Instance.Context;
                     BattleRole role = context.Role;
-                    context.ReleasableCells = value?.CoreSkill.GetCastPositionRange(role).Value;
+                    context.ReleasableCells = _coreSkill?.CoreSkill
+                        .GetCastPositionRange(role).Value;
                     context.InRangeCells = Array.Empty<BattleCell>();
                 }
             }
@@ -83,7 +88,7 @@ namespace InfinityWorldChess.BattleDomain
             CoreSkill.CoreSkill.Cast(role, _skillCastCell, skillRange);
 
             AutoReselectSkill(role);
-            
+
             BattleScope.Instance.Context.OnActionFinished();
         }
 
@@ -91,7 +96,7 @@ namespace InfinityWorldChess.BattleDomain
         {
             CoreSkill = role.NextCoreSkills.FirstOrDefault(u => u is not null);
         }
-        
+
         public void OnClear()
         {
             CoreSkill = null;

@@ -1,5 +1,4 @@
 ﻿using InfinityWorldChess.BuffDomain;
-using InfinityWorldChess.GlobalDomain;
 using InfinityWorldChess.ItemDomain;
 using Secyud.Ugf;
 

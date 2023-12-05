@@ -84,6 +84,11 @@ namespace InfinityWorldChess.BattleDomain
             _context.Role = battleRole;
 
             BattleScope.Instance.Context.OnRoundBegin();
+            
+            _context.StateService.Refresh();
+            _context.RoleService.Refresh();
+            _context.SelectedCellService.Refresh();
+            _context.HoverCellService.Refresh();
 
             EnterControl();
         }

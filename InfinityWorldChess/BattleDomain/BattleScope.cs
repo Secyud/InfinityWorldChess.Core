@@ -2,12 +2,11 @@
 using System.Ugf.Collections.Generic;
 using InfinityWorldChess.GameDomain;
 using InfinityWorldChess.GlobalDomain;
-using InfinityWorldChess.RoleDomain;
 using Secyud.Ugf;
 using Secyud.Ugf.AssetComponents;
 using Secyud.Ugf.DependencyInjection;
 using Secyud.Ugf.HexMap;
-using Secyud.Ugf.HexUtilities;
+using Secyud.Ugf.HexMapExtensions;
 using Secyud.Ugf.UgfHexMap;
 using TMPro;
 using UnityEngine;
@@ -54,7 +53,20 @@ namespace InfinityWorldChess.BattleDomain
         {
             Instance = this;
             _map.Create();
-            _map.Value.Initialize(Get<UgfHexGridDrawer>());
+            _map.Value.Initialize(Get<BattleHexGridDrawer>());
+        }
+
+        public BattleCell GetCell(int index)
+        {
+            return _map.Value.GetCell(index) as BattleCell;
+        }
+
+        public BattleCell GetCellR(int x, int z)
+        {
+            return _map.Value.GetCell(
+                    x + HexCellExtension.Border, 
+                    z + HexCellExtension.Border)
+                as BattleCell;
         }
 
         public static void CreateBattle(IBattleDescriptor descriptor)
@@ -65,7 +77,7 @@ namespace InfinityWorldChess.BattleDomain
             Instance.Battle = descriptor;
 
             BattleMap grid = Instance.Map;
-            grid.GenerateMap(descriptor.Cell, 
+            grid.GenerateMap(descriptor.Cell,
                 descriptor.SizeX, descriptor.SizeZ);
 
             descriptor.OnBattleCreated();
@@ -108,22 +120,25 @@ namespace InfinityWorldChess.BattleDomain
             {
                 chess.Unit.Destroy();
             }
+
             HexUnit unit = Object.Instantiate(_battleUnitPrefab.Value, Map.transform);
+
             unit.Grid = Map;
-            BattleRoleStateViewer viewer = _stateViewer.Instantiate(Map.Ui.transform);
-            viewer.Bind(chess);
-            viewer.TargetTrans = unit.transform;
 
             Map.AddUnit(unit, cell, 0);
             Context.Roles.AddIfNotContains(chess);
-            
+
             unit.SetProperty(chess);
-            
+
             if (chess.UnitPlay?.Value)
             {
                 HexUnitAnim anim = Object.Instantiate(chess.UnitPlay?.Value, unit.transform);
                 anim.Play(chess.Unit as UgfUnit, chess.Unit.Location as BattleCell);
             }
+
+            BattleRoleStateViewer viewer = _stateViewer.Instantiate(Map.Ui.transform);
+            viewer.TargetTrans = unit.transform;
+            viewer.Bind(chess);
 
             Context.OnChessAdded();
         }
@@ -144,42 +159,42 @@ namespace InfinityWorldChess.BattleDomain
             t.color = color;
             Map.AddBillBoard(cell, t.transform);
         }
-
-        public void AutoInitializeRole(Role role, BattleCamp camp, HexCoordinates hexCoordinates, bool playerControl)
-        {
-            HexGrid grid = Map;
-            HexCoordinates coordinate = hexCoordinates;
-            int i = 0, k = 0;
-            HexDirection j = HexDirection.Ne;
-
-            for (; i < 20; i++)
-            {
-                for (; j <= HexDirection.Nw; j++)
-                {
-                    for (; k < i; k++)
-                    {
-                        HexCell cell = grid.GetCell(coordinate);
-                        coordinate += j;
-                        if (cell is not null && !cell.Unit)
-                        {
-                            BattleRole battleRole = new(role)
-                            {
-                                Camp = camp,
-                                PlayerControl = playerControl
-                            };
-                            AddRoleBattleChess(battleRole, cell);
-                            goto End;
-                        }
-                    }
-
-                    k = 0;
-                }
-
-                j = HexDirection.Ne;
-                coordinate += HexDirection.W;
-            }
-
-            End: ;
-        }
+        //
+        // public void AutoInitializeRole(Role role, BattleCamp camp, HexCoordinates hexCoordinates, bool playerControl)
+        // {
+        //     HexGrid grid = Map;
+        //     HexCoordinates coordinate = hexCoordinates;
+        //     int i = 0, k = 0;
+        //     HexDirection j = HexDirection.Ne;
+        //
+        //     for (; i < 20; i++)
+        //     {
+        //         for (; j <= HexDirection.Nw; j++)
+        //         {
+        //             for (; k < i; k++)
+        //             {
+        //                 HexCell cell = grid.GetCell(coordinate);
+        //                 coordinate += j;
+        //                 if (cell is not null && !cell.Unit)
+        //                 {
+        //                     BattleRole battleRole = new(role)
+        //                     {
+        //                         Camp = camp,
+        //                         PlayerControl = playerControl
+        //                     };
+        //                     AddRoleBattleChess(battleRole, cell);
+        //                     goto End;
+        //                 }
+        //             }
+        //
+        //             k = 0;
+        //         }
+        //
+        //         j = HexDirection.Ne;
+        //         coordinate += HexDirection.W;
+        //     }
+        //
+        //     End: ;
+        // }
     }
 }

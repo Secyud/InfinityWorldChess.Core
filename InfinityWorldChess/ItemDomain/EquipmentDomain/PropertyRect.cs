@@ -1,7 +1,6 @@
 ﻿#region
 
 using Secyud.Ugf.BasicComponents;
-using System;
 using InfinityWorldChess.BuffDomain;
 using UnityEngine;
 

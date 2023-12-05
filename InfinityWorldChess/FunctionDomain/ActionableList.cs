@@ -1,6 +1,4 @@
 using System.Collections.Generic;
-using InfinityWorldChess.BuffDomain;
-using InfinityWorldChess.GlobalDomain;
 using Secyud.Ugf.DataManager;
 
 namespace InfinityWorldChess.FunctionDomain

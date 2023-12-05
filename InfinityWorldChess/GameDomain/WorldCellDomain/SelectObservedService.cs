@@ -1,5 +1,4 @@
 ﻿using Secyud.Ugf.DependencyInjection;
-using Secyud.Ugf.HexMapExtensions;
 using Secyud.Ugf.ObserverComponents;
 using UnityEngine;
 

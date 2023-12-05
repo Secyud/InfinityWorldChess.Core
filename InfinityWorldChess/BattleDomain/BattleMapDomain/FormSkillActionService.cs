@@ -7,7 +7,7 @@ using Secyud.Ugf.DependencyInjection;
 namespace InfinityWorldChess.BattleDomain
 {
     [Registry(DependScope = typeof(BattleScope))]
-    public class FormSkillActionService: IBattleMapActionService,IRegistry
+    public class FormSkillActionService : IBattleMapActionService, IRegistry
     {
         private BattleCell _skillCastCell;
         private FormSkillContainer _formSkill;
@@ -18,12 +18,16 @@ namespace InfinityWorldChess.BattleDomain
             get => _formSkill;
             set
             {
-                _formSkill = value;
+                _formSkill = value?.FormSkill.CheckCastCondition(
+                    BattleScope.Instance.Context.Role) is not null
+                    ? null
+                    : value;
+
                 if (_apply)
                 {
                     BattleContext context = BattleScope.Instance.Context;
                     BattleRole role = context.Role;
-                    context.ReleasableCells = value?.FormSkill.GetCastPositionRange(role).Value;
+                    context.ReleasableCells = _formSkill?.FormSkill.GetCastPositionRange(role).Value;
                     context.InRangeCells = Array.Empty<BattleCell>();
                 }
             }
@@ -34,7 +38,7 @@ namespace InfinityWorldChess.BattleDomain
             _apply = true;
             FormSkill = FormSkill;
         }
-        
+
         public void OnHover(BattleCell cell)
         {
             if (FormSkill is not null)
@@ -83,7 +87,7 @@ namespace InfinityWorldChess.BattleDomain
             FormSkill.FormSkill.Cast(role, _skillCastCell, skillRange);
 
             AutoReselectSkill(role);
-            
+
             BattleScope.Instance.Context.OnActionFinished();
         }
 
@@ -91,6 +95,7 @@ namespace InfinityWorldChess.BattleDomain
         {
             FormSkill = role.NextFormSkills.FirstOrDefault(u => u is not null);
         }
+
         public void OnClear()
         {
             FormSkill = null;

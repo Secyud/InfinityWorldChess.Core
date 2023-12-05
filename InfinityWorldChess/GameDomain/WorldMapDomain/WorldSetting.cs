@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
 using InfinityWorldChess.BundleDomain;
-using InfinityWorldChess.GameDomain.WorldCellDomain;
 using InfinityWorldChess.PlayerDomain;
 using Secyud.Ugf;
 using Secyud.Ugf.Archiving;
@@ -23,7 +22,7 @@ namespace InfinityWorldChess.GameDomain.WorldMapDomain
 
         public void PreparePlayer(PlayerGameContext context)
         {
-            context.Role.Position = GameScope.Instance.Map.Value[PositionX,PositionZ] as WorldCell;
+            context.Role.Position = GameScope.Instance.GetCellR(PositionX,PositionZ);
         }
 
         public string GetDataDirectory(string fileName)

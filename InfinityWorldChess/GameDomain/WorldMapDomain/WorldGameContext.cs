@@ -20,7 +20,6 @@ namespace InfinityWorldChess.GameDomain.WorldMapDomain
     public class WorldGameContext : IRegistry
     {
         public readonly IObjectAccessor<HexUnit> WorldUnitPrefab;
-        public static WorldMap Map => GameScope.Instance.Map.Value;
 
         private static readonly string SavePath = IWCC.SaveFilePath(nameof(WorldGameContext));
 
@@ -106,7 +105,7 @@ namespace InfinityWorldChess.GameDomain.WorldMapDomain
                        WorldSetting.GetDataDirectory("map.binary")))
             using (DefaultArchiveReader reader = new(stream))
             {
-                Map.Load(reader);
+                GameScope.Instance.Map.Load(reader);
             }
 
             using (FileStream stream = File.OpenRead(

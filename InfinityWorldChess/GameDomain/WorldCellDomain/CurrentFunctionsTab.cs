@@ -1,5 +1,4 @@
 ﻿using Secyud.Ugf.BasicComponents;
-using Secyud.Ugf.HexMapExtensions;
 using Secyud.Ugf.TabComponents;
 using UnityEngine;
 

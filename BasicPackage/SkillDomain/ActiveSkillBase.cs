@@ -68,23 +68,23 @@ namespace InfinityWorldChess.SkillDomain
 
         public virtual string CheckCastCondition(BattleRole chess, IActiveSkill skill)
         {
-            return Condition?.CheckCastCondition(chess, skill);
+            return Condition?.CheckCastCondition(chess, this);
         }
 
         public virtual void ConditionCast(BattleRole chess, IActiveSkill skill)
         {
-            Condition?.ConditionCast(chess, skill);
+            Condition?.ConditionCast(chess, this);
         }
 
         public virtual ISkillRange GetCastPositionRange(BattleRole role, IActiveSkill skill)
         {
-            return Position?.GetCastPositionRange(role, skill)
+            return Position?.GetCastPositionRange(role, this)
                    ?? new SkillRange(Array.Empty<BattleCell>());
         }
 
         public virtual ISkillRange GetCastResultRange(BattleRole role, BattleCell castPosition, IActiveSkill skill)
         {
-            return Result?.GetCastResultRange(role, castPosition, skill)
+            return Result?.GetCastResultRange(role, castPosition, this)
                    ?? new SkillRange(Array.Empty<BattleCell>());
         }
 

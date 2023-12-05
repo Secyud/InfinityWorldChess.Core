@@ -36,9 +36,7 @@ namespace InfinityWorldChess.BattleDomain
                 HexUnit unit = context.Role.Unit;
                 _service.FindPath(unit.Location as BattleCell, cell, unit);
 
-                IList<int> cellIndex = _service.GetPath();
-                context.InRangeCells =
-                    _service.GetPath().Select(u=>BattleScope.Instance.Map.GetCell(u) as BattleCell).ToList();
+                context.InRangeCells = _service.GetPath().Select(BattleScope.Instance.GetCell).ToList();
             }
             else
             {

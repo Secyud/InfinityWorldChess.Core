@@ -15,17 +15,17 @@ namespace InfinityWorldChess.GameDomain.WorldMapDomain
     public class TravelButtonDescriptor : ButtonDescriptor<WorldCell>
     {
         public override bool Visible(WorldCell target) =>
-            !WorldGameContext.Map.Path.IsNullOrEmpty();
+            !GameScope.Instance.Map.Path.IsNullOrEmpty();
 
         public override void Invoke()
         {
-            IList<int> path = WorldGameContext.Map.Path;
-            WorldMapFunctionService service =
-                U.Get<WorldMapFunctionService>();
+            GameScope scope = GameScope.Instance;
+            IList<int> path = scope.Map.Path;
+            WorldMapFunctionService service = U.Get<WorldMapFunctionService>();
             service.Travel();
             int last = path.Last();
-            GameScope.Instance.Get<CurrentTabService>().Cell = WorldGameContext.Map.GetCell(last) as WorldCell;
-            WorldGameContext.Map.Path = Array.Empty<int>();
+            scope.Get<CurrentTabService>().Cell = scope.GetCell(last);
+            scope.Map.Path = Array.Empty<int>();
         }
 
         public override string Name => "旅行";

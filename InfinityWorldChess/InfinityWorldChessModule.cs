@@ -2,8 +2,6 @@
 
 using System.Collections;
 using System.IO;
-using InfinityWorldChess.ActivityDomain;
-using InfinityWorldChess.DialogueDomain;
 using InfinityWorldChess.GameCreatorDomain;
 using InfinityWorldChess.GameDomain;
 using InfinityWorldChess.GameDomain.WorldCellDomain;
@@ -117,15 +115,15 @@ namespace InfinityWorldChess
             PlayerGameContext player,
             RoleGameContext role)
         {
+            WorldMap map = GameScope.Instance.Map;
             Role pr = player.Role;
             HexUnit pu = world.WorldUnitPrefab
-                .Instantiate(WorldGameContext.Map.transform);
-            pu.Grid = GameScope.Instance.Map.Value;
-            HexCell cell = pr.Position;
-            WorldMap map = WorldGameContext.Map;
+                .Instantiate(map.transform);
+            pu.Grid = map;
+            WorldCell cell = pr.Position;
             player.Unit = pu;
             pu.Id = pr.Id;
-            GameScope.Instance.Get<CurrentTabService>().Cell = (WorldCell)cell; 
+            GameScope.Instance.Get<CurrentTabService>().Cell = cell; 
             map.AddUnit(pu, cell, 0);
             Vector3 position = pu.transform.position;
             position.y = 0;

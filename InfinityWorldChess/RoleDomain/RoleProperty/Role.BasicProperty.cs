@@ -13,6 +13,8 @@ namespace InfinityWorldChess.RoleDomain
 
         public class BasicProperty : IArchivable
         {
+            private int _level;
+
             public AvatarElement[] Avatar { get; } =
                 new AvatarElement[IWCC.AvatarElementCount];
 
@@ -23,7 +25,17 @@ namespace InfinityWorldChess.RoleDomain
 
             public bool Female { get; set; }
 
-            public int Level { get; set; }
+            public int Level
+            {
+                get => _level;
+                set
+                {
+                    if (value >= 0)
+                    {
+                        _level = value;
+                    }
+                }
+            }
 
             // 名
             public string FirstName { get; set; } = string.Empty;

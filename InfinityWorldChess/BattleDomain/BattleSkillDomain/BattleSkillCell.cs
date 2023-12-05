@@ -5,23 +5,29 @@ using UnityEngine;
 
 namespace InfinityWorldChess.BattleDomain
 {
-    public abstract class BattleSkillCell:ShownCell
+    public abstract class BattleSkillCell : ShownCell
     {
         [SerializeField] protected SButton Button;
         protected BattleContext Context { get; set; }
         protected string TipText { get; set; }
-        
+
         protected virtual void Awake()
         {
-            Context = BattleScope.Instance.Context; 
+            Context = BattleScope.Instance.Context;
             SetSkill(Skill);
         }
 
         protected void SetSkill(IActiveSkill skill)
         {
             BindShowable(skill);
-            TipText = skill?.CheckCastCondition(Context.Role,skill);
-            Button.interactable = TipText is null;
+            if (skill is null)
+            {
+                Button.interactable = false;
+            }
+            else
+            {
+                Button.interactable = skill.CheckCastCondition(Context.Role, skill) is null;
+            }
         }
 
         protected override void CreateFloating()
@@ -33,7 +39,7 @@ namespace InfinityWorldChess.BattleDomain
                 t.color = Color.blue;
             }
         }
-        
+
         protected abstract IActiveSkill Skill { get; }
     }
 }

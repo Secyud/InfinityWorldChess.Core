@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Secyud.Ugf.DependencyInjection;
-using Secyud.Ugf.HexMapExtensions;
 using Secyud.Ugf.ObserverComponents;
 
 namespace InfinityWorldChess.BattleDomain

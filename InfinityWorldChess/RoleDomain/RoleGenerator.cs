@@ -40,7 +40,7 @@ namespace InfinityWorldChess.RoleDomain
             _resourceManager = resourceManager;
 
             foreach (HexCell hexCell in
-                     GameScope.Instance.Map.Value.Cells)
+                     GameScope.Instance.Map.Cells)
             {
                 WorldCell cell = (WorldCell)hexCell;
 

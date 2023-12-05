@@ -100,6 +100,7 @@ namespace InfinityWorldChess.RoleDomain
                     FirstName = FirstName,
                     LastName = LastName,
                     Female = Female,
+                    Level = SkillPoint * 0x80000,
                     BirthYear = BirthYear,
                     BirthMonth = BirthMonth,
                     BirthDay = BirthDay,

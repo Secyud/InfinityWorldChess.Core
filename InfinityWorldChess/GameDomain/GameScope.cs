@@ -1,14 +1,15 @@
 ﻿using InfinityWorldChess.BuffDomain;
 using InfinityWorldChess.GameDomain.GameMenuDomain;
 using InfinityWorldChess.GameDomain.SystemMenuDomain;
+using InfinityWorldChess.GameDomain.WorldCellDomain;
 using InfinityWorldChess.GameDomain.WorldMapDomain;
 using InfinityWorldChess.GlobalDomain;
 using InfinityWorldChess.PlayerDomain;
 using InfinityWorldChess.RoleDomain;
-using InfinityWorldChess.SkillDomain;
 using Secyud.Ugf;
 using Secyud.Ugf.AssetComponents;
 using Secyud.Ugf.DependencyInjection;
+using Secyud.Ugf.HexMapExtensions;
 using UnityEditor;
 using UnityEngine;
 
@@ -19,36 +20,52 @@ namespace InfinityWorldChess.GameDomain
     {
         public readonly IMonoContainer<SystemMenuPanel> SystemMenu;
         public readonly IMonoContainer<GameMenuPanel> GameMenu;
-        public readonly IMonoContainer<WorldMap> Map;
+
+
         private readonly IMonoContainer<PointDivisionPanel> _pointPanel;
+        private readonly IMonoContainer<WorldMap> _map;
 
 
-        public WorldGameContext World =>  Get<WorldGameContext>();
+        public WorldGameContext World => Get<WorldGameContext>();
         public PlayerGameContext Player => Get<PlayerGameContext>();
         public RoleGameContext Role => Get<RoleGameContext>();
-        
+        public WorldMap Map => _map.Value;
+
         public static GameScope Instance { get; private set; }
 
         public GameScope(IwcAssets assets)
         {
             SystemMenu = MonoContainer<SystemMenuPanel>.Create(assets);
             GameMenu = MonoContainer<GameMenuPanel>.Create(assets);
-            Map = MonoContainer<WorldMap>.Create(assets, onCanvas: false);
+            _map = MonoContainer<WorldMap>.Create(assets, onCanvas: false);
             _pointPanel = MonoContainer<PointDivisionPanel>.Create(assets);
         }
 
         public override void OnInitialize()
         {
             Instance = this;
-            Map.Create();
-            Map.Value.Initialize(U.Get<WorldHexGridDrawer>());
-            Map.Value.transform.SetSiblingIndex(0);
+            _map.Create();
+            _map.Value.Initialize(U.Get<WorldHexGridDrawer>());
+            _map.Value.transform.SetSiblingIndex(0);
         }
 
         public override void Dispose()
         {
             Map.Destroy();
             Instance = null;
+        }
+
+        public WorldCell GetCell(int index)
+        {
+            return _map.Value.GetCell(index) as WorldCell;
+        }
+
+        public WorldCell GetCellR(int x, int z)
+        {
+            return _map.Value.GetCell(
+                x + HexCellExtension.Border, 
+                z + HexCellExtension.Border)
+                as WorldCell;
         }
 
         public void OpenSystemMenu()
@@ -75,12 +92,12 @@ namespace InfinityWorldChess.GameDomain
 
         public void OnContinue()
         {
-            Map.Value.Show();
+            _map.Value.Show();
         }
 
         public void OnInterrupt()
         {
-            Map.Value.Hide();
+            _map.Value.Hide();
             Transform transform = U.Canvas.transform;
             for (int i = 0; i < transform.childCount; i++)
             {

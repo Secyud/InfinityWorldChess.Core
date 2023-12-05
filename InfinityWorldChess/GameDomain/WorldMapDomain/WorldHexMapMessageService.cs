@@ -18,6 +18,6 @@ namespace InfinityWorldChess.GameDomain.WorldMapDomain
 			return role?.GetSpeed() ?? 1;
 		}
 
-		public override HexGrid Grid => GameScope.Instance.Map.Value;
+		public override HexGrid Grid => GameScope.Instance.Map;
 	}
 }

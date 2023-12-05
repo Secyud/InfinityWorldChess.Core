@@ -100,7 +100,7 @@ namespace InfinityWorldChess.RoleDomain
                 for (int j = 0; j < count; j++)
                 {
                     string assetName = reader.ReadString();
-                    SpriteContainer sprite = AtlasSpriteContainer.Create(loader, atlas, assetName);
+                    SpriteContainer sprite = AtlasSpriteContainer.Create(loader, "Portrait/" + atlas, assetName);
 
                     RegistrableDictionary<int, AvatarSpriteContainer> d =
                         reader.ReadBoolean()

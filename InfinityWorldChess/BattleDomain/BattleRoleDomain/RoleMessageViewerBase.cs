@@ -1,5 +1,4 @@
-﻿using InfinityWorldChess.BuffDomain;
-using InfinityWorldChess.RoleDomain;
+﻿using InfinityWorldChess.RoleDomain;
 using InfinityWorldChess.Ugf;
 using Secyud.Ugf.EditorComponents;
 using Secyud.Ugf.TableComponents;

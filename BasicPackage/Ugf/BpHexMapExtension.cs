@@ -3,6 +3,7 @@
 using Secyud.Ugf.HexMap;
 using System.Collections.Generic;
 using InfinityWorldChess.BattleDomain;
+using Secyud.Ugf.HexMapExtensions;
 using Secyud.Ugf.HexUtilities;
 
 #endregion
@@ -13,7 +14,7 @@ namespace InfinityWorldChess.Ugf
 	{
 		public static void TryAdd(this List<BattleCell> cells, HexGrid grid, HexCoordinates coordinates)
 		{
-			if (grid.GetCell(coordinates) is BattleCell cell)
+			if (grid.GetCell(coordinates) is BattleCell cell && cell.IsValid())
 			{
 				cells.Add(cell);
 			}

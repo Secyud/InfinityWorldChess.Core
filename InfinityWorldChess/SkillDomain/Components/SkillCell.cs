@@ -1,5 +1,6 @@
 ﻿#region
 
+using InfinityWorldChess.GameDomain;
 using InfinityWorldChess.Ugf;
 using Secyud.Ugf.BasicComponents;
 using Secyud.Ugf.TableComponents;
@@ -18,6 +19,7 @@ namespace InfinityWorldChess.SkillDomain
         [SerializeField] private SButton Remove;
         [SerializeField] private TSkillView View;
 
+        protected ISkill BindSkill;
         public TSkillView SkillView => View;
         
         protected virtual void Awake()
@@ -37,8 +39,17 @@ namespace InfinityWorldChess.SkillDomain
 
         public abstract void OnRemove();
 
+        public virtual void OnSelect()
+        {
+            if (BindSkill is not null)
+            {
+                GameScope.Instance.OpenPointPanel(BindSkill);
+            }
+        }
+
         public void Bind(ISkill skill)
         {
+            BindSkill = skill;
             Cell.BindShowable(skill);
         }
     }

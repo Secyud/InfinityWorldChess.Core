@@ -1,5 +1,6 @@
+using System.Linq;
 using InfinityWorldChess.BattleDomain;
-using InfinityWorldChess.BattleTemplates;
+using InfinityWorldChess.GameDomain;
 using InfinityWorldChess.Ugf;
 using Secyud.Ugf;
 using Secyud.Ugf.TableComponents;
@@ -14,9 +15,9 @@ namespace InfinityWorldChess.LevelDomain
         private void Awake()
         {
             BattleLevelGlobalContext service = U.Get<BattleLevelGlobalContext>();
-
-            Table.AutoSetSingleSelectTable<IBattleLevel,
-                BattleLevelSorters, BattleLevelFilters>(service.LevelList.Items, CreateBattle);
+            int playerLevel = GameScope.Instance.Player.Role.Basic.Level;
+            Table.AutoSetSingleSelectTable<IBattleLevel, BattleLevelSorters, BattleLevelFilters>
+                (service.LevelList.Items.Where(u=>u.Level<= playerLevel).ToList(), CreateBattle);
         }
 
         private void CreateBattle(IBattleLevel level)

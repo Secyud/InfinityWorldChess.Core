@@ -1,6 +1,5 @@
 ﻿using InfinityWorldChess.BattleBuffFunction;
 using InfinityWorldChess.BattleDomain;
-using InfinityWorldChess.BattleInteractionDomain;
 using InfinityWorldChess.BuffDomain;
 using InfinityWorldChess.FunctionDomain;
 using InfinityWorldChess.Ugf;
