@@ -57,7 +57,6 @@ namespace InfinityWorldChess.RoleDomain
                 image.SetPositionX(avatar.PositionX);
                 image.SetPositionY(avatar.PositionY);
                 image.SetRotation(avatar.Rotation);
-                container?.SetImage(image);
             }
 
             if (RoleName)

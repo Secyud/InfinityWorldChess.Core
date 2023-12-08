@@ -80,7 +80,7 @@ namespace InfinityWorldChess.RoleDomain
         }
 
 
-        public void RegisterAvatarResourceFromPath(string path, string atlasName, IAssetLoader loader)
+        public void RegisterAvatarResourceFromPath(string path, IAssetLoader loader)
         {
             if (!File.Exists(path))
             {
@@ -119,7 +119,7 @@ namespace InfinityWorldChess.RoleDomain
 
                     AvatarSpriteContainer container = new(
                         sprite, reader.ReadInt32(), (AvatarElementType)i, message);
-
+                    
                     d.Register(container);
                 }
             }

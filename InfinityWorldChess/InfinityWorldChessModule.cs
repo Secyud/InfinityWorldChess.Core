@@ -12,6 +12,7 @@ using InfinityWorldChess.PlayerDomain;
 using InfinityWorldChess.RoleDomain;
 using Secyud.Ugf;
 using Secyud.Ugf.Archiving;
+using Secyud.Ugf.Collections;
 using Secyud.Ugf.DataManager;
 using Secyud.Ugf.HexMap;
 using Secyud.Ugf.Modularity;
@@ -33,21 +34,38 @@ namespace InfinityWorldChess
         public void Configure(ConfigurationContext context)
         {
             context.Manager.AddAssembly(typeof(InfinityWorldChessModule).Assembly);
+            
             context.AddStringResource<InfinityWorldChessResource>();
+            
+            
+            context.Get<WorldCellButtons>().Register(new TravelButtonDescriptor());
+            
         }
 
         public void PostConfigure(ConfigurationContext context)
         {
-            //RegisterWorldModel(context.Get<WorldGlobalService>(), context.Get<IwcAssets>());
-            
-            context.Get<WorldCellButtons>().Register(new TravelButtonDescriptor());
+            RoleResourceManager roleResourceManager = context.Get<RoleResourceManager>();
 
+            foreach (RegistrableDictionary<int, AvatarSpriteContainer> d in roleResourceManager.FemaleAvatarResource)
+            {
+                foreach (AvatarSpriteContainer container in d.ValueList)
+                {
+                    _ = container.Sprite;
+                }             
+            }
+            foreach (RegistrableDictionary<int, AvatarSpriteContainer> d in roleResourceManager.MaleAvatarResource)
+            {
+                foreach (AvatarSpriteContainer container in d.ValueList)
+                {
+                    _ = container.Sprite;
+                }             
+            }
+            
             TypeManager tm = context.Get<TypeManager>();
             string path = Path.Combine(U.Path, "Data/Resource/te.binary");
-
+            
             using FileStream file = File.OpenRead(path);
             tm.AddResourcesFromStream(file);
-            
         }
 
 

@@ -21,7 +21,7 @@ namespace InfinityWorldChess.RoleDomain
 
         public void SetScale(byte scale)
         {
-            if (_container is null ) return;
+            if (_container is null) return;
 
             float value = Mathf.Lerp(
                 _container.Message.ScaleMin,
@@ -33,7 +33,7 @@ namespace InfinityWorldChess.RoleDomain
 
         public void SetPositionX(byte positionX)
         {
-            if (_container is null ) return;
+            if (_container is null) return;
             float value =
                 Mathf.Lerp(
                     -_container.Message.XRange,
@@ -47,12 +47,12 @@ namespace InfinityWorldChess.RoleDomain
 
         public void SetPositionY(byte positionY)
         {
-            if (_container is null ) return;
+            if (_container is null) return;
             float value =
                 Mathf.Lerp(
                     -_container.Message.YRange,
                     _container.Message.YRange,
-                    GetRange01(255-positionY)) +
+                    GetRange01(255 - positionY)) +
                 _container.Message.BiasY + Editor.Bias;
             Vector3 position = rectTransform.localPosition;
             position.y = -value * Editor.Scale;
@@ -61,7 +61,7 @@ namespace InfinityWorldChess.RoleDomain
 
         public void SetRotation(byte rotation)
         {
-            if (_container is null ) return;
+            if (_container is null) return;
             float value = Mathf.Lerp(
                 _container.Message.RotateMin,
                 _container.Message.RotateMax,
@@ -78,7 +78,6 @@ namespace InfinityWorldChess.RoleDomain
                 SetNativeSize();
             }
         }
-
 
         protected float GetRange01(int value)
         {

@@ -20,7 +20,7 @@ namespace InfinityWorldChess.LevelDomain
                 (service.LevelList.Items.Where(u=>u.Level<= playerLevel).ToList(), CreateBattle);
         }
 
-        private void CreateBattle(IBattleLevel level)
+        private static void CreateBattle(IBattleLevel level)
         {
             BattleScope.CreateBattle(level);
         }

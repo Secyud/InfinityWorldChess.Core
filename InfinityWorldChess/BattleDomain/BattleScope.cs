@@ -71,6 +71,11 @@ namespace InfinityWorldChess.BattleDomain
 
         public static void CreateBattle(IBattleDescriptor descriptor)
         {
+            if (descriptor is null)
+            {
+                return;
+            }
+            
             GameScope.Instance.OnInterrupt();
             U.M.CreateScope<BattleScope>();
 

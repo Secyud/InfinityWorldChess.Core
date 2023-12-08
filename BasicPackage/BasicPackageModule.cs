@@ -14,6 +14,7 @@ using InfinityWorldChess.DialogueDomain;
 using InfinityWorldChess.DialogueFunctions;
 using InfinityWorldChess.GameDomain;
 using InfinityWorldChess.InteractionDomain;
+using InfinityWorldChess.LevelDomain;
 using InfinityWorldChess.SkillDomain;
 using Secyud.Ugf;
 using Secyud.Ugf.DataManager;
@@ -26,20 +27,13 @@ namespace InfinityWorldChess
     [DependsOn(
         typeof(InfinityWorldChessModule)
     )]
-    public class BasicPackageModule : IUgfModule, IOnPostConfigure, IOnInitialization
+    public class BasicPackageModule : IUgfModule, IOnInitialization
     {
         public void Configure(ConfigurationContext context)
         {
             context.Get<IDependencyRegistrar>().AddAssembly(typeof(BasicPackageModule).Assembly);
             context.AddStringResource<BasicPackageResource>();
-        }
-
-        public void PostConfigure(ConfigurationContext context)
-        {
-            // context.Get<InteractionGlobalService>().FreeInteractions.RegisterList(
-            //     new ChatInteraction(),
-            //     new FightInteraction()
-            // );
+            
             RegisterItem(context);
             RegisterAvatar(context);
         }
@@ -51,7 +45,7 @@ namespace InfinityWorldChess
             IwcAssets assets = context.Get<IwcAssets>();
 
             resource.RegisterAvatarResourceFromPath(
-                Path.Combine(Application.dataPath, "Data", "Portrait", "portrait.binary"), "basic_portrait", assets
+                Path.Combine(Application.dataPath, "Data", "Portrait", "portrait.binary"), assets
             );
         }
 
@@ -94,6 +88,10 @@ namespace InfinityWorldChess
                 role.CoreSkill.TryAddLearnedSkill(coreSkill);
                 role.CoreSkill.Set(coreSkill, 0, 0);
             }
+
+            var cell = GameScope.Instance.GetCellR(14,10);
+
+            cell.Buttons.Add(new TriggerBattleLevelButton());
 
             return null;
         }

@@ -17,10 +17,6 @@ namespace InfinityWorldChess.RoleDomain
         public Sprite Sprite => _spriteContainer?.Value;
         public AvatarElementMessage Message { get; }
 
-        public virtual void SetImage(SImage image)
-        {
-        }
-
         public AvatarSpriteContainer(SpriteContainer sprite, int id, 
             AvatarElementType type,
             AvatarElementMessage message = null)
