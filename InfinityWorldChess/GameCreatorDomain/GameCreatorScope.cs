@@ -1,5 +1,8 @@
 ﻿using InfinityWorldChess.GlobalDomain;
+using InfinityWorldChess.RoleDomain;
+using Secyud.Ugf;
 using Secyud.Ugf.AssetComponents;
+using Secyud.Ugf.Collections;
 using Secyud.Ugf.DependencyInjection;
 
 namespace InfinityWorldChess.GameCreatorDomain
@@ -17,7 +20,7 @@ namespace InfinityWorldChess.GameCreatorDomain
         {
             _gameCreator = MonoContainer<GameCreatorPanel>.Create(assets);
         }
-
+        
         public override void OnInitialize()
         {
             Instance = this;

@@ -1,6 +1,7 @@
 #region
 
 using System.Collections;
+using System.Collections.Generic;
 using InfinityWorldChess.ItemDomain;
 using InfinityWorldChess.ItemDomain.BookDomain;
 using InfinityWorldChess.ItemDomain.EquipmentDomain;
@@ -27,15 +28,32 @@ namespace InfinityWorldChess
     [DependsOn(
         typeof(InfinityWorldChessModule)
     )]
-    public class BasicPackageModule : IUgfModule, IOnInitialization
+    public class BasicPackageModule : IUgfModule, IOnInitialization,IOnPostConfigure
     {
         public void Configure(ConfigurationContext context)
         {
             context.Get<IDependencyRegistrar>().AddAssembly(typeof(BasicPackageModule).Assembly);
             context.AddStringResource<BasicPackageResource>();
-            
+        }
+        
+        public void PostConfigure(ConfigurationContext context)
+        {
             RegisterItem(context);
             RegisterAvatar(context);
+            
+            TypeManager tm = context.Get<TypeManager>();
+            
+            string path = Path.Combine(U.Path, "Data/Resource/basic-bundle.binary");
+            using FileStream file = File.OpenRead(path);
+            tm.AddResourcesFromStream(file);
+
+            
+            BattleLevelGlobalContext battleLevelGlobalContext = context.Get<BattleLevelGlobalContext>();
+            battleLevelGlobalContext.LevelList.RegisterList();
+
+            using FileStream stream = File.OpenRead(Path.Combine(U.Path, "Data/Resource/levels.binary"));
+            IBattleLevel[] list = stream.ReadResourceObjects<IBattleLevel>().ToArray();
+            battleLevelGlobalContext.LevelList.RegisterList(list);
         }
 
         private void RegisterAvatar(ConfigurationContext context)

@@ -8,70 +8,72 @@ namespace InfinityWorldChess.BattleDomain
     [Registry(DependScope = typeof(BattleScope))]
     public class IwcBattleAiController : IBattleAiController
     {
-        public AiActionNode ResultNode { get; private set; }
-        public AiControlState State { get; private set; }
+        private readonly BattleControlService _service;
+        private readonly BattleContext _context;
+        
+        public static int TargetDistance { get; set; }
+
+        public IwcBattleAiController(BattleControlService service, BattleContext context)
+        {
+            _service = service;
+            _context = context;
+        }
 
         public IEnumerator StartPondering()
         {
-            State = AiControlState.InPondering;
-            BattleRole battleRole = BattleScope.Instance.Context.Role;
-            List<AiActionNode> nodes = new();
-            if (battleRole is null)
-                State = AiControlState.NoActionValid;
-            else
+            AiActionNode node = null;
+
+            do
             {
-                CoreSkillAiActionNode.AddNodes(nodes, battleRole);
-                FormSkillAiActionNode.AddNodes(nodes, battleRole);
-                nodes.Add(new StopActionNode());
-                yield return RandomSelect(nodes);
-            }
+                if (_context.State == BattleFlowState.OnUnitControl)
+                {
+                    BattleRole battleRole = BattleScope.Instance.Context.Role;
+                    List<AiActionNode> nodes = new();
+                    if (battleRole is null)
+                        _service.ExitControl();
+                    else
+                    {
+                        SkillAiActionNode.AddNodes(nodes, battleRole);
+                        MoveAiActionNode.AddNodes(nodes, battleRole);
+                        nodes.Add(new StopActionNode());
+                        node = RandomSelect(nodes);
+                        node?.InvokeAction();
+                    }
+                }
+                yield return null;
+            } while (node is not null);
 
-            State = AiControlState.FinishPonder;
+            _service.ExitControl();
         }
 
-        public void TryInvokeCurrentNode()
-        {
-            if (State == AiControlState.NoActionValid)
-                return;
-            ResultNode?.InvokeAction();
-            ResultNode = null;
-            State = AiControlState.StartPonder;
-        }
 
-
-        public IEnumerator RandomSelect(List<AiActionNode> nodes)
+        public AiActionNode RandomSelect(List<AiActionNode> nodes)
         {
             int count = nodes.Count;
-            if (count <= 0)
-                State = AiControlState.NoActionValid;
-            else
+            if (count <= 0) return null;
+
+            int[] steps = new int[count];
+            steps[0] = nodes[0].GetScore();
+            for (int i = 1; i < count; i++)
             {
-                int[] steps = new int[count];
-                steps[0] = nodes[0].GetScore();
-                for (int i = 1; i < count; i++)
+                steps[i] = steps[i - 1] + nodes[i].GetScore();
+            }
+
+            int total = steps[^1];
+
+            if (total <= 0) return null;
+
+            int rd = U.GetRandom(total);
+
+            for (int i = 0; i < count; i++)
+            {
+                if (steps[i] > rd)
                 {
-                    yield return null;
-                    steps[i] = steps[i - 1] + nodes[i].GetScore();
-                }
-
-                int total = steps[^1];
-
-                if (total <= 0)
-                    State = AiControlState.NoActionValid;
-                else
-                {
-                    int rd = U.GetRandom(total);
-
-                    for (int i = 0; i < count; i++)
-                        if (steps[i] > rd)
-                        {
-                            ResultNode = nodes[i];
-                            break;
-                        }
+                    return nodes[i];
                 }
             }
+
+            return null;
         }
-
-
     }
 }

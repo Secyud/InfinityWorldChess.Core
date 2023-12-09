@@ -1,6 +1,7 @@
 #region
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using InfinityWorldChess.BuffDomain;
 using InfinityWorldChess.FunctionDomain;
@@ -8,6 +9,7 @@ using InfinityWorldChess.RoleDomain;
 using InfinityWorldChess.SkillDomain;
 using Secyud.Ugf;
 using Secyud.Ugf.HexMap;
+using Secyud.Ugf.HexMapExtensions;
 using Secyud.Ugf.HexUtilities;
 using Secyud.Ugf.UgfHexMap;
 using UnityEngine;
@@ -43,8 +45,8 @@ namespace InfinityWorldChess.BattleDomain
 
         public BattleCamp Camp { get; set; }
 
-        public BuffCollection<BattleRole,IBattleRoleBuff> Buffs { get; }
-        public PropertyCollection<BattleRole,IBattleRoleProperty> Properties { get; }
+        public BuffCollection<BattleRole, IBattleRoleBuff> Buffs { get; }
+        public PropertyCollection<BattleRole, IBattleRoleProperty> Properties { get; }
 
         public void OnDying()
         {
@@ -205,7 +207,7 @@ namespace InfinityWorldChess.BattleDomain
         public int GetTimeAdd()
         {
             const float factor = IWCC.BattleTimeFactor;
-            float ret = factor + 4 * factor * factor / 
+            float ret = factor + 4 * factor * factor /
                 (factor + Role.BodyPart[BodyType.Nimble].MaxValue);
             return Math.Max((int)ret, 1);
         }
@@ -260,6 +262,84 @@ namespace InfinityWorldChess.BattleDomain
 
             foreach (IActionable<BattleRole> b in Role.Buffs.BattleInitializes)
                 b.Invoke(this);
+        }
+
+        private const int MoveDivision = 10;
+
+        public int GetMoveCast(BattleCell cell)
+        {
+            return cell.DistanceTo(Unit.Location) * MoveDivision
+                   / Role.BodyPart.Nimble.RealValue;
+        }
+
+        public IReadOnlyList<BattleCell> GetMoveRange()
+        {
+            if (ExecutionValue <= 0)
+            {
+                return Array.Empty<BattleCell>();
+            }
+
+            RoleBodyPart nimble = Role.BodyPart.Nimble;
+            int execution = ExecutionValue;
+
+            byte rg = (byte)Math.Min(nimble.RealValue * execution / MoveDivision, 10);
+
+            HexGrid grid = BattleScope.Instance.Map;
+            List<BattleCell> cells = new();
+            List<Vector2> checks = new();
+            HexCoordinates coordinate = Unit.Location.Coordinates;
+
+            for (int i = 1; i < rg; i++)
+            {
+                HexCoordinates tmp = coordinate;
+
+                for (int j = 0; j < i; j++)
+                {
+                    tmp += HexDirection.W;
+                }
+
+                for (int j = 0; j < 6; j++)
+                {
+                    HexDirection direction = (HexDirection)(j % 6);
+                    for (int k = 0; k < i; k++)
+                    {
+                        TryAddCell(tmp);
+                        tmp += direction;
+                    }
+                }
+
+                TryAddCell(tmp);
+            }
+
+            return cells;
+
+            void TryAddCell(HexCoordinates c)
+            {
+                if (grid.GetCell(c) is not BattleCell cell ||
+                    !cell.IsValid()) return;
+
+                Vector2 p2d = (c - Unit.Location.Coordinates).Position2D();
+
+                const float r2 = 1.5f;
+                foreach (Vector2 check in checks)
+                {
+                    if (check.x * p2d.x < 0 ||
+                        check.y * p2d.y < 0)
+                        continue;
+                    float a = check.x * p2d.y - p2d.x * check.y;
+                    float d = a * a / (check.x * check.x + check.y * check.y);
+                    if (d < r2)
+                        return;
+                }
+
+                if (cell.Unit)
+                {
+                    checks.Add(p2d);
+                    return;
+                }
+
+                cells.Add(cell);
+            }
         }
     }
 }

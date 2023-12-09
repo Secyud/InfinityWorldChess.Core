@@ -44,28 +44,6 @@ namespace InfinityWorldChess
 
         public void PostConfigure(ConfigurationContext context)
         {
-            RoleResourceManager roleResourceManager = context.Get<RoleResourceManager>();
-
-            foreach (RegistrableDictionary<int, AvatarSpriteContainer> d in roleResourceManager.FemaleAvatarResource)
-            {
-                foreach (AvatarSpriteContainer container in d.ValueList)
-                {
-                    _ = container.Sprite;
-                }             
-            }
-            foreach (RegistrableDictionary<int, AvatarSpriteContainer> d in roleResourceManager.MaleAvatarResource)
-            {
-                foreach (AvatarSpriteContainer container in d.ValueList)
-                {
-                    _ = container.Sprite;
-                }             
-            }
-            
-            TypeManager tm = context.Get<TypeManager>();
-            string path = Path.Combine(U.Path, "Data/Resource/te.binary");
-            
-            using FileStream file = File.OpenRead(path);
-            tm.AddResourcesFromStream(file);
         }
 
 

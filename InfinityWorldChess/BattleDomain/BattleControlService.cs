@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using InfinityWorldChess.MessageDomain;
 using Secyud.Ugf.AssetComponents;
 using Secyud.Ugf.DependencyInjection;
 using UnityEngine;
@@ -32,13 +33,10 @@ namespace InfinityWorldChess.BattleDomain
 
         public void OnUpdate(BattleCell cell)
         {
-            if (!EventSystem.current.IsPointerOverGameObject())
+            _context.HoverCell = cell;
+            if (Input.GetMouseButtonDown(1))
             {
-                _context.HoverCell = cell;
-                if (Input.GetMouseButtonDown(1))
-                {
-                    _context.SelectCell(cell);
-                }
+                _context.SelectCell(cell);
             }
 
             switch (State)
@@ -84,7 +82,7 @@ namespace InfinityWorldChess.BattleDomain
             _context.Role = battleRole;
 
             BattleScope.Instance.Context.OnRoundBegin();
-            
+
             _context.StateService.Refresh();
             _context.RoleService.Refresh();
             _context.SelectedCellService.Refresh();
@@ -105,6 +103,8 @@ namespace InfinityWorldChess.BattleDomain
                 StartOrContinueAi();
             }
 
+            MessageScope.Instance.AddMessage($"进入【{_context.Role.Role.ShowName}】回合");
+            
             BattleScope.Instance.Map.MapCamera.SetTargetPosition(_context.Role.Unit.Location.Position);
 
             State = BattleFlowState.OnUnitControl;
@@ -112,7 +112,8 @@ namespace InfinityWorldChess.BattleDomain
 
         public void ExitControl()
         {
-            State = BattleFlowState.OnCalculation;
+            //State = BattleFlowState.OnCalculation;
+            CalculateTurn();
         }
 
 
@@ -127,28 +128,13 @@ namespace InfinityWorldChess.BattleDomain
             }
             else
             {
-                switch (_aiController.State)
-                {
-                    case AiControlState.StartPonder:
-                        StartOrContinueAi();
-                        break;
-                    case AiControlState.InPondering:
-                        break;
-                    case AiControlState.FinishPonder:
-                        _aiController.TryInvokeCurrentNode();
-                        break;
-                    case AiControlState.NoActionValid:
-                        ExitControl();
-                        break;
-                    default:
-                        throw new ArgumentOutOfRangeException();
-                }
+                StartOrContinueAi();
             }
         }
 
         public void StartOrContinueAi()
         {
-            BattleScope.Instance.Map.StartCoroutine(_aiController.StartPondering());
+            _aiController.StartPondering();
         }
 
         public void TriggerEffect()

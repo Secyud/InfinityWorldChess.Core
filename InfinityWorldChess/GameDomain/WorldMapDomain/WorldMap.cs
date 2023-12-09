@@ -31,7 +31,8 @@ namespace InfinityWorldChess.GameDomain.WorldMapDomain
 
         private void Update()
         {
-            if (EventSystem.current.IsPointerOverGameObject() || !Camera.isActiveAndEnabled)
+            if (EventSystem.current.IsPointerOverGameObject() || 
+                !Camera.isActiveAndEnabled)
                 return;
 
             WorldCell cell = GetCellUnderCursor() as WorldCell;

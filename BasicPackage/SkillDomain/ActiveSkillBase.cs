@@ -52,6 +52,11 @@ namespace InfinityWorldChess.SkillDomain
             }
         }
 
+        public ISkillTarget GetTargetInRange(BattleRole battleChess, ISkillRange range)
+        {
+            return TargetGetter?.GetTargetInRange(battleChess, range);
+        }
+
         protected virtual void SetHideContent(Transform transform)
         {
             Condition?.SetContent(transform);
@@ -93,7 +98,7 @@ namespace InfinityWorldChess.SkillDomain
             Role = role;
             Cell = releasePosition;
             Range = range;
-            Targets = TargetGetter?.GetTargetInRange(role, range);
+            Targets = GetTargetInRange(role, range);
 
             this.TryAttach(PreSkill);
             this.TryAttach(PreInteraction);

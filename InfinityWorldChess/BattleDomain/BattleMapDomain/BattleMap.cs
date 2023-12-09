@@ -8,6 +8,7 @@ using Secyud.Ugf.UgfHexMap;
 using Secyud.Ugf.UgfHexMapGenerator;
 using UnityEngine;
 using UnityEngine.Animations;
+using UnityEngine.EventSystems;
 
 #endregion
 
@@ -36,7 +37,7 @@ namespace InfinityWorldChess.BattleDomain
             if (BattleScope.Instance.Battle.Victory ||
                 BattleScope.Instance.Battle.Defeated)
                 BattleScope.DestroyBattle();
-            else
+            else if (!EventSystem.current.IsPointerOverGameObject())
             {
                 HexCell cell = GetCellUnderCursor();
                 if (cell.IsValid())

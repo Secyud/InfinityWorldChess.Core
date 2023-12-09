@@ -21,7 +21,7 @@ namespace InfinityWorldChess.RoleDomain
         [field: S(7)] public byte BirthHour { get; set; }
         [field: S(8)] public bool Female { get; set; }
 
-        [field: S(18)]
+        [field: S(16)]
         public AvatarElement[] Avatar { get; } =
             new AvatarElement[IWCC.AvatarElementCount];
 
