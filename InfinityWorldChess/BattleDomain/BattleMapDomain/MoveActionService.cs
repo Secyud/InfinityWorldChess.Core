@@ -11,6 +11,8 @@ namespace InfinityWorldChess.BattleDomain
     {
         private readonly BattleMapFunctionService _service;
 
+
+        public bool IsInterval => _service.IsTraveling;
         public MoveActionService(BattleMapFunctionService service)
         {
             _service = service;
@@ -59,6 +61,5 @@ namespace InfinityWorldChess.BattleDomain
             context.ReleasableCells = Array.Empty<BattleCell>();
             context.InRangeCells = Array.Empty<BattleCell>();
         }
-
     }
 }

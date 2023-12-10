@@ -14,8 +14,6 @@ namespace InfinityWorldChess.DialogueFunctions
         
         public void Invoke()
         {
-            InteractionScope.Instance.DialogueService.OpenDialoguePanel();
-            
             InteractionScope.Instance.DialogueService.Panel
                 .SetInteraction(UnitAccessor.Value);
         }

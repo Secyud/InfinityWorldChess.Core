@@ -17,11 +17,13 @@ namespace InfinityWorldChess.BattleDomain
     public class BattleScope : DependencyScopeProvider
     {
         private readonly MonoContainer<BattleMap> _map;
-        private readonly PrefabContainer<HexUnit> _battleUnitPrefab;
+        private readonly PrefabContainer<BattleUnit> _battleUnitPrefab;
         private readonly PrefabContainer<TextMeshPro> _simpleTextMesh;
         private readonly PrefabContainer<BattleRoleStateViewer> _stateViewer;
 
-        public MonoContainer<BattleFinishedPanel> BattleFinishPanel { get; }
+        private readonly MonoContainer<BattleFinishedPanel> _battleFinishPanel;
+
+        public BattleFinishedPanel BattleFinishPanel => _battleFinishPanel.GetOrCreate();
 
         public static BattleScope Instance { get; private set; }
         public BattleMap Map => _map.Value;
@@ -37,7 +39,7 @@ namespace InfinityWorldChess.BattleDomain
         public BattleScope(IwcAssets assets)
         {
             _map = MonoContainer<BattleMap>.Create(assets, onCanvas: false);
-            _battleUnitPrefab = PrefabContainer<HexUnit>.Create(
+            _battleUnitPrefab = PrefabContainer<BattleUnit>.Create(
                 assets, U.TypeToPath<BattleContext>() + "Unit.prefab"
             );
             _simpleTextMesh = PrefabContainer<TextMeshPro>.Create(
@@ -45,7 +47,7 @@ namespace InfinityWorldChess.BattleDomain
             );
             _stateViewer = PrefabContainer<BattleRoleStateViewer>.Create(
                 assets, "InfinityWorldChess/BattleDomain/BattleRoleDomain/BattleRoleStateViewer.prefab");
-            BattleFinishPanel
+            _battleFinishPanel
                 = MonoContainer<BattleFinishedPanel>.Create(assets);
         }
 
@@ -96,11 +98,9 @@ namespace InfinityWorldChess.BattleDomain
             {
                 transform.GetChild(i).Destroy();
             }
-
-            Instance.BattleFinishPanel.Create();
+            
             Instance.Context.OnBattleFinished();
             Instance.Battle.OnBattleFinished();
-
 
             U.M.DestroyScope<BattleScope>();
             GameScope.Instance.OnContinue();
@@ -126,7 +126,7 @@ namespace InfinityWorldChess.BattleDomain
                 chess.Unit.Destroy();
             }
 
-            HexUnit unit = Object.Instantiate(_battleUnitPrefab.Value, Map.transform);
+            BattleUnit unit = Object.Instantiate(_battleUnitPrefab.Value, Map.transform);
 
             unit.Grid = Map;
 
@@ -144,14 +144,17 @@ namespace InfinityWorldChess.BattleDomain
             BattleRoleStateViewer viewer = _stateViewer.Instantiate(Map.Ui.transform);
             viewer.TargetTrans = unit.transform;
             viewer.Bind(chess);
-
+            unit.StateViewer = viewer;
+            
             Context.OnChessAdded();
         }
 
         public void RemoveRoleBattleChess(BattleRole chess)
         {
             if (chess.Unit)
+            {
                 chess.Unit.Destroy();
+            }
             chess.Dead = true;
             Context.Roles.Remove(chess);
             Context.OnChessRemoved();

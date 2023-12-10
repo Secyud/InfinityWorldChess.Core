@@ -1,17 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using InfinityWorldChess.SkillDomain;
 using JetBrains.Annotations;
 using Secyud.Ugf;
-using Secyud.Ugf.HexMapExtensions;
 
 namespace InfinityWorldChess.BattleDomain
 {
-    public class MoveAiActionNode : AiActionNode
+    public class MoveAiActionNode : IAiActionNode
     {
         private readonly BattleCell _cell;
         private readonly BattleRole _battleRole;
+        private MoveActionService _service;
+
+        private MoveActionService Service => _service ??= U.Get<MoveActionService>();
 
         private MoveAiActionNode(
             [NotNull] BattleCell cell,
@@ -21,13 +22,15 @@ namespace InfinityWorldChess.BattleDomain
             _battleRole = battleRole;
         }
 
-        public override void InvokeAction()
+        public bool IsInterval => _service.IsInterval;
+
+        public  bool InvokeAction()
         {
-            MoveActionService service = U.Get<MoveActionService>();
-            service.OnPress(_cell);
+            Service.OnPress(_cell);
+            return true;
         }
 
-        public override int GetScore()
+        public  int GetScore()
         {
             return (int)(from chess in BattleScope.Instance.Context.Roles
                 where chess.Camp != _battleRole.Camp 
@@ -37,7 +40,7 @@ namespace InfinityWorldChess.BattleDomain
         }
 
 
-        public static void AddNodes(List<AiActionNode> nodes, BattleRole battleRole)
+        public static void AddNodes(List<IAiActionNode> nodes, BattleRole battleRole)
         {
             IReadOnlyList<BattleCell> range = battleRole.GetMoveRange();
 

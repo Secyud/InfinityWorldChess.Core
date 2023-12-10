@@ -34,7 +34,9 @@ namespace InfinityWorldChess.DialogueDomain
         public void SetInteraction(IDialogueUnit unit)
         {
             if (unit is null)
-                InteractionScope.Instance.DialogueService.CloseDialoguePanel();
+            {
+                InteractionScope.Instance.DialogueService.Panel.Destroy();
+            }
             else
             {
                 SetCurrentRole(unit.RoleAccessor?.Value);

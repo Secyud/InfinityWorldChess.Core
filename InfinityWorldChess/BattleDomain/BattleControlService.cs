@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using InfinityWorldChess.MessageDomain;
+using Secyud.Ugf;
 using Secyud.Ugf.AssetComponents;
 using Secyud.Ugf.DependencyInjection;
 using UnityEngine;
@@ -12,7 +13,6 @@ namespace InfinityWorldChess.BattleDomain
     public class BattleControlService : IRegistry
     {
         private readonly BattleContext _context;
-        private readonly IBattleAiController _aiController;
         private readonly MonoContainer<BattlePlayerController> _playerController;
 
         protected BattleFlowState State
@@ -23,11 +23,9 @@ namespace InfinityWorldChess.BattleDomain
 
         public BattleControlService(
             BattleContext context,
-            IBattleAiController aiController,
             IwcAssets assets)
         {
             _context = context;
-            _aiController = aiController;
             _playerController = MonoContainer<BattlePlayerController>.Create(assets);
         }
 
@@ -56,7 +54,6 @@ namespace InfinityWorldChess.BattleDomain
                     throw new ArgumentOutOfRangeException();
             }
         }
-
 
         private void CalculateTurn()
         {
@@ -93,6 +90,10 @@ namespace InfinityWorldChess.BattleDomain
 
         public void EnterControl()
         {
+            MessageScope.Instance.AddMessage($"【{_context.Role.Role.ShowName}】回合");
+            BattleScope.Instance.Map.MapCamera.SetTargetPosition(_context.Role.Unit.Location.Position);
+            State = BattleFlowState.OnUnitControl;
+
             if (_context.Role.PlayerControl)
             {
                 _playerController.Create();
@@ -100,20 +101,21 @@ namespace InfinityWorldChess.BattleDomain
             else
             {
                 _playerController.Destroy();
-                StartOrContinueAi();
+                TryPondering();
             }
-
-            MessageScope.Instance.AddMessage($"进入【{_context.Role.Role.ShowName}】回合");
-            
-            BattleScope.Instance.Map.MapCamera.SetTargetPosition(_context.Role.Unit.Location.Position);
-
-            State = BattleFlowState.OnUnitControl;
         }
 
         public void ExitControl()
         {
-            //State = BattleFlowState.OnCalculation;
             CalculateTurn();
+        }
+
+        private IBattleAiController _controller;
+
+        private void TryPondering()
+        {
+            _controller ??= U.Get<IBattleAiController>();
+            _controller.TryPondering();
         }
 
 
@@ -128,13 +130,8 @@ namespace InfinityWorldChess.BattleDomain
             }
             else
             {
-                StartOrContinueAi();
+                TryPondering();
             }
-        }
-
-        public void StartOrContinueAi()
-        {
-            _aiController.StartPondering();
         }
 
         public void TriggerEffect()

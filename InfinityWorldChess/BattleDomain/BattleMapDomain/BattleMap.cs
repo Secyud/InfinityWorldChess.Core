@@ -39,10 +39,10 @@ namespace InfinityWorldChess.BattleDomain
                 BattleScope.DestroyBattle();
             else if (!EventSystem.current.IsPointerOverGameObject())
             {
-                HexCell cell = GetCellUnderCursor();
+                BattleCell cell = GetCellUnderCursor() as BattleCell;
                 if (cell.IsValid())
                 {
-                    _controlService.OnUpdate(cell as BattleCell);
+                    _controlService.OnUpdate(cell);
                 }
             }
         }
@@ -79,7 +79,7 @@ namespace InfinityWorldChess.BattleDomain
             }
         }
 
-        public void GenerateMap(WorldCell cell,int width, int height)
+        public void GenerateMap(WorldCell cell, int width, int height)
         {
             // TODO: use world cell to init parameter
             MapGenerator.ChunkCountX = width;

@@ -1,6 +1,7 @@
 using InfinityWorldChess.DialogueDomain;
 using InfinityWorldChess.FunctionDomain;
 using Secyud.Ugf;
+using UnityEngine;
 
 namespace InfinityWorldChess.DialogueFunctions
 {
@@ -8,7 +9,7 @@ namespace InfinityWorldChess.DialogueFunctions
     {
         public void Invoke()
         {
-            U.Get<DialogueService>().CloseDialoguePanel();
+            U.Get<DialogueService>().Panel.Destroy();
         }
     }
 }

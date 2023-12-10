@@ -9,10 +9,18 @@ namespace InfinityWorldChess.BattleDomain
     [Registry(DependScope = typeof(BattleScope))]
     public class FormSkillActionService : IBattleMapActionService, IRegistry
     {
+        private readonly BattleContext _context;
         private BattleCell _skillCastCell;
         private FormSkillContainer _formSkill;
         private bool _apply;
 
+        public FormSkillActionService(BattleContext context)
+        {
+            _context = context;
+        }
+
+        public bool IsInterval  => _context.State != BattleFlowState.OnUnitControl;
+        
         public FormSkillContainer FormSkill
         {
             get => _formSkill;
@@ -43,17 +51,16 @@ namespace InfinityWorldChess.BattleDomain
         {
             if (FormSkill is not null)
             {
-                BattleContext context = BattleScope.Instance.Context;
 
-                if (context.ReleasableCells.Contains(cell))
+                if (_context.ReleasableCells.Contains(cell))
                 {
-                    BattleRole role = context.Role;
+                    BattleRole role = _context.Role;
                     ISkillRange inRange = FormSkill.Skill.GetCastResultRange(role, cell);
-                    context.InRangeCells = inRange.Value;
+                    _context.InRangeCells = inRange.Value;
                 }
                 else
                 {
-                    context.InRangeCells = Array.Empty<BattleCell>();
+                    _context.InRangeCells = Array.Empty<BattleCell>();
                 }
             }
         }
@@ -63,8 +70,7 @@ namespace InfinityWorldChess.BattleDomain
             if (FormSkill is not null)
             {
                 _skillCastCell = cell;
-                BattleContext context = BattleScope.Instance.Context;
-                BattleRole role = context.Role;
+                BattleRole role = _context.Role;
                 BattleScope.Instance.Map.StartBroadcast(role, cell,
                     FormSkill.FormSkill.UnitPlay?.Value);
                 MessageScope.Instance.AddMessage(FormSkill.FormSkill.Name);
@@ -73,8 +79,7 @@ namespace InfinityWorldChess.BattleDomain
 
         public void OnTrig()
         {
-            BattleContext context = BattleScope.Instance.Context;
-            BattleRole role = context.Role;
+            BattleRole role = _context.Role;
 
             role.SetFormSkillCall((byte)(FormSkill.EquipCode / 4));
 
@@ -88,7 +93,7 @@ namespace InfinityWorldChess.BattleDomain
 
             AutoReselectSkill(role);
 
-            BattleScope.Instance.Context.OnActionFinished();
+            _context.OnActionFinished();
         }
 
         public void AutoReselectSkill(BattleRole role)

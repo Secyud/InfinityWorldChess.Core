@@ -12,7 +12,6 @@ namespace InfinityWorldChess.DialogueFunctions
         public override void Invoke()
         {
             DialogueService service = U.Get<DialogueService>();
-            service.OpenDialoguePanel();
             ChatRegister register = U.Get<ChatRegister>();
             
             GameScope.Instance.Role.MainOperationRole = Target;

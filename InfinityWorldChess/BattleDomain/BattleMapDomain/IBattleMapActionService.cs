@@ -11,5 +11,7 @@ namespace InfinityWorldChess.BattleDomain
         void OnTrig();
 
         void OnClear();
+        
+        bool IsInterval { get; }
     }
 }

@@ -9,31 +9,11 @@ namespace InfinityWorldChess.DialogueDomain
     {
         private readonly IMonoContainer<DialoguePanel> _dialoguePanel;
 
-        public DialoguePanel Panel
-        {
-            get
-            {
-                if (!_dialoguePanel.Value)
-                {
-                    OpenDialoguePanel();
-                }
-                return _dialoguePanel.Value;
-            }
-        }
+        public DialoguePanel Panel => _dialoguePanel.GetOrCreate();
 
         public DialogueService(IwcAssets assets)
         {
             _dialoguePanel = MonoContainer<DialoguePanel>.Create(assets);
-        }
-
-        public void OpenDialoguePanel()
-        {
-            _dialoguePanel.Create();
-        }
-
-        public void CloseDialoguePanel()
-        {
-            _dialoguePanel.Destroy();
         }
     }
 }

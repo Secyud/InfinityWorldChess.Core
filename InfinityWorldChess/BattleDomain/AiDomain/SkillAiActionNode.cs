@@ -8,11 +8,19 @@ using Secyud.Ugf.HexUtilities;
 
 namespace InfinityWorldChess.BattleDomain
 {
-    public class SkillAiActionNode : AiActionNode
+    public class SkillAiActionNode : IAiActionNode
     {
         private readonly BattleCell _cell;
         private readonly SkillContainer _container;
         private readonly BattleRole _battleRole;
+
+        private CoreSkillActionService _coreService;
+
+        private CoreSkillActionService CoreService => _coreService ??= U.Get<CoreSkillActionService>();
+
+        private FormSkillActionService _formService;
+
+        private FormSkillActionService FormService => _formService ??= U.Get<FormSkillActionService>();
 
         private SkillAiActionNode([NotNull] BattleCell cell,
             [NotNull] SkillContainer container,
@@ -23,23 +31,37 @@ namespace InfinityWorldChess.BattleDomain
             _battleRole = battleRole;
         }
 
-        public override void InvokeAction()
+        public bool IsInterval
         {
-            if (_container is CoreSkillContainer coreSkillContainer)
+            get
             {
-                CoreSkillActionService skill = U.Get<CoreSkillActionService>();
-                skill.CoreSkill = coreSkillContainer;
-                skill.OnPress(_cell);
-            }
-            else if (_container is FormSkillContainer moveSkillContainer)
-            {
-                FormSkillActionService skill = U.Get<FormSkillActionService>();
-                skill.FormSkill = moveSkillContainer;
-                skill.OnPress(_cell);
+                return _container switch
+                {
+                    CoreSkillContainer => CoreService.IsInterval,
+                    FormSkillContainer => FormService.IsInterval,
+                    _                  => false
+                };
             }
         }
 
-        public override int GetScore()
+        public  bool InvokeAction()
+        {
+            switch (_container)
+            {
+                case CoreSkillContainer coreSkillContainer:
+                    CoreService.CoreSkill = coreSkillContainer;
+                    CoreService.OnPress(_cell);
+                    return true;
+                case FormSkillContainer moveSkillContainer:
+                    FormService.FormSkill = moveSkillContainer;
+                    FormService.OnPress(_cell);
+                    return true;
+                default:
+                    return false;
+            }
+        }
+
+        public  int GetScore()
         {
             ISkillRange range = _container.Skill.GetCastResultRange(_battleRole, _cell);
             ISkillTarget targets = _container.Skill.GetTargetInRange(_battleRole, range);
@@ -52,7 +74,7 @@ namespace InfinityWorldChess.BattleDomain
             return Math.Max((int)score, 0);
         }
 
-        public static void AddNodes(List<AiActionNode> nodes, BattleRole battleRole)
+        public static void AddNodes(List<IAiActionNode> nodes, BattleRole battleRole)
         {
             foreach (CoreSkillContainer skill in battleRole.NextCoreSkills)
             {

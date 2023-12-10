@@ -5,6 +5,7 @@ using InfinityWorldChess.InteractionDomain;
 using InfinityWorldChess.RoleDomain;
 using Secyud.Ugf;
 using Secyud.Ugf.DataManager;
+using UnityEngine;
 
 namespace InfinityWorldChess.DialogueTemplates
 {
@@ -32,7 +33,7 @@ namespace InfinityWorldChess.DialogueTemplates
             else
             {
                 _currentIndex = 0;
-                InteractionScope.Instance.DialogueService.CloseDialoguePanel();
+                InteractionScope.Instance.DialogueService.Panel.Destroy();
                 FinishDialogueAction?.Invoke();
             }
         }

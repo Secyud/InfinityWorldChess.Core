@@ -1,6 +1,7 @@
 using InfinityWorldChess.BattleDomain;
 using InfinityWorldChess.BattleInteractionDomain;
 using InfinityWorldChess.FunctionDomain;
+using InfinityWorldChess.GameDomain;
 using InfinityWorldChess.Ugf;
 using Secyud.Ugf;
 using Secyud.Ugf.HexMap;
@@ -30,7 +31,7 @@ namespace InfinityWorldChess.BattleInteractionFunctions
 
             if (target.HealthValue < 0)
             {
-                target.Unit.Die();
+                BattleScope.Instance.RemoveRoleBattleChess(target);
             }
 
             BattleScope.Instance.CreateNumberText(cell, (int)damage, Color.red);

@@ -2,14 +2,16 @@ using Secyud.Ugf;
 
 namespace InfinityWorldChess.BattleDomain
 {
-    public class StopActionNode:AiActionNode
+    public class StopActionNode:IAiActionNode
     {
-        public override void InvokeAction()
+        public bool IsInterval => false;
+
+        public bool InvokeAction()
         {
-            U.Get<BattleControlService>().ExitControl();
+            return false;
         }
 
-        public override int GetScore()
+        public  int GetScore()
         {
             return 8;
         }
