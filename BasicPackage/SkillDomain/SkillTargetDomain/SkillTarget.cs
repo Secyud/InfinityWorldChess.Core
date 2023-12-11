@@ -11,24 +11,24 @@ using Secyud.Ugf;
 
 namespace InfinityWorldChess.SkillDomain
 {
-	public class SkillTarget : ISkillTarget, IObjectAccessor<List<BattleRole>>
+	public class SkillTarget : ISkillTarget, IObjectAccessor<List<BattleUnit>>
 	{
-		private SkillTarget(IEnumerable<BattleRole> chesses)
+		private SkillTarget(IEnumerable<BattleUnit> chesses)
 		{
 			Value = chesses.ToList();
 		}
 
-		public List<BattleRole> Value { get; }
+		public List<BattleUnit> Value { get; }
 
-		public static SkillTarget GetFixedTarget(params BattleRole[] chesses)
+		public static SkillTarget GetFixedTarget(params BattleUnit[] chesses)
 		{
 			return new SkillTarget(chesses);
 		}
 
-		public static SkillTarget CreateFromRange(ISkillRange range,Func<BattleRole, bool> condition)
+		public static SkillTarget CreateFromRange(ISkillRange range,Func<BattleUnit, bool> condition)
 		{
 			return new SkillTarget(range.Value
-				.Select(u => u.Unit as BattleRole)
+				.Select(u => u.Unit as BattleUnit)
 				.Where(condition));
 		}
 	}

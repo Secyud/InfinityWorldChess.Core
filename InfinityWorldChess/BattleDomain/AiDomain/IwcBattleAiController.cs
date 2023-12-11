@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Secyud.Ugf;
 using Secyud.Ugf.DependencyInjection;
 
@@ -30,17 +29,17 @@ namespace InfinityWorldChess.BattleDomain
                 return;
             }
 
-            BattleRole battleRole = _context.Unit;
+            BattleUnit battleUnit = _context.Unit;
 
-            if (battleRole is null)
+            if (battleUnit is null)
             {
                 _service.ExitControl();
                 return;
             }
 
             _nodes.Clear();
-            SkillAiActionNode.AddNodes(_nodes, battleRole);
-            MoveAiActionNode.AddNodes(_nodes, battleRole);
+            SkillAiActionNode.AddNodes(_nodes, battleUnit);
+            MoveAiActionNode.AddNodes(_nodes, battleUnit);
             _nodes.Add(new StopActionNode());
 
             _currentNode = RandomSelectNode();

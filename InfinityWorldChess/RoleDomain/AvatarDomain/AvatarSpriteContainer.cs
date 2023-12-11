@@ -2,7 +2,6 @@
 
 using Secyud.Ugf;
 using Secyud.Ugf.AssetComponents;
-using Secyud.Ugf.BasicComponents;
 using UnityEngine;
 
 #endregion

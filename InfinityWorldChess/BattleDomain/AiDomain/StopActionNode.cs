@@ -1,5 +1,3 @@
-using Secyud.Ugf;
-
 namespace InfinityWorldChess.BattleDomain
 {
     public class StopActionNode : IAiActionNode

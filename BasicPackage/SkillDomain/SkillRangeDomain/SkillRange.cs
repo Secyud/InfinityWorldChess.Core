@@ -14,7 +14,7 @@ namespace InfinityWorldChess.SkillDomain
 {
 	public class SkillRange : ISkillRange, IObjectAccessor<List<BattleCell>>
 	{
-		private List<BattleRole> _value;
+		private List<BattleUnit> _value;
 
 		public SkillRange(params BattleCell[] cells)
 		{

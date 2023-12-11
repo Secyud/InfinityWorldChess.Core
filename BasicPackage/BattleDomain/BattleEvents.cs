@@ -19,7 +19,7 @@ namespace InfinityWorldChess.BattleDomain
 		public HashSet<IActionable<BattleInteraction>> LaunchCallback { get; } = new();
 		public HashSet<IActionable<BattleInteraction>> ReceiveCallback { get; } = new();
 
-		public override void InstallFrom(BattleRole target)
+		public override void InstallFrom(BattleUnit target)
 		{
 			PrepareLaunch.Clear();
 			PrepareReceive.Clear();

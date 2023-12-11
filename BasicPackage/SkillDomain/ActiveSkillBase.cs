@@ -26,13 +26,13 @@ namespace InfinityWorldChess.SkillDomain
         [field: S(255)] public ISkillCastPosition Position { get; set; }
         [field: S(255)] public ISkillCastResult Result { get; set; }
         [field: S(256)] public ISkillTargetInRange TargetGetter { get; set; }
-        [field: S(257)] public IActionable<BattleRole> PreSkill { get; set; }
+        [field: S(257)] public IActionable<BattleUnit> PreSkill { get; set; }
         [field: S(258)] public IActionable<BattleInteraction> PreInteraction { get; set; }
         [field: S(259)] public IActionable<BattleInteraction> OnInteraction { get; set; }
         [field: S(260)] public IActionable<BattleInteraction> PostInteraction { get; set; }
-        [field: S(261)] public IActionable<BattleRole> PostSkill { get; set; }
+        [field: S(261)] public IActionable<BattleUnit> PostSkill { get; set; }
 
-        public BattleRole Role { get; private set; }
+        public BattleUnit Role { get; private set; }
         public BattleCell Cell { get; private set; }
         public ISkillRange Range { get; private set; }
         public ISkillTarget Targets { get; private set; }
@@ -52,7 +52,7 @@ namespace InfinityWorldChess.SkillDomain
             }
         }
 
-        public ISkillTarget GetTargetInRange(BattleRole battleChess, ISkillRange range)
+        public ISkillTarget GetTargetInRange(BattleUnit battleChess, ISkillRange range)
         {
             return TargetGetter?.GetTargetInRange(battleChess, range);
         }
@@ -71,29 +71,29 @@ namespace InfinityWorldChess.SkillDomain
             PostSkill.TrySetContent(transform);
         }
 
-        public virtual string CheckCastCondition(BattleRole chess, IActiveSkill skill)
+        public virtual string CheckCastCondition(BattleUnit chess, IActiveSkill skill)
         {
             return Condition?.CheckCastCondition(chess, this);
         }
 
-        public virtual void ConditionCast(BattleRole chess, IActiveSkill skill)
+        public virtual void ConditionCast(BattleUnit chess, IActiveSkill skill)
         {
             Condition?.ConditionCast(chess, this);
         }
 
-        public virtual ISkillRange GetCastPositionRange(BattleRole role, IActiveSkill skill)
+        public virtual ISkillRange GetCastPositionRange(BattleUnit role, IActiveSkill skill)
         {
             return Position?.GetCastPositionRange(role, this)
                    ?? new SkillRange(Array.Empty<BattleCell>());
         }
 
-        public virtual ISkillRange GetCastResultRange(BattleRole role, BattleCell castPosition, IActiveSkill skill)
+        public virtual ISkillRange GetCastResultRange(BattleUnit role, BattleCell castPosition, IActiveSkill skill)
         {
             return Result?.GetCastResultRange(role, castPosition, this)
                    ?? new SkillRange(Array.Empty<BattleCell>());
         }
 
-        public virtual void Cast(BattleRole role, BattleCell releasePosition, ISkillRange range, IActiveSkill skill)
+        public virtual void Cast(BattleUnit role, BattleCell releasePosition, ISkillRange range, IActiveSkill skill)
         {
             Role = role;
             Cell = releasePosition;
@@ -109,7 +109,7 @@ namespace InfinityWorldChess.SkillDomain
             PreSkill?.Invoke(role);
             if (Targets is not null)
             {
-                foreach (BattleRole enemy in Targets.Value)
+                foreach (BattleUnit enemy in Targets.Value)
                 {
                     BattleInteraction interaction = BattleInteraction.Create(role, enemy);
                     PreInteraction?.Invoke(interaction);

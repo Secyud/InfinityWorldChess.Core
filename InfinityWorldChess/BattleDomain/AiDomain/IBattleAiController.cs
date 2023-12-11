@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using Secyud.Ugf.DependencyInjection;
+﻿using Secyud.Ugf.DependencyInjection;
 
 namespace InfinityWorldChess.BattleDomain
 {

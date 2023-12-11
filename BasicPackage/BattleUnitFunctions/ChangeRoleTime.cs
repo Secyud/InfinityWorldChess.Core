@@ -2,29 +2,32 @@
 using InfinityWorldChess.BuffDomain;
 using InfinityWorldChess.FunctionDomain;
 using InfinityWorldChess.Ugf;
+using Secyud.Ugf;
 using Secyud.Ugf.DataManager;
 using UnityEngine;
 
-namespace InfinityWorldChess.BattleRoleFunctions
+namespace InfinityWorldChess.BattleUnitFunctions
 {
-    [ID("02CA9FAD-3644-C429-596D-FB16080A0B63")]
-    public class ChangeEnergy : IActionable<BattleRole>, IPropertyAttached
+    /// <summary>
+    /// 延缓敌方行动时间
+    /// </summary>
+    [ID("aa8da7e7-f8a7-d7eb-9e2b-46544117c6bf")]
+    public class ChangeRoleTime : IActionable<BattleUnit>,IHasContent,IPropertyAttached
     {
         [field: S] public float Factor { get; set; }
         [field: S] public float Value { get; set; }
         public IAttachProperty Property { get; set; }
-
+        
         public void SetContent(Transform transform)
         {
-            transform.AddParagraph(
-                $"此招式恢复{Value}+{Factor:P0}[生]点内力。");
+            transform.AddParagraph($"此招式延缓敌方{Value}+{Factor:P0}[灵]点时序。");
         }
 
-        public void Invoke(BattleRole role)
+        public void Invoke(BattleUnit target)
         {
             if (Property is not null)
             {
-                role.EnergyValue += Value + Factor * Property.Living;
+                target.Time += (int)(Value + Property.Nimble * Factor);
             }
         }
     }

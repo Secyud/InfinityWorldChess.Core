@@ -11,7 +11,7 @@ namespace InfinityWorldChess.Ugf
 {
     public static class BpSkillExtension
     {
-        public static void TryAttach(this IBattleRoleBuff buff, object attached)
+        public static void TryAttach(this IBattleUnitBuff buff, object attached)
         {
             if (attached is IBuffAttached buffAttached)
             {
@@ -39,7 +39,7 @@ namespace InfinityWorldChess.Ugf
             return interaction.Properties.Get<TreatRecordProperty>();
         }
 
-        public static bool FitWeapon(this IActiveSkill coreSkill, BattleRole chess)
+        public static bool FitWeapon(this IActiveSkill coreSkill, BattleUnit chess)
         {
             byte tc = chess.Role.Equipment.Get()?.TypeCode ?? 0;
             return ((tc ^ coreSkill.ConditionCode) & coreSkill.ConditionMask) == 0;

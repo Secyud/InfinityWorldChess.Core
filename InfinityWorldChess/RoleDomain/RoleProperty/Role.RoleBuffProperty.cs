@@ -16,7 +16,7 @@ namespace InfinityWorldChess.RoleDomain
 
 		public class RoleBuffProperty : BuffCollection<Role,IRoleBuff>
 		{
-			public List<IActionable<BattleRole>> BattleInitializes { get; } = new();
+			public List<IActionable<BattleUnit>> BattleInitializes { get; } = new();
 
 			public RoleBuffProperty(Role target) : base(target)
 			{

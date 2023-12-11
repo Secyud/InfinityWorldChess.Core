@@ -12,7 +12,7 @@ namespace InfinityWorldChess.RoleFunctions
     [ID("8BA74C93-5B48-E9E9-9F27-01B0FC09B094")]
     public class RoleBattleInitialize : IInstallable<Role>, IHasContent, IPropertyAttached
     {
-        [field: S] public IActionable<BattleRole> Initialize { get; set; }
+        [field: S] public IActionable<BattleUnit> Initialize { get; set; }
 
         public IAttachProperty Property
         {

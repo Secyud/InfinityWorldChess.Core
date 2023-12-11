@@ -4,19 +4,19 @@ using Secyud.Ugf;
 
 namespace InfinityWorldChess.BattleDomain
 {
-    public abstract class BattleRecordProperty: IBattleRoleProperty
+    public abstract class BattleRecordProperty: IBattleUnitProperty
     {
         public virtual Type Id => GetType();
         
-        public virtual void InstallFrom(BattleRole target)
+        public virtual void InstallFrom(BattleUnit target)
         {
         }
 
-        public virtual void UnInstallFrom(BattleRole target)
+        public virtual void UnInstallFrom(BattleUnit target)
         {
         }
 
-        public void Overlay(IOverlayable<BattleRole> otherOverlayable)
+        public void Overlay(IOverlayable<BattleUnit> otherOverlayable)
         {
             throw new UgfException($"{GetType()} cannot be overlapped!");
         }

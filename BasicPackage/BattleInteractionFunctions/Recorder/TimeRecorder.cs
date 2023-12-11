@@ -10,13 +10,13 @@ namespace InfinityWorldChess.BattleInteractionFunctions
     {
         protected int TimeRecord { get; set; }
 
-        public override void InstallFrom(BattleRole target)
+        public override void InstallFrom(BattleUnit target)
         {
             TimeRecord = Context.TotalTime;
             Context.RoundBeginAction += CalculateRemove;
         }
 
-        public override void UnInstallFrom(BattleRole target)
+        public override void UnInstallFrom(BattleUnit target)
         {
             Context.RoundBeginAction -= CalculateRemove;
         }

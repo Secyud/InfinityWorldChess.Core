@@ -28,7 +28,7 @@ namespace InfinityWorldChess.BattleInteractionFunctions
             property.TryAttach(Actionable);
         }
 
-        protected override void SetBuff(IBattleRoleBuff buff)
+        protected override void SetBuff(IBattleUnitBuff buff)
         {
             buff.TryAttach(Limit);
             buff.TryAttach(Actionable);

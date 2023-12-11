@@ -18,8 +18,8 @@ namespace InfinityWorldChess.BattleInteractionDomain
         private BattleEvents _originRecord;
         private BattleEvents _targetRecord;
         public PropertyCollection<BattleInteraction, BattleInteractionPropertyBase> Properties { get; }
-        public BattleRole Origin { get; set; }
-        public BattleRole Target { get; set; }
+        public BattleUnit Origin { get; set; }
+        public BattleUnit Target { get; set; }
 
         private BattleInteraction()
         {
@@ -27,7 +27,7 @@ namespace InfinityWorldChess.BattleInteractionDomain
         }
 
 
-        public static BattleInteraction Create(BattleRole launch, BattleRole target)
+        public static BattleInteraction Create(BattleUnit launch, BattleUnit target)
         {
             return new BattleInteraction
             {

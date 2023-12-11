@@ -5,9 +5,9 @@ using Secyud.Ugf.DataManager;
 
 namespace InfinityWorldChess.SkillTemplates
 {
-    public class ResourceBattleBuff : ResourceAccessor<BattleRoleBuff>
+    public class ResourceBattleBuff : ResourceAccessor<BattleUnitBuff>
     {
-        [field: S, TypeLimit(typeof(BattleRoleBuff))]
+        [field: S, TypeLimit(typeof(BattleUnitBuff))]
         public Guid ClassId { get; set; }
 
         protected override Guid TypeId => ClassId;

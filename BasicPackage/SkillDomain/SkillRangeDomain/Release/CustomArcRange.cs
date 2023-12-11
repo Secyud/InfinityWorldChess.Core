@@ -13,11 +13,11 @@ namespace InfinityWorldChess.SkillDomain.Release
         [field:S] public byte Range { get; set; }
         [field:S] public bool IncludeUnit { get; set; }
         
-        public ISkillRange GetCastPositionRange(BattleRole role, IActiveSkill skill = null)
+        public ISkillRange GetCastPositionRange(BattleUnit unit, IActiveSkill skill = null)
         {
             return SkillRange.GetArcRange(Start, End,
-                role.Location.Coordinates,
-                role.Direction + (sbyte)Direction,
+                unit.Location.Coordinates,
+                unit.Direction + (sbyte)Direction,
                 Range, IncludeUnit);
         }
 

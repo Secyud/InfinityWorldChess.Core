@@ -22,8 +22,8 @@ namespace InfinityWorldChess.BattleInteractionFunctions
         }
         public void Invoke(BattleInteraction interaction)
         {
-            BattleRole battleRole = interaction.Origin;
-            float value = 1 - battleRole.HealthValue / battleRole.MaxHealthValue;
+            BattleUnit unit = interaction.Origin;
+            float value = 1 - unit.HealthValue / unit.MaxHealthValue;
             AttackRecordProperty attackRecord = interaction.GetOrAddAttack();
             attackRecord.AttackFactor += value * Factor * 100;
         }

@@ -10,7 +10,6 @@ using Secyud.Ugf;
 using Secyud.Ugf.Archiving;
 using Secyud.Ugf.DataManager;
 using Secyud.Ugf.DependencyInjection;
-using Secyud.Ugf.HexMap;
 
 #endregion
 

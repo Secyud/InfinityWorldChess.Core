@@ -4,23 +4,25 @@ using InfinityWorldChess.FunctionDomain;
 using InfinityWorldChess.SkillDomain;
 using InfinityWorldChess.Ugf;
 using Secyud.Ugf;
+using Secyud.Ugf.DataManager;
 using UnityEngine;
 
-namespace InfinityWorldChess.BattleRoleFunctions
+namespace InfinityWorldChess.BattleUnitFunctions
 {
-    public class AddBuffToBattleRole :AccessorWithTemplate<IBattleRoleBuff>,
-        IActionable<BattleRole>, IHasContent, IPropertyAttached
+    [ID("09CDEB29-6E8F-D324-1A56-174680F456F3")]
+    public class AddBuffToBattleUnit :AccessorWithTemplate<IBattleUnitBuff>,
+        IActionable<BattleUnit>, IHasContent, IPropertyAttached
     {
         public override void SetContent(Transform transform)
         {
             transform.AddParagraph($"为目标添加状态{Template?.Name}。");
         }
 
-        public void Invoke(BattleRole target)
+        public void Invoke(BattleUnit target)
         {
             if (target is null) return;
 
-            IBattleRoleBuff buff = Accessor?.Value;
+            IBattleUnitBuff buff = Accessor?.Value;
             if (buff is null) return;
             if (Property is ActiveSkillBase activeSkillBase)
             {

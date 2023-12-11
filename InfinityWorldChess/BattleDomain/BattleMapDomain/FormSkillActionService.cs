@@ -34,8 +34,8 @@ namespace InfinityWorldChess.BattleDomain
                 if (_apply)
                 {
                     BattleContext context = BattleScope.Instance.Context;
-                    BattleRole role = context.Unit;
-                    context.ReleasableCells = _formSkill?.FormSkill.GetCastPositionRange(role).Value;
+                    BattleUnit unit = context.Unit;
+                    context.ReleasableCells = _formSkill?.FormSkill.GetCastPositionRange(unit).Value;
                     context.InRangeCells = Array.Empty<BattleCell>();
                 }
             }
@@ -54,8 +54,8 @@ namespace InfinityWorldChess.BattleDomain
 
                 if (_context.ReleasableCells.Contains(cell))
                 {
-                    BattleRole role = _context.Unit;
-                    ISkillRange inRange = FormSkill.Skill.GetCastResultRange(role, cell);
+                    BattleUnit unit = _context.Unit;
+                    ISkillRange inRange = FormSkill.Skill.GetCastResultRange(unit, cell);
                     _context.InRangeCells = inRange.Value;
                 }
                 else
@@ -70,8 +70,8 @@ namespace InfinityWorldChess.BattleDomain
             if (FormSkill is not null)
             {
                 _skillCastCell = cell;
-                BattleRole role = _context.Unit;
-                BattleScope.Instance.Map.StartBroadcast(role, cell,
+                BattleUnit unit = _context.Unit;
+                BattleScope.Instance.Map.StartBroadcast(unit, cell,
                     FormSkill.FormSkill.UnitPlay?.Value);
                 MessageScope.Instance.AddMessage(FormSkill.FormSkill.Name);
             }
@@ -79,26 +79,26 @@ namespace InfinityWorldChess.BattleDomain
 
         public void OnTrig()
         {
-            BattleRole role = _context.Unit;
+            BattleUnit unit = _context.Unit;
 
-            role.SetFormSkillCall((byte)(FormSkill.EquipCode / 4));
+            unit.SetFormSkillCall((byte)(FormSkill.EquipCode / 4));
 
-            var selfCell = role.Location;
+            var selfCell = unit.Location;
             if (selfCell != _skillCastCell)
-                role.Direction = selfCell.DirectionTo(_skillCastCell);
-            FormSkill.FormSkill.ConditionCast(role);
+                unit.Direction = selfCell.DirectionTo(_skillCastCell);
+            FormSkill.FormSkill.ConditionCast(unit);
             ISkillRange skillRange =
-                FormSkill.FormSkill.GetCastResultRange(role, _skillCastCell);
-            FormSkill.FormSkill.Cast(role, _skillCastCell, skillRange);
+                FormSkill.FormSkill.GetCastResultRange(unit, _skillCastCell);
+            FormSkill.FormSkill.Cast(unit, _skillCastCell, skillRange);
 
-            AutoReselectSkill(role);
+            AutoReselectSkill(unit);
 
             _context.OnActionFinished();
         }
 
-        public void AutoReselectSkill(BattleRole role)
+        public void AutoReselectSkill(BattleUnit unit)
         {
-            FormSkill = role.NextFormSkills.FirstOrDefault(u => u is not null);
+            FormSkill = unit.NextFormSkills.FirstOrDefault(u => u is not null);
         }
 
         public void OnClear()

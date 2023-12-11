@@ -8,7 +8,7 @@ namespace InfinityWorldChess.SkillDomain.Target
     {
         protected override string Description => "圆形";
         
-        public ISkillRange GetCastResultRange(BattleRole role, BattleCell castPosition,IActiveSkill skill)
+        public ISkillRange GetCastResultRange(BattleUnit role, BattleCell castPosition,IActiveSkill skill)
         {
             return SkillRange.RoundAngle(Start, End, castPosition.Coordinates);
         }

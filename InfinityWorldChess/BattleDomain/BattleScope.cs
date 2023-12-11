@@ -3,6 +3,7 @@ using InfinityWorldChess.GameDomain;
 using InfinityWorldChess.GlobalDomain;
 using InfinityWorldChess.RoleDomain;
 using InfinityWorldChess.SkillDomain;
+using JetBrains.Annotations;
 using Secyud.Ugf;
 using Secyud.Ugf.AssetComponents;
 using Secyud.Ugf.DependencyInjection;
@@ -17,11 +18,11 @@ namespace InfinityWorldChess.BattleDomain
     [Registry(DependScope = typeof(GlobalScope))]
     public class BattleScope : DependencyScopeProvider
     {
-        private readonly IBattleRoleInitializeService _initializeService;
+        private readonly IBattleUnitInitializeService _initializeService;
         private readonly MonoContainer<BattleMap> _map;
-        private readonly PrefabContainer<BattleRole> _battleUnitPrefab;
+        private readonly PrefabContainer<BattleUnit> _battleUnitPrefab;
         private readonly PrefabContainer<TextMeshPro> _simpleTextMesh;
-        private readonly PrefabContainer<BattleRoleStateViewer> _stateViewer;
+        private readonly PrefabContainer<BattleUnitStateViewer> _stateViewer;
 
         private readonly MonoContainer<BattleFinishedPanel> _battleFinishPanel;
 
@@ -38,18 +39,18 @@ namespace InfinityWorldChess.BattleDomain
             set => Context.State = value;
         }
 
-        public BattleScope(IwcAssets assets, IBattleRoleInitializeService initializeService)
+        public BattleScope(IwcAssets assets, IBattleUnitInitializeService initializeService)
         {
             _initializeService = initializeService;
             _map = MonoContainer<BattleMap>.Create(assets, onCanvas: false);
-            _battleUnitPrefab = PrefabContainer<BattleRole>.Create(
+            _battleUnitPrefab = PrefabContainer<BattleUnit>.Create(
                 assets, U.TypeToPath<BattleContext>() + "Unit.prefab"
             );
             _simpleTextMesh = PrefabContainer<TextMeshPro>.Create(
                 assets, "InfinityWorldChess/BattleDomain/DamageText.prefab"
             );
-            _stateViewer = PrefabContainer<BattleRoleStateViewer>.Create(
-                assets, "InfinityWorldChess/BattleDomain/BattleRoleDomain/BattleRoleStateViewer.prefab");
+            _stateViewer = PrefabContainer<BattleUnitStateViewer>.Create(
+                assets, "InfinityWorldChess/BattleDomain/BattleUnitDomain/BattleUnitStateViewer.prefab");
             _battleFinishPanel
                 = MonoContainer<BattleFinishedPanel>.Create(assets);
         }
@@ -76,10 +77,7 @@ namespace InfinityWorldChess.BattleDomain
 
         public static void CreateBattle(IBattleDescriptor descriptor)
         {
-            if (descriptor is null)
-            {
-                return;
-            }
+            Throw.IfNull(descriptor);
 
             GameScope.Instance.OnInterrupt();
             U.M.CreateScope<BattleScope>();
@@ -111,22 +109,25 @@ namespace InfinityWorldChess.BattleDomain
 
         public override void Dispose()
         {
-            foreach (BattleRole chess in Context.Roles)
+            foreach (BattleUnit chess in Context.Units)
                 chess.Die();
             _map.Destroy();
             Instance = null;
         }
 
-        public BattleRole InitBattleRole(Role role, BattleCell cell, BattleCamp camp, bool playerControl = false)
+        public BattleUnit InitBattleUnit(
+            [NotNull] Role role,
+            [NotNull] BattleCell cell,
+            [NotNull] BattleCamp camp, bool playerControl = false)
         {
-            BattleRole unit = Object.Instantiate(_battleUnitPrefab.Value, Map.transform);
+            BattleUnit unit = Object.Instantiate(_battleUnitPrefab.Value, Map.transform);
 
             unit.PlayerControl = playerControl;
             unit.Camp = camp;
-            
+
             unit.Initialize(role, Map, cell);
 
-            Context.Roles.AddIfNotContains(unit);
+            Context.Units.AddIfNotContains(unit);
 
             SkillAnimBase play = role.PassiveSkill[0]?.UnitPlay.Value;
             if (play is not null)
@@ -137,63 +138,25 @@ namespace InfinityWorldChess.BattleDomain
 
             _stateViewer.Instantiate(Map.Ui.transform).Bind(unit);
 
-            _initializeService.InitBattleRole(unit);
+            _initializeService.InitBattleUnit(unit);
             Context.OnChessAdd(unit);
 
             return unit;
         }
 
-        public void KillBattleRole(BattleRole chess)
+        public void KillBattleUnit([NotNull] BattleUnit chess)
         {
             chess.gameObject.SetActive(false);
             chess.Dead = true;
             Context.OnChessRemove(chess);
         }
 
-        public void CreateNumberText(HexCell cell, int value, Color color)
+        public void CreateNumberText([NotNull] HexCell cell, int value, Color color)
         {
             TextMeshPro t = _simpleTextMesh.Value.Instantiate();
             t.text = value.ToString();
             t.color = color;
             Map.AddBillBoard(cell, t.transform);
         }
-        
-        //
-        // public void AutoInitializeRole(Role role, BattleCamp camp, HexCoordinates hexCoordinates, bool playerControl)
-        // {
-        //     HexGrid grid = Map;
-        //     HexCoordinates coordinate = hexCoordinates;
-        //     int i = 0, k = 0;
-        //     HexDirection j = HexDirection.Ne;
-        //
-        //     for (; i < 20; i++)
-        //     {
-        //         for (; j <= HexDirection.Nw; j++)
-        //         {
-        //             for (; k < i; k++)
-        //             {
-        //                 HexCell cell = grid.GetCell(coordinate);
-        //                 coordinate += j;
-        //                 if (cell is not null && !cell.Unit)
-        //                 {
-        //                     BattleRole battleRole = new(role)
-        //                     {
-        //                         Camp = camp,
-        //                         PlayerControl = playerControl
-        //                     };
-        //                     AddRoleBattleChess(battleRole, cell);
-        //                     goto End;
-        //                 }
-        //             }
-        //
-        //             k = 0;
-        //         }
-        //
-        //         j = HexDirection.Ne;
-        //         coordinate += HexDirection.W;
-        //     }
-        //
-        //     End: ;
-        // }
     }
 }

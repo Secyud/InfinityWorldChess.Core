@@ -25,7 +25,7 @@ namespace InfinityWorldChess.BattleDomain
 
         private State _state;
 
-        public List<BattleRole> Roles { get; } = new();
+        public List<BattleUnit> Roles { get; } = new();
 
 
         private BuffCollection<BattleCell, IBattleCellBuff> _buffs;

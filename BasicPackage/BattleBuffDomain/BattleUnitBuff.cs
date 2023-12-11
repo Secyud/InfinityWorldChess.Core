@@ -11,7 +11,7 @@ using UnityEngine;
 namespace InfinityWorldChess.BattleBuffDomain
 {
     [ID("be8e28a4-2a16-6404-78f3-dbd3a2d1c6f7")]
-    public class BattleRoleBuff : IBattleRoleBuff,IHasContent,IHasPriority
+    public class BattleUnitBuff : IBattleUnitBuff,IHasContent,IHasPriority
     {
         [field: S(0)] public int Id { get; set; }
         [field: S(1)] public string Name { get; set; }
@@ -29,8 +29,8 @@ namespace InfinityWorldChess.BattleBuffDomain
         // decided when buff remove, null if not remove
         [field: S(6)] public IBuffRecorder Recorder { get; set; }
 
-        public BattleRole Target { get; set; }
-        public BattleRole Origin { get; set; }
+        public BattleUnit Target { get; set; }
+        public BattleUnit Origin { get; set; }
         public IAttachProperty Property
         {
             get=>null;
@@ -43,20 +43,20 @@ namespace InfinityWorldChess.BattleBuffDomain
             }
         }
 
-        public virtual void InstallFrom(BattleRole target)
+        public virtual void InstallFrom(BattleUnit target)
         {
             Effect?.InstallFrom(target);
             Recorder?.InstallFrom(target);
         }
 
-        public virtual void UnInstallFrom(BattleRole target)
+        public virtual void UnInstallFrom(BattleUnit target)
         {
             Effect?.UnInstallFrom(target);
             Recorder?.UnInstallFrom(target);
         }
 
 
-        public void Overlay(IOverlayable<BattleRole> otherOverlayable)
+        public void Overlay(IOverlayable<BattleUnit> otherOverlayable)
         {
             Effect?.Overlay(otherOverlayable);
         }

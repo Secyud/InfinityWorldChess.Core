@@ -2,7 +2,7 @@
 
 namespace InfinityWorldChess.BattleDomain
 {
-    public class SelectRoleMessageViewer : RoleMessageViewerBase
+    public class SelectUnitMessageViewer : UnitMessageViewerBase
     {
         private BattleContext _context;
 
@@ -10,24 +10,24 @@ namespace InfinityWorldChess.BattleDomain
         {
             _context = BattleScope.Instance.Context;
             _context.SelectedCellService.AddObserverObject(
-                nameof(SelectRoleMessageViewer), Refresh, gameObject);
+                nameof(SelectUnitMessageViewer), Refresh, gameObject);
             _context.StateService.AddObserverObject(
-                nameof(SelectRoleMessageViewer), Refresh, gameObject);
+                nameof(SelectUnitMessageViewer), Refresh, gameObject);
             Refresh();
         }
 
         private void Refresh()
         {
             HexCell cell = BattleScope.Instance.Context.SelectedCell;
-            BattleRole chess = null;
+            BattleUnit unit = null;
 
-            if (cell is not null  && cell.Unit)
+            if (cell is not null && cell.Unit)
             {
-                chess = cell.Unit as BattleRole;
+                unit = cell.Unit as BattleUnit;
             }
 
-            Bind(chess);
-            
+            Bind(unit);
+
             RefreshState();
         }
     }

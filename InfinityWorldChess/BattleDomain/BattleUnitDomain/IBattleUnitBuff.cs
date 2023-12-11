@@ -4,14 +4,14 @@ using Secyud.Ugf;
 
 namespace InfinityWorldChess.BattleDomain
 {
-    public interface IBattleRoleBuff :
+    public interface IBattleUnitBuff :
         IShowable, IHasId<int>,
-        IInstallable<BattleRole>,
-        IOverlayable<BattleRole>,
+        IInstallable<BattleUnit>,
+        IOverlayable<BattleUnit>,
         IPropertyAttached
     {
-        BattleRole Target { get; set; }
-        BattleRole Origin { get; set; }
+        BattleUnit Target { get; set; }
+        BattleUnit Origin { get; set; }
         int BuffRecord { get; set; }
     }
 }

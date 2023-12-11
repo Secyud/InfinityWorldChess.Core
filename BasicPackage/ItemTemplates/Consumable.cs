@@ -14,7 +14,7 @@ namespace InfinityWorldChess.ItemTemplates
     public class  Consumable : Item, IEdible, IEdibleInBattle, IAttachProperty
     {
         [field: S(64)] public List<IActionable<Role>> EffectsInWorld { get; } = new();
-        [field: S(64)] public List<IActionable<BattleRole>> EffectsInBattle { get; } = new();
+        [field: S(64)] public List<IActionable<BattleUnit>> EffectsInBattle { get; } = new();
         [field: S(6)] public byte Living { get; set; }
         [field: S(6)] public byte Kiling { get; set; }
         [field: S(6)] public byte Nimble { get; set; }
@@ -29,9 +29,9 @@ namespace InfinityWorldChess.ItemTemplates
             }
         }
 
-        public void EatingInBattle(BattleRole role)
+        public void EatingInBattle(BattleUnit role)
         {
-            foreach (IActionable<BattleRole> buff in EffectsInBattle)
+            foreach (IActionable<BattleUnit> buff in EffectsInBattle)
             {
                 this.TryAttach(buff);
                 buff.Invoke(role);
@@ -48,7 +48,7 @@ namespace InfinityWorldChess.ItemTemplates
             }
 
             writer.Write(EffectsInBattle.Count);
-            foreach (IActionable<BattleRole> actionable in EffectsInBattle)
+            foreach (IActionable<BattleUnit> actionable in EffectsInBattle)
             {
                 writer.WriteObject(actionable);
             }
@@ -68,7 +68,7 @@ namespace InfinityWorldChess.ItemTemplates
             count = reader.ReadInt32();
             for (int i = 0; i < count; i++)
             {
-                EffectsInBattle.Add(reader.ReadObject<IActionable<BattleRole>>());
+                EffectsInBattle.Add(reader.ReadObject<IActionable<BattleUnit>>());
             }
         }
 
@@ -89,7 +89,7 @@ namespace InfinityWorldChess.ItemTemplates
 
             transform.AddTitle2("战斗中使用效果：");
 
-            foreach (IActionable<BattleRole> actionable in EffectsInBattle)
+            foreach (IActionable<BattleUnit> actionable in EffectsInBattle)
             {
                 actionable.TrySetContent(transform);
             }

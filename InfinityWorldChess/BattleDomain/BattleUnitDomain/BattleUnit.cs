@@ -6,7 +6,6 @@ using System.Linq;
 using InfinityWorldChess.BuffDomain;
 using InfinityWorldChess.RoleDomain;
 using InfinityWorldChess.SkillDomain;
-using Secyud.Ugf;
 using Secyud.Ugf.HexMap;
 using Secyud.Ugf.HexMapExtensions;
 using Secyud.Ugf.HexUtilities;
@@ -17,7 +16,7 @@ using UnityEngine;
 
 namespace InfinityWorldChess.BattleDomain
 {
-    public class BattleRole : UgfUnit, ICanAttack, ICanDefend
+    public class BattleUnit : UgfUnit, ICanAttack, ICanDefend
     {
         private const int MoveDivision = 10;
 
@@ -25,34 +24,31 @@ namespace InfinityWorldChess.BattleDomain
         private float _execution;
         private bool _active;
         private bool _selected;
+        private BattleCamp _camp;
 
-        public CoreSkillContainer[] NextCoreSkills { get; } =
-            new CoreSkillContainer[IWCC.CoreSkillCodeCount];
-
-        public FormSkillContainer[] NextFormSkills { get; } =
-            new FormSkillContainer[IWCC.FormSkillTypeCount];
-
+        public CoreSkillContainer[] NextCoreSkills { get; } = new CoreSkillContainer[IWCC.CoreSkillCodeCount];
+        public FormSkillContainer[] NextFormSkills { get; } = new FormSkillContainer[IWCC.FormSkillTypeCount];
         public Role Role { get; private set; }
 
         public byte CurrentCode { get; private set; }
-
         public byte CurrentLayer { get; private set; }
-
         public byte CurrentState { get; private set; } = 1;
-
         public bool PlayerControl { get; set; }
-
         public int Time { get; set; }
 
-        public BattleCamp Camp { get; set; }
+        public BattleCamp Camp
+        {
+            get => _camp;
+            set
+            {
+                _camp = value;
+                SetHighlight();
+            }
+        }
+        public BattleUnitStateViewer StateViewer { get; set; }
+        public BuffCollection<BattleUnit, IBattleUnitBuff> Buffs { get; private set; }
+        public PropertyCollection<BattleUnit, IBattleUnitProperty> Properties { get; private set; }
 
-        public BuffCollection<BattleRole, IBattleRoleBuff> Buffs { get; private set; }
-        public PropertyCollection<BattleRole, IBattleRoleProperty> Properties { get; private set; }
-
-        public BattleRoleStateViewer StateViewer { get; set; }
-        public float AttackValue => Role.BodyPart[BodyType.Kiling].RealValue;
-
-        public float DefendValue => Role.BodyPart[BodyType.Defend].RealValue;
 
         public float MaxHealthValue { get; set; }
 
@@ -82,7 +78,8 @@ namespace InfinityWorldChess.BattleDomain
                 SetHighlight();
             }
         }
-
+        public float AttackValue => Role.BodyPart[BodyType.Kiling].RealValue;
+        public float DefendValue => Role.BodyPart[BodyType.Defend].RealValue;
         public float ExecutionValue
         {
             get => _execution;
@@ -112,11 +109,10 @@ namespace InfinityWorldChess.BattleDomain
             set => Orientation = (int)value * 60 + 30;
         }
 
-
         private void Awake()
         {
-            Properties = new PropertyCollection<BattleRole, IBattleRoleProperty>(this);
-            Buffs = new BuffCollection<BattleRole, IBattleRoleBuff>(this);
+            Properties = new PropertyCollection<BattleUnit, IBattleUnitProperty>(this);
+            Buffs = new BuffCollection<BattleUnit, IBattleUnitBuff>(this);
         }
 
         public void Initialize(Role role, BattleMap map, BattleCell cell)
@@ -125,6 +121,12 @@ namespace InfinityWorldChess.BattleDomain
             Role.CoreSkill.GetGroup(CurrentLayer, 0, NextCoreSkills);
             Role.FormSkill.GetGroup(CurrentState, NextFormSkills);
             SetHighlight();
+
+            AvatarEditor avatar = GetComponentInChildren<AvatarEditor>();
+            if (avatar)
+            {
+                avatar.OnInitialize(role.Basic);
+            }
 
             base.Initialize(role.Id, map, cell);
         }
@@ -193,11 +195,17 @@ namespace InfinityWorldChess.BattleDomain
         public void SetHighlight()
         {
             if (Selected)
+            {
                 SetHighlight(Color.green);
+            }
             else if (Active)
+            {
                 SetHighlight(Color.yellow);
+            }
             else
-                SetHighlight(Color.white);
+            {
+                SetHighlight(_camp?.Color ?? Color.white);
+            }
         }
 
         public override void Die()

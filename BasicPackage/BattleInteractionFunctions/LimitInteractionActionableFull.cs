@@ -16,7 +16,7 @@ namespace InfinityWorldChess.BattleInteractionFunctions
         [field: S] public IActionable<BattleInteraction> Actionable { get; set; }
         [field: S] public ILimitable<BattleInteraction> Limitable { get; set; }
 
-        public IBattleRoleBuff Buff
+        public IBattleUnitBuff Buff
         {
             get => null;
             set

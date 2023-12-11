@@ -15,26 +15,26 @@ namespace InfinityWorldChess.BattleBuffFunction
         [field: S] public int Value { get; set; }
         [field: S] public byte Type { get; set; }
 
-        public BattleRoleBuff BelongBuff { get; set; }
+        public BattleUnitBuff BelongBuff { get; set; }
 
         private BattleProperty Property { get; set; }
         private BodyType BodyType => (BodyType)Type;
 
-        public void InstallFrom(BattleRole target)
+        public void InstallFrom(BattleUnit target)
         {
             Property = target.Properties.GetOrCreate<BattleProperty>();
             Property[BodyType] += Value;
         }
 
-        public void UnInstallFrom(BattleRole target)
+        public void UnInstallFrom(BattleUnit target)
         {
             Property[BodyType] -= Value;
         }
 
 
-        public void Overlay(IOverlayable<BattleRole> finishBuff)
+        public void Overlay(IOverlayable<BattleUnit> finishBuff)
         {
-            if (finishBuff is not BattleRoleBuff
+            if (finishBuff is not BattleUnitBuff
                 {
                     Effect: PropertyChange effect
                 })

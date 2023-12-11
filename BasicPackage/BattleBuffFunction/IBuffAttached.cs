@@ -4,6 +4,6 @@ namespace InfinityWorldChess.BattleBuffFunction
 {
     public interface IBuffAttached
     {
-        public IBattleRoleBuff Buff { get; set; }
+        public IBattleUnitBuff Buff { get; set; }
     }
 }

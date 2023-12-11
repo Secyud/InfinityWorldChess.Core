@@ -1,7 +1,6 @@
 ﻿#region
 
 using System.Collections;
-using System.IO;
 using InfinityWorldChess.GameCreatorDomain;
 using InfinityWorldChess.GameDomain;
 using InfinityWorldChess.GameDomain.WorldCellDomain;
@@ -12,8 +11,6 @@ using InfinityWorldChess.PlayerDomain;
 using InfinityWorldChess.RoleDomain;
 using Secyud.Ugf;
 using Secyud.Ugf.Archiving;
-using Secyud.Ugf.Collections;
-using Secyud.Ugf.DataManager;
 using Secyud.Ugf.HexMap;
 using Secyud.Ugf.Modularity;
 using UnityEngine;
@@ -73,11 +70,22 @@ namespace InfinityWorldChess
         public IEnumerator OnGamePostInitialization(GameInitializeContext context)
         {
             U.M.DestroyScope<GameCreatorScope>();
-            SetPlayer(
-                GameScope.Instance.World,
-                GameScope.Instance.Player,
-                GameScope.Instance.Role
-            );
+            
+            
+            
+            WorldMap map = GameScope.Instance.Map;
+            Role role = GameScope.Instance.Player.Role;
+            HexUnit unit = GameScope.Instance.World
+                .WorldUnitPrefab.Instantiate(map.transform);
+            unit.Initialize(role.Id,map,role.Position);
+            GameScope.Instance.Player.Unit = unit;
+            U.Get<CurrentTabService>().Cell = role.Position; 
+            unit.GetComponentInChildren<AvatarEditor>().OnInitialize(role.Basic);
+            map.MapCamera.transform.position = unit.transform.position;
+            
+            
+            
+            
             yield return null;
         }
 
@@ -105,27 +113,7 @@ namespace InfinityWorldChess
             yield return GameScope.Instance.Role.OnGameLoading();
             yield return GameScope.Instance.Player.OnGameLoading();
         }
-
-        private void SetPlayer(
-            WorldGameContext world,
-            PlayerGameContext player,
-            RoleGameContext role)
-        {
-            WorldMap map = GameScope.Instance.Map;
-            Role pr = player.Role;
-            HexUnit pu =  world.WorldUnitPrefab
-                .Instantiate(map.transform);
-            WorldCell cell = pr.Position;
-            player.Unit = pu;
-            pu.Id = pr.Id;
-            GameScope.Instance.Get<CurrentTabService>().Cell = cell; 
-            map.AddUnit(pu, cell, 0);
-            Vector3 position = pu.transform.position;
-            position.y = 0;
-            AvatarEditor avatar = pu.GetComponentInChildren<AvatarEditor>();
-            avatar.OnInitialize(pr.Basic);
-            map.MapCamera.transform.position = position;
-        }
+        
         //
         // private static void RegisterWorldModel(WorldGlobalService service, IAssetLoader ab)
         // {

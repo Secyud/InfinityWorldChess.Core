@@ -58,24 +58,24 @@ namespace InfinityWorldChess.BattleDomain
         {
             BattleScope.Instance.Context.OnRoundEnd();
 
-            BattleRole battleRole =
-                _context.Roles.First(u => !u.Dead);
+            BattleUnit battleUnit =
+                _context.Units.First(u => !u.Dead);
             int min = int.MaxValue;
-            foreach (BattleRole r in _context.Roles)
+            foreach (BattleUnit r in _context.Units)
             {
                 if (!r.Dead && r.Time < min)
                 {
-                    battleRole = r;
+                    battleUnit = r;
                     min = r.Time;
                 }
             }
 
-            battleRole.Time += battleRole.GetTimeAdd();
-            battleRole.ExecutionValue += battleRole.ExecutionRecover;
-            battleRole.EnergyValue += battleRole.EnergyRecover;
+            battleUnit.Time += battleUnit.GetTimeAdd();
+            battleUnit.ExecutionValue += battleUnit.ExecutionRecover;
+            battleUnit.EnergyValue += battleUnit.EnergyRecover;
             BattleScope.Instance.Context.TotalTime = min;
 
-            _context.Unit = battleRole;
+            _context.Unit = battleUnit;
 
             BattleScope.Instance.Context.OnRoundBegin();
 
@@ -83,13 +83,13 @@ namespace InfinityWorldChess.BattleDomain
             _context.RoleService.Refresh();
             _context.SelectedCellService.Refresh();
             _context.HoverCellService.Refresh();
-
+            
+            MessageScope.Instance.AddMessage($"【{_context.Unit.Role.ShowName}】回合");
             EnterControl();
         }
 
         public void EnterControl()
         {
-            MessageScope.Instance.AddMessage($"【{_context.Unit.Role.ShowName}】回合");
             BattleScope.Instance.Map.MapCamera.SetTargetPosition(_context.Unit.Location.Position);
             State = BattleFlowState.OnUnitControl;
 

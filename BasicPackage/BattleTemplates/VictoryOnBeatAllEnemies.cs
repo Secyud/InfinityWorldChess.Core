@@ -22,15 +22,15 @@ namespace InfinityWorldChess.BattleTemplates
 
         public bool Defeated { get; private set; }
 
-        public void CheckVictory(BattleRole role)
+        public void CheckVictory(BattleUnit unit)
         {
             bool victory = true;
             bool defeated = true;
 
-            if (role.Camp.Index <= 0)
+            if (unit.Camp.Index <= 0)
                 return;
 
-            foreach (BattleRole chess in BattleScope.Instance.Context.BattleRoles
+            foreach (BattleUnit chess in BattleScope.Instance.Context.Units
                          .Where(chess => chess.Camp is not null && !chess.Dead))
             {
                 if (chess.Camp.Index == 0)

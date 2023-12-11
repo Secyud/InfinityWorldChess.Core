@@ -22,7 +22,7 @@ namespace InfinityWorldChess.BattleInteractionFunctions
 
         public virtual void Invoke(BattleInteraction interaction)
         {
-            BattleRole target = interaction.Target;
+            BattleUnit target = interaction.Target;
             float damage = interaction
                 .GetOrAddAttack()
                 .RunDamage(target);
@@ -31,7 +31,7 @@ namespace InfinityWorldChess.BattleInteractionFunctions
 
             if (target.HealthValue < 0)
             {
-                BattleScope.Instance.KillBattleRole(target);
+                BattleScope.Instance.KillBattleUnit(target);
             }
 
             BattleScope.Instance.CreateNumberText(cell, (int)damage, Color.red);

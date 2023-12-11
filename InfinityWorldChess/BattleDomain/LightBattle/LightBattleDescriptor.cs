@@ -1,7 +1,6 @@
 using InfinityWorldChess.GameDomain.WorldCellDomain;
 using InfinityWorldChess.RoleDomain;
 using Secyud.Ugf;
-using Secyud.Ugf.HexMap;
 using UnityEngine;
 
 namespace InfinityWorldChess.BattleDomain
@@ -26,8 +25,8 @@ namespace InfinityWorldChess.BattleDomain
         public int SizeZ => 4;
         private Role Player { get; }
         private Role Target { get; }
-        public BattleRole BattlePlayer { get; private set; }
-        public BattleRole BattleTarget { get; private set; }
+        public BattleUnit BattlePlayer { get; private set; }
+        public BattleUnit BattleTarget { get; private set; }
 
         public void OnBattleCreated()
         {
@@ -39,7 +38,7 @@ namespace InfinityWorldChess.BattleDomain
                 Index = 0,
                 Name = "Player"
             };
-            BattlePlayer = scope.InitBattleRole(Player, playerCell, playerCamp,true);
+            BattlePlayer = scope.InitBattleUnit(Player, playerCell, playerCamp,true);
             BattleCell enemyCell = scope.GetCellR(6, 6);
             BattleCamp enemyCamp = new()
             {
@@ -47,7 +46,7 @@ namespace InfinityWorldChess.BattleDomain
                 Index = 1,
                 Name = "Enemy"
             };
-            BattleTarget = scope.InitBattleRole(Target, enemyCell,enemyCamp);
+            BattleTarget = scope.InitBattleUnit(Target, enemyCell,enemyCamp);
 
             BattleContext context = scope.Context;
             context.RoundBeginAction += CheckVictory;
@@ -61,9 +60,9 @@ namespace InfinityWorldChess.BattleDomain
 
         private void CheckVictory()
         {
-            BattleRole target = BattleTarget;
+            BattleUnit target = BattleTarget;
             Victory = target.HealthValue < target.MaxHealthValue / 2;
-            BattleRole player = BattlePlayer;
+            BattleUnit player = BattlePlayer;
             Defeated = player.HealthValue < player.MaxHealthValue / 2;
         }
 

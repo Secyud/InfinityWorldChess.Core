@@ -21,7 +21,7 @@ namespace InfinityWorldChess.BattleInteractionFunctions
         
         public virtual void Invoke(BattleInteraction interaction)
         {
-            BattleRole target = interaction.Target;
+            BattleUnit target = interaction.Target;
             float recover = interaction
                 .GetOrAddTreat()
                 .RunRecover(target);

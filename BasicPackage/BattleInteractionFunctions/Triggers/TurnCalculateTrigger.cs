@@ -34,7 +34,7 @@ namespace InfinityWorldChess.BattleInteractionFunctions
                 value.TryAttach(Actionable);
             }
         }
-        public IBattleRoleBuff Buff
+        public IBattleUnitBuff Buff
         {
             get => null;
             set
@@ -58,13 +58,13 @@ namespace InfinityWorldChess.BattleInteractionFunctions
             }
         }
         
-        public void InstallFrom(BattleRole target)
+        public void InstallFrom(BattleUnit target)
         {
             TurnRecord = 0;
             Context.RoundBeginAction += Invoke;
         }
 
-        public void UnInstallFrom(BattleRole target)
+        public void UnInstallFrom(BattleUnit target)
         {
             Context.RoundBeginAction -= Invoke;
         }
@@ -76,7 +76,7 @@ namespace InfinityWorldChess.BattleInteractionFunctions
             Actionable.TrySetContent(transform);
         }
 
-        public void Overlay(IOverlayable<BattleRole> otherOverlayable)
+        public void Overlay(IOverlayable<BattleUnit> otherOverlayable)
         {
             
         }

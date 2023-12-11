@@ -7,15 +7,15 @@ using Secyud.Ugf;
 using Secyud.Ugf.DataManager;
 using UnityEngine;
 
-namespace InfinityWorldChess.BattleRoleFunctions
+namespace InfinityWorldChess.BattleUnitFunctions
 {
     public class LimitRoleActionable : IBuffAttached, IPropertyAttached, IHasContent,
-        IActionable<BattleRole>
+        IActionable<BattleUnit>
     {
-        [field: S] public IActionable<BattleRole> Actionable { get; set; }
+        [field: S] public IActionable<BattleUnit> Actionable { get; set; }
         [field: S] public ILimitable Limitable { get; set; }
 
-        public IBattleRoleBuff Buff
+        public IBattleUnitBuff Buff
         {
             get => null;
             set
@@ -41,7 +41,7 @@ namespace InfinityWorldChess.BattleRoleFunctions
             Actionable.TrySetContent(transform);
         }
 
-        public void Invoke(BattleRole target)
+        public void Invoke(BattleUnit target)
         {
             if (Limitable is null || Limitable.CheckUseful())
             {

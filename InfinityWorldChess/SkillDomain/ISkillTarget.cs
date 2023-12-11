@@ -9,6 +9,6 @@ namespace InfinityWorldChess.SkillDomain
 {
 	public interface ISkillTarget
 	{
-		List<BattleRole> Value { get; }
+		List<BattleUnit> Value { get; }
 	}
 }

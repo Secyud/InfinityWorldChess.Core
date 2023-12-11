@@ -64,14 +64,14 @@ namespace InfinityWorldChess.BattleDomain
         }
 
 
-        public void StartBroadcast(BattleRole role, BattleCell cell, HexUnitAnim anim)
+        public void StartBroadcast(BattleUnit unit, BattleCell cell, HexUnitAnim anim)
         {
             BattleScope.Instance.State = BattleFlowState.AnimationPlay;
 
             if (anim)
             {
-                HexUnitAnim clone = anim.Instantiate(role.transform);
-                clone.Play(role, cell);
+                HexUnitAnim clone = anim.Instantiate(unit.transform);
+                clone.Play(unit, cell);
             }
             else
             {

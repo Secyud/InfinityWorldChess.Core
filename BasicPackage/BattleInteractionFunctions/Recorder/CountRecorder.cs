@@ -15,19 +15,19 @@ namespace InfinityWorldChess.BattleInteractionFunctions
             transform.AddParagraph($"(剩余{Remain}次)");
         }
 
-        public override void InstallFrom(BattleRole target)
+        public override void InstallFrom(BattleUnit target)
         {
             base.InstallFrom(target);
-            if (Buff is BattleRoleBuff { Effect: ITriggerable trigger })
+            if (Buff is BattleUnitBuff { Effect: ITriggerable trigger })
             {
                 trigger.ExtraActions += CalculateRemove;
             }
         }
 
-        public override void UnInstallFrom(BattleRole target)
+        public override void UnInstallFrom(BattleUnit target)
         {
             base.UnInstallFrom(target);
-            if (Buff is BattleRoleBuff { Effect: ITriggerable trigger })
+            if (Buff is BattleUnitBuff { Effect: ITriggerable trigger })
             {
                 trigger.ExtraActions -= CalculateRemove;
             }

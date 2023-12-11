@@ -7,7 +7,7 @@ namespace InfinityWorldChess.SkillDomain.Target
     public class PointTargetRange:ISkillCastResult
     {
         public string Description => "单点";
-        public ISkillRange GetCastResultRange(BattleRole role, BattleCell castPosition, IActiveSkill skill = null)
+        public ISkillRange GetCastResultRange(BattleUnit role, BattleCell castPosition, IActiveSkill skill = null)
         {
             return SkillRange.GetFixedRange(castPosition);
         }

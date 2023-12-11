@@ -41,7 +41,7 @@ namespace InfinityWorldChess.BattleTemplates
                     Role role = roleWithPosition.RoleAccessor?.Value;
                     if (role is not null)
                     {
-                        AddBattleRole(role, roleWithPosition.PositionX,roleWithPosition.PositionZ, camp);
+                        AddBattleUnit(role, roleWithPosition.PositionX,roleWithPosition.PositionZ, camp);
                     }
                 }
             }
@@ -52,11 +52,11 @@ namespace InfinityWorldChess.BattleTemplates
         public bool Victory => VictoryCondition.Victory;
         public bool Defeated => VictoryCondition.Defeated;
 
-        private static void AddBattleRole(Role role, int x, int z, BattleCamp camp)
+        private static void AddBattleUnit(Role role, int x, int z, BattleCamp camp)
         {
             BattleScope scope = BattleScope.Instance;
             BattleCell cell = scope.GetCellR(x,z);
-            scope.InitBattleRole(role, cell,camp,camp.Index == 0);
+            scope.InitBattleUnit(role, cell,camp,camp.Index == 0);
         }
 
         public IBattleDescriptor Value => this;

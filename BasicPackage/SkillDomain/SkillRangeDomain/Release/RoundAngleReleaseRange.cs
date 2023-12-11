@@ -10,10 +10,10 @@ namespace InfinityWorldChess.SkillDomain.Release
         [field: S] public bool IncludeUnit { get; set; }
         protected override string Description => "圆形";
 
-        public ISkillRange GetCastPositionRange(BattleRole role, IActiveSkill skill)
+        public ISkillRange GetCastPositionRange(BattleUnit unit, IActiveSkill skill)
         {
             return SkillRange.RoundAngle(
-                Start, End, role.Location.Coordinates, IncludeUnit);
+                Start, End, unit.Location.Coordinates, IncludeUnit);
         }
 
         public void SetContent(Transform transform)

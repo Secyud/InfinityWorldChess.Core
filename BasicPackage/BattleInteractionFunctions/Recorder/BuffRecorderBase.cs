@@ -9,18 +9,18 @@ namespace InfinityWorldChess.BattleInteractionFunctions
     {
         [field: S] public int RemoveValue { get; set; } = 1;
 
-        public IBattleRoleBuff Buff { get; set; }
+        public IBattleUnitBuff Buff { get; set; }
         
         protected int Remain => (Buff?.BuffRecord ?? 0) / RemoveValue;
 
         protected static BattleContext Context => BattleScope.Instance.Context;
 
 
-        public virtual void InstallFrom(BattleRole target)
+        public virtual void InstallFrom(BattleUnit target)
         {
         }
 
-        public virtual void UnInstallFrom(BattleRole target)
+        public virtual void UnInstallFrom(BattleUnit target)
         {
         }
 

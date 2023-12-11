@@ -10,7 +10,7 @@ namespace InfinityWorldChess.SkillDomain
         [field: S] public float EnergyConsume { get; set; }
         [field: S] public int ExecutionConsume { get; set; }
 
-        public string CheckCastCondition(BattleRole chess, IActiveSkill skill)
+        public string CheckCastCondition(BattleUnit chess, IActiveSkill skill)
         {
             if (chess.ExecutionValue < ExecutionConsume)
                 return "行动力不足，无法释放技能。";
@@ -22,7 +22,7 @@ namespace InfinityWorldChess.SkillDomain
             return null;
         }
 
-        public void ConditionCast(BattleRole chess, IActiveSkill skill)
+        public void ConditionCast(BattleUnit chess, IActiveSkill skill)
         {
             chess.ExecutionValue -= ExecutionConsume;
             chess.EnergyValue -= GetEnergyConsume(skill);

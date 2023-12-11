@@ -14,7 +14,7 @@ namespace InfinityWorldChess.BattleInteractionFunctions
         IHasContent, IHasPriority
     {
         [field:S]public int Priority { get; set; }
-        [field:S]public IActionable<BattleRole> RoleAction { get; set; }
+        [field:S]public IActionable<BattleUnit> RoleAction { get; set; }
         
         public IAttachProperty Property
         {

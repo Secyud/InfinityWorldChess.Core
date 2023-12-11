@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace InfinityWorldChess.BattleDomain
 {
-    public class RoleMessageViewerBase : EditorBase<BattleRole>
+    public class UnitMessageViewerBase : EditorBase<BattleUnit>
     {
         [SerializeField] private ValueViewer Health;
         [SerializeField] private ValueViewer Energy;
@@ -14,7 +14,7 @@ namespace InfinityWorldChess.BattleDomain
         [SerializeField] private Table BuffContent;
         [SerializeField] private AvatarEditor Avatar;
 
-        private TableDelegate<IBattleRoleBuff> _buffDelegate;
+        private TableDelegate<IBattleUnitBuff> _buffDelegate;
 
         protected override void ClearUi()
         {
@@ -25,7 +25,7 @@ namespace InfinityWorldChess.BattleDomain
         {
             gameObject.SetActive(true);
             Avatar.OnInitialize(Property.Role.Basic);
-            _buffDelegate = BuffContent.AutoSetTable<IBattleRoleBuff>(null);
+            _buffDelegate = BuffContent.AutoSetTable<IBattleUnitBuff>(null);
         }
 
         private void LateUpdate()
@@ -37,7 +37,7 @@ namespace InfinityWorldChess.BattleDomain
             Energy.SetValue(Property.EnergyValue, Property.MaxEnergyValue);
             Execution.SetValue(Property.ExecutionValue, IWCC.MaxExecutionValue);
             _buffDelegate.Items.Clear();
-            foreach (IBattleRoleBuff buff in Property.Buffs.All())
+            foreach (IBattleUnitBuff buff in Property.Buffs.All())
             {
                 _buffDelegate.Items.Add(buff);
             }

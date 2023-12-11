@@ -22,14 +22,14 @@ namespace InfinityWorldChess.SkillDomain.Target
         /// <summary>
         /// 获取中心点和最终方向
         /// </summary>
-        /// <param name="role"></param>
+        /// <param name="unit"></param>
         /// <param name="position"></param>
         /// <returns></returns>
-        protected Tuple<HexCoordinates, HexDirection> GetCenter(BattleRole role, HexCell position)
+        protected Tuple<HexCoordinates, HexDirection> GetCenter(BattleUnit unit, HexCell position)
         {
-            HexDirection direction = role.Location.DirectionTo(position);
+            HexDirection direction = unit.Location.DirectionTo(position);
 
-            HexCoordinates coordinates = role.Location.Coordinates;
+            HexCoordinates coordinates = unit.Location.Coordinates;
             if (!FixCenter)
             {
                 coordinates = position.Coordinates;

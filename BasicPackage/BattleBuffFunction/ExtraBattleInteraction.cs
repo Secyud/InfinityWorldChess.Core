@@ -15,7 +15,7 @@ namespace InfinityWorldChess.BattleBuffFunction
         [field: S(259)] public IActionable<BattleInteraction> OnInteraction { get; set; }
         [field: S(260)] public IActionable<BattleInteraction> PostInteraction { get; set; }
 
-        public IBattleRoleBuff Buff { get; set; }
+        public IBattleUnitBuff Buff { get; set; }
 
         public IAttachProperty Property
         {

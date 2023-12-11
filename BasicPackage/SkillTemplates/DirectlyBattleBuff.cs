@@ -3,8 +3,8 @@ using Secyud.Ugf;
 
 namespace InfinityWorldChess.SkillTemplates
 {
-    public class DirectlyBattleBuff:BattleRoleBuff,IObjectAccessor<BattleRoleBuff>
+    public class DirectlyBattleBuff:BattleUnitBuff,IObjectAccessor<BattleUnitBuff>
     {
-        public BattleRoleBuff Value => this;
+        public BattleUnitBuff Value => this;
     }
 }

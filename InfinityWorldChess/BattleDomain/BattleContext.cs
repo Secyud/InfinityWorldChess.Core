@@ -12,9 +12,7 @@ namespace InfinityWorldChess.BattleDomain
 
         public BattleFlowState State { get; set; } = BattleFlowState.OnCalculation;
 
-        public IReadOnlyList<BattleRole> BattleRoles => Roles;
-
-        internal readonly List<BattleRole> Roles = new();
+        public List<BattleUnit> Units { get; } = new();
 
         #region State
 
@@ -143,9 +141,9 @@ namespace InfinityWorldChess.BattleDomain
             }
         }
 
-        private BattleRole _unit;
+        private BattleUnit _unit;
 
-        public BattleRole Unit
+        public BattleUnit Unit
         {
             get => _unit;
             internal set
@@ -219,18 +217,18 @@ namespace InfinityWorldChess.BattleDomain
             RoundBeginAction?.Invoke();
         }
 
-        public event Action<BattleRole> ChessRemoveAction;
+        public event Action<BattleUnit> ChessRemoveAction;
 
-        public void OnChessRemove(BattleRole role)
+        public void OnChessRemove(BattleUnit unit)
         {
-            ChessRemoveAction?.Invoke(role);
+            ChessRemoveAction?.Invoke(unit);
         }
 
-        public event Action<BattleRole> ChessAddAction;
+        public event Action<BattleUnit> ChessAddAction;
 
-        public void OnChessAdd(BattleRole role)
+        public void OnChessAdd(BattleUnit unit)
         {
-            ChessAddAction?.Invoke(role);
+            ChessAddAction?.Invoke(unit);
         }
 
         #endregion

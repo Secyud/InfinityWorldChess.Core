@@ -5,6 +5,6 @@ namespace InfinityWorldChess.SkillDomain
 {
     public interface ISkillTargetInRange:IHasContent
     {
-        ISkillTarget GetTargetInRange(BattleRole battleChess, ISkillRange range);
+        ISkillTarget GetTargetInRange(BattleUnit battleChess, ISkillRange range);
     }
 }

@@ -26,10 +26,8 @@ namespace InfinityWorldChess.Ugf
 
         private IHasContent _withContent;
 
-        public virtual void BindShowable(IShowable item)
+        public override void BindShowable(IShowable item)
         {
-            if (IconImage)
-                IconImage.Sprite = item?.Icon?.Value;
             if (ShowLabel)
                 ShowLabel.text = U.T[item?.Name];
             if (item is IHasContent withContent)
@@ -40,6 +38,8 @@ namespace InfinityWorldChess.Ugf
                 sDelayedHoverable.OnHoverTrig.RemoveAllListeners();
                 sDelayedHoverable.OnHoverTrig.AddListener(CreateFloating);
             }
+            if (IconImage)
+                IconImage.Sprite = item?.Icon?.Value;
         }
 
         protected virtual void CreateFloating()

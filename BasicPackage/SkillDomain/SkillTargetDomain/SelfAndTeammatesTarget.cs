@@ -9,7 +9,7 @@ namespace InfinityWorldChess.SkillDomain
 {
     public class SelfAndTeammatesTarget : ISkillTargetInRange
     {
-        public ISkillTarget GetTargetInRange(BattleRole battleChess, ISkillRange range)
+        public ISkillTarget GetTargetInRange(BattleUnit battleChess, ISkillRange range)
         {
             SkillTarget target = SkillTarget.CreateFromRange(range,
                 u => u && u.Camp == battleChess.Camp);

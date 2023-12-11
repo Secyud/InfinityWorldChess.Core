@@ -42,7 +42,7 @@ namespace InfinityWorldChess.BattleInteractionFunctions
         {
         }
 
-        public virtual void InstallFrom(BattleRole target)
+        public virtual void InstallFrom(BattleUnit target)
         {
             BattleEvents events = target.Properties.GetOrCreate<BattleEvents>();
             Container = InteractionType switch
@@ -56,12 +56,12 @@ namespace InfinityWorldChess.BattleInteractionFunctions
             Container?.Add(this);
         }
 
-        public virtual void UnInstallFrom(BattleRole target)
+        public virtual void UnInstallFrom(BattleUnit target)
         {
             Container?.Remove(this);
         }
 
-        public virtual void Overlay(IOverlayable<BattleRole> otherOverlayable)
+        public virtual void Overlay(IOverlayable<BattleUnit> otherOverlayable)
         {
         }
 
@@ -79,9 +79,9 @@ namespace InfinityWorldChess.BattleInteractionFunctions
             transform.AddParagraph("每次受到技能触发。");
         }
 
-        public IBattleRoleBuff Buff { get => null; set=> SetBuff(value); }
+        public IBattleUnitBuff Buff { get => null; set=> SetBuff(value); }
 
-        protected virtual void SetBuff(IBattleRoleBuff buff)
+        protected virtual void SetBuff(IBattleUnitBuff buff)
         {
             
         }
