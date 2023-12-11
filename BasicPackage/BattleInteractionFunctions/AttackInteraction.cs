@@ -27,11 +27,11 @@ namespace InfinityWorldChess.BattleInteractionFunctions
                 .GetOrAddAttack()
                 .RunDamage(target);
 
-            HexCell cell = target.Unit.Location;
+            HexCell cell = target.Location;
 
             if (target.HealthValue < 0)
             {
-                BattleScope.Instance.RemoveRoleBattleChess(target);
+                BattleScope.Instance.KillBattleRole(target);
             }
 
             BattleScope.Instance.CreateNumberText(cell, (int)damage, Color.red);

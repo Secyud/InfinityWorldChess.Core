@@ -13,7 +13,7 @@ namespace InfinityWorldChess.SkillDomain.Release
         public ISkillRange GetCastPositionRange(BattleRole role, IActiveSkill skill)
         {
             return SkillRange.RoundAngle(
-                Start, End, role.Unit.Location.Coordinates, IncludeUnit);
+                Start, End, role.Location.Coordinates, IncludeUnit);
         }
 
         public void SetContent(Transform transform)

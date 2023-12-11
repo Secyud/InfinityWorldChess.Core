@@ -23,9 +23,9 @@ namespace InfinityWorldChess.BattleDomain
 
         public void OnCoreSkillReset()
         {
-            if (_context.Role.ResetCoreSkill())
+            if (_context.Unit.ResetCoreSkill())
             {
-                _coreSkillActionService.AutoReselectSkill(_context.Role);
+                _coreSkillActionService.AutoReselectSkill(_context.Unit);
             }
             else
             {
@@ -35,9 +35,9 @@ namespace InfinityWorldChess.BattleDomain
 
         public void OnFormSkillReset()
         {
-            if (_context.Role.ResetFormSkill())
+            if (_context.Unit.ResetFormSkill())
             {
-                _formSkillActionService.AutoReselectSkill(_context.Role);
+                _formSkillActionService.AutoReselectSkill(_context.Unit);
             }
             else
             {

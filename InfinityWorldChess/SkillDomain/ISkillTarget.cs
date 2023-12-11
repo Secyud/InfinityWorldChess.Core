@@ -1,5 +1,6 @@
 ﻿#region
 
+using System.Collections.Generic;
 using InfinityWorldChess.BattleDomain;
 
 #endregion
@@ -8,6 +9,6 @@ namespace InfinityWorldChess.SkillDomain
 {
 	public interface ISkillTarget
 	{
-		BattleRole[] Value { get; }
+		List<BattleRole> Value { get; }
 	}
 }

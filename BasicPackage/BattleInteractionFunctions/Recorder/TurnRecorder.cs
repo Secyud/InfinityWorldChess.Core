@@ -25,7 +25,7 @@ namespace InfinityWorldChess.BattleInteractionFunctions
 
         protected override void CalculateRemove()
         {
-            if (Buff.Target == Context.Role)
+            if (Buff.Target == Context.Unit)
             {
                 base.CalculateRemove();
             }

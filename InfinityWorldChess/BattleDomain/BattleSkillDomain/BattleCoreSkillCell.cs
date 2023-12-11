@@ -15,7 +15,7 @@ namespace InfinityWorldChess.BattleDomain
 
         protected override IActiveSkill Skill => CoreSkill?.CoreSkill;
 
-        protected CoreSkillContainer CoreSkill => Context.Role.NextCoreSkills[CellIndex];
+        protected CoreSkillContainer CoreSkill => Context.Unit.NextCoreSkills[CellIndex];
         
         public void OnClick()
         {

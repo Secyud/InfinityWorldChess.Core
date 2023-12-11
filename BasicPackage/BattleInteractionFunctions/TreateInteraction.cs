@@ -26,7 +26,7 @@ namespace InfinityWorldChess.BattleInteractionFunctions
                 .GetOrAddTreat()
                 .RunRecover(target);
 
-            HexCell cell = target.Unit.Location;
+            HexCell cell = target.Location;
 
             BattleScope.Instance.CreateNumberText(cell, (int)recover, Color.green);
         }

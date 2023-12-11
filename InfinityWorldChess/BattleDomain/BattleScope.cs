@@ -1,7 +1,8 @@
-﻿using System.Linq;
-using System.Ugf.Collections.Generic;
+﻿using System.Ugf.Collections.Generic;
 using InfinityWorldChess.GameDomain;
 using InfinityWorldChess.GlobalDomain;
+using InfinityWorldChess.RoleDomain;
+using InfinityWorldChess.SkillDomain;
 using Secyud.Ugf;
 using Secyud.Ugf.AssetComponents;
 using Secyud.Ugf.DependencyInjection;
@@ -16,8 +17,9 @@ namespace InfinityWorldChess.BattleDomain
     [Registry(DependScope = typeof(GlobalScope))]
     public class BattleScope : DependencyScopeProvider
     {
+        private readonly IBattleRoleInitializeService _initializeService;
         private readonly MonoContainer<BattleMap> _map;
-        private readonly PrefabContainer<BattleUnit> _battleUnitPrefab;
+        private readonly PrefabContainer<BattleRole> _battleUnitPrefab;
         private readonly PrefabContainer<TextMeshPro> _simpleTextMesh;
         private readonly PrefabContainer<BattleRoleStateViewer> _stateViewer;
 
@@ -36,10 +38,11 @@ namespace InfinityWorldChess.BattleDomain
             set => Context.State = value;
         }
 
-        public BattleScope(IwcAssets assets)
+        public BattleScope(IwcAssets assets, IBattleRoleInitializeService initializeService)
         {
+            _initializeService = initializeService;
             _map = MonoContainer<BattleMap>.Create(assets, onCanvas: false);
-            _battleUnitPrefab = PrefabContainer<BattleUnit>.Create(
+            _battleUnitPrefab = PrefabContainer<BattleRole>.Create(
                 assets, U.TypeToPath<BattleContext>() + "Unit.prefab"
             );
             _simpleTextMesh = PrefabContainer<TextMeshPro>.Create(
@@ -66,7 +69,7 @@ namespace InfinityWorldChess.BattleDomain
         public BattleCell GetCellR(int x, int z)
         {
             return _map.Value.GetCell(
-                    x + HexCellExtension.Border, 
+                    x + HexCellExtension.Border,
                     z + HexCellExtension.Border)
                 as BattleCell;
         }
@@ -77,7 +80,7 @@ namespace InfinityWorldChess.BattleDomain
             {
                 return;
             }
-            
+
             GameScope.Instance.OnInterrupt();
             U.M.CreateScope<BattleScope>();
 
@@ -98,7 +101,7 @@ namespace InfinityWorldChess.BattleDomain
             {
                 transform.GetChild(i).Destroy();
             }
-            
+
             Instance.Context.OnBattleFinished();
             Instance.Battle.OnBattleFinished();
 
@@ -109,55 +112,42 @@ namespace InfinityWorldChess.BattleDomain
         public override void Dispose()
         {
             foreach (BattleRole chess in Context.Roles)
-                chess.Release();
+                chess.Die();
             _map.Destroy();
             Instance = null;
         }
 
-        public BattleRole GetChess(HexUnit unit)
+        public BattleRole InitBattleRole(Role role, BattleCell cell, BattleCamp camp, bool playerControl = false)
         {
-            return !unit ? null : Context.Roles.FirstOrDefault(u => u.Unit == unit);
-        }
+            BattleRole unit = Object.Instantiate(_battleUnitPrefab.Value, Map.transform);
 
-        public void AddRoleBattleChess(BattleRole chess, HexCell cell)
-        {
-            if (chess.Unit)
-            {
-                chess.Unit.Destroy();
-            }
-
-            BattleUnit unit = Object.Instantiate(_battleUnitPrefab.Value, Map.transform);
-
-            unit.Grid = Map;
-
-            Map.AddUnit(unit, cell, 0);
-            Context.Roles.AddIfNotContains(chess);
-
-            unit.SetProperty(chess);
-
-            if (chess.UnitPlay?.Value)
-            {
-                HexUnitAnim anim = Object.Instantiate(chess.UnitPlay?.Value, unit.transform);
-                anim.Play(chess.Unit as UgfUnit, chess.Unit.Location as BattleCell);
-            }
-
-            BattleRoleStateViewer viewer = _stateViewer.Instantiate(Map.Ui.transform);
-            viewer.TargetTrans = unit.transform;
-            viewer.Bind(chess);
-            unit.StateViewer = viewer;
+            unit.PlayerControl = playerControl;
+            unit.Camp = camp;
             
-            Context.OnChessAdded();
+            unit.Initialize(role, Map, cell);
+
+            Context.Roles.AddIfNotContains(unit);
+
+            SkillAnimBase play = role.PassiveSkill[0]?.UnitPlay.Value;
+            if (play is not null)
+            {
+                HexUnitAnim anim = Object.Instantiate(play, unit.transform);
+                anim.Play(unit, unit.Location as BattleCell);
+            }
+
+            _stateViewer.Instantiate(Map.Ui.transform).Bind(unit);
+
+            _initializeService.InitBattleRole(unit);
+            Context.OnChessAdd(unit);
+
+            return unit;
         }
 
-        public void RemoveRoleBattleChess(BattleRole chess)
+        public void KillBattleRole(BattleRole chess)
         {
-            if (chess.Unit)
-            {
-                chess.Unit.Destroy();
-            }
+            chess.gameObject.SetActive(false);
             chess.Dead = true;
-            Context.Roles.Remove(chess);
-            Context.OnChessRemoved();
+            Context.OnChessRemove(chess);
         }
 
         public void CreateNumberText(HexCell cell, int value, Color color)
@@ -167,6 +157,7 @@ namespace InfinityWorldChess.BattleDomain
             t.color = color;
             Map.AddBillBoard(cell, t.transform);
         }
+        
         //
         // public void AutoInitializeRole(Role role, BattleCamp camp, HexCoordinates hexCoordinates, bool playerControl)
         // {

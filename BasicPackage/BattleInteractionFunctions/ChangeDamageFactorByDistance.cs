@@ -23,8 +23,8 @@ namespace InfinityWorldChess.BattleInteractionFunctions
 
         public void Invoke(BattleInteraction interaction)
         {
-            HexUnit attackerUnit = interaction.Origin.Unit;
-            HexUnit defenderUnit = interaction.Target.Unit;
+            HexUnit attackerUnit = interaction.Origin;
+            HexUnit defenderUnit = interaction.Target;
             AttackRecordProperty attackRecord = interaction.GetOrAddAttack();
             attackRecord.DamageFactor += Factor * attackerUnit.DistanceTo(defenderUnit);
         }

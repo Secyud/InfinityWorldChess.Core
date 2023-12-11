@@ -30,7 +30,7 @@ namespace InfinityWorldChess.BattleDomain
                 return;
             }
 
-            BattleRole battleRole = _context.Role;
+            BattleRole battleRole = _context.Unit;
 
             if (battleRole is null)
             {

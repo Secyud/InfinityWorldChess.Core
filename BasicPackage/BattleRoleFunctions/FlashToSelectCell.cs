@@ -25,8 +25,8 @@ namespace InfinityWorldChess.BattleRoleFunctions
             if (Property is ActiveSkillBase activeSkillBase && !activeSkillBase.Cell.Unit)
             {
                 HexDirection direction = 
-                    target.Unit.DirectionTo(activeSkillBase.Cell);
-                target.Unit.Location = activeSkillBase.Cell;
+                    target.DirectionTo(activeSkillBase.Cell);
+                target.Location = activeSkillBase.Cell;
                 target.Direction = direction;
             }
         }

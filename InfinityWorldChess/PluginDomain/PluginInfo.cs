@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using Newtonsoft.Json;
 
@@ -6,6 +7,7 @@ namespace InfinityWorldChess.PluginDomain
     public class PluginInfo
     {
         public string ModuleAssemblyName { get; set; }
+        public string FolderPath { get; set; }
         public bool Disabled { get; set; }
         
         private PluginInfo()

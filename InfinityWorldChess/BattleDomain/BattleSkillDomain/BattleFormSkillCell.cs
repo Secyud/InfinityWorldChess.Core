@@ -15,7 +15,7 @@ namespace InfinityWorldChess.BattleDomain
 
         protected override IActiveSkill Skill => FormSkill?.FormSkill;
 
-        protected FormSkillContainer FormSkill => Context.Role.NextFormSkills[CellIndex];
+        protected FormSkillContainer FormSkill => Context.Unit.NextFormSkills[CellIndex];
         public void OnClick()
         {
             Context.MapAction = _actionService;

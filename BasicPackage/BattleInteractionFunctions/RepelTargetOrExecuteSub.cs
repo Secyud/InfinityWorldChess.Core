@@ -34,13 +34,13 @@ namespace InfinityWorldChess.BattleInteractionFunctions
 
         public void Invoke(BattleInteraction interaction)
         {
-            HexCell lC = interaction.Origin.Unit.Location;
-            HexCell tC = interaction.Target.Unit.Location;
+            HexCell lC = interaction.Origin.Location;
+            HexCell tC = interaction.Target.Location;
             HexDirection direction = lC.DirectionTo(tC);
             HexCell neighbour = tC.GetNeighbor(direction);
             if (neighbour is not null  && !neighbour.Unit)
             {
-                interaction.Target.Unit.Location = neighbour;
+                interaction.Target.Location = neighbour;
             }
             else
             {

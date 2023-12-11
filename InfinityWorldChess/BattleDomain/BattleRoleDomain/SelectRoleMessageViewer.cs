@@ -23,8 +23,7 @@ namespace InfinityWorldChess.BattleDomain
 
             if (cell is not null  && cell.Unit)
             {
-                HexUnit unit = cell.Unit;
-                chess = BattleScope.Instance.GetChess(unit);
+                chess = cell.Unit as BattleRole;
             }
 
             Bind(chess);

@@ -56,12 +56,7 @@ namespace InfinityWorldChess.BattleTemplates
         {
             BattleScope scope = BattleScope.Instance;
             BattleCell cell = scope.GetCellR(x,z);
-            BattleRole battleRole = new(role)
-            {
-                PlayerControl = camp.Index == 0,
-                Camp = camp
-            };
-            scope.AddRoleBattleChess(battleRole, cell);
+            scope.InitBattleRole(role, cell,camp,camp.Index == 0);
         }
 
         public IBattleDescriptor Value => this;

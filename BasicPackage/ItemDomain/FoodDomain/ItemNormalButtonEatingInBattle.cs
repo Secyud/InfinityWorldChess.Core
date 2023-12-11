@@ -13,7 +13,7 @@ namespace InfinityWorldChess.ItemDomain.FoodDomain
 
 		public override void Invoke()
 		{
-			(Target as IEdibleInBattle)!.EatingInBattle(BattleScope.Instance.Context.Role);
+			(Target as IEdibleInBattle)!.EatingInBattle(BattleScope.Instance.Context.Unit);
 		}
 
 		public override bool Visible(IItem target)

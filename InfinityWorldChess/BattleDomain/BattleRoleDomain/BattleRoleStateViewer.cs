@@ -13,9 +13,7 @@ namespace InfinityWorldChess.BattleDomain
         [SerializeField] private ValueViewer Execution;
 
         private BattleContext _context;
-        
-        public Transform TargetTrans { get; set; }
-
+        private Transform _targetPosition;
         private void Awake()
         {
             _context = BattleScope.Instance.Context;
@@ -24,15 +22,17 @@ namespace InfinityWorldChess.BattleDomain
 
         private void Update()
         {
-            if (TargetTrans)
+            if (_targetPosition)
             {
-                transform.position = TargetTrans.position + new Vector3(0, 16, 0);
+                transform.position = _targetPosition.position + new Vector3(0, 16, 0);
             }
         }
 
         protected override void InitData()
         {
             RefreshState();
+            Property.StateViewer = this;
+            _targetPosition = Property.transform;
         }
 
         protected void RefreshState()

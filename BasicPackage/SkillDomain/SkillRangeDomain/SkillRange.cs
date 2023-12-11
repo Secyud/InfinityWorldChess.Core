@@ -12,14 +12,16 @@ using Secyud.Ugf.HexUtilities;
 
 namespace InfinityWorldChess.SkillDomain
 {
-	public class SkillRange : ISkillRange, IObjectAccessor<BattleCell[]>
+	public class SkillRange : ISkillRange, IObjectAccessor<List<BattleCell>>
 	{
+		private List<BattleRole> _value;
+
 		public SkillRange(params BattleCell[] cells)
 		{
-			Value = cells.ToArray();
+			Value = cells.ToList();
 		}
 
-		public BattleCell[] Value { get; }
+		public List<BattleCell> Value { get; }
 
 		public static SkillRange GetFixedRange(params BattleCell[] cells)
 		{

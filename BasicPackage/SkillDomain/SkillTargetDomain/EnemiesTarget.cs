@@ -5,21 +5,16 @@ using UnityEngine;
 
 namespace InfinityWorldChess.SkillDomain
 {
-    public class EnemiesTarget:ISkillTargetInRange
+    public class EnemiesTarget : ISkillTargetInRange
     {
         public static EnemiesTarget Instance { get; } = new();
-        
+
         public ISkillTarget GetTargetInRange(BattleRole battleChess, ISkillRange range)
         {
-            return new SkillTarget(
-                from cell in range.Value
-                where cell.Unit
-                select cell.Unit.Get<BattleRole>()
-                into chess
-                where chess?.Camp != battleChess.Camp
-                select chess
-            );
+            return SkillTarget.CreateFromRange(range,
+                u => u && u.Camp != battleChess.Camp);
         }
+
         public void SetContent(Transform transform)
         {
             transform.AddParagraph("目标：敌方。");

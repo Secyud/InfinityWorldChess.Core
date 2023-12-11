@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using InfinityWorldChess.BuffDomain;
-using InfinityWorldChess.FunctionDomain;
 using InfinityWorldChess.RoleDomain;
 using InfinityWorldChess.SkillDomain;
 using Secyud.Ugf;
@@ -18,12 +17,14 @@ using UnityEngine;
 
 namespace InfinityWorldChess.BattleDomain
 {
-    public class BattleRole : UnitProperty,
-        ICanAttack, ICanDefend, IHasContent, IReleasable
+    public class BattleRole : UgfUnit, ICanAttack, ICanDefend
     {
-        private float _health, _energy;
-        private int _execution;
+        private const int MoveDivision = 10;
 
+        private float _health, _energy;
+        private float _execution;
+        private bool _active;
+        private bool _selected;
 
         public CoreSkillContainer[] NextCoreSkills { get; } =
             new CoreSkillContainer[IWCC.CoreSkillCodeCount];
@@ -31,7 +32,7 @@ namespace InfinityWorldChess.BattleDomain
         public FormSkillContainer[] NextFormSkills { get; } =
             new FormSkillContainer[IWCC.FormSkillTypeCount];
 
-        public Role Role { get; }
+        public Role Role { get; private set; }
 
         public byte CurrentCode { get; private set; }
 
@@ -45,37 +46,44 @@ namespace InfinityWorldChess.BattleDomain
 
         public BattleCamp Camp { get; set; }
 
-        public BuffCollection<BattleRole, IBattleRoleBuff> Buffs { get; }
-        public PropertyCollection<BattleRole, IBattleRoleProperty> Properties { get; }
+        public BuffCollection<BattleRole, IBattleRoleBuff> Buffs { get; private set; }
+        public PropertyCollection<BattleRole, IBattleRoleProperty> Properties { get; private set; }
 
-        public void OnDying()
-        {
-        }
-
-        public void OnEndPlay()
-        {
-        }
-
+        public BattleRoleStateViewer StateViewer { get; set; }
         public float AttackValue => Role.BodyPart[BodyType.Kiling].RealValue;
 
         public float DefendValue => Role.BodyPart[BodyType.Defend].RealValue;
 
-        public float MaxHealthValue { get; private set; }
+        public float MaxHealthValue { get; set; }
 
-        public float MaxEnergyValue { get; private set; }
+        public float MaxEnergyValue { get; set; }
 
-        public float EnergyRecoverValue
+        public float EnergyRecover { get; set; }
+        public float ExecutionRecover { get; set; }
+
+        public bool Dead { get; set; }
+
+        public bool Active
         {
-            get
+            get => _active;
+            set
             {
-                float f = Role.BodyPart[BodyType.Living].RealValue;
-                return EnergyRecover * f / (f + 128);
+                _active = value;
+                SetHighlight();
             }
         }
 
-        public int ExecutionRecoverValue => (int)ExecutionRecover;
+        public bool Selected
+        {
+            get => _selected;
+            set
+            {
+                _selected = value;
+                SetHighlight();
+            }
+        }
 
-        public int ExecutionValue
+        public float ExecutionValue
         {
             get => _execution;
             set => _execution = Math.Min(value, IWCC.MaxExecutionValue);
@@ -93,62 +101,32 @@ namespace InfinityWorldChess.BattleDomain
             set => _energy = Math.Min(value, MaxEnergyValue);
         }
 
-        public bool Active
-        {
-            get => _active;
-            set
-            {
-                _active = value;
-                SetHighlight();
-            }
-        }
-
         public HexDirection Direction
         {
             get
             {
-                int d = (int)(Unit.Orientation - 30) / 60 % 6;
+                int d = (int)(Orientation - 30) / 60 % 6;
                 if (d < 0) d += 6;
                 return (HexDirection)d;
             }
-            set => Unit.Orientation = (int)value * 60 + 30;
+            set => Orientation = (int)value * 60 + 30;
         }
 
-        public bool Selected
+
+        private void Awake()
         {
-            get => _selected;
-            set
-            {
-                _selected = value;
-                SetHighlight();
-            }
-        }
-
-        public IObjectAccessor<HexUnitAnim> UnitPlay { get; set; }
-        public bool Dead { get; set; }
-
-        private bool _active;
-        private bool _selected;
-        public float EnergyRecover;
-        public float ExecutionRecover;
-
-        public BattleRole(Role role)
-        {
-            Role = role;
-            Role.CoreSkill.GetGroup(CurrentLayer, 0, NextCoreSkills);
-            Role.FormSkill.GetGroup(CurrentState, NextFormSkills);
-            UnitPlay = role.PassiveSkill[0]?.UnitPlay;
             Properties = new PropertyCollection<BattleRole, IBattleRoleProperty>(this);
             Buffs = new BuffCollection<BattleRole, IBattleRoleBuff>(this);
         }
 
-        public void InitValue(float health, float energy, int execution)
+        public void Initialize(Role role, BattleMap map, BattleCell cell)
         {
-            MaxHealthValue = health;
-            MaxEnergyValue = energy;
-            _health = health;
-            _energy = energy;
-            _execution = execution;
+            Role = role;
+            Role.CoreSkill.GetGroup(CurrentLayer, 0, NextCoreSkills);
+            Role.FormSkill.GetGroup(CurrentState, NextFormSkills);
+            SetHighlight();
+
+            base.Initialize(role.Id, map, cell);
         }
 
         public void SetCoreSkillCall(byte code)
@@ -214,61 +192,23 @@ namespace InfinityWorldChess.BattleDomain
 
         public void SetHighlight()
         {
-            if (Unit is null) return;
-
             if (Selected)
-                Unit.SetHighlight(Color.green);
+                SetHighlight(Color.green);
             else if (Active)
-                Unit.SetHighlight(Color.yellow);
+                SetHighlight(Color.yellow);
             else
-                Unit.SetHighlight(Color.white);
+                SetHighlight(Color.white);
         }
 
-        public int GetSpeed()
+        public override void Die()
         {
-            return Role.GetSpeed();
+            base.Die();
+            Destroy(StateViewer.gameObject);
         }
-
-        public void SetContent(Transform transform)
-        {
-            Role.SetContent(transform);
-        }
-
-        public void Release()
-        {
-            if (Unit)
-            {
-                Unit.Die();
-            }
-        }
-
-        public override void Initialize(HexUnit unit)
-        {
-            base.Initialize(unit);
-            SetHighlight();
-            OnBattleInitialize();
-
-            Dead = false;
-        }
-
-        public void OnBattleInitialize()
-        {
-            float maxHealth = Role.PassiveSkill.Living + Role.BodyPart[BodyType.Living].MaxValue;
-            float maxEnergy = maxHealth;
-            float execution = maxHealth / 128 + 1;
-            InitValue(maxHealth, maxEnergy, (int)execution * 2);
-            EnergyRecover = maxEnergy / 16;
-            ExecutionRecover = execution;
-
-            foreach (IActionable<BattleRole> b in Role.Buffs.BattleInitializes)
-                b.Invoke(this);
-        }
-
-        private const int MoveDivision = 10;
 
         public int GetMoveCast(BattleCell cell)
         {
-            return cell.DistanceTo(Unit.Location) * MoveDivision
+            return cell.DistanceTo(Location) * MoveDivision
                    / Role.BodyPart.Nimble.RealValue;
         }
 
@@ -280,14 +220,14 @@ namespace InfinityWorldChess.BattleDomain
             }
 
             RoleBodyPart nimble = Role.BodyPart.Nimble;
-            int execution = ExecutionValue;
+            float execution = ExecutionValue;
 
             byte rg = (byte)Math.Min(nimble.RealValue * execution / MoveDivision, 10);
 
             HexGrid grid = BattleScope.Instance.Map;
             List<BattleCell> cells = new();
             List<Vector2> checks = new();
-            HexCoordinates coordinate = Unit.Location.Coordinates;
+            HexCoordinates coordinate = Location.Coordinates;
 
             for (int i = 1; i < rg; i++)
             {
@@ -318,7 +258,7 @@ namespace InfinityWorldChess.BattleDomain
                 if (grid.GetCell(c) is not BattleCell cell ||
                     !cell.IsValid()) return;
 
-                Vector2 p2d = (c - Unit.Location.Coordinates).Position2D();
+                Vector2 p2d = (c - Location.Coordinates).Position2D();
 
                 const float r2 = 1.5f;
                 foreach (Vector2 check in checks)

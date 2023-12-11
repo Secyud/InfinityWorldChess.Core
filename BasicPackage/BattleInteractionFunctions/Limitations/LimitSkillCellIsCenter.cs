@@ -13,7 +13,7 @@ namespace InfinityWorldChess.BattleInteractionFunctions
         public bool CheckUseful(BattleInteraction target)
         {
             return Property is ActiveSkillBase activeSkillBase &&
-                   activeSkillBase.Cell == target.Target.Unit.Location;
+                   activeSkillBase.Cell == target.Target.Location;
         }
 
         public void SetContent(Transform transform)

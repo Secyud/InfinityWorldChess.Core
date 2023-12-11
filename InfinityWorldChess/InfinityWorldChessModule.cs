@@ -113,9 +113,8 @@ namespace InfinityWorldChess
         {
             WorldMap map = GameScope.Instance.Map;
             Role pr = player.Role;
-            HexUnit pu = world.WorldUnitPrefab
+            HexUnit pu =  world.WorldUnitPrefab
                 .Instantiate(map.transform);
-            pu.Grid = map;
             WorldCell cell = pr.Position;
             player.Unit = pu;
             pu.Id = pr.Id;

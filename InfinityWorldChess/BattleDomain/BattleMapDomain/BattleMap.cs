@@ -70,8 +70,8 @@ namespace InfinityWorldChess.BattleDomain
 
             if (anim)
             {
-                HexUnitAnim clone = anim.Instantiate(role.Unit.transform);
-                clone.Play(role.Unit as UgfUnit, cell);
+                HexUnitAnim clone = anim.Instantiate(role.transform);
+                clone.Play(role, cell);
             }
             else
             {

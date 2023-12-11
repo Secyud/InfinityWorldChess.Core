@@ -2,7 +2,7 @@ using Secyud.Ugf;
 
 namespace InfinityWorldChess.BattleDomain
 {
-    public class StopActionNode:IAiActionNode
+    public class StopActionNode : IAiActionNode
     {
         public bool IsInterval => false;
 
@@ -11,9 +11,9 @@ namespace InfinityWorldChess.BattleDomain
             return false;
         }
 
-        public  int GetScore()
+        public int GetScore()
         {
-            return 8;
+            return 1;
         }
     }
 }

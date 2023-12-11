@@ -34,8 +34,8 @@ namespace InfinityWorldChess.BattleDomain
         {
             return (int)(from chess in BattleScope.Instance.Context.Roles
                 where chess.Camp != _battleRole.Camp 
-                let distance1 = Math.Abs(IwcBattleAiController.TargetDistance - chess.Unit.Location.DistanceTo(_cell)) 
-                let distance2 = Math.Abs(IwcBattleAiController.TargetDistance - chess.Unit.DistanceTo(_battleRole.Unit)) 
+                let distance1 = Math.Abs(IwcBattleAiController.TargetDistance - chess.Location.DistanceTo(_cell)) 
+                let distance2 = Math.Abs(IwcBattleAiController.TargetDistance - chess.DistanceTo(_battleRole)) 
                 where distance2 > distance1 select distance2 - distance1).Sum();
         }
 

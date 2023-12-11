@@ -143,28 +143,28 @@ namespace InfinityWorldChess.BattleDomain
             }
         }
 
-        private BattleRole _role;
+        private BattleRole _unit;
 
-        public BattleRole Role
+        public BattleRole Unit
         {
-            get => _role;
+            get => _unit;
             internal set
             {
-                if (_role == value)
+                if (_unit == value)
                 {
                     return;
                 }
 
-                if (_role is not null)
+                if (_unit is not null)
                 {
-                    _role.Active = false;
+                    _unit.Active = false;
                 }
 
-                _role = value;
+                _unit = value;
 
-                if (_role is not null)
+                if (_unit is not null)
                 {
-                    _role.Active = true;
+                    _unit.Active = true;
                 }
 
                 RoleService.Refresh();
@@ -219,18 +219,18 @@ namespace InfinityWorldChess.BattleDomain
             RoundBeginAction?.Invoke();
         }
 
-        public event Action ChessRemovedAction;
+        public event Action<BattleRole> ChessRemoveAction;
 
-        public void OnChessRemoved()
+        public void OnChessRemove(BattleRole role)
         {
-            ChessRemovedAction?.Invoke();
+            ChessRemoveAction?.Invoke(role);
         }
 
-        public event Action ChessAddedAction;
+        public event Action<BattleRole> ChessAddAction;
 
-        public void OnChessAdded()
+        public void OnChessAdd(BattleRole role)
         {
-            ChessAddedAction?.Invoke();
+            ChessAddAction?.Invoke(role);
         }
 
         #endregion

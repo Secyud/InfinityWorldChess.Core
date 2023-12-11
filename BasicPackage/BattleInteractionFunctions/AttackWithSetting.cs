@@ -37,7 +37,7 @@ namespace InfinityWorldChess.BattleInteractionFunctions
 
                 if (Property is ActiveSkillBase skillBase)
                 {
-                    attackRecord.TargetCount = skillBase.Targets?.Value.Length ?? 0;
+                    attackRecord.TargetCount = skillBase.Targets?.Value.Count ?? 0;
                 }
 
                 if (Property is IActiveSkill activeSkill &&

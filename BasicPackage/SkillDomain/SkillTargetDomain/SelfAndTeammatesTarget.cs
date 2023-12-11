@@ -11,16 +11,12 @@ namespace InfinityWorldChess.SkillDomain
     {
         public ISkillTarget GetTargetInRange(BattleRole battleChess, ISkillRange range)
         {
-            List<BattleRole> r =
-                (from cell in range.Value
-                    where cell.Unit
-                    select cell.Unit.Get<BattleRole>()
-                    into c
-                    where c?.Camp == battleChess.Camp
-                    select c).ToList();
-            r.AddIfNotContains(battleChess);
-            return new SkillTarget(r);
+            SkillTarget target = SkillTarget.CreateFromRange(range,
+                u => u && u.Camp == battleChess.Camp);
+            target.Value.AddIfNotContains(battleChess);
+            return target;
         }
+
         public void SetContent(Transform transform)
         {
             transform.AddParagraph("目标：友军加自身。");

@@ -16,7 +16,7 @@ namespace InfinityWorldChess.SkillDomain.Release
         public ISkillRange GetCastPositionRange(BattleRole role, IActiveSkill skill = null)
         {
             return SkillRange.GetArcRange(Start, End,
-                role.Unit.Location.Coordinates,
+                role.Location.Coordinates,
                 role.Direction + (sbyte)Direction,
                 Range, IncludeUnit);
         }

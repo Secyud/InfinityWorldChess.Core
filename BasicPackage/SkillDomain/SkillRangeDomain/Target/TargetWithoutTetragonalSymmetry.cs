@@ -27,9 +27,9 @@ namespace InfinityWorldChess.SkillDomain.Target
         /// <returns></returns>
         protected Tuple<HexCoordinates, HexDirection> GetCenter(BattleRole role, HexCell position)
         {
-            HexDirection direction = role.Unit.Location.DirectionTo(position);
+            HexDirection direction = role.Location.DirectionTo(position);
 
-            HexCoordinates coordinates = role.Unit.Location.Coordinates;
+            HexCoordinates coordinates = role.Location.Coordinates;
             if (!FixCenter)
             {
                 coordinates = position.Coordinates;

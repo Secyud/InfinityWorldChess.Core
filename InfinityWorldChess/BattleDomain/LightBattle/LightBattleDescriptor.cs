@@ -9,6 +9,7 @@ namespace InfinityWorldChess.BattleDomain
     public class LightBattleDescriptor : IBattleDescriptor
     {
         public string ResourceId { get; set; } = "切磋";
+
         public LightBattleDescriptor(Role player, Role target)
         {
             Player = player;
@@ -18,7 +19,7 @@ namespace InfinityWorldChess.BattleDomain
         public string Description => "将目标血量降至50%以下。";
         public string Name => "切磋";
         public IObjectAccessor<Sprite> Icon => null;
-        
+
         public WorldCell Cell { get; set; }
 
         public int SizeX => 4;
@@ -31,31 +32,22 @@ namespace InfinityWorldChess.BattleDomain
         public void OnBattleCreated()
         {
             BattleScope scope = BattleScope.Instance;
-            HexCell cell1 = scope.GetCellR(1,1);
-            BattlePlayer = new BattleRole(Player)
+            BattleCell playerCell = scope.GetCellR(1, 1);
+            BattleCamp playerCamp = new()
             {
-                PlayerControl = true,
-                Camp = new BattleCamp()
-                {
-                    Color = Color.green,
-                    Index = 0,
-                    Name = "Player"
-                }
+                Color = Color.green,
+                Index = 0,
+                Name = "Player"
             };
-            scope.AddRoleBattleChess(BattlePlayer, cell1);
-            HexCell cell2 = scope.GetCellR(6,6);
-            BattleTarget = new BattleRole(Target)
+            BattlePlayer = scope.InitBattleRole(Player, playerCell, playerCamp,true);
+            BattleCell enemyCell = scope.GetCellR(6, 6);
+            BattleCamp enemyCamp = new()
             {
-                PlayerControl = false,
-                Camp = new BattleCamp()
-                {
-                    Color = Color.green,
-                    Index = 1,
-                    Name = "Enemy"
-                }
+                Color = Color.red,
+                Index = 1,
+                Name = "Enemy"
             };
-            scope.AddRoleBattleChess(BattleTarget, cell2);
-
+            BattleTarget = scope.InitBattleRole(Target, enemyCell,enemyCamp);
 
             BattleContext context = scope.Context;
             context.RoundBeginAction += CheckVictory;

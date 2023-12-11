@@ -2,7 +2,6 @@ using System;
 using System.Linq;
 using InfinityWorldChess.MessageDomain;
 using Secyud.Ugf.DependencyInjection;
-using Secyud.Ugf.HexMap;
 
 namespace InfinityWorldChess.BattleDomain
 {
@@ -21,7 +20,7 @@ namespace InfinityWorldChess.BattleDomain
         public void OnApply()
         {
             BattleContext context = BattleScope.Instance.Context;
-            context.ReleasableCells = context.Role.GetMoveRange();
+            context.ReleasableCells = context.Unit.GetMoveRange();
         }
 
         public void OnHover(BattleCell cell)
@@ -30,7 +29,7 @@ namespace InfinityWorldChess.BattleDomain
 
             if (context.ReleasableCells.Contains(cell))
             {
-                HexUnit unit = context.Role.Unit;
+                BattleRole unit = context.Unit;
                 _service.FindPath(unit.Location as BattleCell, cell, unit);
 
                 context.InRangeCells = _service.GetPath().Select(BattleScope.Instance.GetCell).ToList();
@@ -44,7 +43,7 @@ namespace InfinityWorldChess.BattleDomain
         public void OnPress(BattleCell cell)
         {
             BattleContext context = BattleScope.Instance.Context;
-            BattleRole role = context.Role;
+            BattleRole role = context.Unit;
             role.ExecutionValue -= role.GetMoveCast(cell);
             _service.Travel();
             OnApply();

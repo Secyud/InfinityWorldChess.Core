@@ -5,7 +5,6 @@ using Secyud.Ugf;
 using Secyud.Ugf.AssetComponents;
 using Secyud.Ugf.DependencyInjection;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 namespace InfinityWorldChess.BattleDomain
 {
@@ -72,11 +71,11 @@ namespace InfinityWorldChess.BattleDomain
             }
 
             battleRole.Time += battleRole.GetTimeAdd();
-            battleRole.ExecutionValue += battleRole.ExecutionRecoverValue;
-            battleRole.EnergyValue += battleRole.EnergyRecoverValue;
+            battleRole.ExecutionValue += battleRole.ExecutionRecover;
+            battleRole.EnergyValue += battleRole.EnergyRecover;
             BattleScope.Instance.Context.TotalTime = min;
 
-            _context.Role = battleRole;
+            _context.Unit = battleRole;
 
             BattleScope.Instance.Context.OnRoundBegin();
 
@@ -90,11 +89,11 @@ namespace InfinityWorldChess.BattleDomain
 
         public void EnterControl()
         {
-            MessageScope.Instance.AddMessage($"【{_context.Role.Role.ShowName}】回合");
-            BattleScope.Instance.Map.MapCamera.SetTargetPosition(_context.Role.Unit.Location.Position);
+            MessageScope.Instance.AddMessage($"【{_context.Unit.Role.ShowName}】回合");
+            BattleScope.Instance.Map.MapCamera.SetTargetPosition(_context.Unit.Location.Position);
             State = BattleFlowState.OnUnitControl;
 
-            if (_context.Role.PlayerControl)
+            if (_context.Unit.PlayerControl)
             {
                 _playerController.Create();
             }
@@ -121,7 +120,7 @@ namespace InfinityWorldChess.BattleDomain
 
         private void ControlUnitWithCell(BattleCell cell)
         {
-            if (_context.Role.PlayerControl)
+            if (_context.Unit.PlayerControl)
             {
                 if (Input.GetMouseButtonDown(0))
                 {

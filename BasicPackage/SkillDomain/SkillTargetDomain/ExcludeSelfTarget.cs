@@ -9,11 +9,8 @@ namespace InfinityWorldChess.SkillDomain
     {
         public ISkillTarget GetTargetInRange(BattleRole battleChess, ISkillRange range)
         {
-            return new SkillTarget(
-                from cell in range.Value
-                where cell.Unit
-                select cell.Unit.Get<BattleRole>()
-            );
+            return SkillTarget.CreateFromRange(range,
+                u => u && u != battleChess);
         }
         public void SetContent(Transform transform)
         {

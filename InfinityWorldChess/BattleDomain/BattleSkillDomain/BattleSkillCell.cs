@@ -26,7 +26,7 @@ namespace InfinityWorldChess.BattleDomain
             }
             else
             {
-                Button.interactable = skill.CheckCastCondition(Context.Role, skill) is null;
+                Button.interactable = skill.CheckCastCondition(Context.Unit, skill) is null;
             }
         }
 
