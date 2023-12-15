@@ -24,7 +24,7 @@ namespace InfinityWorldChess
         typeof(UgfHexMapModule)
     )]
     public class InfinityWorldChessModule : IUgfModule, IOnPostConfigure,
-        IOnPreInitialization, IOnInitialization, IOnPostInitialization, IOnArchiving
+        IOnPreInitialization, IOnInitialization, IOnPostInitialization,IOnShutDown, IOnArchiving
     {
         public const string AssetBundleName = "infinityworldchess";
         
@@ -148,5 +148,9 @@ namespace InfinityWorldChess
         //     service.RegistrarSpecialFeature(1,
         //         PrefabContainer<Transform>.Create(ab, "Features/Special/Village.prefab"));
         // }
+        public void OnGameShutDown(GameShutDownContext context)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

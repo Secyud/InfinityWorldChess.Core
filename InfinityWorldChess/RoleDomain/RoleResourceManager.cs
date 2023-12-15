@@ -23,29 +23,16 @@ namespace InfinityWorldChess.RoleDomain
         public readonly RegistrableDictionary<int, AvatarSpriteContainer>[] FemaleAvatarResource =
             new RegistrableDictionary<int, AvatarSpriteContainer>[IWCC.AvatarElementCount];
 
-        public List<Tuple<string, Guid>> CoreSkills { get; } = new();
-        public List<Tuple<string, Guid>> FormSkills { get; } = new();
-        public List<Tuple<string, Guid>> PassiveSkills { get; } = new();
-        public List<Tuple<string, Guid>> Items { get; } = new();
-
-        public List<string> LastNames { get; }
-        public List<char> FirstNameFrontFemale { get; }
-        public List<char> FirstNameFrontMale { get; }
-        public List<char> FirstNameBehindFemale { get; }
-        public List<char> FirstNameBehindMale { get; }
-        public List<string> FirstNamesFemale { get; }
-        public List<string> FirstNamesMale { get; }
+        public RegistrableList<string> LastNames { get; } = new();
+        public RegistrableList<char> FirstNameFrontFemale { get; } = new();
+        public RegistrableList<char> FirstNameFrontMale { get; } = new();
+        public RegistrableList<char> FirstNameBehindFemale { get; } = new();
+        public RegistrableList<char> FirstNameBehindMale { get; } = new();
+        public RegistrableList<string> FirstNamesFemale { get; } = new();
+        public RegistrableList<string> FirstNamesMale { get; } = new();
 
         public RoleResourceManager()
         {
-            string path = Path.Combine(Application.dataPath, "Data", nameof(RoleResourceManager));
-            LastNames = Path.Combine(path, nameof(LastNames)).GetStringListFromPath();
-            FirstNameFrontFemale = Path.Combine(path, nameof(FirstNameFrontFemale)).GetCharListFromPath();
-            FirstNameFrontMale = Path.Combine(path, nameof(FirstNameFrontMale)).GetCharListFromPath();
-            FirstNameBehindFemale = Path.Combine(path, nameof(FirstNameBehindFemale)).GetCharListFromPath();
-            FirstNameBehindMale = Path.Combine(path, nameof(FirstNameBehindMale)).GetCharListFromPath();
-            FirstNamesMale = Path.Combine(path, nameof(FirstNamesMale)).GetStringListFromPath();
-            FirstNamesFemale = Path.Combine(path, nameof(FirstNamesFemale)).GetStringListFromPath();
             for (int i = 0; i < IWCC.AvatarElementCount; i++)
             {
                 MaleAvatarResource[i] = new RegistrableDictionary<int, AvatarSpriteContainer>();
@@ -59,13 +46,13 @@ namespace InfinityWorldChess.RoleDomain
             List<char> front, behind;
             if (female)
             {
-                front = FirstNameFrontFemale;
-                behind = FirstNameBehindFemale;
+                front = FirstNameFrontFemale.Items;
+                behind = FirstNameBehindFemale.Items;
             }
             else
             {
-                front = FirstNameFrontMale;
-                behind = FirstNameBehindMale;
+                front = FirstNameFrontMale.Items;
+                behind = FirstNameBehindMale.Items;
             }
 
             int totalLength = front.Count + behind.Count;

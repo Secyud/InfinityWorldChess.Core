@@ -17,6 +17,7 @@ using InfinityWorldChess.GameDomain;
 using InfinityWorldChess.InteractionDomain;
 using InfinityWorldChess.LevelDomain;
 using InfinityWorldChess.SkillDomain;
+using InfinityWorldChess.Ugf;
 using Secyud.Ugf;
 using Secyud.Ugf.DataManager;
 using UnityEngine;
@@ -28,26 +29,26 @@ namespace InfinityWorldChess
     [DependsOn(
         typeof(InfinityWorldChessModule)
     )]
-    public class BasicPackageModule : IUgfModule, IOnInitialization,IOnPostConfigure
+    public class BasicPackageModule : IUgfModule, IOnInitialization, IOnPostConfigure
     {
         public void Configure(ConfigurationContext context)
         {
             context.Get<IDependencyRegistrar>().AddAssembly(typeof(BasicPackageModule).Assembly);
             context.AddStringResource<BasicPackageResource>();
         }
-        
+
         public void PostConfigure(ConfigurationContext context)
         {
             RegisterItem(context);
             RegisterAvatar(context);
-            
+
             TypeManager tm = context.Get<TypeManager>();
-            
+
             string path = Path.Combine(U.Path, "Data/Resource/basic-bundle.binary");
             using FileStream file = File.OpenRead(path);
             tm.AddResourcesFromStream(file);
 
-            
+
             BattleLevelGlobalContext battleLevelGlobalContext = context.Get<BattleLevelGlobalContext>();
             battleLevelGlobalContext.LevelList.RegisterList();
 
@@ -63,8 +64,26 @@ namespace InfinityWorldChess
             IwcAssets assets = context.Get<IwcAssets>();
 
             resource.RegisterAvatarResourceFromPath(
-                Path.Combine(Application.dataPath, "Data", "Portrait", "portrait.binary"), assets
+                Path.Combine(U.Path, "Data", "Portrait", "portrait.binary"), assets
             );
+
+            string path = Path.Combine(U.Path, "Data", "NameResources");
+            resource.LastNames.RegisterList(
+                Path.Combine(path, nameof(resource.LastNames))
+                    .GetStringListFromPath());
+            resource.FirstNameFrontFemale.RegisterList(
+                Path.Combine(path, nameof(resource.FirstNameFrontFemale))
+                    .GetCharListFromPath());
+            resource.FirstNameFrontMale.RegisterList(Path.Combine(path, nameof(resource.FirstNameFrontMale))
+                .GetCharListFromPath());
+            resource.FirstNameBehindFemale.RegisterList(Path.Combine(path, nameof(resource.FirstNameBehindFemale))
+                .GetCharListFromPath());
+            resource.FirstNameBehindMale.RegisterList(Path.Combine(path, nameof(resource.FirstNameBehindMale))
+                .GetCharListFromPath());
+            resource.FirstNamesMale.RegisterList(Path.Combine(path, nameof(resource.FirstNamesMale))
+                .GetStringListFromPath());
+            resource.FirstNamesFemale.RegisterList(Path.Combine(path, nameof(resource.FirstNamesFemale))
+                .GetStringListFromPath());
         }
 
         private static void RegisterItem(ConfigurationContext context)
@@ -82,10 +101,10 @@ namespace InfinityWorldChess
                 new EquipmentButtonDescriptor(),
                 new ItemNormalButtonReading()
             );
-            
+
             WorldCellRoleDefaultButtons.RegistrarButtons(context.Get<InteractionButtons>());
-            
-            ChatRegister chat = context.Get<ChatRegister>() ;
+
+            ChatRegister chat = context.Get<ChatRegister>();
             chat.Register(new ActivityDialogueChat());
         }
 
@@ -107,7 +126,7 @@ namespace InfinityWorldChess
                 role.CoreSkill.Set(coreSkill, 0, 0);
             }
 
-            var cell = GameScope.Instance.GetCellR(14,10);
+            var cell = GameScope.Instance.GetCellR(14, 10);
 
             cell.Buttons.Add(new TriggerBattleLevelButton());
 

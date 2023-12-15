@@ -25,14 +25,9 @@ namespace InfinityWorldChess.BattleInteractionDomain
         {
         }
 
-        protected static float I(float i)
+        protected static float O(float i,float m = 0)
         {
-            return Math.Max(i, 1);
-        }
-
-        protected static float O(float i)
-        {
-            return Math.Max(i, 0);
+            return Math.Max(i, m);
         }
     }
 }

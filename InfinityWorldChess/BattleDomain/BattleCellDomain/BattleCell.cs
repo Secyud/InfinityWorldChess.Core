@@ -25,16 +25,16 @@ namespace InfinityWorldChess.BattleDomain
 
         private State _state;
 
+
+        public BattleCell()
+        {
+            Buffs = new BuffCollection<BattleCell, IBattleCellBuff>(this);
+            Properties = new PropertyCollection<BattleCell, IBattleCellProperty>(this);
+        }
+        
         public List<BattleUnit> Roles { get; } = new();
-
-
-        private BuffCollection<BattleCell, IBattleCellBuff> _buffs;
-        public BuffCollection<BattleCell, IBattleCellBuff> Buffs => 
-            _buffs ??= new BuffCollection<BattleCell, IBattleCellBuff>(this);
-
-        private PropertyCollection<BattleCell, IBattleCellProperty> _properties;
-        public PropertyCollection<BattleCell, IBattleCellProperty> Properties => 
-            _properties ??= new PropertyCollection<BattleCell, IBattleCellProperty>(this);
+        public BuffCollection<BattleCell, IBattleCellBuff> Buffs { get; }
+        public PropertyCollection<BattleCell, IBattleCellProperty> Properties { get; } 
 
         internal bool Releasable
         {
@@ -59,12 +59,6 @@ namespace InfinityWorldChess.BattleDomain
             get => _state.HasFlag(State.Hovered);
             set => SetState(State.Hovered, value);
         }
-
-        public int SpecialIndex { get; set; } = -1;
-
-        public int ResourceType { get; set; } = -1;
-
-        public int ResourceLevel { get; set; } = -1;
 
         private void SetState(State state, bool value)
         {

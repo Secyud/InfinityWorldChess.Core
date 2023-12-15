@@ -5,8 +5,8 @@ namespace InfinityWorldChess.SkillDomain
 {
     public class SkillAnim : SkillAnimBase
     {
-        [SerializeField] private AnimationCurve Curve;
         [SerializeField] private bool ControlRole;
+        [SerializeField] private AnimationCurve Curve;
 
         private Transform _animTransform;
         private Vector3 _s;
@@ -16,7 +16,7 @@ namespace InfinityWorldChess.SkillDomain
         {
             base.OnUpdate();
             float value = Curve.Evaluate(LastTime / PlayTime);
-            _animTransform.position = _e + value * (_s - _e);
+            _animTransform.position = Vector3.LerpUnclamped(_e,_s,value);
         }
 
         public override void Play(UgfUnit unit, UgfCell targetCell)

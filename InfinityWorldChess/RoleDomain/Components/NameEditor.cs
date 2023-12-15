@@ -46,7 +46,7 @@ namespace InfinityWorldChess.RoleDomain
         public void SetRandomName()
         {
             SetFirstName(Resource.GenerateFirstName(Property.Female));
-            SetLastName(Resource.LastNames.RandomPick());
+            SetLastName(Resource.LastNames.Items.RandomPick());
         }
 
         protected override void InitData()
