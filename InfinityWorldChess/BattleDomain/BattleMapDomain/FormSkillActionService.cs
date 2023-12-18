@@ -71,8 +71,9 @@ namespace InfinityWorldChess.BattleDomain
             {
                 _skillCastCell = cell;
                 BattleUnit unit = _context.Unit;
+                IFormSkill skill = FormSkill.FormSkill;
                 BattleScope.Instance.Map.StartBroadcast(unit, cell,
-                    FormSkill.FormSkill.UnitPlay?.Value);
+                    skill.UnitPlay?.Instantiate(),skill.EffectDelegate);
                 MessageScope.Instance.AddMessage(FormSkill.FormSkill.Name);
             }
         }

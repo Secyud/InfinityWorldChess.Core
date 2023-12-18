@@ -7,7 +7,6 @@ using InfinityWorldChess.GameDomain.WorldCellDomain;
 using InfinityWorldChess.GameDomain.WorldMapDomain;
 using InfinityWorldChess.InteractionDomain;
 using InfinityWorldChess.MessageDomain;
-using InfinityWorldChess.PlayerDomain;
 using InfinityWorldChess.RoleDomain;
 using Secyud.Ugf;
 using Secyud.Ugf.Archiving;
@@ -24,19 +23,18 @@ namespace InfinityWorldChess
         typeof(UgfHexMapModule)
     )]
     public class InfinityWorldChessModule : IUgfModule, IOnPostConfigure,
-        IOnPreInitialization, IOnInitialization, IOnPostInitialization,IOnShutDown, IOnArchiving
+        IOnPreInitialization, IOnInitialization, IOnPostInitialization, IOnShutDown, IOnArchiving
     {
         public const string AssetBundleName = "infinityworldchess";
-        
+
         public void Configure(ConfigurationContext context)
         {
             context.Manager.AddAssembly(typeof(InfinityWorldChessModule).Assembly);
-            
+
             context.AddStringResource<InfinityWorldChessResource>();
-            
-            
+
+
             context.Get<WorldCellButtons>().Register(new TravelButtonDescriptor());
-            
         }
 
         public void PostConfigure(ConfigurationContext context)
@@ -70,32 +68,22 @@ namespace InfinityWorldChess
         public IEnumerator OnGamePostInitialization(GameInitializeContext context)
         {
             U.M.DestroyScope<GameCreatorScope>();
-            
-            
-            
+
+
             WorldMap map = GameScope.Instance.Map;
             Role role = GameScope.Instance.Player.Role;
             HexUnit unit = GameScope.Instance.World
                 .WorldUnitPrefab.Instantiate(map.transform);
-            unit.Initialize(role.Id,map,role.Position);
+            unit.Initialize(role.Id, map, role.Position);
             GameScope.Instance.Player.Unit = unit;
-            U.Get<CurrentTabService>().Cell = role.Position; 
+            U.Get<CurrentTabService>().Cell = role.Position;
             unit.GetComponentInChildren<AvatarEditor>().OnInitialize(role.Basic);
             map.MapCamera.transform.position = unit.transform.position;
-            
-            
-            
-            
+
+
             yield return null;
         }
 
-
-        public void OnGameShutdown()
-        {
-            U.M.DestroyScope<GameScope>();
-            U.M.DestroyScope<InteractionScope>();
-            U.M.DestroyScope<MessageScope>();
-        }
 
         public int GameInitializeStep { get; } = 30;
 
@@ -113,7 +101,14 @@ namespace InfinityWorldChess
             yield return GameScope.Instance.Role.OnGameLoading();
             yield return GameScope.Instance.Player.OnGameLoading();
         }
-        
+
+        public void OnGameShutDown(GameShutDownContext context)
+        {
+            U.M.DestroyScope<GameScope>();
+            U.M.DestroyScope<InteractionScope>();
+            U.M.DestroyScope<MessageScope>();
+        }
+
         //
         // private static void RegisterWorldModel(WorldGlobalService service, IAssetLoader ab)
         // {
@@ -148,9 +143,5 @@ namespace InfinityWorldChess
         //     service.RegistrarSpecialFeature(1,
         //         PrefabContainer<Transform>.Create(ab, "Features/Special/Village.prefab"));
         // }
-        public void OnGameShutDown(GameShutDownContext context)
-        {
-            throw new System.NotImplementedException();
-        }
     }
 }

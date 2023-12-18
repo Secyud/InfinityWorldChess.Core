@@ -1,6 +1,7 @@
 #region
 
 using InfinityWorldChess.GameDomain.WorldCellDomain;
+using InfinityWorldChess.SkillDomain;
 using Secyud.Ugf;
 using Secyud.Ugf.HexMap;
 using Secyud.Ugf.HexMapExtensions;
@@ -64,19 +65,23 @@ namespace InfinityWorldChess.BattleDomain
         }
 
 
-        public void StartBroadcast(BattleUnit unit, BattleCell cell, HexUnitAnim anim)
+        public void StartBroadcast(BattleUnit unit, BattleCell cell,
+            UgfUnitEffect effect, SkillEffectDelegate effectDelegate)
         {
             BattleScope.Instance.State = BattleFlowState.AnimationPlay;
 
-            if (anim)
+            if (effect)
             {
-                HexUnitAnim clone = anim.Instantiate(unit.transform);
-                clone.Play(unit, cell);
+                if (effectDelegate is not null)
+                {
+                    effectDelegate.OnInitialize(effect, unit, cell);
+                    return;
+                }
+
+                Destroy(effect.gameObject);
             }
-            else
-            {
-                BattleScope.Instance.State = BattleFlowState.OnEffectTrig;
-            }
+
+            BattleScope.Instance.State = BattleFlowState.OnEffectTrig;
         }
 
         public void GenerateMap(WorldCell cell, int width, int height)

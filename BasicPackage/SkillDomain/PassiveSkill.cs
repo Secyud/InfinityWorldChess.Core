@@ -5,7 +5,9 @@ using InfinityWorldChess.RoleDomain;
 using InfinityWorldChess.Ugf;
 using Secyud.Ugf;
 using Secyud.Ugf.Archiving;
+using Secyud.Ugf.AssetComponents;
 using Secyud.Ugf.DataManager;
+using Secyud.Ugf.UgfHexMap;
 using UnityEngine;
 
 namespace InfinityWorldChess.SkillDomain
@@ -14,7 +16,7 @@ namespace InfinityWorldChess.SkillDomain
     {
         [field: S(0)] public string ResourceId { get; set; }
         [field: S(1)] public int Score { get; set; }
-        [field: S(254)] public IObjectAccessor<SkillAnimBase> UnitPlay { get; set; }
+        [field: S(254)] public PrefabContainer<UgfUnitEffect> UnitPlay { get; set; }
         [field: S(0)] public string Name { get; set; }
         [field: S(2)] public string Description { get; set; }
         [field: S(254)] public IObjectAccessor<Sprite> Icon { get; set; }

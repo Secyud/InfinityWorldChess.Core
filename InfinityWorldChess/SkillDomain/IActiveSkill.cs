@@ -11,6 +11,8 @@ namespace InfinityWorldChess.SkillDomain
 		ISkillCastCondition,  IActiveSkillEffect,ISkillCastPosition,
 		ISkillCastResult,ISkillTargetInRange,ISkill
 	{
+		SkillEffectDelegate EffectDelegate { get; }
+		
 		byte ConditionCode { get;  }
 
 		byte ConditionMask { get;  }

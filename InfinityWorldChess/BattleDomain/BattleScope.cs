@@ -129,11 +129,12 @@ namespace InfinityWorldChess.BattleDomain
 
             Context.Units.AddIfNotContains(unit);
 
-            SkillAnimBase play = role.PassiveSkill[0]?.UnitPlay.Value;
-            if (play is not null)
+            UgfUnitEffect effect = role.PassiveSkill[0]?.UnitPlay?.Instantiate();
+            if (effect)
             {
-                HexUnitAnim anim = Object.Instantiate(play, unit.transform);
-                anim.Play(unit, unit.Location as BattleCell);
+                Transform transform = effect.transform;
+                transform.SetParent(unit.transform);
+                transform.position = unit.transform.position;
             }
 
             _stateViewer.Instantiate(Map.Ui.transform).Bind(unit);

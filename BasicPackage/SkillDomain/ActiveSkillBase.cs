@@ -7,7 +7,9 @@ using InfinityWorldChess.GameDomain;
 using InfinityWorldChess.Ugf;
 using Secyud.Ugf;
 using Secyud.Ugf.Archiving;
+using Secyud.Ugf.AssetComponents;
 using Secyud.Ugf.DataManager;
+using Secyud.Ugf.UgfHexMap;
 using UnityEngine;
 
 namespace InfinityWorldChess.SkillDomain
@@ -20,7 +22,9 @@ namespace InfinityWorldChess.SkillDomain
         [field: S(1)] public int Score { get; set; }
         [field: S(15)] public byte ConditionCode { get; set; }
         [field: S(15)] public byte ConditionMask { get; set; }
-        [field: S(254)] public IObjectAccessor<SkillAnimBase> UnitPlay { get; set; }
+        [field: S(253)] public PrefabContainer<UgfUnitEffect> UnitPlay { get; set; }
+
+        [field: S(253)] public SkillEffectDelegate EffectDelegate { get; set; }
         [field: S(254)] public IObjectAccessor<Sprite> Icon { get; set; }
         [field: S(255)] public ISkillCastCondition Condition { get; set; }
         [field: S(255)] public ISkillCastPosition Position { get; set; }
@@ -119,6 +123,7 @@ namespace InfinityWorldChess.SkillDomain
                     PostInteraction?.Invoke(interaction);
                 }
             }
+
             PostSkill?.Invoke(role);
             Cell = null;
         }

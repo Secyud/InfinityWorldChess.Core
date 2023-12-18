@@ -68,8 +68,9 @@ namespace InfinityWorldChess.BattleDomain
             {
                 _skillCastCell = cell;
                 BattleUnit unit = _context.Unit;
+                ICoreSkill skill = CoreSkill.CoreSkill;
                 BattleScope.Instance.Map.StartBroadcast(unit, cell,
-                    CoreSkill.CoreSkill.UnitPlay?.Value);
+                    skill.UnitPlay?.Instantiate(),skill.EffectDelegate);
                 MessageScope.Instance.AddMessage(CoreSkill.CoreSkill.Name);
             }
         }

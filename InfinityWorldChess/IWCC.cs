@@ -1,4 +1,5 @@
 using System.IO;
+using Secyud.Ugf;
 using UnityEngine;
 
 namespace InfinityWorldChess
@@ -34,7 +35,7 @@ namespace InfinityWorldChess
         public const int NatureCount = 9;
         public const int AvatarElementCount = 12;
 
-        public static readonly string SavePath = InitFolderPath(Application.dataPath, "SaveFiles");
+        public static readonly string SavePath = InitFolderPath(U.Path, "SaveFiles");
 
         public static bool LoadGame { get; set; } = false;
 
