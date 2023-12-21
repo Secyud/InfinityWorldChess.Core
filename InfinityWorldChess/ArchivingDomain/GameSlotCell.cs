@@ -12,7 +12,6 @@ namespace InfinityWorldChess.ArchivingDomain
 {
     public class GameSlotCell : MonoBehaviour
     {
-        [SerializeField] private GameLoadPanel LoadPanel;
         [SerializeField] private AvatarEditor Avatar;
         [SerializeField] private EditorEvent<string> NameText;
         [SerializeField] private EditorEvent<bool> SlotEnabled;
@@ -47,7 +46,6 @@ namespace InfinityWorldChess.ArchivingDomain
             }
         }
 
-
         public void OnSlotLoad()
         {
             IWCC.SaveFolder = _slotIndex;
@@ -55,11 +53,13 @@ namespace InfinityWorldChess.ArchivingDomain
             ArchivingScope.Instance.CloseGameLoadPanel();
             if (File.Exists(_slotMessagePath))
             {
+                IWCC.LoadGame = true;
                 U.Factory.InitializeGame();
                 IwcAssets.Instance.LoadingPanelInk.Instantiate();
             }
             else
             {
+                IWCC.LoadGame = false;
                 U.M.CreateScope<GameCreatorScope>();
             }
         }

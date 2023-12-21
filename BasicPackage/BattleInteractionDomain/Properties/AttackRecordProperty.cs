@@ -54,7 +54,7 @@ namespace InfinityWorldChess.BattleInteractionDomain
         public float RunDamage(ICanDefend target)
         {
             float penetration = O(Penetration,1);
-            float factor = 0.1f + O(AttackFactor) / O(TargetCount,1);
+            float factor = 1f + O(AttackFactor) / O(TargetCount,1);
             float basic = O(Attack) * factor + O(AttackFixedValue);
             float afterDefend = basic * penetration / (penetration + O(Defend));
             float damage = afterDefend * O(DamageFactor,0.1f) * O(1 - O(DefendFactor),0.1f);

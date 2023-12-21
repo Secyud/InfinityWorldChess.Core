@@ -4,6 +4,6 @@
     {
         bool IsInterval { get; }
         bool InvokeAction();
-        int GetScore();
+        int Score { get; }
     }
 }

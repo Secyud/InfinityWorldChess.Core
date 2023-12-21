@@ -21,7 +21,7 @@ namespace InfinityWorldChess.BattleDomain
             _nodes = new List<IAiActionNode>();
         }
 
-        public void TryPondering()
+        public void TryPonder()
         {
             if (_currentNode is not null &&
                 _currentNode.IsInterval)
@@ -57,10 +57,10 @@ namespace InfinityWorldChess.BattleDomain
                 if (count <= 0) return null;
 
                 int[] steps = new int[count];
-                steps[0] = _nodes[0].GetScore();
+                steps[0] = _nodes[0].Score;
                 for (int i = 1; i < count; i++)
                 {
-                    steps[i] = steps[i - 1] + _nodes[i].GetScore();
+                    steps[i] = steps[i - 1] + _nodes[i].Score;
                 }
 
                 int total = steps[^1];

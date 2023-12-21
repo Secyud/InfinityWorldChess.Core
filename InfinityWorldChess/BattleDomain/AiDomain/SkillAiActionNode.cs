@@ -11,7 +11,8 @@ namespace InfinityWorldChess.BattleDomain
     {
         private readonly BattleCell _cell;
         private readonly SkillContainer _container;
-        private readonly BattleUnit _battleUnit;
+
+        public int Score { get; }
 
         private CoreSkillActionService _coreService;
 
@@ -21,14 +22,15 @@ namespace InfinityWorldChess.BattleDomain
 
         private FormSkillActionService FormService => _formService ??= U.Get<FormSkillActionService>();
 
-        
-        private SkillAiActionNode([NotNull] BattleCell cell,
+
+        private SkillAiActionNode(
             [NotNull] SkillContainer container,
-            [NotNull] BattleUnit battleUnit)
+            [NotNull] BattleCell cell,
+            int score)
         {
+            Score = score;
             _cell = cell;
             _container = container;
-            _battleUnit = battleUnit;
         }
 
         public bool IsInterval
@@ -44,10 +46,10 @@ namespace InfinityWorldChess.BattleDomain
             }
         }
 
-        public  bool InvokeAction()
+        public bool InvokeAction()
         {
-            IBattleMapActionService service = null;
-            
+            IBattleMapActionService service;
+
             switch (_container)
             {
                 case CoreSkillContainer coreSkillContainer:
@@ -61,49 +63,49 @@ namespace InfinityWorldChess.BattleDomain
                 default:
                     return false;
             }
-            service.OnApply();
+
+            BattleScope.Instance.Context.MapAction = service;
             service.OnHover(_cell);
             service.OnPress(_cell);
             return true;
         }
 
-        public  int GetScore()
+        public static int GetScore(BattleUnit unit, IActiveSkill skill, BattleCell cell)
         {
-            ISkillRange range = _container.Skill.GetCastResultRange(_battleUnit, _cell);
-            ISkillTarget targets = _container.Skill.GetTargetInRange(_battleUnit, range);
+            ISkillRange range = skill.GetCastResultRange(unit, cell);
+            ISkillTarget targets = skill.GetTargetInRange(unit, range);
             float score = 0;
             foreach (BattleUnit target in targets.Value)
             {
                 float health = target.MaxHealthValue - target.HealthValue;
-                score += Math.Min(_container.Skill.Score, 5) + 10 * health / target.MaxHealthValue;
+                score += Math.Min(skill.Score, 5) + 10 * health / target.MaxHealthValue + 1;
+                score += Math.Max(5 - target.DistanceTo(cell), 0);
             }
+
             return Math.Max((int)score, 0);
         }
 
-        public static void AddNodes(List<IAiActionNode> nodes, BattleUnit battleUnit)
+        public static void AddNodes(List<IAiActionNode> nodes, BattleUnit unit)
         {
-            foreach (CoreSkillContainer skill in battleUnit.NextCoreSkills)
+            foreach (CoreSkillContainer skill in unit.NextCoreSkills)
             {
-                if (skill is not null &&
-                    skill.CoreSkill.CheckCastCondition(battleUnit) is null)
-                {
-                    nodes.AddRange(
-                        skill.CoreSkill.GetCastPositionRange(battleUnit).Value
-                            .Select(cell => new SkillAiActionNode(cell, skill, battleUnit))
-                    );
-                }
+                if (skill is null || skill.CoreSkill.CheckCastCondition(unit) is not null) continue;
+                List<BattleCell> range = skill.CoreSkill.GetCastPositionRange(unit).Value;
+                nodes.AddRange(
+                    from cell in range
+                    let score = GetScore(unit, skill.CoreSkill, cell)
+                    where score > 0
+                    select new SkillAiActionNode(skill, cell, score));
             }
-
-            foreach (FormSkillContainer skill in battleUnit.NextFormSkills)
+            foreach (FormSkillContainer skill in unit.NextFormSkills)
             {
-                if (skill is not null &&
-                    skill.FormSkill.CheckCastCondition(battleUnit) is null)
-                {
-                    nodes.AddRange(
-                        skill.FormSkill.GetCastPositionRange(battleUnit).Value
-                            .Select(cell => new SkillAiActionNode(cell, skill, battleUnit))
-                    );
-                }
+                if (skill is null || skill.FormSkill.CheckCastCondition(unit) is not null) continue;
+                List<BattleCell> range = skill.FormSkill.GetCastPositionRange(unit).Value;
+                nodes.AddRange(
+                    from cell in range
+                    let score = GetScore(unit, skill.FormSkill, cell)
+                    where score > 0
+                    select new SkillAiActionNode(skill, cell, score));
             }
         }
     }

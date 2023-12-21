@@ -1,6 +1,7 @@
 ﻿#region
 
 using System.Collections;
+using System.IO;
 using InfinityWorldChess.GameCreatorDomain;
 using InfinityWorldChess.GameDomain;
 using InfinityWorldChess.GameDomain.WorldCellDomain;
@@ -12,6 +13,7 @@ using Secyud.Ugf;
 using Secyud.Ugf.Archiving;
 using Secyud.Ugf.HexMap;
 using Secyud.Ugf.Modularity;
+using Secyud.Ugf.VirtualPath;
 using UnityEngine;
 
 #endregion
@@ -35,6 +37,10 @@ namespace InfinityWorldChess
 
 
             context.Get<WorldCellButtons>().Register(new TravelButtonDescriptor());
+            
+            IVirtualPathManager virtualPathManager = context.Get<IVirtualPathManager>();
+            virtualPathManager.AddDirectory("Data",Path.Combine(U.Path,"Data"));
+            virtualPathManager.AddDirectory("Localization",Path.Combine(U.Path,"Localization"));
         }
 
         public void PostConfigure(ConfigurationContext context)
@@ -69,7 +75,6 @@ namespace InfinityWorldChess
         {
             U.M.DestroyScope<GameCreatorScope>();
 
-
             WorldMap map = GameScope.Instance.Map;
             Role role = GameScope.Instance.Player.Role;
             HexUnit unit = GameScope.Instance.World
@@ -90,6 +95,11 @@ namespace InfinityWorldChess
 
         public IEnumerator SaveGame()
         {
+            {
+                using FileStream stream = File.OpenWrite(IWCC.SaveFilePath("slot"));
+                using DefaultArchiveWriter writer = new(stream);
+                GameScope.Instance.Player.Role.Basic.Save(writer);
+            }
             yield return GameScope.Instance.World.OnGameSaving();
             yield return GameScope.Instance.Role.OnGameSaving();
             yield return GameScope.Instance.Player.OnGameSaving();

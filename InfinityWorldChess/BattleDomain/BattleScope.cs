@@ -2,7 +2,6 @@
 using InfinityWorldChess.GameDomain;
 using InfinityWorldChess.GlobalDomain;
 using InfinityWorldChess.RoleDomain;
-using InfinityWorldChess.SkillDomain;
 using JetBrains.Annotations;
 using Secyud.Ugf;
 using Secyud.Ugf.AssetComponents;

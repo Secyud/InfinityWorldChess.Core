@@ -4,6 +4,6 @@ namespace InfinityWorldChess.BattleDomain
 {
 	public interface IBattleAiController:IRegistry
 	{
-		void TryPondering();
+		void TryPonder();
 	}
 }

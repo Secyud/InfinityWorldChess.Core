@@ -39,54 +39,11 @@ namespace InfinityWorldChess
 
         public void PostConfigure(ConfigurationContext context)
         {
-            RegisterItem(context);
-            RegisterAvatar(context);
-
-            TypeManager tm = context.Get<TypeManager>();
-
-            string path = Path.Combine(U.Path, "Data/Resource/basic-bundle.binary");
-            using FileStream file = File.OpenRead(path);
-            tm.AddResourcesFromStream(file);
-
-
-            BattleLevelGlobalContext battleLevelGlobalContext = context.Get<BattleLevelGlobalContext>();
-            battleLevelGlobalContext.LevelList.RegisterList();
-
-            using FileStream stream = File.OpenRead(Path.Combine(U.Path, "Data/Resource/levels.binary"));
-            IBattleLevel[] list = stream.ReadResourceObjects<IBattleLevel>().ToArray();
-            battleLevelGlobalContext.LevelList.RegisterList(list);
+            RegisterItemComponents(context);
+            Registerer.RegisterDefault(context.Manager);
         }
 
-        private void RegisterAvatar(ConfigurationContext context)
-        {
-            RoleResourceManager resource = context.Get<RoleResourceManager>();
-
-            IwcAssets assets = context.Get<IwcAssets>();
-
-            resource.RegisterAvatarResourceFromPath(
-                Path.Combine(U.Path, "Data", "Portrait", "portrait.binary"), assets
-            );
-
-            string path = Path.Combine(U.Path, "Data", "NameResources");
-            resource.LastNames.RegisterList(
-                Path.Combine(path, nameof(resource.LastNames))
-                    .GetStringListFromPath());
-            resource.FirstNameFrontFemale.RegisterList(
-                Path.Combine(path, nameof(resource.FirstNameFrontFemale))
-                    .GetCharListFromPath());
-            resource.FirstNameFrontMale.RegisterList(Path.Combine(path, nameof(resource.FirstNameFrontMale))
-                .GetCharListFromPath());
-            resource.FirstNameBehindFemale.RegisterList(Path.Combine(path, nameof(resource.FirstNameBehindFemale))
-                .GetCharListFromPath());
-            resource.FirstNameBehindMale.RegisterList(Path.Combine(path, nameof(resource.FirstNameBehindMale))
-                .GetCharListFromPath());
-            resource.FirstNamesMale.RegisterList(Path.Combine(path, nameof(resource.FirstNamesMale))
-                .GetStringListFromPath());
-            resource.FirstNamesFemale.RegisterList(Path.Combine(path, nameof(resource.FirstNamesFemale))
-                .GetStringListFromPath());
-        }
-
-        private static void RegisterItem(ConfigurationContext context)
+        private static void RegisterItemComponents(ConfigurationContext context)
         {
             ItemFilters filters = context.Get<ItemFilters>();
 

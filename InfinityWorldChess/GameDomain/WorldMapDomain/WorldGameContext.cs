@@ -1,5 +1,6 @@
 ﻿#region
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -101,20 +102,28 @@ namespace InfinityWorldChess.GameDomain.WorldMapDomain
 
         private IEnumerator LoadWorld()
         {
-            using (FileStream stream = File.OpenRead(
-                       WorldSetting.GetDataDirectory("map.binary")))
-            using (DefaultArchiveReader reader = new(stream))
+            foreach (string path in WorldSetting.GetDataDirectory("map.binary"))
             {
-                GameScope.Instance.Map.Load(reader);
+                try
+                {
+                    using FileStream stream = File.OpenRead(path);
+                    using DefaultArchiveReader reader = new(stream);
+                    GameScope.Instance.Map.Load(reader);
+                }
+                catch (Exception e)
+                {
+                    U.LogError(e);
+                    continue;
+                }
+                break;
             }
 
-            using (FileStream stream = File.OpenRead(
-                       WorldSetting.GetDataDirectory("regions.binary")))
+            foreach (string path in WorldSetting.GetDataDirectory("regions.binary"))
             {
-                List<WorldCellMessage> messages =
-                    stream.ReadResourceObjects<WorldCellMessage>();
-
-                foreach (WorldCellMessage message in messages)
+                using FileStream stream = File.OpenRead(path);
+                
+                foreach (WorldCellMessage message in 
+                         stream.ReadResourceObjects<WorldCellMessage>())
                 {
                     AddMessage(message);
                     if (U.AddStep())

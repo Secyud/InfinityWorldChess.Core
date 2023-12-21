@@ -68,20 +68,16 @@ namespace InfinityWorldChess.BattleDomain
         public void StartBroadcast(BattleUnit unit, BattleCell cell,
             UgfUnitEffect effect, SkillEffectDelegate effectDelegate)
         {
-            BattleScope.Instance.State = BattleFlowState.AnimationPlay;
-
             if (effect)
             {
-                if (effectDelegate is not null)
-                {
-                    effectDelegate.OnInitialize(effect, unit, cell);
-                    return;
-                }
-
-                Destroy(effect.gameObject);
+                BattleScope.Instance.State = BattleFlowState.AnimationPlay;
+                effectDelegate ??= SkillEffectDelegate.Default;
+                effectDelegate.OnInitialize(effect, unit, cell);
             }
-
-            BattleScope.Instance.State = BattleFlowState.OnEffectTrig;
+            else
+            {
+                BattleScope.Instance.State = BattleFlowState.OnEffectTrig;
+            }
         }
 
         public void GenerateMap(WorldCell cell, int width, int height)

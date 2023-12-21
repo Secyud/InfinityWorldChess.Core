@@ -1,6 +1,5 @@
 using System.IO;
 using Secyud.Ugf;
-using UnityEngine;
 
 namespace InfinityWorldChess
 {
@@ -43,7 +42,14 @@ namespace InfinityWorldChess
 
         public static string SaveFilePath(string fileName)
         {
-            return Path.Combine(SavePath, SaveFolder.ToString(), fileName + ".binary");
+            string path = Path.Combine(SavePath, SaveFolder.ToString());
+
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+            
+            return Path.Combine(path, fileName + ".binary");
         }
 
         private static string InitFolderPath(params string[] seg)

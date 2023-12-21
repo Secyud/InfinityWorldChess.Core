@@ -55,7 +55,7 @@ namespace InfinityWorldChess.RoleDomain
 
         public virtual IEnumerator OnGameSaving()
         {
-            using FileStream stream = File.OpenRead(SavePath);
+            using FileStream stream = File.OpenWrite(SavePath);
             using DefaultArchiveWriter writer = new(stream);
 
 
@@ -76,21 +76,20 @@ namespace InfinityWorldChess.RoleDomain
 
         public virtual IEnumerator OnGameCreation()
         {
-            string path = GameScope.Instance.World.WorldSetting
-                .GetDataDirectory("roles.binary");
-
-            using FileStream stream = File.OpenRead(path);
-
-            List<RoleTemplate> roles = stream.ReadResourceObjects<RoleTemplate>();
-
-            foreach (RoleTemplate template in roles)
+            foreach (string path in GameScope.Instance.World.WorldSetting.GetDataDirectory("roles.binary"))
             {
-                var role = template.GenerateRole();
+                using FileStream stream = File.OpenRead(path);
 
-                this[role.Id] = role;
-                role.Position = GameScope.Instance.GetCellR(
-                    template.PositionX,
-                    template.PositionZ);
+                List<RoleTemplate> roles = stream.ReadResourceObjects<RoleTemplate>();
+
+                foreach (RoleTemplate template in roles)
+                {
+                    Role role = template.GenerateRole();
+
+                    this[role.Id] = role;
+                    role.Position = GameScope.Instance.GetCellR(
+                        template.PositionX, template.PositionZ);
+                }
             }
 
             if (U.AddStep())

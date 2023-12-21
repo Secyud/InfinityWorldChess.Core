@@ -1,15 +1,13 @@
 ﻿#region
 
-using System;
-using InfinityWorldChess.Ugf;
 using Secyud.Ugf.AssetLoading;
 using Secyud.Ugf.Collections;
 using System.Collections.Generic;
 using System.IO;
 using Secyud.Ugf;
+using Secyud.Ugf.Archiving;
 using Secyud.Ugf.AssetComponents;
 using Secyud.Ugf.DependencyInjection;
-using UnityEngine;
 
 #endregion
 
@@ -67,17 +65,8 @@ namespace InfinityWorldChess.RoleDomain
         }
 
 
-        public void RegisterAvatarResourceFromPath(string path, IAssetLoader loader)
+        public void RegisterAvatarResourceFromPath(IArchiveReader reader, IAssetLoader loader)
         {
-            if (!File.Exists(path))
-            {
-                U.LogWarning($"Avatar resource doesn't exist: {path}");
-                return;
-            }
-
-            using FileStream stream = File.OpenRead(path);
-            using BinaryReader reader = new(stream);
-
             for (int i = 0; i < IWCC.AvatarElementCount; i++)
             {
                 string atlas = reader.ReadString();
@@ -87,8 +76,8 @@ namespace InfinityWorldChess.RoleDomain
                 for (int j = 0; j < count; j++)
                 {
                     string assetName = reader.ReadString();
-                    SpriteContainer sprite = AtlasSpriteContainer.Create(loader, "Portrait/" + atlas, assetName);
-
+                    SpriteContainer sprite = SpriteContainer.Create(loader, $"AvatarElements/{atlas}/{assetName}");
+                    
                     RegistrableDictionary<int, AvatarSpriteContainer> d =
                         reader.ReadBoolean()
                             ? FemaleAvatarResource[i]
@@ -106,7 +95,7 @@ namespace InfinityWorldChess.RoleDomain
 
                     AvatarSpriteContainer container = new(
                         sprite, reader.ReadInt32(), (AvatarElementType)i, message);
-                    
+
                     d.Register(container);
                 }
             }

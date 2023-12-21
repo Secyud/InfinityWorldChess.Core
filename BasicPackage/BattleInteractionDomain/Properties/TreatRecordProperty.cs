@@ -16,7 +16,7 @@ namespace InfinityWorldChess.BattleInteractionDomain
 		
 		public float RunRecover(ICanDefend target)
 		{
-			float factor = 0.1f + O(TreatFactor) / O(TargetCount,1);
+			float factor = 1f + O(TreatFactor) / O(TargetCount,1);
 			float basic = O(Treat) * factor + O(TreatFixedValue);
 			float recover = basic * O(RecoverFactor,0.1f) * O(1 - O(RestrainFactor),0.1f);
 			target.HealthValue += recover;

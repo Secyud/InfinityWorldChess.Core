@@ -114,7 +114,7 @@ namespace InfinityWorldChess.BattleDomain
         private void TryPondering()
         {
             _controller ??= U.Get<IBattleAiController>();
-            _controller.TryPondering();
+            _controller.TryPonder();
         }
 
 

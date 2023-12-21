@@ -79,7 +79,7 @@ namespace InfinityWorldChess.PlayerDomain
 
         public virtual IEnumerator OnGameSaving()
         {
-            using FileStream stream = File.OpenRead(SavePath);
+            using FileStream stream = File.OpenWrite(SavePath);
             using DefaultArchiveWriter writer = new(stream);
             writer.Write(Role.Position.Index);
             Role.Save(writer);

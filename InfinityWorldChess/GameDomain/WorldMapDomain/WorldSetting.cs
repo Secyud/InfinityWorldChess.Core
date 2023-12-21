@@ -5,6 +5,7 @@ using InfinityWorldChess.PlayerDomain;
 using Secyud.Ugf;
 using Secyud.Ugf.Archiving;
 using Secyud.Ugf.DataManager;
+using Secyud.Ugf.VirtualPath;
 using UnityEngine;
 
 namespace InfinityWorldChess.GameDomain.WorldMapDomain
@@ -25,9 +26,9 @@ namespace InfinityWorldChess.GameDomain.WorldMapDomain
             context.Role.Position = GameScope.Instance.GetCellR(PositionX,PositionZ);
         }
 
-        public string GetDataDirectory(string fileName)
+        public string[] GetDataDirectory(string fileName)
         {
-            return Path.Combine(U.Path,"Data/Play",Name,fileName);
+            return U.Get<IVirtualPathManager>().GetFilesSingly($"Data/Play/{Name}/{fileName}");
         }
     }
 }

@@ -14,39 +14,47 @@ namespace InfinityWorldChess.BattleDomain
 
         private MoveActionService Service => _service ??= U.Get<MoveActionService>();
 
+
+        public int Score { get; }
+        
         private MoveAiActionNode(
             [NotNull] BattleCell cell,
-            [NotNull] BattleUnit battleUnit)
+            [NotNull] BattleUnit battleUnit,
+            int score)
         {
             _cell = cell;
             _battleUnit = battleUnit;
+            Score = score;
         }
 
         public bool IsInterval => _service.IsInterval;
 
         public  bool InvokeAction()
         {
-            Service.OnApply();
+            BattleScope.Instance.Context.MapAction = Service;
             Service.OnHover(_cell);
             Service.OnPress(_cell);
             return true;
         }
 
-        public  int GetScore()
+        private static int GetScore(BattleUnit unit,BattleCell cell)
         {
             return (int)(from chess in BattleScope.Instance.Context.Units
-                where chess.Camp != _battleUnit.Camp 
-                let distance1 = Math.Abs(IwcBattleAiController.TargetDistance - chess.Location.DistanceTo(_cell)) 
-                let distance2 = Math.Abs(IwcBattleAiController.TargetDistance - chess.DistanceTo(_battleUnit)) 
+                where chess.Camp != unit.Camp 
+                let distance1 = Math.Abs(IwcBattleAiController.TargetDistance - chess.Location.DistanceTo(cell)) 
+                let distance2 = Math.Abs(IwcBattleAiController.TargetDistance - chess.DistanceTo(unit)) 
                 where distance2 > distance1 select distance2 - distance1).Sum();
         }
 
-
-        public static void AddNodes(List<IAiActionNode> nodes, BattleUnit battleUnit)
+        public static void AddNodes(List<IAiActionNode> nodes, BattleUnit unit)
         {
-            IReadOnlyList<BattleCell> range = battleUnit.GetMoveRange();
+            IReadOnlyList<BattleCell> range = unit.GetMoveRange();
 
-            nodes.AddRange(range.Select(cell => new MoveAiActionNode(cell, battleUnit)));
+            nodes.AddRange(
+                from cell in range
+                let score = GetScore(unit, cell) 
+                where score > 0 
+                select new MoveAiActionNode(cell, unit, score));
         }
     }
 }

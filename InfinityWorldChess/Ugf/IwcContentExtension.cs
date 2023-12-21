@@ -60,9 +60,6 @@ namespace InfinityWorldChess.Ugf
 		
 		public static List<string> GetStringListFromPath(this string path)
 		{
-			if (!path.EndsWith(".json"))
-				path += ".json";
-				
 			if (!File.Exists(path)) return new List<string>();
 
 			try
@@ -78,8 +75,6 @@ namespace InfinityWorldChess.Ugf
 
 		public static List<char> GetCharListFromPath(this string path)
 		{
-			if (!path.EndsWith(".binary"))
-				path += ".binary";
 			return File.Exists(path) ? File.ReadAllText(path).ToList() : new List<char>();
 		}
 	}
