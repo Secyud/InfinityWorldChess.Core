@@ -39,7 +39,7 @@ namespace InfinityWorldChess.GameDomain.SystemMenuDomain
 			U.Factory.SaveGame();
 		}
 
-		public void SaveAndExit()
+		public void ExitGame()
 		{
 			"未保存的进度将会丢失".CreateEnsureFloatingOnCenter(GameScope.Instance.ExitGame);
 		}

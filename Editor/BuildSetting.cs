@@ -23,6 +23,7 @@ namespace Core.Editor
 
 			FileUtil.CopyFileOrDirectory(In("Data"), Out("Data"));
 			FileUtil.CopyFileOrDirectory(In("Localization"), Out("Localization"));
+			FileUtil.CopyFileOrDirectory(In("steam_appid.txt"), Out("steam_appid.txt"));
 			return;
 
 			string Out(string name)
