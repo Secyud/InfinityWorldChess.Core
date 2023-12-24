@@ -2,6 +2,7 @@
 using InfinityWorldChess.MainMenuDomain;
 using InfinityWorldChess.Ugf;
 using Secyud.Ugf;
+using Secyud.Ugf.Archiving;
 using Secyud.Ugf.FunctionalComponents;
 using UnityEngine;
 
@@ -19,7 +20,6 @@ namespace InfinityWorldChess.GameDomain.SystemMenuDomain
 			"未保存的进度将会丢失".CreateEnsureFloatingOnCenter(() =>
 			{
 				GameScope.Instance.CloseSystemMenu();
-				U.Factory.GameShutdown();
 				U.M.DestroyScope<GameScope>();
 				U.M.CreateScope<MainMenuScope>();
 			});

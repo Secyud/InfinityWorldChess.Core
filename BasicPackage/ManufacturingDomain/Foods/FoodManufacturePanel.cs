@@ -10,6 +10,7 @@ using InfinityWorldChess.RoleDomain;
 using InfinityWorldChess.Ugf;
 using Secyud.Ugf;
 using Secyud.Ugf.LayoutComponents;
+using Secyud.Ugf.TableComponents;
 using UnityEngine;
 
 namespace InfinityWorldChess.ManufacturingDomain.Foods

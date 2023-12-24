@@ -4,9 +4,12 @@ using InfinityWorldChess.GameDomain.SystemMenuDomain;
 using InfinityWorldChess.GameDomain.WorldCellDomain;
 using InfinityWorldChess.GameDomain.WorldMapDomain;
 using InfinityWorldChess.GlobalDomain;
+using InfinityWorldChess.InteractionDomain;
+using InfinityWorldChess.MessageDomain;
 using InfinityWorldChess.PlayerDomain;
 using InfinityWorldChess.RoleDomain;
 using Secyud.Ugf;
+using Secyud.Ugf.Archiving;
 using Secyud.Ugf.AssetComponents;
 using Secyud.Ugf.DependencyInjection;
 using Secyud.Ugf.HexMapExtensions;
@@ -47,10 +50,15 @@ namespace InfinityWorldChess.GameDomain
             _map.Create();
             _map.Value.Initialize(U.Get<WorldHexGridDrawer>());
             _map.Value.transform.SetSiblingIndex(0);
+            U.M.CreateScope<InteractionScope>();
+            U.M.CreateScope<MessageScope>();
         }
 
         public override void Dispose()
         {
+            U.M.DestroyScope<InteractionScope>();
+            U.M.DestroyScope<MessageScope>();
+            
             Map.Destroy();
             Instance = null;
         }
@@ -113,11 +121,7 @@ namespace InfinityWorldChess.GameDomain
 
         public void ExitGame()
         {
-#if UNITY_EDITOR
-            EditorApplication.isPlaying = false;
-#else
-            UnityEngine.Application.Quit();
-#endif
+            U.Factory.Shutdown();
         }
     }
 }

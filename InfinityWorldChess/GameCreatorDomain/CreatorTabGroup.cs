@@ -1,5 +1,6 @@
 ﻿using InfinityWorldChess.MainMenuDomain;
 using Secyud.Ugf;
+using Secyud.Ugf.Archiving;
 using Secyud.Ugf.TabComponents;
 using UnityEngine;
 
@@ -25,6 +26,7 @@ namespace InfinityWorldChess.GameCreatorDomain
             U.M.DestroyScope<GameCreatorScope>();
         }
 
-        protected override TabService Service => GameCreatorScope.Instance.Get<CreatorTabService>();
+        protected override TabService Service =>
+            GameCreatorScope.Instance.Get<CreatorTabService>();
     }
 }

@@ -53,13 +53,11 @@ namespace InfinityWorldChess.ArchivingDomain
             ArchivingScope.Instance.CloseGameLoadPanel();
             if (File.Exists(_slotMessagePath))
             {
-                IWCC.LoadGame = true;
-                U.Factory.InitializeGame();
                 IwcAssets.Instance.LoadingPanelInk.Instantiate();
+                U.Factory.LoadGame();
             }
             else
             {
-                IWCC.LoadGame = false;
                 U.M.CreateScope<GameCreatorScope>();
             }
         }

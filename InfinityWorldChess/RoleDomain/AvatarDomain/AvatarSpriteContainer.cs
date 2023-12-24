@@ -16,14 +16,16 @@ namespace InfinityWorldChess.RoleDomain
         public Sprite Sprite => _spriteContainer?.Value;
         public AvatarElementMessage Message { get; }
 
-        public AvatarSpriteContainer(SpriteContainer sprite, int id, 
+        public AvatarSpriteContainer(SpriteContainer sprite, int id,
             AvatarElementType type,
             AvatarElementMessage message = null)
         {
             Id = id;
             _type = type;
-            if (message is not null)
-                Message = AvatarElementMessage.Messages[(int)type].MergeMessage(message) ;
+            Message = message is not null ? 
+                AvatarElementMessage.Messages[(int)type].MergeMessage(message) :
+                AvatarElementMessage.Messages[(int)type];
+
             _spriteContainer = sprite;
         }
     }

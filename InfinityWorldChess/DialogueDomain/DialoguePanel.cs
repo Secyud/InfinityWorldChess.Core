@@ -48,7 +48,7 @@ namespace InfinityWorldChess.DialogueDomain
 
         private void SetDefaultAction(IActionable action)
         {
-            NextButton.Clear();
+            NextButton.onClick.RemoveAllListeners();
             NextButton.Bind(action is null ? Die : action.Invoke);
         }
 

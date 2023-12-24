@@ -2,6 +2,7 @@
 
 using InfinityWorldChess.ArchivingDomain;
 using Secyud.Ugf;
+using Secyud.Ugf.ModManagement;
 using UnityEngine;
 
 #endregion
@@ -19,6 +20,11 @@ namespace InfinityWorldChess.MainMenuDomain
         public void OnSettingsClick()
         {
             U.Log("Settings");
+        }
+
+        public void OpenModSetting()
+        {
+            U.M.CreateScope<SteamModManageScope>();
         }
 
         public void OnExitGameClick()

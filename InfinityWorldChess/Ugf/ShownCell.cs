@@ -17,6 +17,7 @@ namespace InfinityWorldChess.Ugf
         [SerializeField] private SImage BorderImage;
         [SerializeField] private SImage SelectImage;
         [SerializeField] private SText ShowLabel;
+        [SerializeField] private SText Content;
 
         public SImage Icon => IconImage;
         public SImage Back => Background;
@@ -29,7 +30,13 @@ namespace InfinityWorldChess.Ugf
         public override void BindShowable(IShowable item)
         {
             if (ShowLabel)
+            {
                 ShowLabel.text = U.T[item?.Name];
+            }
+            if (Content)
+            {
+                Content.text = U.T[item?.Description];
+            }
             if (item is IHasContent withContent)
             {
                 _withContent = withContent;
@@ -38,8 +45,11 @@ namespace InfinityWorldChess.Ugf
                 sDelayedHoverable.OnHoverTrig.RemoveAllListeners();
                 sDelayedHoverable.OnHoverTrig.AddListener(CreateFloating);
             }
+
             if (IconImage)
+            {
                 IconImage.Sprite = item?.Icon?.Value;
+            }
         }
 
         protected virtual void CreateFloating()

@@ -9,6 +9,7 @@ using InfinityWorldChess.GameDomain.WorldMapDomain;
 using InfinityWorldChess.InteractionDomain;
 using InfinityWorldChess.MessageDomain;
 using InfinityWorldChess.RoleDomain;
+using InfinityWorldChess.SkillDomain;
 using Secyud.Ugf;
 using Secyud.Ugf.Archiving;
 using Secyud.Ugf.HexMap;
@@ -22,10 +23,11 @@ namespace InfinityWorldChess
 {
     [DependsOn(
         typeof(UgfCoreModule),
-        typeof(UgfHexMapModule)
+        typeof(UgfHexMapModule),
+        typeof(UgfSteamModule)
     )]
     public class InfinityWorldChessModule : IUgfModule, IOnPostConfigure,
-        IOnPreInitialization, IOnInitialization, IOnPostInitialization, IOnShutDown, IOnArchiving
+        IOnPreInitialization, IOnInitialization, IOnPostInitialization, IOnArchiving
     {
         public const string AssetBundleName = "infinityworldchess";
 
@@ -37,40 +39,34 @@ namespace InfinityWorldChess
 
 
             context.Get<WorldCellButtons>().Register(new TravelButtonDescriptor());
-            
+
             IVirtualPathManager virtualPathManager = context.Get<IVirtualPathManager>();
-            virtualPathManager.AddDirectory("Data",Path.Combine(U.Path,"Data"));
-            virtualPathManager.AddDirectory("Localization",Path.Combine(U.Path,"Localization"));
+            virtualPathManager.AddDirectory("Data", Path.Combine(U.Path, "Data"));
+            virtualPathManager.AddDirectory("Localization", Path.Combine(U.Path, "Localization"));
         }
 
         public void PostConfigure(ConfigurationContext context)
         {
+            U.Get<PassiveSkillButtons>()
+                .Register(new PassiveSkillPointDivisionButton());
+            U.Get<FormSkillButtons>()
+                .Register(new FormSkillPointDivisionButton());
+            U.Get<CoreSkillButtons>()
+                .Register(new CoreSkillPointDivisionButton());
         }
-
-
+        
         public IEnumerator OnGamePreInitialization(GameInitializeContext context)
         {
-            IUgfApplication app = context.Get<IUgfApplication>();
-            app.DependencyManager.CreateScope<GameScope>();
-            app.DependencyManager.CreateScope<InteractionScope>();
-            app.DependencyManager.CreateScope<MessageScope>();
+            U.M.CreateScope<GameScope>();
             yield return null;
         }
 
         public IEnumerator OnGameInitializing(GameInitializeContext context)
         {
-            if (IWCC.LoadGame)
-            {
-                yield return LoadGame();
-            }
-            else
-            {
-                yield return GameScope.Instance.World.OnGameCreation();
-                yield return GameScope.Instance.Role.OnGameCreation();
-                yield return GameScope.Instance.Player.OnGameCreation();
-            }
+            yield return GameScope.Instance.World.OnGameCreation();
+            yield return GameScope.Instance.Role.OnGameCreation();
+            yield return GameScope.Instance.Player.OnGameCreation();
         }
-
         public IEnumerator OnGamePostInitialization(GameInitializeContext context)
         {
             U.M.DestroyScope<GameCreatorScope>();
@@ -89,10 +85,6 @@ namespace InfinityWorldChess
             yield return null;
         }
 
-
-        public int GameInitializeStep { get; } = 30;
-
-
         public IEnumerator SaveGame()
         {
             {
@@ -110,13 +102,6 @@ namespace InfinityWorldChess
             yield return GameScope.Instance.World.OnGameLoading();
             yield return GameScope.Instance.Role.OnGameLoading();
             yield return GameScope.Instance.Player.OnGameLoading();
-        }
-
-        public void OnGameShutDown(GameShutDownContext context)
-        {
-            U.M.DestroyScope<GameScope>();
-            U.M.DestroyScope<InteractionScope>();
-            U.M.DestroyScope<MessageScope>();
         }
 
         //

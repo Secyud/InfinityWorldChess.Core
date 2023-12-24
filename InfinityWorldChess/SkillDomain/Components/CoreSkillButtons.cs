@@ -8,9 +8,5 @@ namespace InfinityWorldChess.SkillDomain
 {
 	public class CoreSkillButtons : ButtonRegeditBase<ICoreSkill>
 	{
-		public CoreSkillButtons()
-		{
-			Register(new CoreSkillPointDivisionButton());
-		}
 	}
 }

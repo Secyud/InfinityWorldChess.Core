@@ -19,6 +19,7 @@ using InfinityWorldChess.LevelDomain;
 using InfinityWorldChess.SkillDomain;
 using InfinityWorldChess.Ugf;
 using Secyud.Ugf;
+using Secyud.Ugf.Archiving;
 using Secyud.Ugf.DataManager;
 using UnityEngine;
 
@@ -29,7 +30,7 @@ namespace InfinityWorldChess
     [DependsOn(
         typeof(InfinityWorldChessModule)
     )]
-    public class BasicPackageModule : IUgfModule, IOnInitialization, IOnPostConfigure
+    public class BasicPackageModule : IUgfModule, IOnInitialization, IOnPostConfigure,IOnPostInitialization
     {
         public void Configure(ConfigurationContext context)
         {
@@ -72,24 +73,24 @@ namespace InfinityWorldChess
             //U.Get<ManufacturingGameContext>().OnGameSaving();
             //U.Get<ManufacturingGameContext>().OnGameCreation();
 
-            if (!IWCC.LoadGame)
-            {
-                var role = GameScope.Instance.Player.Role;
-                var coreSkill = U.Tm.ReadObjectFromResource<CoreSkill>("基础招式_砸");
-                role.CoreSkill.TryAddLearnedSkill(coreSkill);
-                role.CoreSkill.Set(coreSkill, 0, 1);
-                coreSkill = U.Tm.ReadObjectFromResource<CoreSkill>("基础招式_抓");
-                role.CoreSkill.TryAddLearnedSkill(coreSkill);
-                role.CoreSkill.Set(coreSkill, 0, 0);
-            }
+            var role = GameScope.Instance.Player.Role;
+            var coreSkill = U.Tm.ReadObjectFromResource<CoreSkill>("基础招式_砸");
+            role.CoreSkill.TryAddLearnedSkill(coreSkill);
+            role.CoreSkill.Set(coreSkill, 0, 1);
+            coreSkill = U.Tm.ReadObjectFromResource<CoreSkill>("基础招式_抓");
+            role.CoreSkill.TryAddLearnedSkill(coreSkill);
+            role.CoreSkill.Set(coreSkill, 0, 0);
+            return null;
+        }
 
+
+        public IEnumerator OnGamePostInitialization(GameInitializeContext context)
+        {
             var cell = GameScope.Instance.GetCellR(14, 10);
 
             cell.Buttons.Add(new TriggerBattleLevelButton());
 
-            return null;
+            yield return null;
         }
-
-        public int GameInitializeStep => 0x1000;
     }
 }

@@ -9,33 +9,36 @@ using UnityEngine;
 
 namespace Core.Editor
 {
-	public class BuildSetting : IPreprocessBuildWithReport, IPostprocessBuildWithReport
-	{
-		public int callbackOrder => 0;
+    public class BuildSetting : IPreprocessBuildWithReport, IPostprocessBuildWithReport
+    {
+        public int callbackOrder => 0;
 
-		public void OnPreprocessBuild(BuildReport report)
-		{
-			Debug.Log(nameof(OnPreprocessBuild));
-		}
-		public void OnPostprocessBuild(BuildReport report)
-		{
-			Debug.Log(nameof(OnPostprocessBuild));
+        public void OnPreprocessBuild(BuildReport report)
+        {
+            Debug.Log(nameof(OnPreprocessBuild));
+        }
 
-			FileUtil.CopyFileOrDirectory(In("Data"), Out("Data"));
-			FileUtil.CopyFileOrDirectory(In("Localization"), Out("Localization"));
-			FileUtil.CopyFileOrDirectory(In("steam_appid.txt"), Out("steam_appid.txt"));
-			return;
+        public void OnPostprocessBuild(BuildReport report)
+        {
+            Debug.Log(nameof(OnPostprocessBuild));
 
-			string Out(string name)
-			{
-				return Path.Combine(report.summary.outputPath,"..", name);
-			}
+            FileUtil.CopyFileOrDirectory(In("Data"), Out("Data"));
+            FileUtil.CopyFileOrDirectory(In("Localization"), Out("Localization"));
+#if DEBUG
+            FileUtil.CopyFileOrDirectory(In("steam_appid.txt"), Out("steam_appid.txt"));
+#endif
+            return;
 
-			string In(string name)
-			{
-				return Path.Combine(Application.dataPath[..^6], name);
-			}
-		}
-	}
+            string Out(string name)
+            {
+                return Path.Combine(report.summary.outputPath, "..", name);
+            }
+
+            string In(string name)
+            {
+                return Path.Combine(Application.dataPath[..^6], name);
+            }
+        }
+    }
 }
 #endif

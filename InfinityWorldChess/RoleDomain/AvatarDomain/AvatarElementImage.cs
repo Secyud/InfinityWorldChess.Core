@@ -41,7 +41,7 @@ namespace InfinityWorldChess.RoleDomain
                     GetRange01(positionX)) +
                 _container.Message.BiasX;
             Vector3 position = rectTransform.localPosition;
-            position.x = value * Editor.Scale;
+            position.x = value * Editor.Scale / 3 * 2;
             rectTransform.localPosition = position;
         }
 
@@ -81,7 +81,7 @@ namespace InfinityWorldChess.RoleDomain
 
         protected float GetRange01(int value)
         {
-            return value / 255f;
+            return value / 256f;
         }
     }
 }

@@ -4,6 +4,7 @@ using System.Collections;
 using InfinityWorldChess.GameDomain;
 using InfinityWorldChess.GameDomain.WorldCellDomain;
 using InfinityWorldChess.ManufacturingDomain;
+using Secyud.Ugf.Archiving;
 using Secyud.Ugf.Modularity;
 
 #endregion

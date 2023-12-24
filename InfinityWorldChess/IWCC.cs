@@ -15,7 +15,7 @@ namespace InfinityWorldChess
         public const int FormSkillTypeCount = 3;
         public const int FormSkillCount = FormSkillStateCount * FormSkillTypeCount;
 
-        public const int MaxOverloadedCount = 99999;
+        public const int MaxOverloadedCount = 9999;
 
         public const int MaxChessResourceLevel = 5;
         public const int MaxChessResourceTypeCount = 1;
@@ -35,8 +35,6 @@ namespace InfinityWorldChess
         public const int AvatarElementCount = 12;
 
         public static readonly string SavePath = InitFolderPath(U.Path, "SaveFiles");
-
-        public static bool LoadGame { get; set; } = false;
 
         public static int SaveFolder { get; set; }
 

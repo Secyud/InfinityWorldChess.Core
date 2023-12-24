@@ -5,6 +5,7 @@ using InfinityWorldChess.GlobalDomain;
 using InfinityWorldChess.RoleDomain;
 using InfinityWorldChess.Ugf;
 using Secyud.Ugf.EditorComponents;
+using Secyud.Ugf.TableComponents;
 using UnityEngine;
 
 #endregion

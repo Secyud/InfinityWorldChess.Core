@@ -2,7 +2,9 @@
 
 using InfinityWorldChess.ArchivingDomain;
 using InfinityWorldChess.GlobalDomain;
+using InfinityWorldChess.MainMenuDomain;
 using InfinityWorldChess.RoleDomain;
+using Secyud.Ugf;
 using Secyud.Ugf.Collections;
 using Secyud.Ugf.DependencyInjection;
 using Secyud.Ugf.Modularity;
@@ -37,10 +39,11 @@ namespace InfinityWorldChess
                     _ = container.Sprite;
                 }
             }
+            
 
-            IDependencyManager manager = context.Get<IDependencyManager>();
-            manager.CreateScope<GlobalScope>();
-            manager.CreateScope<ArchivingScope>();
+            U.M.CreateScope<GlobalScope>();
+            U.M.CreateScope<MainMenuScope>();
+            U.M.CreateScope<ArchivingScope>();
         }
     }
 }

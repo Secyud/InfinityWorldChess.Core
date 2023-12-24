@@ -1,5 +1,6 @@
 #region
 
+using System;
 using InfinityWorldChess.ItemDomain;
 using Secyud.Ugf.Archiving;
 using System.Collections.Generic;
@@ -17,7 +18,7 @@ namespace InfinityWorldChess.RoleDomain
         public class ItemProperty : IArchivable
         {
             private readonly List<IItem> _items = new();
-            private readonly SortedDictionary<string,IOverloadedItem> _oItems = new();
+            private readonly SortedDictionary<string, IOverloadedItem> _oItems = new();
             public int Award { get; set; }
 
             public void Save(IArchiveWriter writer)
@@ -53,6 +54,7 @@ namespace InfinityWorldChess.RoleDomain
                     item!.SaveIndex = i;
                     Add(item);
                 }
+
                 count = reader.ReadInt32();
                 for (int i = 0; i < count; i++)
                 {
@@ -63,7 +65,7 @@ namespace InfinityWorldChess.RoleDomain
 
                 Award = reader.ReadInt32();
             }
-            
+
             public void Add(IItem item)
             {
                 if (item is IOverloadedItem oItem)
@@ -72,11 +74,13 @@ namespace InfinityWorldChess.RoleDomain
 
                     if (existItem is not null)
                     {
-                        existItem.Quantity += oItem.Quantity;
+                        existItem.Quantity =
+                            Math.Clamp(existItem.Quantity + oItem.Quantity, 1, IWCC.MaxOverloadedCount);
                     }
                     else
                     {
                         _oItems[item.ResourceId] = oItem;
+                        oItem.Quantity = Math.Clamp(oItem.Quantity, 1, IWCC.MaxOverloadedCount);
                     }
                 }
                 else
@@ -85,7 +89,7 @@ namespace InfinityWorldChess.RoleDomain
                 }
             }
 
-            public bool Remove(IItem item,int count)
+            public bool Remove(IItem item, int count)
             {
                 if (item is IOverloadedItem)
                 {
@@ -112,7 +116,7 @@ namespace InfinityWorldChess.RoleDomain
 
                 return true;
             }
-            
+
             public void Add(ItemCounter counter)
             {
                 _oItems.TryGetValue(counter.Item.ResourceId, out IOverloadedItem existItem);
@@ -126,7 +130,7 @@ namespace InfinityWorldChess.RoleDomain
                     _oItems[counter.Item.ResourceId] = counter.Item;
                 }
             }
-            
+
             public bool Remove(ItemCounter counter)
             {
                 _oItems.TryGetValue(counter.Item.ResourceId, out IOverloadedItem existItem);
@@ -147,9 +151,9 @@ namespace InfinityWorldChess.RoleDomain
                     return false;
                 }
             }
-            
+
             public IItem this[int i] => i < _items.Count ? _items[i] : null;
-            
+
             public IList<IItem> All()
             {
                 List<IItem> ret = _oItems.Values.Cast<IItem>().ToList();

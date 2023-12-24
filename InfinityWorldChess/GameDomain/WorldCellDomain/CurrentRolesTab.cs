@@ -1,5 +1,6 @@
 ﻿#region
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using InfinityWorldChess.InteractionDomain;
@@ -31,6 +32,11 @@ namespace InfinityWorldChess.GameDomain.WorldCellDomain
                 <Role, RoleSorters, RoleFilters>(
                     _showRoles, AvatarEditor.SetCell);
             td.BindInitAction(InitSelectRole);
+        }
+
+        private void OnDisable()
+        {
+            InteractionScope.Instance.SetSelectRole(null);
         }
 
         public override void RefreshTab()

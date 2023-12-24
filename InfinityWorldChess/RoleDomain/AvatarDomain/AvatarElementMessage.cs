@@ -48,12 +48,12 @@
             new(AvatarElementType.FntBdy, biasX: 0, biasY: 0.176f),
             new(AvatarElementType.FntHad, biasX: 0, biasY: -.266f),
             new(AvatarElementType.HadFtr, biasX: 0, biasY: -.266f),
-            new(AvatarElementType.NseFtr, biasX: 0, biasY: -.236f),
-            new(AvatarElementType.MthFtr, biasX: 0, biasY: -.187f),
-            new(AvatarElementType.LftEye, -30, 30, 0.047f, -.01f, -.256f, 0.01f),
-            new(AvatarElementType.RhtEye, 30, -30, -.047f, 0.01f, -.256f, 0.01f),
-            new(AvatarElementType.LftBrw, -30, 30, 0.047f, -.01f, -.275f, 0.01f),
-            new(AvatarElementType.RhtBrw, 30, -30, -.047f, 0.01f, -.275f, 0.01f),
+            new(AvatarElementType.NseFtr, biasX: 0, biasY: -.236f,yRange:0.01f),
+            new(AvatarElementType.MthFtr, biasX: 0, biasY: -.187f,yRange:0.01f),
+            new(AvatarElementType.LftEye, -30, 30, 0.047f, 0.01f, -.256f, 0.01f),
+            new(AvatarElementType.RhtEye, 30, -30, -.047f, -.01f, -.256f, 0.01f),
+            new(AvatarElementType.LftBrw, -30, 30, 0.047f, 0.01f, -.275f, 0.01f),
+            new(AvatarElementType.RhtBrw, 30, -30, -.047f, -.01f, -.275f, 0.01f),
             new(AvatarElementType.FntHar, biasX: 0, biasY: -.266f),
         };
     }

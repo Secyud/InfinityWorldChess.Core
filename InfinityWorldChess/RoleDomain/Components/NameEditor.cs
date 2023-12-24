@@ -51,7 +51,6 @@ namespace InfinityWorldChess.RoleDomain
 
         protected override void InitData()
         {
-            SetRandomName();
         }
     }
 }
