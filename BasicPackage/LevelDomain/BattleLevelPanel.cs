@@ -1,7 +1,6 @@
 using System.Linq;
 using InfinityWorldChess.BattleDomain;
 using InfinityWorldChess.GameDomain;
-using InfinityWorldChess.Ugf;
 using Secyud.Ugf;
 using Secyud.Ugf.TableComponents;
 using UnityEngine;

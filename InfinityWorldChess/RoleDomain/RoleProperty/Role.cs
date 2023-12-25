@@ -5,20 +5,22 @@ using InfinityWorldChess.BuffDomain;
 using InfinityWorldChess.GameDomain.WorldCellDomain;
 using InfinityWorldChess.Ugf;
 using Secyud.Ugf.Archiving;
-using Secyud.Ugf.HexMap;
 using UnityEngine;
 
 #endregion
 
 namespace InfinityWorldChess.RoleDomain
 {
-    public partial class Role : IHasContent, IReleasable
+    public partial class Role : IHasContent
     {
         public int Id { get; set; }
 
-        private HexUnit _unit;
+        public PropertyCollection<Role, IRoleProperty> Properties { get; }
 
-        public  PropertyCollection<Role,IRoleProperty> Properties { get; }
+        public string ShowName => Basic.Name;
+
+        public string ShowDescription => Basic.Description;
+
         public Role()
         {
             Properties = new PropertyCollection<Role, IRoleProperty>(this);
@@ -58,15 +60,6 @@ namespace InfinityWorldChess.RoleDomain
             PassiveSkill.Load(reader, this);
             Relation.Load(reader, this, position);
             Properties.Load(reader);
-        }
-
-        public string ShowName => Basic.Name;
-
-        public string ShowDescription => Basic.Description;
-
-        public void Release()
-        {
-            Position = null;
         }
     }
 }

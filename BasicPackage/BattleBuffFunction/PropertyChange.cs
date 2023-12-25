@@ -15,8 +15,6 @@ namespace InfinityWorldChess.BattleBuffFunction
         [field: S] public int Value { get; set; }
         [field: S] public byte Type { get; set; }
 
-        public BattleUnitBuff BelongBuff { get; set; }
-
         private BattleProperty Property { get; set; }
         private BodyType BodyType => (BodyType)Type;
 

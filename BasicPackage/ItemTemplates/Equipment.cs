@@ -14,7 +14,7 @@ using UnityEngine;
 
 namespace InfinityWorldChess.ItemTemplates
 {
-    public class Equipment : Item, IEquipment,IAttachProperty
+    public class Equipment : Item, IEquipment
     {
         [field:S(64)]public  List<IInstallable<Role>> Effects { get; } = new();
         [field:S(5)]public byte TypeCode { get; set; }

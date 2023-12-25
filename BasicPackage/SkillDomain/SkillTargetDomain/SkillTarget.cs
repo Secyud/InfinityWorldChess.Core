@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using InfinityWorldChess.BattleDomain;
-using InfinityWorldChess.Ugf;
 using Secyud.Ugf;
 
 #endregion

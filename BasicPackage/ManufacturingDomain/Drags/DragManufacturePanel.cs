@@ -113,14 +113,12 @@ namespace InfinityWorldChess.ManufacturingDomain.Drags
 
         public void SelectBlueprintClick()
         {
-            IList<IItem> items = GameScope.Instance.Player.Role.Item.All();
-            List<DragBlueprint> materials = items.TryFindCast<IItem, DragBlueprint>();
             GlobalScope.Instance.OpenSelect()
                 .AutoSetSingleSelectTable<
                         DragBlueprint,
                         DragBlueprintSorters,
                         DragBlueprintFilters>
-                    (materials, SelectBlueprint);
+                    (Property.LearnedBlueprints, SelectBlueprint);
         }
 
         private void SelectBlueprint(DragBlueprint blueprint)

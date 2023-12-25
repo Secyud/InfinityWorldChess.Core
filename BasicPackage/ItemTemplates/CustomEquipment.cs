@@ -12,7 +12,7 @@ namespace InfinityWorldChess.ItemTemplates
             writer.Write(Kiling);
             writer.Write(Nimble);
             writer.Write(Defend);
-            
+            SaveEffects(writer);
         }
 
         public override void Load(IArchiveReader reader)
@@ -23,6 +23,7 @@ namespace InfinityWorldChess.ItemTemplates
             Kiling = reader.ReadByte();
             Nimble = reader.ReadByte();
             Defend = reader.ReadByte();
+            LoadEffects(reader);
         }
 
     }
