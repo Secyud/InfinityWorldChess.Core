@@ -1,4 +1,5 @@
-﻿using InfinityWorldChess.BattleDomain;
+﻿using System.Runtime.InteropServices;
+using InfinityWorldChess.BattleDomain;
 using InfinityWorldChess.BuffDomain;
 using InfinityWorldChess.FunctionDomain;
 using InfinityWorldChess.Ugf;
@@ -11,7 +12,7 @@ namespace InfinityWorldChess.BattleUnitFunctions
     /// <summary>
     /// 延缓敌方行动时间
     /// </summary>
-    [ID("aa8da7e7-f8a7-d7eb-9e2b-46544117c6bf")]
+    [Guid("aa8da7e7-f8a7-d7eb-9e2b-46544117c6bf")]
     public class ChangeRoleTime : IActionable<BattleUnit>,IHasContent,IPropertyAttached
     {
         [field: S] public float Factor { get; set; }

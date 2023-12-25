@@ -1,4 +1,5 @@
-﻿using InfinityWorldChess.BattleInteractionDomain;
+﻿using System.Runtime.InteropServices;
+using InfinityWorldChess.BattleInteractionDomain;
 using InfinityWorldChess.FunctionDomain;
 using InfinityWorldChess.GlobalDomain;
 using InfinityWorldChess.Ugf;
@@ -8,7 +9,7 @@ using UnityEngine;
 
 namespace InfinityWorldChess.BattleInteractionFunctions
 {
-    [ID("c32a9205-1b69-757e-cdfd-e44cb6040571")]
+    [Guid("c32a9205-1b69-757e-cdfd-e44cb6040571")]
     public class ChangeDefendFactor: IActionable<BattleInteraction>, IHasContent,IHasPriority
     {
         [field: S] public float Factor { get; set; }

@@ -1,5 +1,6 @@
 #region
 
+using System;
 using System.IO;
 using Secyud.Ugf.DataManager;
 
@@ -13,6 +14,10 @@ namespace InfinityWorldChess.RoleDomain
 
         [field: S] public int RealValue { get; set; } = 10;
 
+        public void ChangeRealValue(int value)
+        {
+            RealValue = Math.Min(MaxValue, RealValue + value);
+        }
 
         public override string ToString()
         {

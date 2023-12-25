@@ -1,11 +1,12 @@
-﻿using InfinityWorldChess.BattleDomain;
+﻿using System.Runtime.InteropServices;
+using InfinityWorldChess.BattleDomain;
 using InfinityWorldChess.Ugf;
 using Secyud.Ugf.DataManager;
 using UnityEngine;
 
 namespace InfinityWorldChess.BattleInteractionFunctions
 {
-    [ID("5828303A-2706-9A32-08E7-992C5DD65E01")]
+    [Guid("5828303A-2706-9A32-08E7-992C5DD65E01")]
     public class TurnRecorder : BuffRecorderBase
     {
         public override void InstallFrom(BattleUnit target)

@@ -1,4 +1,5 @@
-﻿using InfinityWorldChess.BattleDomain;
+﻿using System.Runtime.InteropServices;
+using InfinityWorldChess.BattleDomain;
 using InfinityWorldChess.BattleInteractionDomain;
 using InfinityWorldChess.FunctionDomain;
 using InfinityWorldChess.GlobalDomain;
@@ -9,7 +10,7 @@ using UnityEngine;
 
 namespace InfinityWorldChess.BattleInteractionFunctions
 {
-    [ID("1192A36C-5697-D24C-9B42-71E3F2755433")]
+    [Guid("1192A36C-5697-D24C-9B42-71E3F2755433")]
     public class ChangeAttackFactorByHealthLost : IActionable<BattleInteraction>, IHasContent,IHasPriority
     {
         [field: S] public float Factor { get; set; }

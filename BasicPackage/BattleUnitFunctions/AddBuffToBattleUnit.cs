@@ -1,3 +1,4 @@
+using System.Runtime.InteropServices;
 using InfinityWorldChess.BattleDomain;
 using InfinityWorldChess.BuffDomain;
 using InfinityWorldChess.FunctionDomain;
@@ -9,7 +10,7 @@ using UnityEngine;
 
 namespace InfinityWorldChess.BattleUnitFunctions
 {
-    [ID("09CDEB29-6E8F-D324-1A56-174680F456F3")]
+    [Guid("09CDEB29-6E8F-D324-1A56-174680F456F3")]
     public class AddBuffToBattleUnit :AccessorWithTemplate<IBattleUnitBuff>,
         IActionable<BattleUnit>, IHasContent, IPropertyAttached
     {

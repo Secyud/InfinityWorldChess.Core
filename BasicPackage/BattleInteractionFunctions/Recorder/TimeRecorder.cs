@@ -1,11 +1,12 @@
-﻿using InfinityWorldChess.BattleDomain;
+﻿using System.Runtime.InteropServices;
+using InfinityWorldChess.BattleDomain;
 using InfinityWorldChess.Ugf;
 using Secyud.Ugf.DataManager;
 using UnityEngine;
 
 namespace InfinityWorldChess.BattleInteractionFunctions
 {
-    [ID("897C91CF-C1B0-D980-8D74-91A8B3691A53")]
+    [Guid("897C91CF-C1B0-D980-8D74-91A8B3691A53")]
     public class TimeRecorder : BuffRecorderBase
     {
         protected int TimeRecord { get; set; }

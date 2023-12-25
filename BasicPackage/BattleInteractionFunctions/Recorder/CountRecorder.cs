@@ -1,4 +1,5 @@
-﻿using InfinityWorldChess.BattleBuffDomain;
+﻿using System.Runtime.InteropServices;
+using InfinityWorldChess.BattleBuffDomain;
 using InfinityWorldChess.BattleDomain;
 using InfinityWorldChess.FunctionDomain;
 using InfinityWorldChess.Ugf;
@@ -7,7 +8,7 @@ using UnityEngine;
 
 namespace InfinityWorldChess.BattleInteractionFunctions
 {
-    [ID("F40D4732-5A6C-0A9B-C5FF-48278BDC2A07")]
+    [Guid("F40D4732-5A6C-0A9B-C5FF-48278BDC2A07")]
     public class CountRecorder : BuffRecorderBase
     {
         public override void SetContent(Transform transform)

@@ -1,4 +1,5 @@
-﻿using InfinityWorldChess.BattleDomain;
+﻿using System.Runtime.InteropServices;
+using InfinityWorldChess.BattleDomain;
 using InfinityWorldChess.BuffDomain;
 using InfinityWorldChess.FunctionDomain;
 using InfinityWorldChess.SkillDomain;
@@ -10,7 +11,7 @@ using UnityEngine;
 
 namespace InfinityWorldChess.BattleUnitFunctions
 {
-    [ID("2A14E687-EBA2-409A-D09E-AD1C75A55D77")]
+    [Guid("2A14E687-EBA2-409A-D09E-AD1C75A55D77")]
     public class FlashToSelectCell : IActionable<BattleUnit>, IHasContent, IPropertyAttached
     {
         public IAttachProperty Property { get; set; }

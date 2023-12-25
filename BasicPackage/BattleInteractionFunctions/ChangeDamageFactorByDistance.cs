@@ -1,4 +1,5 @@
-﻿using InfinityWorldChess.BattleInteractionDomain;
+﻿using System.Runtime.InteropServices;
+using InfinityWorldChess.BattleInteractionDomain;
 using InfinityWorldChess.FunctionDomain;
 using InfinityWorldChess.GlobalDomain;
 using InfinityWorldChess.Ugf;
@@ -9,7 +10,7 @@ using UnityEngine;
 
 namespace InfinityWorldChess.BattleInteractionFunctions
 {
-    [ID("C6E92AB6-B9A3-6DB8-47D9-D6738F6604FB")]
+    [Guid("C6E92AB6-B9A3-6DB8-47D9-D6738F6604FB")]
     public class ChangeDamageFactorByDistance : IActionable<BattleInteraction>, IHasContent, IHasPriority
     {
         [field: S] public float Factor { get; set; }

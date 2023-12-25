@@ -1,4 +1,5 @@
 using System;
+using System.Runtime.InteropServices;
 using InfinityWorldChess.BattleBuffDomain;
 using InfinityWorldChess.BattleBuffFunction;
 using InfinityWorldChess.BattleDomain;
@@ -14,7 +15,7 @@ namespace InfinityWorldChess.BattleInteractionFunctions
     /// <summary>
     /// provide trigger in round calculate.
     /// </summary>
-    [ID("69DD7F7A-1E43-180F-C4C2-41A2C1761F6E")]
+    [Guid("69DD7F7A-1E43-180F-C4C2-41A2C1761F6E")]
     public class RoundCalculateTrigger :
         IBuffEffect, IPropertyAttached, IActionable, IHasContent,ITriggerable,IBuffAttached
     {

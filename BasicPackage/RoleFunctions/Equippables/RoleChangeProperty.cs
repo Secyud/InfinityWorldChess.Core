@@ -1,4 +1,5 @@
-﻿using InfinityWorldChess.BuffDomain;
+﻿using System.Runtime.InteropServices;
+using InfinityWorldChess.BuffDomain;
 using InfinityWorldChess.FunctionDomain;
 using InfinityWorldChess.RoleDomain;
 using InfinityWorldChess.Ugf;
@@ -8,7 +9,7 @@ using UnityEngine;
 
 namespace InfinityWorldChess.RoleFunctions
 {
-    [ID("9AF58D20-1D76-14A8-3283-9DCF21B4E749")]
+    [Guid("9AF58D20-1D76-14A8-3283-9DCF21B4E749")]
     public class RoleChangeProperty : IInstallable<Role>, IHasContent, IPropertyAttached
     {
         [field: S] public float LivingFactor { get; set; }

@@ -23,7 +23,7 @@ namespace InfinityWorldChess.BuffDomain
 
         protected override Guid GetKey(Type index)
         {
-            return U.Tm[index].Id;
+            return index.GUID;
         }
         
         public TProperty GetOrCreate<TProperty>()

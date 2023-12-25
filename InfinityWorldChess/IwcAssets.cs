@@ -1,5 +1,6 @@
 ﻿#region
 
+using System.Runtime.InteropServices;
 using InfinityWorldChess.ItemDomain.EquipmentDomain;
 using InfinityWorldChess.RoleDomain;
 using InfinityWorldChess.Ugf;
@@ -17,7 +18,7 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace InfinityWorldChess
 {
-    [ID("11E30167-E0BD-61B9-8F41-46776AF49A11")]
+    [Guid("11E30167-E0BD-61B9-8F41-46776AF49A11")]
 	public class IwcAssets : IAssetLoader
 	{
 		public static IwcAssets Instance => _instance ??= U.Get<IwcAssets>();

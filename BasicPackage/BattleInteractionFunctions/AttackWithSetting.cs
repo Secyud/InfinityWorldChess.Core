@@ -1,4 +1,5 @@
-﻿using InfinityWorldChess.BattleInteractionDomain;
+﻿using System.Runtime.InteropServices;
+using InfinityWorldChess.BattleInteractionDomain;
 using InfinityWorldChess.BuffDomain;
 using InfinityWorldChess.SkillDomain;
 using InfinityWorldChess.Ugf;
@@ -10,7 +11,7 @@ namespace InfinityWorldChess.BattleInteractionFunctions
     /// <summary>
     /// all attack skill should add attack action to interaction
     /// </summary>
-    [ID("976e4a11-19d0-3847-d162-c18a7ecc48cf")]
+    [Guid("976e4a11-19d0-3847-d162-c18a7ecc48cf")]
     public class AttackWithSetting : AttackInteraction,IPropertyAttached
     {
         private const float Pb = 2048f;

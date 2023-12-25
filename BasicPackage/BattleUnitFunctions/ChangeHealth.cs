@@ -9,8 +9,8 @@ using UnityEngine;
 
 namespace InfinityWorldChess.BattleUnitFunctions
 {
-    [Guid("02CA9FAD-3644-C429-596D-FB16080A0B63")]
-    public class ChangeEnergy : IActionable<BattleUnit>, IPropertyAttached,IHasContent
+    [Guid("1F290EA4-5BCC-45CB-8D2A-6C8BA7E64BA4")]
+    public class ChangeHealth : IActionable<BattleUnit>, IPropertyAttached,IHasContent
     {
         [field: S] public float Factor { get; set; }
         [field: S] public float Value { get; set; }

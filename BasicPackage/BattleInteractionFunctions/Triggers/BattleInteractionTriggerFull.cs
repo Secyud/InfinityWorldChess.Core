@@ -1,3 +1,4 @@
+using System.Runtime.InteropServices;
 using InfinityWorldChess.BattleDomain;
 using InfinityWorldChess.BattleInteractionDomain;
 using InfinityWorldChess.BuffDomain;
@@ -7,7 +8,7 @@ using Secyud.Ugf.DataManager;
 
 namespace InfinityWorldChess.BattleInteractionFunctions
 {
-    [ID("8DB6A9A1-DE9C-4BD1-933D-F44547D8B3B2")]
+    [Guid("8DB6A9A1-DE9C-4BD1-933D-F44547D8B3B2")]
     public class BattleInteractionTriggerFull : BattleInteractionTriggerBase
     {
         [field: S] public IActionable<BattleInteraction> Actionable { get; set; }

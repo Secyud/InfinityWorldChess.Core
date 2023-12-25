@@ -1,3 +1,4 @@
+using System.Runtime.InteropServices;
 using InfinityWorldChess.BattleDomain;
 using InfinityWorldChess.BattleInteractionFunctions;
 using InfinityWorldChess.BuffDomain;
@@ -10,7 +11,7 @@ using UnityEngine;
 
 namespace InfinityWorldChess.BattleBuffDomain
 {
-    [ID("be8e28a4-2a16-6404-78f3-dbd3a2d1c6f7")]
+    [Guid("be8e28a4-2a16-6404-78f3-dbd3a2d1c6f7")]
     public class BattleUnitBuff : IBattleUnitBuff,IHasContent,IHasPriority
     {
         [field: S(0)] public int Id { get; set; }

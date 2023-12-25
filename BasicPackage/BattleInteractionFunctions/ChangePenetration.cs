@@ -1,4 +1,5 @@
-﻿using InfinityWorldChess.BattleInteractionDomain;
+﻿using System.Runtime.InteropServices;
+using InfinityWorldChess.BattleInteractionDomain;
 using InfinityWorldChess.BuffDomain;
 using InfinityWorldChess.FunctionDomain;
 using InfinityWorldChess.GlobalDomain;
@@ -9,7 +10,7 @@ using UnityEngine;
 
 namespace InfinityWorldChess.BattleInteractionFunctions
 {
-    [ID("0F062155-47DE-A9EA-93E2-BDCA7EFB8FD5")]
+    [Guid("0F062155-47DE-A9EA-93E2-BDCA7EFB8FD5")]
     public class ChangePenetration : IActionable<BattleInteraction>,
         IHasContent, IPropertyAttached, IHasPriority
     {
