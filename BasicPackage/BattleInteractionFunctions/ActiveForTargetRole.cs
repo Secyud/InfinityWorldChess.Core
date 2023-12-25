@@ -1,3 +1,4 @@
+using System.Runtime.InteropServices;
 using InfinityWorldChess.BattleDomain;
 using InfinityWorldChess.BattleInteractionDomain;
 using InfinityWorldChess.BuffDomain;
@@ -10,6 +11,7 @@ using UnityEngine;
 
 namespace InfinityWorldChess.BattleInteractionFunctions
 {
+    [Guid("8ADEBFE4-EADB-0FA7-AFB2-93A6D9E82665")]
     public class ActiveForTargetRole: IActionable<BattleInteraction>, IPropertyAttached,
         IHasContent, IHasPriority
     {

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.InteropServices;
 using InfinityWorldChess.BundleDomain;
 using InfinityWorldChess.PlayerDomain;
 using Secyud.Ugf;
@@ -10,6 +11,7 @@ using UnityEngine;
 
 namespace InfinityWorldChess.GameDomain.WorldMapDomain
 {
+    [Guid("711E2173-12C0-E9A8-8E49-36F922ACD707")]
     public sealed class WorldSetting : IShowable,IDataResource
     {
         [field: S(2)] public string Description { get; set; }

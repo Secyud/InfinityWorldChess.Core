@@ -1,4 +1,5 @@
-﻿using InfinityWorldChess.BattleBuffFunction;
+﻿using System.Runtime.InteropServices;
+using InfinityWorldChess.BattleBuffFunction;
 using InfinityWorldChess.BattleDomain;
 using InfinityWorldChess.BattleInteractionDomain;
 using InfinityWorldChess.BuffDomain;
@@ -10,6 +11,7 @@ using UnityEngine;
 
 namespace InfinityWorldChess.BattleInteractionFunctions
 {
+    [Guid("9CBC545B-DBFB-9012-DCCA-5507F7D07759")]
     public class LimitInteractionActionable : IBuffAttached, IPropertyAttached, IHasContent,
         IActionable<BattleInteraction>
     {

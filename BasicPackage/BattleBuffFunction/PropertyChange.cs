@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.InteropServices;
 using InfinityWorldChess.BattleBuffDomain;
 using InfinityWorldChess.BattleDomain;
 using InfinityWorldChess.FunctionDomain;
@@ -10,6 +11,7 @@ using UnityEngine;
 
 namespace InfinityWorldChess.BattleBuffFunction
 {
+    [Guid("58DE7D9F-5646-9F26-45A6-32003494FADC")]
     public class PropertyChange : IBuffEffect, IHasContent
     {
         [field: S] public int Value { get; set; }

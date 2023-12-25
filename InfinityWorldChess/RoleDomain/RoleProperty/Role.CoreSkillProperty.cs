@@ -4,6 +4,7 @@ using InfinityWorldChess.SkillDomain;
 using Secyud.Ugf.Archiving;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using Secyud.Ugf;
 
 #endregion
@@ -19,6 +20,7 @@ namespace InfinityWorldChess.RoleDomain
             CoreSkill.AutoEquip();
         }
 
+        [Guid("498BA51A-C45E-15DB-E94F-39AA3261C3D0")]
         public class CoreSkillProperty : IArchivable
         {
             private readonly List<ICoreSkill> _learnedSkills = new();

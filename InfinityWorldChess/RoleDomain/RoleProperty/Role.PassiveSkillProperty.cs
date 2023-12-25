@@ -3,6 +3,7 @@
 using InfinityWorldChess.SkillDomain;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using Secyud.Ugf;
 using Secyud.Ugf.Archiving;
 
@@ -24,6 +25,7 @@ namespace InfinityWorldChess.RoleDomain
             PassiveSkill.AutoSet(this);
         }
 
+        [Guid("7DC8299E-97AA-A5AD-DEE9-2CE129593C26")]
         public class PassiveSkillProperty
         {
             private readonly List< IPassiveSkill> _learnedSkills = new();

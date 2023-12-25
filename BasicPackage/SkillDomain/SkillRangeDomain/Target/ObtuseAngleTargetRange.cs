@@ -1,7 +1,9 @@
-﻿using InfinityWorldChess.BattleDomain;
+﻿using System.Runtime.InteropServices;
+using InfinityWorldChess.BattleDomain;
 
 namespace InfinityWorldChess.SkillDomain.Target
 {
+    [Guid("1361F508-3E9E-4A40-A077-938B411131B5")]
     public class ObtuseAngleTargetRange : TargetWithoutTetragonalSymmetry, ISkillCastResult
     {
         protected override string Description => "钝角";

@@ -1,3 +1,4 @@
+using System.Runtime.InteropServices;
 using InfinityWorldChess.BuffDomain;
 using InfinityWorldChess.FunctionDomain;
 using InfinityWorldChess.Ugf;
@@ -7,6 +8,7 @@ using UnityEngine;
 
 namespace InfinityWorldChess.ActivityDomain
 {
+    [Guid("341A7C54-0337-B875-C54F-7958E89B850C")]
     public class Activity :IActivity
     {
         [field: S(0)] public string Name { get; set; }

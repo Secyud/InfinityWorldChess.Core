@@ -3,6 +3,7 @@
 using InfinityWorldChess.ItemDomain;
 using InfinityWorldChess.ItemDomain.EquipmentDomain;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using System.Ugf.Collections.Generic;
 using Secyud.Ugf.Archiving;
 
@@ -37,6 +38,7 @@ namespace InfinityWorldChess.RoleDomain
             SetEquipment(ret);
         }
 
+        [Guid("6E1D1802-EAA0-EBAE-53A8-FA078B1E010A")]
         public class EquipmentProperty
         {
             private IEquipment _equipment;

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using InfinityWorldChess.BuffDomain;
 using InfinityWorldChess.FunctionDomain;
 using InfinityWorldChess.MessageDomain;
@@ -16,6 +17,7 @@ namespace InfinityWorldChess.ActivityDomain
     /// nimble means current index.
     /// defend means collapsed.
     /// </summary>
+    [Guid("D751C9F8-64BE-EC75-10B1-1F128BD04E4E")]
     public sealed class ActivityGroup :IInstallable, IShowable, IArchivable, IDataResource, IAttachProperty
     {
         [field: S(0)] public string ResourceId { get; set; }

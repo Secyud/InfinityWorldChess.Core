@@ -1,5 +1,6 @@
 ﻿#region
 
+using System.Runtime.InteropServices;
 using Secyud.Ugf.Archiving;
 using Secyud.Ugf.DataManager;
 
@@ -7,6 +8,7 @@ using Secyud.Ugf.DataManager;
 
 namespace InfinityWorldChess.RoleDomain
 {
+    [Guid("E4884F79-EF1B-322B-C6BB-629AF7E8A57E")]
     public class AvatarElement : IArchivable
     {
         public static AvatarElement DefaultElement { get; } = new();

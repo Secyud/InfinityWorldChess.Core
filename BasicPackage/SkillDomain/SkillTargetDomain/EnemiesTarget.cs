@@ -1,9 +1,11 @@
-﻿using InfinityWorldChess.BattleDomain;
+﻿using System.Runtime.InteropServices;
+using InfinityWorldChess.BattleDomain;
 using InfinityWorldChess.Ugf;
 using UnityEngine;
 
 namespace InfinityWorldChess.SkillDomain
 {
+    [Guid("9A62C533-7D9D-B1BF-9B37-FA016037AE71")]
     public class EnemiesTarget : ISkillTargetInRange
     {
         public static EnemiesTarget Instance { get; } = new();

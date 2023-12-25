@@ -1,10 +1,12 @@
-﻿using InfinityWorldChess.BattleDomain;
+﻿using System.Runtime.InteropServices;
+using InfinityWorldChess.BattleDomain;
 using InfinityWorldChess.Ugf;
 using Secyud.Ugf.DataManager;
 using UnityEngine;
 
 namespace InfinityWorldChess.SkillDomain
 {
+    [Guid("AC08FF2D-703C-F428-F92E-581012FC2693")]
     public class SkillEnergyCast : ISkillCastCondition
     {
         [field: S] public float EnergyConsume { get; set; }

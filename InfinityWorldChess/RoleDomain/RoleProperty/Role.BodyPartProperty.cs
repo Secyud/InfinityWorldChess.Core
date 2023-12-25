@@ -1,6 +1,7 @@
 #region
 
 using System;
+using System.Runtime.InteropServices;
 
 #endregion
 
@@ -16,6 +17,7 @@ namespace InfinityWorldChess.RoleDomain
 			return Math.Max(64 + 256 * speed / (256 + speed), 1);
 		}
 
+		[Guid("CC2E89F1-40B1-5F26-560C-6CF66998E710")]
 		public class BodyPartProperty 
 		{
 			public RoleBodyPart Living { get; set; } = new();

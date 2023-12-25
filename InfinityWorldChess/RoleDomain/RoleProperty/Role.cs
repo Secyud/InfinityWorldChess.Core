@@ -1,5 +1,6 @@
 #region
 
+using System.Runtime.InteropServices;
 using Secyud.Ugf;
 using InfinityWorldChess.BuffDomain;
 using InfinityWorldChess.GameDomain.WorldCellDomain;
@@ -11,6 +12,7 @@ using UnityEngine;
 
 namespace InfinityWorldChess.RoleDomain
 {
+    [Guid("2B27EE43-4A3A-52DA-4E5F-8A83CE5E8912")]
     public partial class Role : IHasContent
     {
         public int Id { get; set; }

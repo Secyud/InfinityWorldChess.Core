@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using InfinityWorldChess.BattleDomain;
 using InfinityWorldChess.GameDomain;
 using InfinityWorldChess.GameDomain.WorldCellDomain;
@@ -9,6 +10,7 @@ using UnityEngine;
 
 namespace InfinityWorldChess.BattleTemplates
 {
+    [Guid("7ADE420F-FB5E-F146-BD9F-3C0EBB1845F6")]
     public class Battle : IBattleDescriptor, IObjectAccessor<IBattleDescriptor>
     {
         [field: S(0)] public string ResourceId { get; set; }

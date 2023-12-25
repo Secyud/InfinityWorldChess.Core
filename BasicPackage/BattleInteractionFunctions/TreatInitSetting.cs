@@ -1,4 +1,5 @@
 using System;
+using System.Runtime.InteropServices;
 using InfinityWorldChess.BattleInteractionDomain;
 using InfinityWorldChess.FunctionDomain;
 using InfinityWorldChess.GlobalDomain;
@@ -9,6 +10,7 @@ using UnityEngine;
 
 namespace InfinityWorldChess.BattleInteractionFunctions
 {
+    [Guid("E0ACD2FC-FCCF-799A-4CA7-EFB7181F275A")]
     public class TreatInitSetting:IHasPriority,
         IActionable<BattleInteraction>,IHasContent
     {

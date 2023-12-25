@@ -1,5 +1,6 @@
 ﻿#region
 
+using System.Runtime.InteropServices;
 using InfinityWorldChess.BattleInteractionDomain;
 using InfinityWorldChess.FunctionDomain;
 using InfinityWorldChess.GlobalDomain;
@@ -12,6 +13,7 @@ using UnityEngine;
 
 namespace InfinityWorldChess.BattleInteractionFunctions
 {
+    [Guid("9BCE4CEF-1F6D-7124-D0B0-BDF19B862ADF")]
     public class ChangeDamageFactor : IActionable<BattleInteraction>, IHasContent, IHasPriority
     {
         [field: S] public float Factor { get; set; }

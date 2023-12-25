@@ -1,3 +1,4 @@
+using System.Runtime.InteropServices;
 using InfinityWorldChess.BattleDomain;
 using InfinityWorldChess.BattleInteractionDomain;
 using InfinityWorldChess.FunctionDomain;
@@ -12,6 +13,7 @@ namespace InfinityWorldChess.BattleInteractionFunctions
     /// run an attack.
     /// if not set property yet, use <see cref="AttackWithSetting"/> instead
     /// </summary>
+    [Guid("54DD327A-C83F-B459-93DD-EA3213E28176")]
     public class AttackInteraction : IActionable<BattleInteraction>, IHasContent
     {
         public virtual void SetContent(Transform transform)

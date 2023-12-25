@@ -1,6 +1,7 @@
 #region
 
 using System;
+using System.Runtime.InteropServices;
 using Secyud.Ugf.Archiving;
 using Secyud.Ugf.DataManager;
 
@@ -12,6 +13,7 @@ namespace InfinityWorldChess.RoleDomain
     {
         [field: S] public NatureProperty Nature { get; } = new();
 
+        [Guid("D8CC09D0-C472-64B5-7A32-FBFB0294795C")]
         public class NatureProperty : IArchivable
         {
             // 认知

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.InteropServices;
 using InfinityWorldChess.BattleDomain;
 using InfinityWorldChess.Ugf;
 using Secyud.Ugf;
@@ -9,6 +10,7 @@ using UnityEngine;
 
 namespace InfinityWorldChess.SkillDomain.Target
 {
+    [Guid("0F8FBB82-4E37-C1BC-2CB9-E596AB316120")]
     public abstract class TargetWithoutTetragonalSymmetry : StartEndRange,IHasContent
     {
         [field: S(0)] public bool FixCenter { get; set; }

@@ -1,7 +1,9 @@
-﻿using InfinityWorldChess.BattleDomain;
+﻿using System.Runtime.InteropServices;
+using InfinityWorldChess.BattleDomain;
 
 namespace InfinityWorldChess.SkillDomain.Target
 {
+    [Guid("23A51C9F-3519-F2CC-5CBD-6C601CF15AF9")]
     public class ReflexAngleTargetRange :TargetWithoutTetragonalSymmetry, ISkillCastResult
     {
         protected override string Description => "半圆";

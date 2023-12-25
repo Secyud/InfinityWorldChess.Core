@@ -2,12 +2,14 @@
 
 using System;
 using System.IO;
+using System.Runtime.InteropServices;
 using Secyud.Ugf.DataManager;
 
 #endregion
 
 namespace InfinityWorldChess.RoleDomain
 {
+    [Guid("4D142541-D579-A4E7-EED5-C8429AFA44EC")]
     public class RoleBodyPart 
     {
         [field: S ] public int MaxValue { get; set; } = 10;

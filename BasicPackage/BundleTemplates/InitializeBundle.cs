@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using InfinityWorldChess.BundleDomain;
 using InfinityWorldChess.FunctionDomain;
 using InfinityWorldChess.Ugf;
@@ -8,6 +9,7 @@ using UnityEngine;
 
 namespace InfinityWorldChess.BundleTemplates
 {
+    [Guid("E952883B-4090-D695-157C-3E47DCB61D00")]
     public class InitializeBundle : IBundle
     {
         [field: S] public string Description { get; set; }

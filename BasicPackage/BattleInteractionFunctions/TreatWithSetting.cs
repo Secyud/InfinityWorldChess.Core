@@ -1,3 +1,4 @@
+using System.Runtime.InteropServices;
 using InfinityWorldChess.BattleInteractionDomain;
 using InfinityWorldChess.BuffDomain;
 using InfinityWorldChess.SkillDomain;
@@ -10,6 +11,7 @@ namespace InfinityWorldChess.BattleInteractionFunctions
     /// <summary>
     /// all treat skill should add treat action to interaction
     /// </summary>
+    [Guid("21FCF801-AFDC-F99B-ABC5-B1682E02B9DD")]
     public class TreatWithSetting : TreatInteraction,IPropertyAttached
     {
         private const float Pb = 2048f;

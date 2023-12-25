@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using InfinityWorldChess.ItemDomain;
 using InfinityWorldChess.ItemDomain.EquipmentDomain;
 using InfinityWorldChess.SkillDomain;
@@ -7,6 +8,7 @@ using Secyud.Ugf.DataManager;
 
 namespace InfinityWorldChess.RoleDomain
 {
+    [Guid("0D543FAD-25DE-9EBB-4157-F29C7134004F")]
     public class RoleTemplate
     {
         [field: S(-1)] public int Id { get; set; }

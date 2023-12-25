@@ -1,10 +1,12 @@
-﻿using InfinityWorldChess.BattleDomain;
+﻿using System.Runtime.InteropServices;
+using InfinityWorldChess.BattleDomain;
 using InfinityWorldChess.Ugf;
 using Secyud.Ugf.DataManager;
 using UnityEngine;
 
 namespace InfinityWorldChess.SkillDomain.Release
 {
+    [Guid("922AEA90-8ECB-F057-CF77-6A5997D8BE4D")]
     public class RoundAngleReleaseRange : StartEndRange, ISkillCastPosition
     {
         [field: S] public bool IncludeUnit { get; set; }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.InteropServices;
 using InfinityWorldChess.BattleDomain;
 using InfinityWorldChess.BattleInteractionDomain;
 using InfinityWorldChess.BuffDomain;
@@ -14,6 +15,7 @@ using UnityEngine;
 
 namespace InfinityWorldChess.SkillDomain
 {
+    [Guid("A212F1E8-9185-5D2A-D6EA-D258C98F52AA")]
     public abstract class ActiveSkillBase : IActiveSkill, IArchivable
     {
         [field: S(0)] public string ResourceId { get; set; }

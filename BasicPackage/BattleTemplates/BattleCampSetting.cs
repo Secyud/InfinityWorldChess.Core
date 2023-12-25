@@ -1,8 +1,10 @@
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using Secyud.Ugf.DataManager;
 
 namespace InfinityWorldChess.BattleTemplates
 {
+    [Guid("91534ADD-02ED-92C5-7269-2D1D8F1C297B")]
     public class BattleCampSetting
     {
         [field: S(0)] public int Index { get; set; }

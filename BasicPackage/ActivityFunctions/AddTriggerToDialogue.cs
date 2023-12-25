@@ -1,3 +1,4 @@
+using System.Runtime.InteropServices;
 using InfinityWorldChess.DialogueDomain;
 using InfinityWorldChess.FunctionDomain;
 using InfinityWorldChess.RoleDomain;
@@ -8,6 +9,7 @@ using UnityEngine;
 
 namespace InfinityWorldChess.ActivityFunctions
 {
+    [Guid("46FBC804-8A6C-F51E-FA6B-A078622FBF57")]
     public class AddTriggerToDialogue : IActionInstallTarget,IHasContent
     {
         [field: S] public IObjectAccessor<Role> RoleAccessor { get; set; }

@@ -1,4 +1,5 @@
-﻿using InfinityWorldChess.BattleDomain;
+﻿using System.Runtime.InteropServices;
+using InfinityWorldChess.BattleDomain;
 using InfinityWorldChess.BattleInteractionDomain;
 using InfinityWorldChess.BuffDomain;
 using InfinityWorldChess.FunctionDomain;
@@ -9,6 +10,7 @@ using UnityEngine;
 
 namespace InfinityWorldChess.BattleBuffFunction
 {
+    [Guid("D6486A94-2A95-C280-AD62-38DB55E5F487")]
     public class ExtraBattleInteraction : IActionable,IPropertyAttached,IHasContent,IBuffAttached
     {
         [field: S(258)] public IActionable<BattleInteraction> PreInteraction { get; set; }

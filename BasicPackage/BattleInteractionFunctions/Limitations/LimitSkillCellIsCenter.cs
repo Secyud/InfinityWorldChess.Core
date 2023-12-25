@@ -1,4 +1,5 @@
-﻿using InfinityWorldChess.BattleInteractionDomain;
+﻿using System.Runtime.InteropServices;
+using InfinityWorldChess.BattleInteractionDomain;
 using InfinityWorldChess.BuffDomain;
 using InfinityWorldChess.FunctionDomain;
 using InfinityWorldChess.SkillDomain;
@@ -8,6 +9,7 @@ using UnityEngine;
 
 namespace InfinityWorldChess.BattleInteractionFunctions
 {
+    [Guid("E37F8422-E782-8987-6C9D-6C313FCF9E2F")]
     public class LimitSkillCellIsCenter: ILimitable<BattleInteraction>, IHasContent,IPropertyAttached
     {
         public bool CheckUseful(BattleInteraction target)

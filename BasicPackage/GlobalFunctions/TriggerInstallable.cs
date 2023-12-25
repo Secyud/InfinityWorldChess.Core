@@ -1,4 +1,5 @@
-﻿using InfinityWorldChess.BuffDomain;
+﻿using System.Runtime.InteropServices;
+using InfinityWorldChess.BuffDomain;
 using InfinityWorldChess.FunctionDomain;
 using InfinityWorldChess.Ugf;
 using Secyud.Ugf;
@@ -7,6 +8,7 @@ using UnityEngine;
 
 namespace InfinityWorldChess.GlobalFunctions
 {
+    [Guid("390B37AF-6042-7521-8A63-3BD484DE0654")]
     public sealed class TriggerInstallable : IInstallable, IPropertyAttached, IHasContent
     {
         [field: S] private IActionable Action { get; set; }

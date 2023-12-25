@@ -2,6 +2,7 @@
 
 using Secyud.Ugf.Archiving;
 using System.Globalization;
+using System.Runtime.InteropServices;
 
 #endregion
 
@@ -11,6 +12,7 @@ namespace InfinityWorldChess.RoleDomain
     {
         public BasicProperty Basic { get; } = new();
 
+        [Guid("A51432B4-0813-CA3A-BA2F-352A68F21AC3")]
         public class BasicProperty : IArchivable
         {
             private int _level;

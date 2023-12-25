@@ -1,5 +1,6 @@
 #region
 
+using System.Runtime.InteropServices;
 using InfinityWorldChess.GameDomain.WorldCellDomain;
 using Secyud.Ugf.Archiving;
 
@@ -17,6 +18,7 @@ namespace InfinityWorldChess.RoleDomain
             set => Relation.SetPosition(this, value);
         }
 
+        [Guid("D75378C1-D496-F9C7-A5F8-069665EBF390")]
         public class RelationProperty
         {
             public float AreaView { get; set; }

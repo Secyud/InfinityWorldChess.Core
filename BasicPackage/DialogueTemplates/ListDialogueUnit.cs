@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using InfinityWorldChess.DialogueDomain;
 using InfinityWorldChess.FunctionDomain;
 using InfinityWorldChess.InteractionDomain;
@@ -9,6 +10,7 @@ using UnityEngine;
 
 namespace InfinityWorldChess.DialogueTemplates
 {
+    [Guid("A023EAF6-EDC0-C7B7-A2D2-3172B132C360")]
     public class ListDialogueUnit : IDialogueUnit, IObjectAccessor<IDialogueUnit>, IActionable
     {
         [field: S(1)] public List<IDialogueUnit> Dialogues { get; } = new();

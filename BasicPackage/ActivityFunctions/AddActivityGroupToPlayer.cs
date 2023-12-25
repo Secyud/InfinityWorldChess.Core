@@ -1,3 +1,4 @@
+using System.Runtime.InteropServices;
 using InfinityWorldChess.ActivityAccessors;
 using InfinityWorldChess.FunctionDomain;
 using InfinityWorldChess.PlayerDomain;
@@ -10,6 +11,7 @@ namespace InfinityWorldChess.ActivityFunctions
     /// if you want to add activity to role,
     /// use this trigger.
     /// </summary>
+    [Guid("100A6A99-2B75-1407-410A-21CC147A78CE")]
     public class AddActivityGroupToPlayer : IActionable
     {
         [field: S] private ResourceActivityGroup GroupAccessor { get; set; }

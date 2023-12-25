@@ -1,4 +1,5 @@
-﻿using InfinityWorldChess.BuffDomain;
+﻿using System.Runtime.InteropServices;
+using InfinityWorldChess.BuffDomain;
 using InfinityWorldChess.FunctionDomain;
 using InfinityWorldChess.GameDomain;
 using InfinityWorldChess.RoleDomain;
@@ -12,6 +13,7 @@ using UnityEngine;
 
 namespace InfinityWorldChess.SkillDomain
 {
+    [Guid("80A82968-5E58-71D6-4B5C-C1AB3CD2D367")]
     public class PassiveSkill : IPassiveSkill, IArchivable
     {
         [field: S(0)] public string ResourceId { get; set; }

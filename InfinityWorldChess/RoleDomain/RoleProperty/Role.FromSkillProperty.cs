@@ -4,6 +4,7 @@ using InfinityWorldChess.SkillDomain;
 using Secyud.Ugf.Archiving;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using Secyud.Ugf;
 
 #endregion
@@ -18,7 +19,7 @@ namespace InfinityWorldChess.RoleDomain
         {
             FormSkill.AutoEquip();
         }
-
+        [Guid("36D1106C-DFB7-9B5C-4444-525761041B77")]
         public class FormSkillProperty : IArchivable
         {
             private readonly List<IFormSkill> _learnedSkills  = new();

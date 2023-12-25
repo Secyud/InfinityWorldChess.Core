@@ -1,12 +1,14 @@
 #region
 
 using System.Linq;
+using System.Runtime.InteropServices;
 using InfinityWorldChess.BattleDomain;
 
 #endregion
 
 namespace InfinityWorldChess.BattleTemplates
 {
+    [Guid("A00DA8E0-04B7-2B80-F604-9AD60094C6B6")]
     public class VictoryOnBeatAllEnemies : IBattleVictoryCondition
     {
         private BattleContext _context;
