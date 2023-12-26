@@ -15,7 +15,7 @@ namespace InfinityWorldChess.GameDomain.WorldCellDomain
 {
     public class WorldCell : UgfCell
     {
-        private static PrefabContainer<Transform> _prefabContainer =
+        private static readonly PrefabContainer<Transform> PrefabContainer =
             PrefabContainer<Transform>.Create<IwcAssets>("Features/Special/Village.prefab");
 
         private byte _pathState;
@@ -34,7 +34,7 @@ namespace InfinityWorldChess.GameDomain.WorldCellDomain
                 {
                     FeaturePrefab = value.FeaturePrefab is not null
                         ? value.FeaturePrefab.Value
-                        : _prefabContainer.Value;
+                        : PrefabContainer.Value;
                 }
             }
         }

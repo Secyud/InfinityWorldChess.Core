@@ -35,9 +35,8 @@ namespace InfinityWorldChess
 
             context.AddStringResource<MainPackageResource>();
 
-
             context.Get<WorldCellButtons>().Register(new TravelButtonDescriptor());
-
+            
             IVirtualPathManager virtualPathManager = context.Get<IVirtualPathManager>();
             virtualPathManager.AddDirectory("Data", Path.Combine(U.Path, "Data"));
             virtualPathManager.AddDirectory("Localization", Path.Combine(U.Path, "Localization"));
@@ -52,7 +51,7 @@ namespace InfinityWorldChess
             U.Get<CoreSkillButtons>()
                 .Register(new CoreSkillPointDivisionButton());
         }
-        
+
         public IEnumerator OnGamePreInitialization(GameInitializeContext context)
         {
             U.M.CreateScope<GameScope>();
@@ -65,6 +64,7 @@ namespace InfinityWorldChess
             yield return GameScope.Instance.Role.OnGameCreation();
             yield return GameScope.Instance.Player.OnGameCreation();
         }
+
         public IEnumerator OnGamePostInitialization(GameInitializeContext context)
         {
             U.M.DestroyScope<GameCreatorScope>();
