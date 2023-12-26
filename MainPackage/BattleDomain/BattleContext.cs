@@ -165,11 +165,11 @@ namespace InfinityWorldChess.BattleDomain
                     _unit.Active = true;
                 }
 
-                RoleService.Refresh();
+                UnitService.Refresh();
             }
         }
 
-        public ObservedService RoleService { get; } = new();
+        public ObservedService UnitService { get; } = new();
         public ObservedService StateService { get; } = new();
 
         public virtual void SelectCell(BattleCell cell)

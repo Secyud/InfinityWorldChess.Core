@@ -80,7 +80,7 @@ namespace InfinityWorldChess.BattleDomain
             BattleScope.Instance.Context.OnRoundBegin();
 
             _context.StateService.Refresh();
-            _context.RoleService.Refresh();
+            _context.UnitService.Refresh();
             _context.SelectedCellService.Refresh();
             _context.HoverCellService.Refresh();
             
