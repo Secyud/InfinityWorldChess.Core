@@ -3,7 +3,7 @@ using Secyud.Ugf;
 
 namespace InfinityWorldChess
 {
-    public static class IWCC
+    public static class MainPackageConsts
     {
         public const int MaxBodyPartsCount = 4;
         public const int PassiveSkillCount = 3;
@@ -34,9 +34,9 @@ namespace InfinityWorldChess
         public const int NatureCount = 9;
         public const int AvatarElementCount = 12;
 
-        public static readonly string SavePath = InitFolderPath(U.Path, "SaveFiles");
-
         public static int SaveFolder { get; set; }
+
+        public static readonly string SavePath = InitFolderPath(U.Path, "SaveFiles");
 
         public static string SaveFilePath(string fileName)
         {

@@ -24,7 +24,7 @@ namespace InfinityWorldChess.BattleInteractionFunctions
         public void SetContent(Transform transform)
         {
             transform.AddParagraph(
-                $"此招式固定增加{BPC.F(Value)}点穿透，且{BPC.P(Factor, "[杀]", "[御]")}点浮动穿透。");
+                $"此招式固定增加{BasicPackageConsts.F(Value)}点穿透，且{BasicPackageConsts.P(Factor, "[杀]", "[御]")}点浮动穿透。");
         }
 
         public void Invoke(BattleInteraction interaction)

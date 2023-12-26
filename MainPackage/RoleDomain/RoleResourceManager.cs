@@ -16,10 +16,10 @@ namespace InfinityWorldChess.RoleDomain
     public class RoleResourceManager : IRegistry
     {
         public readonly RegistrableDictionary<int, AvatarSpriteContainer>[] MaleAvatarResource =
-            new RegistrableDictionary<int, AvatarSpriteContainer>[IWCC.AvatarElementCount];
+            new RegistrableDictionary<int, AvatarSpriteContainer>[MainPackageConsts.AvatarElementCount];
 
         public readonly RegistrableDictionary<int, AvatarSpriteContainer>[] FemaleAvatarResource =
-            new RegistrableDictionary<int, AvatarSpriteContainer>[IWCC.AvatarElementCount];
+            new RegistrableDictionary<int, AvatarSpriteContainer>[MainPackageConsts.AvatarElementCount];
 
         public RegistrableList<string> LastNames { get; } = new();
         public RegistrableList<char> FirstNameFrontFemale { get; } = new();
@@ -31,7 +31,7 @@ namespace InfinityWorldChess.RoleDomain
 
         public RoleResourceManager()
         {
-            for (int i = 0; i < IWCC.AvatarElementCount; i++)
+            for (int i = 0; i < MainPackageConsts.AvatarElementCount; i++)
             {
                 MaleAvatarResource[i] = new RegistrableDictionary<int, AvatarSpriteContainer>();
                 FemaleAvatarResource[i] = new RegistrableDictionary<int, AvatarSpriteContainer>();
@@ -67,7 +67,7 @@ namespace InfinityWorldChess.RoleDomain
 
         public void RegisterAvatarResourceFromPath(IArchiveReader reader, IAssetLoader loader)
         {
-            for (int i = 0; i < IWCC.AvatarElementCount; i++)
+            for (int i = 0; i < MainPackageConsts.AvatarElementCount; i++)
             {
                 string atlas = reader.ReadString();
 

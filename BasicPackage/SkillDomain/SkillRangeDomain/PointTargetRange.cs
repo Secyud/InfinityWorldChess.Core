@@ -4,7 +4,7 @@ using InfinityWorldChess.Ugf;
 using Secyud.Ugf;
 using UnityEngine;
 
-namespace InfinityWorldChess.SkillDomain.Target
+namespace InfinityWorldChess.SkillDomain
 {
     [Guid("D034B75A-B4AC-163C-E1FE-7223DA9C5767")]
     public class PointTargetRange:ISkillCastResult,IHasDescription

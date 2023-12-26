@@ -44,7 +44,7 @@ namespace InfinityWorldChess.BattleDomain
                 return;
             Health.SetValue(Property.HealthValue, Property.MaxHealthValue);
             Energy.SetValue(Property.EnergyValue, Property.MaxEnergyValue);
-            Execution.SetValue(Property.ExecutionValue, IWCC.MaxExecutionValue);
+            Execution.SetValue(Property.ExecutionValue, MainPackageConsts.MaxExecutionValue);
         }
     }
 }

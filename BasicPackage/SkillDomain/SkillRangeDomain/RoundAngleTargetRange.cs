@@ -3,7 +3,7 @@ using InfinityWorldChess.BattleDomain;
 using InfinityWorldChess.Ugf;
 using UnityEngine;
 
-namespace InfinityWorldChess.SkillDomain.Target
+namespace InfinityWorldChess.SkillDomain
 {
     [Guid("62E639E2-F85B-3E56-8FAE-9D1CE26E7490")]
     public class RoundAngleTargetRange :StartEndRange, ISkillCastResult

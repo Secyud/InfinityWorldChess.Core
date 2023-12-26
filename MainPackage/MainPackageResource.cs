@@ -8,7 +8,7 @@ using Secyud.Ugf.Localization;
 namespace InfinityWorldChess
 {
 	[ResourceName(typeof(DefaultResource))]
-	public class InfinityWorldChessResource : DefaultResource
+	public class MainPackageResource : DefaultResource
 	{
 	}
 }

@@ -17,7 +17,7 @@ namespace InfinityWorldChess.BattleInteractionFunctions
         public int Priority => -0x10000;
         public void SetContent(Transform transform)
         {
-            transform.AddParagraph($"{BPC.P(Factor)}[招式层数]的攻击系数。");
+            transform.AddParagraph($"{BasicPackageConsts.P(Factor)}[招式层数]的攻击系数。");
         }
 
         public void Invoke(BattleInteraction interaction)

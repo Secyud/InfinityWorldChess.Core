@@ -75,12 +75,12 @@ namespace InfinityWorldChess.RoleDomain
                     if (existItem is not null)
                     {
                         existItem.Quantity =
-                            Math.Clamp(existItem.Quantity + oItem.Quantity, 1, IWCC.MaxOverloadedCount);
+                            Math.Clamp(existItem.Quantity + oItem.Quantity, 1, MainPackageConsts.MaxOverloadedCount);
                     }
                     else
                     {
                         _oItems[item.ResourceId] = oItem;
-                        oItem.Quantity = Math.Clamp(oItem.Quantity, 1, IWCC.MaxOverloadedCount);
+                        oItem.Quantity = Math.Clamp(oItem.Quantity, 1, MainPackageConsts.MaxOverloadedCount);
                     }
                 }
                 else

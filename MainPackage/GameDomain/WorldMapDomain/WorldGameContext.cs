@@ -22,7 +22,7 @@ namespace InfinityWorldChess.GameDomain.WorldMapDomain
     {
         public readonly IObjectAccessor<HexUnit> WorldUnitPrefab;
 
-        private static readonly string SavePath = IWCC.SaveFilePath(nameof(WorldGameContext));
+        private static readonly string SavePath = MainPackageConsts.SaveFilePath(nameof(WorldGameContext));
 
         public WorldSetting WorldSetting { get; private set; }
 

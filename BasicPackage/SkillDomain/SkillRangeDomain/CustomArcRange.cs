@@ -3,7 +3,7 @@ using InfinityWorldChess.Ugf;
 using Secyud.Ugf.DataManager;
 using UnityEngine;
 
-namespace InfinityWorldChess.SkillDomain.Release
+namespace InfinityWorldChess.SkillDomain
 {
     public class CustomArcRange:ISkillCastPosition
     {

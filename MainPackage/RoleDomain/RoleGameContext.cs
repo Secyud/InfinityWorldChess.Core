@@ -22,7 +22,7 @@ namespace InfinityWorldChess.RoleDomain
 
         public Role SupportOperationRole { get; set; }
 
-        private static readonly string SavePath = IWCC.SaveFilePath(nameof(RoleGameContext));
+        private static readonly string SavePath = MainPackageConsts.SaveFilePath(nameof(RoleGameContext));
 
         public bool IsPlayer()
         {

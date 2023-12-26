@@ -1,6 +1,6 @@
 ﻿namespace InfinityWorldChess
 {
-    public static class BPC
+    public static class BasicPackageConsts
     {
         public static string P(float f, string s1 = null, string s2 = null)
         {

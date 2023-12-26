@@ -19,7 +19,7 @@ namespace InfinityWorldChess.BattleInteractionFunctions
 
         public void SetContent(Transform transform)
         {
-            transform.AddParagraph($"每单位距离{BPC.P(Factor)}此招式伤害。");
+            transform.AddParagraph($"每单位距离{BasicPackageConsts.P(Factor)}此招式伤害。");
         }
 
         public void Invoke(BattleInteraction interaction)

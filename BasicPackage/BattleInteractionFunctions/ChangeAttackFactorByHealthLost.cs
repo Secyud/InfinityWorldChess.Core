@@ -19,7 +19,7 @@ namespace InfinityWorldChess.BattleInteractionFunctions
 
         public void SetContent(Transform transform)
         {
-            transform.AddParagraph($"每损失1%的生命值{BPC.P(Factor)}的攻击系数。");
+            transform.AddParagraph($"每损失1%的生命值{BasicPackageConsts.P(Factor)}的攻击系数。");
         }
         public void Invoke(BattleInteraction interaction)
         {

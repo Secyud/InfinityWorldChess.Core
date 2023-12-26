@@ -2,7 +2,7 @@ namespace InfinityWorldChess.SkillDomain
 {
     public sealed class CoreSkillView : SkillViewBase<CoreSkillCell, CoreSkillView>
     {
-        protected override int CellCount => IWCC.CoreSkillCount;
+        protected override int CellCount => MainPackageConsts.CoreSkillCount;
         public override void BindCell(CoreSkillCell cell)
         {
             base.BindCell(cell);
@@ -10,7 +10,7 @@ namespace InfinityWorldChess.SkillDomain
         }
         protected override void InitData()
         {
-            for (int i = 0; i < IWCC.CoreSkillCount; i++)
+            for (int i = 0; i < MainPackageConsts.CoreSkillCount; i++)
             {
                 CoreSkillCell cell = Cells[i];
                 cell.Bind(Property.CoreSkill.Get(cell.Layer,cell.Code)?.CoreSkill);

@@ -26,8 +26,10 @@ namespace InfinityWorldChess.ArchivingDomain
 
         private void Start()
         {
-            _slotMessagePath = Path.Combine(IWCC.SavePath,
-                _slotIndex.ToString(), "slot.binary");
+            _slotMessagePath = Path.Combine(
+                MainPackageConsts.SavePath,
+                _slotIndex.ToString(),
+                "slot.binary");
             if (File.Exists(_slotMessagePath))
             {
                 using FileStream fileStream = File.OpenRead(_slotMessagePath);
@@ -48,7 +50,7 @@ namespace InfinityWorldChess.ArchivingDomain
 
         public void OnSlotLoad()
         {
-            IWCC.SaveFolder = _slotIndex;
+            MainPackageConsts.SaveFolder = _slotIndex;
             U.M.DestroyScope<MainMenuScope>();
             ArchivingScope.Instance.CloseGameLoadPanel();
             if (File.Exists(_slotMessagePath))
@@ -69,8 +71,11 @@ namespace InfinityWorldChess.ArchivingDomain
 
         private void DeleteSlot()
         {
-            Directory.Delete(Path.Combine(IWCC.SavePath,
-                _slotIndex.ToString()), true);
+            Directory.Delete(
+                Path.Combine(
+                    MainPackageConsts.SavePath,
+                    _slotIndex.ToString()),
+                true);
             Avatar.OnInitialize(null);
             NameText.Invoke("空存档");
             SlotEnabled.Invoke(false);

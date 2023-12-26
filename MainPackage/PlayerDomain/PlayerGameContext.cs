@@ -28,7 +28,7 @@ namespace InfinityWorldChess.PlayerDomain
 
         public Role Role { get; private set; }
 
-        private static readonly string SavePath = IWCC.SaveFilePath(nameof(PlayerGameContext));
+        private static readonly string SavePath = MainPackageConsts.SaveFilePath(nameof(PlayerGameContext));
 
         public virtual HexUnit Unit
         {

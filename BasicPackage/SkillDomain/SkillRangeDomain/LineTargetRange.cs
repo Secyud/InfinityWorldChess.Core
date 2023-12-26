@@ -1,7 +1,7 @@
 ﻿using System.Runtime.InteropServices;
 using InfinityWorldChess.BattleDomain;
 
-namespace InfinityWorldChess.SkillDomain.Target
+namespace InfinityWorldChess.SkillDomain
 {
     [Guid("7623C6D9-D946-A969-CE81-B7E225956231")]
     public class LineTargetRange : TargetWithoutTetragonalSymmetry, ISkillCastResult

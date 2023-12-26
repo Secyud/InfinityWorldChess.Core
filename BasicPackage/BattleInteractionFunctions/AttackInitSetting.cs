@@ -62,12 +62,12 @@ namespace InfinityWorldChess.BattleInteractionFunctions
                 str += "\r\n额外攻击: " + AttackFixedValue;
             }
 
-            if (Math.Abs(AttackFactor - 1) > IWCC.T)
+            if (Math.Abs(AttackFactor - 1) > MainPackageConsts.T)
             {
                 str += "\r\n攻击倍率: " + AttackFactor;
             }
 
-            if (Math.Abs(DamageFactor - 1) > IWCC.T)
+            if (Math.Abs(DamageFactor - 1) > MainPackageConsts.T)
             {
                 str += "\r\n伤害倍率: " + DamageFactor;
             }

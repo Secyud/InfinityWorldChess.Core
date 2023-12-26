@@ -24,16 +24,16 @@ namespace InfinityWorldChess
         typeof(UgfHexMapModule),
         typeof(UgfSteamModule)
     )]
-    public class InfinityWorldChessModule : IUgfModule, IOnPostConfigure,
+    public class IwcMainPackageModule : IUgfModule, IOnPostConfigure,
         IOnPreInitialization, IOnInitialization, IOnPostInitialization, IOnArchiving
     {
         public const string AssetBundleName = "infinityworldchess";
 
         public void Configure(ConfigurationContext context)
         {
-            context.Manager.AddAssembly(typeof(InfinityWorldChessModule).Assembly);
+            context.Manager.AddAssembly(typeof(IwcMainPackageModule).Assembly);
 
-            context.AddStringResource<InfinityWorldChessResource>();
+            context.AddStringResource<MainPackageResource>();
 
 
             context.Get<WorldCellButtons>().Register(new TravelButtonDescriptor());
@@ -86,7 +86,7 @@ namespace InfinityWorldChess
         public IEnumerator SaveGame()
         {
             {
-                using FileStream stream = File.OpenWrite(IWCC.SaveFilePath("slot"));
+                using FileStream stream = File.OpenWrite(MainPackageConsts.SaveFilePath("slot"));
                 using DefaultArchiveWriter writer = new(stream);
                 GameScope.Instance.Player.Role.Basic.Save(writer);
             }

@@ -8,7 +8,7 @@ using Secyud.Ugf.HexMap;
 using Secyud.Ugf.HexUtilities;
 using UnityEngine;
 
-namespace InfinityWorldChess.SkillDomain.Target
+namespace InfinityWorldChess.SkillDomain
 {
     [Guid("0F8FBB82-4E37-C1BC-2CB9-E596AB316120")]
     public abstract class TargetWithoutTetragonalSymmetry : StartEndRange,IHasContent

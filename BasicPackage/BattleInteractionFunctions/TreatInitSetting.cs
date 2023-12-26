@@ -37,12 +37,12 @@ namespace InfinityWorldChess.BattleInteractionFunctions
                 str += "\r\n额外治疗: " + TreatFixedValue;
             }
 
-            if (Math.Abs(TreatFactor - 1) > IWCC.T)
+            if (Math.Abs(TreatFactor - 1) > MainPackageConsts.T)
             {
                 str += "\r\n治疗倍率: " + TreatFactor;
             }
 
-            if (Math.Abs(RecoverFactor - 1) > IWCC.T)
+            if (Math.Abs(RecoverFactor - 1) > MainPackageConsts.T)
             {
                 str += "\r\n额外治疗倍率: " + RecoverFactor;
             }

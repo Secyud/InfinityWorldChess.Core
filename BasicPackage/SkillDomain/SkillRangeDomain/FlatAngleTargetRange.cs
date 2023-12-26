@@ -1,7 +1,7 @@
 ﻿using System.Runtime.InteropServices;
 using InfinityWorldChess.BattleDomain;
 
-namespace InfinityWorldChess.SkillDomain.Target
+namespace InfinityWorldChess.SkillDomain
 {
     [Guid("88B15AF6-490C-D5BC-32EE-F7E88BFA67F0")]
     public class FlatAngleTargetRange : TargetWithoutTetragonalSymmetry, ISkillCastResult

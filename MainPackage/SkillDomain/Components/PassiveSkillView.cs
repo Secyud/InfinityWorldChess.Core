@@ -6,7 +6,7 @@ namespace InfinityWorldChess.SkillDomain
 {
     public sealed class PassiveSkillView : SkillViewBase<PassiveSkillCell, PassiveSkillView>
     {
-        protected override int CellCount => IWCC.PassiveSkillCount;
+        protected override int CellCount => MainPackageConsts.PassiveSkillCount;
 
         public override void BindCell(PassiveSkillCell cell)
         {
@@ -16,7 +16,7 @@ namespace InfinityWorldChess.SkillDomain
 
         protected override void InitData()
         {
-            for (int i = 0; i < IWCC.PassiveSkillCount; i++)
+            for (int i = 0; i < MainPackageConsts.PassiveSkillCount; i++)
             {
                 Cells[i].Bind(Property.PassiveSkill[i]);
             }

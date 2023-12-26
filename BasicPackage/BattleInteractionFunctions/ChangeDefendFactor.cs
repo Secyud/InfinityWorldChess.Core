@@ -18,7 +18,7 @@ namespace InfinityWorldChess.BattleInteractionFunctions
 
         public void SetContent(Transform transform)
         {
-            transform.AddParagraph($"此攻击{BPC.P(Factor)}点防御。");
+            transform.AddParagraph($"此攻击{BasicPackageConsts.P(Factor)}点防御。");
         }
 
         public void Invoke(BattleInteraction interaction)

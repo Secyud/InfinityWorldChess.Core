@@ -24,7 +24,7 @@ namespace InfinityWorldChess.SkillDomain
         private void EnsureSkill(IPassiveSkill skill)
         {
             if (skill is not null)
-                for (int i = 0; i < IWCC.PassiveSkillCount; i++)
+                for (int i = 0; i < MainPackageConsts.PassiveSkillCount; i++)
                     if (SkillView.Property.PassiveSkill[i] == skill)
                         SkillView.SkillCells[i].Bind(null);
 

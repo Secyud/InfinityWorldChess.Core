@@ -20,8 +20,8 @@ namespace InfinityWorldChess.RoleDomain
 
 		private void Awake()
 		{
-			_texts = new SText[IWCC.MaxBodyPartsCount];
-			for (int i = 0; i < IWCC.MaxBodyPartsCount; i++)
+			_texts = new SText[MainPackageConsts.MaxBodyPartsCount];
+			for (int i = 0; i < MainPackageConsts.MaxBodyPartsCount; i++)
 				_texts[i] = Buttons[i].GetComponent<SText>();
 		}
 
@@ -47,12 +47,12 @@ namespace InfinityWorldChess.RoleDomain
 
 		private bool CheckIndex()
 		{
-			return _selectPart is >= 0 and < IWCC.MaxBodyPartsCount;
+			return _selectPart is >= 0 and < MainPackageConsts.MaxBodyPartsCount;
 		}
 
 		public void OnInitialize(byte code)
 		{
-			for (int i = 0; i < IWCC.MaxBodyPartsCount; i++)
+			for (int i = 0; i < MainPackageConsts.MaxBodyPartsCount; i++)
 				Buttons[i].enabled = (1u << i & code) > 0;
 		}
 

@@ -42,7 +42,7 @@ namespace InfinityWorldChess.RoleDomain
         {
             _female = basic.Female;
 
-            for (int i = 0; i < IWCC.AvatarElementCount; i++)
+            for (int i = 0; i < MainPackageConsts.AvatarElementCount; i++)
             {
                 AvatarElementImage image = Images[i];
                 

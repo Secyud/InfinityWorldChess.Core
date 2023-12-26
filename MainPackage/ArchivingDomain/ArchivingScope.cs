@@ -8,10 +8,10 @@ using Secyud.Ugf.DependencyInjection;
 namespace InfinityWorldChess.ArchivingDomain
 {
     [Registry(DependScope = typeof(GlobalScope))]
-    public class ArchivingScope:DependencyScopeProvider
+    public class ArchivingScope : DependencyScopeProvider
     {
         public readonly IMonoContainer<GameLoadPanel> GameLoadPanel;
-        
+
         public static ArchivingScope Instance { get; private set; }
 
 
@@ -29,7 +29,7 @@ namespace InfinityWorldChess.ArchivingDomain
         {
             GameLoadPanel.Create();
         }
-        
+
         public void CloseGameLoadPanel()
         {
             GameLoadPanel.Destroy();
@@ -38,9 +38,8 @@ namespace InfinityWorldChess.ArchivingDomain
         public void SaveSlotMessage()
         {
             using FileStream stream = File.OpenWrite(
-                Path.Combine(IWCC.SavePath,
-                IWCC.SaveFolder.ToString(), "slot.binary"));
-            using DefaultArchiveWriter writer = new (stream);
+                MainPackageConsts.SaveFilePath("slot"));
+            using DefaultArchiveWriter writer = new(stream);
             GameScope.Instance.Player.Role.Basic.Save(writer);
         }
 

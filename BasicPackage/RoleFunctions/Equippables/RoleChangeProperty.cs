@@ -18,7 +18,7 @@ namespace InfinityWorldChess.RoleFunctions
         [field: S] public float DefendFactor { get; set; }
         public IAttachProperty Property { get; set; }
 
-        private readonly int[] _propertyChanged = new int[IWCC.MaxBodyPartsCount];
+        private readonly int[] _propertyChanged = new int[MainPackageConsts.MaxBodyPartsCount];
 
         public float this[int i] => i switch
         {
@@ -37,7 +37,7 @@ namespace InfinityWorldChess.RoleFunctions
 
         public void InstallFrom(Role target)
         {
-            for (int i = 0; i < IWCC.MaxBodyPartsCount; i++)
+            for (int i = 0; i < MainPackageConsts.MaxBodyPartsCount; i++)
             {
                 _propertyChanged[i] = (int)(Property.Get(i) * this[i]);
                 target.BodyPart[(BodyType)i].MaxValue += _propertyChanged[i];
@@ -46,7 +46,7 @@ namespace InfinityWorldChess.RoleFunctions
 
         public void UnInstallFrom(Role target)
         {
-            for (int i = 0; i < IWCC.MaxBodyPartsCount; i++)
+            for (int i = 0; i < MainPackageConsts.MaxBodyPartsCount; i++)
             {
                 target.BodyPart[(BodyType)i].MaxValue -= _propertyChanged[i];
             }

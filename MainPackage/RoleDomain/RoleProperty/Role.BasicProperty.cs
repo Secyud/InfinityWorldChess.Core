@@ -18,7 +18,7 @@ namespace InfinityWorldChess.RoleDomain
             private int _level;
 
             public AvatarElement[] Avatar { get; } =
-                new AvatarElement[IWCC.AvatarElementCount];
+                new AvatarElement[MainPackageConsts.AvatarElementCount];
 
             public int BirthYear { get; set; }
             public byte BirthMonth { get; set; }
@@ -48,7 +48,7 @@ namespace InfinityWorldChess.RoleDomain
 
             public BasicProperty()
             {
-                for (int i = 0; i < IWCC.AvatarElementCount; i++)
+                for (int i = 0; i < MainPackageConsts.AvatarElementCount; i++)
                 {
                     Avatar[i] = new AvatarElement();
                 }

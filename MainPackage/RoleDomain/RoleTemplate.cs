@@ -26,7 +26,7 @@ namespace InfinityWorldChess.RoleDomain
 
         [field: S(16)]
         public AvatarElement[] Avatar { get; } =
-            new AvatarElement[IWCC.AvatarElementCount];
+            new AvatarElement[MainPackageConsts.AvatarElementCount];
 
         [field: S(9)] public int Living { get; set; }
         [field: S(9)] public int Kiling { get; set; }
@@ -39,19 +39,19 @@ namespace InfinityWorldChess.RoleDomain
 
         [field: S(18)]
         public IObjectAccessor<ICoreSkill>[] CoreSkills { get; } =
-            new IObjectAccessor<ICoreSkill>[IWCC.CoreSkillCount];
+            new IObjectAccessor<ICoreSkill>[MainPackageConsts.CoreSkillCount];
 
         [field: S(19)] public List<IObjectAccessor<IFormSkill>> LearnedFormSkills { get; } = new();
 
         [field: S(20)]
         public IObjectAccessor<IFormSkill>[] FormSkills { get; } =
-            new IObjectAccessor<IFormSkill>[IWCC.FormSkillCount];
+            new IObjectAccessor<IFormSkill>[MainPackageConsts.FormSkillCount];
 
         [field: S(21)] public List<IObjectAccessor<IPassiveSkill>> LearnedPassiveSkills { get; } = new();
 
         [field: S(22)]
         public IObjectAccessor<IPassiveSkill>[] PassiveSkills { get; } =
-            new IObjectAccessor<IPassiveSkill>[IWCC.PassiveSkillCount];
+            new IObjectAccessor<IPassiveSkill>[MainPackageConsts.PassiveSkillCount];
 
         [field: S(23)] public List<IObjectAccessor<IItem>> Items { get; } = new();
 
@@ -173,8 +173,8 @@ namespace InfinityWorldChess.RoleDomain
                 if (GetValue(accessor, out var skill)) continue;
                 SetSkill(skill);
                 role.FormSkill.TryAddLearnedSkill(skill);
-                role.FormSkill.Set(skill, (byte)(i / IWCC.FormSkillTypeCount),
-                    (byte)(i % IWCC.FormSkillTypeCount));
+                role.FormSkill.Set(skill, (byte)(i / MainPackageConsts.FormSkillTypeCount),
+                    (byte)(i % MainPackageConsts.FormSkillTypeCount));
             }
 
             foreach (IObjectAccessor<IPassiveSkill> accessor in LearnedPassiveSkills)

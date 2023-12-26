@@ -23,13 +23,13 @@ using Secyud.Ugf.DataManager;
 namespace InfinityWorldChess
 {
     [DependsOn(
-        typeof(InfinityWorldChessModule)
+        typeof(IwcMainPackageModule)
     )]
-    public class BasicPackageModule : IUgfModule, IOnInitialization, IOnPostConfigure,IOnPostInitialization
+    public class IwcBasicPackageModule : IUgfModule, IOnInitialization, IOnPostConfigure,IOnPostInitialization
     {
         public void Configure(ConfigurationContext context)
         {
-            context.Get<IDependencyRegistrar>().AddAssembly(typeof(BasicPackageModule).Assembly);
+            context.Get<IDependencyRegistrar>().AddAssembly(typeof(IwcBasicPackageModule).Assembly);
             context.AddStringResource<BasicPackageResource>();
         }
 

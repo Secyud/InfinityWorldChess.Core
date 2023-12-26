@@ -24,7 +24,7 @@ namespace InfinityWorldChess.RoleDomain
         {
             private readonly List<IFormSkill> _learnedSkills  = new();
 
-            private readonly FormSkillContainer[] _equippedSkills = new FormSkillContainer[IWCC.FormSkillCount];
+            private readonly FormSkillContainer[] _equippedSkills = new FormSkillContainer[MainPackageConsts.FormSkillCount];
 
             public FormSkillContainer this[byte state, byte type] => _equippedSkills[GetIndex(state, type)];
 
@@ -66,8 +66,8 @@ namespace InfinityWorldChess.RoleDomain
 
             public void GetGroup(int state, FormSkillContainer[] group)
             {
-                for (int i = 0; i < IWCC.FormSkillTypeCount; i++)
-                    group[i] = _equippedSkills[state * IWCC.FormSkillTypeCount + i];
+                for (int i = 0; i < MainPackageConsts.FormSkillTypeCount; i++)
+                    group[i] = _equippedSkills[state * MainPackageConsts.FormSkillTypeCount + i];
             }
 
             public static bool CanSet(IFormSkill skill, int index)
@@ -77,7 +77,7 @@ namespace InfinityWorldChess.RoleDomain
 
             public static int GetIndex(byte state, byte type)
             {
-                return state * IWCC.FormSkillTypeCount + type;
+                return state * MainPackageConsts.FormSkillTypeCount + type;
             }
 
             public void Save(IArchiveWriter writer)
@@ -90,7 +90,7 @@ namespace InfinityWorldChess.RoleDomain
                     skill.SaveIndex = i;
                 }
 
-                for (int i = 0; i < IWCC.FormSkillCount; i++)
+                for (int i = 0; i < MainPackageConsts.FormSkillCount; i++)
                 {
                     FormSkillContainer skill = _equippedSkills[i];
                     writer.Write(skill?.FormSkill.SaveIndex??-1);
@@ -108,7 +108,7 @@ namespace InfinityWorldChess.RoleDomain
                     _learnedSkills.Add(skill);
                 }
 
-                for (int i = 0; i < IWCC.FormSkillCount; i++)
+                for (int i = 0; i < MainPackageConsts.FormSkillCount; i++)
                 {
                     int index  = reader.ReadInt32();
                     Set(index < 0 ? null : _learnedSkills[index], i);
@@ -117,8 +117,8 @@ namespace InfinityWorldChess.RoleDomain
 
             internal void AutoEquip()
             {
-                int[] level = new int[IWCC.FormSkillCount];
-                IFormSkill[] tmp = new IFormSkill[IWCC.FormSkillCount];
+                int[] level = new int[MainPackageConsts.FormSkillCount];
+                IFormSkill[] tmp = new IFormSkill[MainPackageConsts.FormSkillCount];
                 foreach (IFormSkill skill in _learnedSkills)
                 {
                     int index = GetIndex(skill.State, skill.Type);
@@ -128,7 +128,7 @@ namespace InfinityWorldChess.RoleDomain
                     tmp[index] = skill;
                 }
 
-                for (int i = 0; i < IWCC.FormSkillCount; i++)
+                for (int i = 0; i < MainPackageConsts.FormSkillCount; i++)
                     Set(tmp[i], i);
             }
         }

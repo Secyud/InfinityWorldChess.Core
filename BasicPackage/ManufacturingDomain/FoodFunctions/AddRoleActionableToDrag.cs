@@ -2,7 +2,7 @@ using InfinityWorldChess.FunctionDomain;
 using InfinityWorldChess.ItemTemplates;
 using InfinityWorldChess.ManufacturingFunctions;
 
-namespace InfinityWorldChess.ManufacturingDomain.DragFunctions
+namespace InfinityWorldChess.ManufacturingDomain.FoodFunctions
 {
     public class AddRoleActionableToFood:AddRoleActionable,IActionable<CustomFood>
     {

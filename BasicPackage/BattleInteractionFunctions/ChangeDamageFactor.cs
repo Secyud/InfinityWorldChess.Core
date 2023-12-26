@@ -28,7 +28,7 @@ namespace InfinityWorldChess.BattleInteractionFunctions
 
         public void SetContent(Transform transform)
         {
-            transform.AddParagraph($"伤害{BPC.P(Factor)}。");
+            transform.AddParagraph($"伤害{BasicPackageConsts.P(Factor)}。");
         }
     }
 }
