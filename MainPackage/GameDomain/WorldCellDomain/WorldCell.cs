@@ -3,6 +3,7 @@
 using System.Collections.Generic;
 using InfinityWorldChess.GameDomain.WorldMapDomain;
 using InfinityWorldChess.RoleDomain;
+using Secyud.Ugf.AssetComponents;
 using Secyud.Ugf.HexMapExtensions;
 using Secyud.Ugf.TableComponents.ButtonComponents;
 using Secyud.Ugf.UgfHexMap;
@@ -14,6 +15,9 @@ namespace InfinityWorldChess.GameDomain.WorldCellDomain
 {
     public class WorldCell : UgfCell
     {
+        private static PrefabContainer<Transform> _prefabContainer =
+            PrefabContainer<Transform>.Create<IwcAssets>("Features/Special/Village.prefab");
+
         private byte _pathState;
         private WorldCellMessage _message;
         public List<Role> InRoles { get; } = new();
@@ -26,7 +30,12 @@ namespace InfinityWorldChess.GameDomain.WorldCellDomain
             {
                 _message = value;
 
-                FeaturePrefab = value?.FeaturePrefab?.Value;
+                if (value is not null)
+                {
+                    FeaturePrefab = value.FeaturePrefab is not null
+                        ? value.FeaturePrefab.Value
+                        : _prefabContainer.Value;
+                }
             }
         }
 
