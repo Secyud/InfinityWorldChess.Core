@@ -1,7 +1,7 @@
 using System;
+using System.Linq;
 using InfinityWorldChess.GameDomain;
 using InfinityWorldChess.RoleDomain;
-using Secyud.Ugf.BasicComponents;
 using Secyud.Ugf.EditorComponents;
 using UnityEngine;
 
@@ -10,48 +10,85 @@ namespace InfinityWorldChess.BuffDomain
     public class PointDivisionPanel : EditorBase<IAttachProperty>
     {
         [SerializeField] public EditorEvent<float>[] Properties;
-        [SerializeField] public SText RemainPoints;
 
         private byte[] _properties;
+        private float[] _proportion;
 
         private void Awake()
         {
             _properties = new byte[4];
+            _proportion = new float[] { 1, 1, 1, 1 };
         }
 
         public void SetLiving(float value)
         {
-            SetOriginValue(value, 0);
+            _proportion[0] = value;
+            SetOriginValue();
         }
 
         public void SetKiling(float value)
         {
-            SetOriginValue(value, 1);
+            _proportion[1] = value;
+            SetOriginValue();
         }
 
         public void SetNimble(float value)
         {
-            SetOriginValue(value, 2);
+            _proportion[2] = value;
+            SetOriginValue();
         }
 
         public void SetDefend(float value)
         {
-            SetOriginValue(value, 3);
+            _proportion[3] = value;
+            SetOriginValue();
         }
 
-        private void SetOriginValue(float value, int t)
+        private void SetOriginValue()
         {
             Role role = GameScope.Instance.Role.MainOperationRole;
             byte total = (byte)(role.Basic.Level / 0x80000);
-            byte current = (byte)(Property.Defend + Property.Living +
-                                  Property.Nimble + Property.Kiling);
 
-            _properties[t] = (byte)Math.Min(total - current + _properties[t], value);
-            Properties[t].Invoke(_properties[t]);
-            int remain = total - (Property.Defend + Property.Living +
-                                        Property.Nimble + Property.Kiling);
-            
-            RemainPoints.text = remain.ToString();
+            float sumProportion = _proportion.Sum(u => u);
+
+            for (int i = 0; i < 4; i++)
+            {
+                byte property = (byte)Math.Round(total * _proportion[i] / sumProportion);
+                _properties[i] = property;
+            }
+
+            byte result = (byte)_properties.Sum(u => u);
+
+            if (result != total)
+            {
+                int index = 0;
+                if (result > total)
+                {
+                    for (byte i = 1; i < 4; i++)
+                    {
+                        if (_properties[i] > _properties[index])
+                        {
+                            index = i;
+                        }
+                    }
+                }
+                else if (result < total)
+                {
+                    for (byte i = 1; i < 4; i++)
+                    {
+                        if (_properties[i] < _properties[index])
+                        {
+                            index = i;
+                        }
+                    }
+                }
+                _properties[index] = (byte)(_properties[index] - result + total);
+            }
+
+            for (int i = 0; i < 4; i++)
+            {
+                Properties[i].Invoke(_properties[i]);
+            }
         }
 
         public void Ensure()
@@ -65,15 +102,16 @@ namespace InfinityWorldChess.BuffDomain
 
         public void Cancel()
         {
+            _proportion[0] = Property.Living + 1;
+            _proportion[1] = Property.Kiling + 1;
+            _proportion[2] = Property.Nimble + 1;
+            _proportion[3] = Property.Defend + 1;
             Destroy(gameObject);
         }
 
         protected override void InitData()
         {
-            SetOriginValue(Property.Living, 0);
-            SetOriginValue(Property.Kiling, 1);
-            SetOriginValue(Property.Nimble, 2);
-            SetOriginValue(Property.Defend, 3);
+            SetOriginValue();
         }
     }
 }

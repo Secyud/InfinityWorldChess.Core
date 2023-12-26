@@ -5,6 +5,7 @@ using InfinityWorldChess.ItemDomain.EquipmentDomain;
 using InfinityWorldChess.SkillDomain;
 using Secyud.Ugf;
 using Secyud.Ugf.DataManager;
+using UnityEngine;
 
 namespace InfinityWorldChess.RoleDomain
 {
@@ -54,7 +55,7 @@ namespace InfinityWorldChess.RoleDomain
 
         [field: S(23)] public List<IObjectAccessor<IItem>> Items { get; } = new();
 
-        [field: S(16)] public IObjectAccessor<IEquipment> Equipment { get; set; } 
+        [field: S(16)] public IObjectAccessor<IEquipment> Equipment { get; set; }
 
         // 认知
         [field: S(10)] public float Recognize { get; set; }
@@ -130,6 +131,7 @@ namespace InfinityWorldChess.RoleDomain
                 AvatarElement element = Avatar[i];
                 role.Basic.Avatar[i] = element ?? new AvatarElement();
             }
+
             byte living, kiling, nimble, defend;
 
             {
@@ -139,12 +141,11 @@ namespace InfinityWorldChess.RoleDomain
                 nimble = (byte)(SkillPoint * Nimble / totalValue);
                 defend = (byte)(SkillPoint * Defend / totalValue);
             }
-            
-            
+
+
             foreach (IObjectAccessor<ICoreSkill> accessor in LearnedCoreSkills)
             {
-                var skill = accessor?.Value;
-                if (skill is null)continue;
+                if (GetValue(accessor, out var skill)) continue;
                 SetSkill(skill);
                 role.CoreSkill.TryAddLearnedSkill(skill);
             }
@@ -152,8 +153,7 @@ namespace InfinityWorldChess.RoleDomain
             for (int i = 0; i < CoreSkills.Length; i++)
             {
                 var accessor = CoreSkills[i];
-                var skill = accessor?.Value;
-                if (skill is null)continue;
+                if (GetValue(accessor, out var skill)) continue;
                 SetSkill(skill);
                 role.CoreSkill.TryAddLearnedSkill(skill);
                 Role.CoreSkillProperty.GetCodeAndLayer(i, out byte layer, out byte code);
@@ -162,7 +162,7 @@ namespace InfinityWorldChess.RoleDomain
 
             foreach (IObjectAccessor<IFormSkill> accessor in LearnedFormSkills)
             {
-                var skill = accessor?.Value;
+                if (GetValue(accessor, out var skill)) continue;
                 SetSkill(skill);
                 role.FormSkill.TryAddLearnedSkill(skill);
             }
@@ -170,8 +170,7 @@ namespace InfinityWorldChess.RoleDomain
             for (int i = 0; i < FormSkills.Length; i++)
             {
                 var accessor = FormSkills[i];
-                var skill = accessor?.Value;
-                if (skill is null)continue;
+                if (GetValue(accessor, out var skill)) continue;
                 SetSkill(skill);
                 role.FormSkill.TryAddLearnedSkill(skill);
                 role.FormSkill.Set(skill, (byte)(i / IWCC.FormSkillTypeCount),
@@ -180,8 +179,7 @@ namespace InfinityWorldChess.RoleDomain
 
             foreach (IObjectAccessor<IPassiveSkill> accessor in LearnedPassiveSkills)
             {
-                var skill = accessor?.Value;
-                if (skill is null)continue;
+                if (GetValue(accessor, out var skill)) continue;
                 SetSkill(skill);
                 role.PassiveSkill.TryAddLearnedSkill(skill);
             }
@@ -189,17 +187,15 @@ namespace InfinityWorldChess.RoleDomain
             for (int i = 0; i < PassiveSkills.Length; i++)
             {
                 var accessor = PassiveSkills[i];
-                var skill = accessor?.Value;
-                if (skill is null)continue;
+                if (GetValue(accessor, out var skill)) continue;
                 role.PassiveSkill.TryAddLearnedSkill(skill);
                 role.PassiveSkill[i, role] = skill;
             }
 
             foreach (IObjectAccessor<IItem> accessor in Items)
             {
-                var item = accessor?.Value;
-                if (item is null)continue;
-                role.Item.Add(accessor.Value);
+                if (GetValue(accessor, out var item)) continue;
+                role.Item.Add(item);
             }
 
             role.SetEquipment(Equipment?.Value);
@@ -213,7 +209,7 @@ namespace InfinityWorldChess.RoleDomain
             {
                 role.Buffs.Install(buff.Value);
             }
-            
+
             return role;
 
             void SetSkill(ISkill skill)
@@ -222,6 +218,26 @@ namespace InfinityWorldChess.RoleDomain
                 skill.Kiling = kiling;
                 skill.Nimble = nimble;
                 skill.Defend = defend;
+            }
+
+            bool GetValue<TObject>(IObjectAccessor<TObject> a, out TObject o)
+                where TObject : class
+            {
+                if (a is null)
+                {
+                    o = null;
+                    return true;
+                }
+
+                o = a.Value;
+
+                if (o is null)
+                {
+                    Debug.LogError($"RoleTemplate {role.ShowName} has abnormal null value.");
+                    return true;
+                }
+
+                return false;
             }
         }
     }

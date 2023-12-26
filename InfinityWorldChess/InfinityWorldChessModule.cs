@@ -6,8 +6,6 @@ using InfinityWorldChess.GameCreatorDomain;
 using InfinityWorldChess.GameDomain;
 using InfinityWorldChess.GameDomain.WorldCellDomain;
 using InfinityWorldChess.GameDomain.WorldMapDomain;
-using InfinityWorldChess.InteractionDomain;
-using InfinityWorldChess.MessageDomain;
 using InfinityWorldChess.RoleDomain;
 using InfinityWorldChess.SkillDomain;
 using Secyud.Ugf;

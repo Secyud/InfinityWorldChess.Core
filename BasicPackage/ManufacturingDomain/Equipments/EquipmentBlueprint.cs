@@ -11,6 +11,7 @@ namespace InfinityWorldChess.ManufacturingDomain.Equipments
     {
         private CustomEquipment _equipment;
         [field: S(1)] public string Name { get; set; }
+        // this resource id is blueprint id, not equipment id
         [field: S(1)] public string ResourceId { get; set; }
         [field: S(2)] public string Description { get; set; }
         [field: S(5)] public string EquipmentId { get; set; }

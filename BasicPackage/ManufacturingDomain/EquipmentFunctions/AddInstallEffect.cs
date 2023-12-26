@@ -2,7 +2,6 @@ using InfinityWorldChess.FunctionDomain;
 using InfinityWorldChess.ItemTemplates;
 using InfinityWorldChess.RoleDomain;
 using Secyud.Ugf.DataManager;
-using UnityEditor;
 
 namespace InfinityWorldChess.ManufacturingDomain.EquipmentFunctions
 {

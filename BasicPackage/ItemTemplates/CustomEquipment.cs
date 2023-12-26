@@ -1,3 +1,4 @@
+using InfinityWorldChess.Ugf;
 using Secyud.Ugf.Archiving;
 
 namespace InfinityWorldChess.ItemTemplates
@@ -8,10 +9,7 @@ namespace InfinityWorldChess.ItemTemplates
         {
             writer.Write(TypeCode);
             writer.Write(Location);
-            writer.Write(Living);
-            writer.Write(Kiling);
-            writer.Write(Nimble);
-            writer.Write(Defend);
+            this.SaveProperty(writer);
             SaveEffects(writer);
         }
 
@@ -19,10 +17,7 @@ namespace InfinityWorldChess.ItemTemplates
         {
             TypeCode = reader.ReadByte();
             Location = reader.ReadByte();
-            Living = reader.ReadByte();
-            Kiling = reader.ReadByte();
-            Nimble = reader.ReadByte();
-            Defend = reader.ReadByte();
+            this.LoadProperty(reader);
             LoadEffects(reader);
         }
 

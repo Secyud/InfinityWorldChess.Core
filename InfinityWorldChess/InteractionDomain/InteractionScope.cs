@@ -41,7 +41,10 @@ namespace InfinityWorldChess.InteractionDomain
                 service.InteractionRole = role;
             }
 
-            GameScope.Instance.Role.MainOperationRole = role;
+            if (GameScope.Instance is not null)
+            {
+                GameScope.Instance.Role.MainOperationRole = role;
+            }
         }
     }
 }
