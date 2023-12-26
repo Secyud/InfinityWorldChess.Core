@@ -88,6 +88,8 @@ namespace InfinityWorldChess.BattleDomain
                 descriptor.SizeX, descriptor.SizeZ);
 
             descriptor.OnBattleCreated();
+
+            Instance.Get<BattleControlService>().CalculateTurn();
         }
 
 

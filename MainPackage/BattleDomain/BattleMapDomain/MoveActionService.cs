@@ -9,8 +9,7 @@ namespace InfinityWorldChess.BattleDomain
     public class MoveActionService : IBattleMapActionService, IRegistry
     {
         private readonly BattleMapFunctionService _service;
-        public bool IsInterval => _service.IsTraveling;
-
+        
         public MoveActionService(BattleMapFunctionService service)
         {
             _service = service;

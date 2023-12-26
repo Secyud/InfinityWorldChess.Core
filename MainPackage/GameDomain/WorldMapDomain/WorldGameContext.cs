@@ -27,34 +27,38 @@ namespace InfinityWorldChess.GameDomain.WorldMapDomain
         public WorldSetting WorldSetting { get; private set; }
 
         public SortedDictionary<int, WorldCellMessage> WorldMessage { get; } = new();
-        public SortedDictionary<int, WorldCellMessage> WorldIndexById { get; } = new();
 
         public void AddMessage(WorldCellMessage message)
         {
-            WorldIndexById[message.Id] = message;
             WorldCell cell = message.Cell;
-            if (cell is not null )
+
+            if (cell is not null)
             {
+                WorldCellMessage pre = GetMessage(message.Id);
+                if (pre is not null)
+                {
+                    pre.Cell.Message = null;
+                }
+
+                WorldMessage[message.Id] = message;
                 cell.Message = message;
+            }
+            else
+            {
+                U.LogError($"Cell for message {message.Name} is invalid!");
             }
         }
 
-        public WorldCellMessage GetMessage(int index)
+        public WorldCellMessage GetMessage(int id)
         {
-            WorldMessage.TryGetValue(index, out WorldCellMessage msg);
-            return msg;
-        }
-
-        public WorldCellMessage GetMessageById(int id)
-        {
-            WorldIndexById.TryGetValue(id, out WorldCellMessage msg);
+            WorldMessage.TryGetValue(id, out WorldCellMessage msg);
             return msg;
         }
 
         public void RemoveMessage(WorldCellMessage message)
         {
             WorldCell cell = message.Cell;
-            if (cell is not null )
+            if (cell is not null)
             {
                 cell.Message = null;
             }
@@ -115,14 +119,15 @@ namespace InfinityWorldChess.GameDomain.WorldMapDomain
                     U.LogError(e);
                     continue;
                 }
+
                 break;
             }
 
             foreach (string path in WorldSetting.GetDataDirectory("regions.binary"))
             {
                 using FileStream stream = File.OpenRead(path);
-                
-                foreach (WorldCellMessage message in 
+
+                foreach (WorldCellMessage message in
                          stream.ReadResourceObjects<WorldCellMessage>())
                 {
                     AddMessage(message);

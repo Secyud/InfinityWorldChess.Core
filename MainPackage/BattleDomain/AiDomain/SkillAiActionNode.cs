@@ -33,19 +33,6 @@ namespace InfinityWorldChess.BattleDomain
             _container = container;
         }
 
-        public bool IsInterval
-        {
-            get
-            {
-                return _container switch
-                {
-                    CoreSkillContainer => CoreService.IsInterval,
-                    FormSkillContainer => FormService.IsInterval,
-                    _                  => false
-                };
-            }
-        }
-
         public bool InvokeAction()
         {
             IBattleMapActionService service;

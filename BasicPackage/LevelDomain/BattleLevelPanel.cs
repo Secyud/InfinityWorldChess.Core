@@ -21,7 +21,10 @@ namespace InfinityWorldChess.LevelDomain
 
         private static void CreateBattle(IBattleLevel level)
         {
-            BattleScope.CreateBattle(level);
+            if (level is not null)
+            {
+                BattleScope.CreateBattle(level);
+            }
         }
     }
 }

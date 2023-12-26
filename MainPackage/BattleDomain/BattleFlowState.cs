@@ -3,8 +3,6 @@
     public enum BattleFlowState
     {
         AnimationPlay,
-        OnCalculation,
-        OnUnitControl,
-        OnEffectTrig,
+        OnUnitControl
     }
 }

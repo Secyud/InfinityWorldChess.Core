@@ -18,8 +18,6 @@ namespace InfinityWorldChess.BattleDomain
         {
             _context = context;
         }
-
-        public bool IsInterval  => _context.State != BattleFlowState.OnUnitControl;
         
         public FormSkillContainer FormSkill
         {

@@ -24,7 +24,7 @@ namespace InfinityWorldChess.BattleDomain
         public void TryPonder()
         {
             if (_currentNode is not null &&
-                _currentNode.IsInterval)
+                BattleScope.Instance.Context.State != BattleFlowState.OnUnitControl)
             {
                 return;
             }

@@ -67,7 +67,7 @@ namespace InfinityWorldChess.SkillDomain
 
         private static void SetTrigger()
         {
-            BattleScope.Instance.State = BattleFlowState.OnEffectTrig;
+            BattleScope.Instance.Get<BattleControlService>().TriggerEffect();
         }
 
         private static void EndPlay(UgfUnitEffect effect)

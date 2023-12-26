@@ -10,7 +10,7 @@ namespace InfinityWorldChess.BattleDomain
     {
         public int TotalTime { get; set; }
 
-        public BattleFlowState State { get; set; } = BattleFlowState.OnCalculation;
+        public BattleFlowState State { get; set; } 
 
         public List<BattleUnit> Units { get; } = new();
 

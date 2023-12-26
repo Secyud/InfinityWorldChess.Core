@@ -29,9 +29,6 @@ namespace InfinityWorldChess.BattleTemplates
             bool victory = true;
             bool defeated = true;
 
-            if (unit.Camp.Index <= 0)
-                return;
-
             foreach (BattleUnit chess in BattleScope.Instance.Context.Units
                          .Where(chess => chess.Camp is not null && !chess.Dead))
             {

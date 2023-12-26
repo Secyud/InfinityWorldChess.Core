@@ -76,7 +76,7 @@ namespace InfinityWorldChess.BattleDomain
             }
             else
             {
-                BattleScope.Instance.State = BattleFlowState.OnEffectTrig;
+                BattleScope.Instance.Get<BattleControlService>().TriggerEffect();
             }
         }
 

@@ -40,21 +40,15 @@ namespace InfinityWorldChess.BattleDomain
             {
                 case BattleFlowState.AnimationPlay:
                     break;
-                case BattleFlowState.OnCalculation:
-                    CalculateTurn();
-                    break;
                 case BattleFlowState.OnUnitControl:
                     ControlUnitWithCell(cell);
-                    break;
-                case BattleFlowState.OnEffectTrig:
-                    TriggerEffect();
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
         }
 
-        private void CalculateTurn()
+        public void CalculateTurn()
         {
             BattleScope.Instance.Context.OnRoundEnd();
 
@@ -90,7 +84,8 @@ namespace InfinityWorldChess.BattleDomain
 
         public void EnterControl()
         {
-            BattleScope.Instance.Map.MapCamera.SetTargetPosition(_context.Unit.Location.Position);
+            BattleScope.Instance.Map.MapCamera
+                .SetTargetPosition(_context.Unit.Location.Position);
             State = BattleFlowState.OnUnitControl;
 
             if (_context.Unit.PlayerControl)

@@ -27,8 +27,6 @@ namespace InfinityWorldChess.BattleDomain
             Score = score;
         }
 
-        public bool IsInterval => _service.IsInterval;
-
         public  bool InvokeAction()
         {
             BattleScope.Instance.Context.MapAction = Service;

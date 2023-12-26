@@ -1,9 +1,11 @@
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using InfinityWorldChess.BattleDomain;
+using InfinityWorldChess.FunctionDomain;
 using InfinityWorldChess.GameDomain;
 using InfinityWorldChess.GameDomain.WorldCellDomain;
 using InfinityWorldChess.RoleDomain;
+using InfinityWorldChess.Ugf;
 using Secyud.Ugf;
 using Secyud.Ugf.DataManager;
 using UnityEngine;
@@ -11,7 +13,7 @@ using UnityEngine;
 namespace InfinityWorldChess.BattleTemplates
 {
     [Guid("7ADE420F-FB5E-F146-BD9F-3C0EBB1845F6")]
-    public class Battle : IBattleDescriptor, IObjectAccessor<IBattleDescriptor>
+    public class Battle : IBattleDescriptor, IObjectAccessor<IBattleDescriptor>, IHasContent
     {
         [field: S(0)] public string ResourceId { get; set; }
         [field: S(2)] public int SizeX { get; set; }
@@ -21,10 +23,17 @@ namespace InfinityWorldChess.BattleTemplates
         [field: S(0)] public string Name { get; set; }
         [field: S(15)] public IObjectAccessor<Sprite> Icon { get; set; }
         [field: S(18)] public List<BattleCampSetting> BattleCampSettings { get; } = new();
+
+        [field: S(19)] public List<IActionable<BattleScope>> BattleFinishActions { get; } = new();
+
         public virtual WorldCell Cell => GameScope.Instance.Player.Role.Position;
 
         public virtual void OnBattleFinished()
         {
+            foreach (IActionable<BattleScope> actionable in BattleFinishActions)
+            {
+                actionable.Invoke(BattleScope.Instance);
+            }
         }
 
         public virtual void OnBattleCreated()
@@ -43,7 +52,7 @@ namespace InfinityWorldChess.BattleTemplates
                     Role role = roleWithPosition.RoleAccessor?.Value;
                     if (role is not null)
                     {
-                        AddBattleUnit(role, roleWithPosition.PositionX,roleWithPosition.PositionZ, camp);
+                        AddBattleUnit(role, roleWithPosition.PositionX, roleWithPosition.PositionZ, camp);
                     }
                 }
             }
@@ -57,10 +66,17 @@ namespace InfinityWorldChess.BattleTemplates
         private static void AddBattleUnit(Role role, int x, int z, BattleCamp camp)
         {
             BattleScope scope = BattleScope.Instance;
-            BattleCell cell = scope.GetCellR(x,z);
-            scope.InitBattleUnit(role, cell,camp,camp.Index == 0);
+            BattleCell cell = scope.GetCellR(x, z);
+            scope.InitBattleUnit(role, cell, camp, camp.Index == 0);
         }
 
         public IBattleDescriptor Value => this;
+
+        public void SetContent(Transform transform)
+        {
+            transform.AddSimpleShown(this);
+            
+            
+        }
     }
 }
