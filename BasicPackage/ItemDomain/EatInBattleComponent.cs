@@ -21,8 +21,11 @@ namespace InfinityWorldChess.ItemDomain
 
         private static void EatItem(IItem item)
         {
-            ((IEdibleInBattle)item).EatingInBattle(
+            if (item is IEdibleInBattle edibleInBattle)
+            {
+                edibleInBattle.EatingInBattle(
                     BattleScope.Instance.Context.Unit);
+            }
         }
     }
 }
