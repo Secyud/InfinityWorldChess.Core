@@ -22,8 +22,11 @@ public class GameManager : UgfGameManager
 
         PlugInSourceList.AddRange(new IPlugInSource[]
             {
-                new FolderPluginSource(
+                new FolderPluginSource( 
+                    // 一个插件目录来源
                     Path.Combine(Application.dataPath, "../Plugins")),
+                // 本体StartupModule并未依赖IwcBasicPackageModule 所以要用插件的形式载入
+                // 这种方式可以制作dlc等内容。
                 new TypePlugInSource(typeof(IwcBasicPackageModule)),
 #if !DISABLESTEAMWORKS
                 SteamManager.Instance.PlugInSource,

@@ -22,6 +22,9 @@ using Secyud.Ugf.DataManager;
 
 namespace InfinityWorldChess
 {
+    /// <summary>
+    /// 这个包被当作插件加载，它在主体上进行实现，增加了一些基础性的功能和数据模板，以及锻造烹饪制药关卡系统。
+    /// </summary>
     [DependsOn(
         typeof(IwcMainPackageModule)
     )]
