@@ -14,10 +14,10 @@ namespace InfinityWorldChess.ActivityFunctions
     [Guid("DABA9B4C-F4D6-E8C3-8F48-FFDD80C5C7B6")]
     public class SelectActivityInGroup : IActionable
     {
-        [field: S] private PlayerActivityGroup GroupAccessor { get; set; }
-        [field: S] private string CurrentActivityId { get; set; }
-        [field: S] private string NextActivityId { get; set; }
-        [field: S] private bool CurrentSuccess { get; set; }
+        [field: S(32)] private PlayerActivityGroup GroupAccessor { get; set; }
+        [field: S(0)] private string CurrentActivityId { get; set; }
+        [field: S(2)] private string NextActivityId { get; set; }
+        [field: S(1)] private bool CurrentSuccess { get; set; }
 
         public void Invoke()
         {

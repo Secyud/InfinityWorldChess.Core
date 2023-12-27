@@ -15,7 +15,7 @@ namespace InfinityWorldChess.ActivityDomain
         [field: S(0)] public string Name { get; set; }
         [field: S(0)] public string ResourceId { get; set; }
         [field: S(1)] public string Description { get; set; }
-        [field: S(2)] private ActivityState InnerState { get; set; }
+        [field: S(2)] private byte InnerState { get; set; }
         [field: S(32)] public IObjectAccessor<Sprite> Icon { get; set; }
 
         /// <summary>
@@ -27,15 +27,15 @@ namespace InfinityWorldChess.ActivityDomain
 
         public ActivityState State
         {
-            get => InnerState;
+            get => (ActivityState)InnerState;
             set
             {
-                if (Equals(InnerState, value))
+                if (InnerState == (byte)value)
                 {
                     return;
                 }
 
-                if (InnerState is ActivityState.Received)
+                if ((ActivityState)InnerState is ActivityState.Received)
                 {
                     UnInstall();
                     switch (value)
@@ -59,7 +59,7 @@ namespace InfinityWorldChess.ActivityDomain
                     MessageScope.Instance.AddMessage($"获取任务：{Name}");
                 }
 
-                InnerState = value;
+                InnerState = (byte)value;
             }
         }
 
@@ -81,12 +81,12 @@ namespace InfinityWorldChess.ActivityDomain
 
         public void Save(IArchiveWriter writer)
         {
-            writer.Write((byte)InnerState);
+            writer.Write(InnerState);
         }
 
         public void Load(IArchiveReader reader)
         {
-            InnerState = (ActivityState)reader.ReadByte();
+            InnerState = reader.ReadByte();
         }
     }
 }
