@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using InfinityWorldChess.GlobalDomain;
-using InfinityWorldChess.Ugf;
 using Secyud.Ugf.TableComponents;
 
 namespace InfinityWorldChess.SkillDomain

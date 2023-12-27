@@ -8,7 +8,6 @@ using Secyud.Ugf;
 using Secyud.Ugf.AssetComponents;
 using Secyud.Ugf.AssetLoading;
 using Secyud.Ugf.BasicComponents;
-using Secyud.Ugf.DataManager;
 using Secyud.Ugf.FunctionalComponents;
 using UnityEngine;
 using UnityEngine.AddressableAssets;

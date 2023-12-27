@@ -34,13 +34,13 @@ namespace InfinityWorldChess.PlayerDomain
 			if (group is not null)
 			{
 				base.Add(group);
-				group.InstallFrom();
+				group.Install();
 			}
 		}
 		public new void Remove(ActivityGroup group)
 		{
 			base.Remove(group);
-			group?.UnInstallFrom();
+			group?.UnInstall();
 		}
 	}
 }

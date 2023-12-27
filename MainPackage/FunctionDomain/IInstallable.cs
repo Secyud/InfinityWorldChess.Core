@@ -8,9 +8,9 @@ namespace InfinityWorldChess.FunctionDomain
     }
     public interface IInstallable
     {
-        void InstallFrom();
+        void Install();
 
-        void UnInstallFrom();
+        void UnInstall();
     }
 
     public interface IActionInstallTarget 

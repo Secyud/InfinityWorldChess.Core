@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using InfinityWorldChess.GameDomain;
 using InfinityWorldChess.ItemDomain;
 using InfinityWorldChess.PlayerDomain;
-using InfinityWorldChess.Ugf;
 using Secyud.Ugf.TableComponents;
 using UnityEngine;
 using UnityEngine.Events;

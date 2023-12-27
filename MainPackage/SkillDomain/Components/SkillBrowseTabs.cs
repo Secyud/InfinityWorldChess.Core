@@ -3,7 +3,6 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using InfinityWorldChess.RoleDomain;
-using InfinityWorldChess.Ugf;
 using Secyud.Ugf.TableComponents;
 using UnityEngine;
 

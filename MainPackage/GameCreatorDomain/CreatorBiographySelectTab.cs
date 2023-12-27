@@ -1,5 +1,4 @@
 ﻿using InfinityWorldChess.BiographyDomain;
-using InfinityWorldChess.Ugf;
 using Secyud.Ugf;
 using Secyud.Ugf.TabComponents;
 using Secyud.Ugf.TableComponents;

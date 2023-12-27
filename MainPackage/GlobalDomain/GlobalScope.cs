@@ -1,6 +1,4 @@
-﻿using InfinityWorldChess.ArchivingDomain;
-using Secyud.Ugf;
-using Secyud.Ugf.AssetComponents;
+﻿using Secyud.Ugf.AssetComponents;
 using Secyud.Ugf.DependencyInjection;
 using Secyud.Ugf.TableComponents;
 

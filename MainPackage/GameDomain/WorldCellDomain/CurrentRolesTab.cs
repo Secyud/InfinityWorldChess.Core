@@ -1,11 +1,9 @@
 ﻿#region
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using InfinityWorldChess.InteractionDomain;
 using InfinityWorldChess.RoleDomain;
-using InfinityWorldChess.Ugf;
 using Secyud.Ugf.BasicComponents;
 using Secyud.Ugf.TabComponents;
 using Secyud.Ugf.TableComponents;

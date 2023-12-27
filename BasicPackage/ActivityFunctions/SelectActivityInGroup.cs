@@ -1,5 +1,7 @@
 using System.Runtime.InteropServices;
+using System.Ugf;
 using InfinityWorldChess.ActivityAccessors;
+using InfinityWorldChess.ActivityDomain;
 using InfinityWorldChess.FunctionDomain;
 using Secyud.Ugf.DataManager;
 
@@ -13,12 +15,26 @@ namespace InfinityWorldChess.ActivityFunctions
     public class SelectActivityInGroup : IActionable
     {
         [field: S] private PlayerActivityGroup GroupAccessor { get; set; }
-        [field: S] private string ActivityId { get; set; }
+        [field: S] private string CurrentActivityId { get; set; }
+        [field: S] private string NextActivityId { get; set; }
         [field: S] private bool CurrentSuccess { get; set; }
 
         public void Invoke()
         {
-            GroupAccessor?.Value?.SetNextActivity(ActivityId, CurrentSuccess);
+            ActivityGroup group = GroupAccessor?.Value;
+
+            if (group is not null)
+            {
+                if (!CurrentActivityId.IsNullOrEmpty())
+                {
+                    group.SetActivityResult(CurrentActivityId, CurrentSuccess);
+                }
+
+                if (!NextActivityId.IsNullOrEmpty())
+                {
+                    group.SetActivityActive(NextActivityId);
+                }
+            }
         }
     }
 }

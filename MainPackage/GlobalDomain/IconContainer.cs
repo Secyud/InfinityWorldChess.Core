@@ -1,6 +1,5 @@
 using System.Runtime.InteropServices;
 using Secyud.Ugf.AssetComponents;
-using Secyud.Ugf.DataManager;
 using UnityEngine;
 
 namespace InfinityWorldChess.GlobalDomain

@@ -24,12 +24,12 @@ namespace InfinityWorldChess.GlobalFunctions
             }
         }
 
-        public void InstallFrom()
+        public void Install()
         {
             Target.Install(Action);
         }
 
-        public void UnInstallFrom()
+        public void UnInstall()
         {
             Target.UnInstall(Action);
         }

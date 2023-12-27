@@ -29,7 +29,7 @@ namespace InfinityWorldChess.ActivityDomain
                     if (value)
                     {
                         foreach (IActivity activity in Property.Activities.Where(
-                                     activity => activity.Living > 0))
+                                     activity => activity.State > 0))
                         {
                             ActivityLineViewer instance = Prefab.Instantiate(content);
                             instance.Group = this;

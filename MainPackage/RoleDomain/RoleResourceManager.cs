@@ -3,7 +3,6 @@
 using Secyud.Ugf.AssetLoading;
 using Secyud.Ugf.Collections;
 using System.Collections.Generic;
-using System.IO;
 using Secyud.Ugf;
 using Secyud.Ugf.Archiving;
 using Secyud.Ugf.AssetComponents;
