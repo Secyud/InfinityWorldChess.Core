@@ -4,6 +4,9 @@ using UnityEngine;
 
 namespace InfinityWorldChess.RoleDomain
 {
+    /// <summary>
+    /// 滑动条汇总，用于管理所有捏脸元素的滑动条
+    /// </summary>
     public class AvatarElementSliders : MonoBehaviour
     {
         [SerializeField] private AvatarEditor AvatarEditor;

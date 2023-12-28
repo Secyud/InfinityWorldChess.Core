@@ -1,4 +1,5 @@
-﻿using Secyud.Ugf;
+﻿using System.Collections.Generic;
+using Secyud.Ugf;
 using Secyud.Ugf.BasicComponents;
 using Secyud.Ugf.Collections;
 using Secyud.Ugf.TableComponents;
@@ -6,36 +7,29 @@ using UnityEngine;
 
 namespace InfinityWorldChess.RoleDomain
 {
+    /// <summary>
+    /// 汇总个体组件，这个组件可以设置整体大小和偏移用于调试，同时提供外部接口。
+    /// </summary>
     [RequireComponent(typeof(RectTransform))]
     public sealed class AvatarEditor : TableCell
     {
         [SerializeField] private SText RoleName;
         [SerializeField] private float Size;
         [SerializeField] private float BiasY;
-
         [SerializeField] private AvatarElementImage[] Images;
 
-        public RegistrableDictionary<int, AvatarSpriteContainer>[] Group =>
-            _female ? Manager.FemaleAvatarResource : Manager.MaleAvatarResource;
-
-        public AvatarElementImage[] Elements => Images;
-
         private bool _female;
-
         private RoleResourceManager _manager;
-        private RoleResourceManager Manager => _manager ??= U.Get<RoleResourceManager>();
-
+        
+        public RegistrableDictionary<int, AvatarSpriteContainer>[] Group =>
+            _female ? _manager.FemaleAvatarResource : _manager.MaleAvatarResource;
+        public IReadOnlyList<AvatarElementImage> Elements => Images;
         public float Scale => Size;
         public float Bias => BiasY;
 
         private void Awake()
         {
-            GetComponent<RectTransform>();
-            // Size = Content.rect.width * 0.65f;
-            // Content.pivot = Content.anchorMin = Content.anchorMax = new Vector2(0.5f, 0.5f);
-            // Content.anchoredPosition = Vector2.zero;
-            // Content.sizeDelta = new Vector2(Size, Size * 1.5f);
-            // Size /= 120;
+            _manager = U.Get<RoleResourceManager>();
         }
 
         private void Bind(Role.BasicProperty basic)
@@ -45,10 +39,10 @@ namespace InfinityWorldChess.RoleDomain
             for (int i = 0; i < MainPackageConsts.AvatarElementCount; i++)
             {
                 AvatarElementImage image = Images[i];
-                
+
                 if (!image)
                     continue;
-                
+
                 AvatarElement avatar = basic.Avatar[i];
                 AvatarSpriteContainer container = Group[i].Get(avatar.Id);
 
@@ -60,7 +54,9 @@ namespace InfinityWorldChess.RoleDomain
             }
 
             if (RoleName)
+            {
                 RoleName.text = basic.Name;
+            }
         }
 
         public void SetImage(AvatarElementImage image, AvatarElementType type)
@@ -71,9 +67,13 @@ namespace InfinityWorldChess.RoleDomain
         public void OnInitialize(Role.BasicProperty basic)
         {
             if (basic is null)
+            {
                 Clear();
+            }
             else
+            {
                 Bind(basic);
+            }
         }
 
         private void Clear()
@@ -85,7 +85,9 @@ namespace InfinityWorldChess.RoleDomain
             }
 
             if (RoleName)
+            {
                 RoleName.text = "";
+            }
         }
 
 

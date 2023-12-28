@@ -95,11 +95,13 @@ namespace InfinityWorldChess.RoleDomain
                 {
                     IPassiveSkill skill = _learnedSkills[i];
                     writer.WriteObject(skill);
+                    // 这里要设置索引了，后续引用保存应当使用索引。
                     skill.SaveIndex = i;
                 }
 
                 for (int i = 0; i < MainPackageConsts.PassiveSkillCount; i++)
                 {
+                    // 保存索引而非对象。
                     writer.Write(_equippedSkills[i]?.SaveIndex ?? -1);
                 }
             }

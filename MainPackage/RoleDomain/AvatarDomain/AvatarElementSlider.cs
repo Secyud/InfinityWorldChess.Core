@@ -6,6 +6,9 @@ using UnityEngine;
 
 namespace InfinityWorldChess.RoleDomain
 {
+    /// <summary>
+    /// 滑动条，用于设置元素的参数
+    /// </summary>
     public class AvatarElementSlider : MonoBehaviour
     {
         [SerializeField] private AvatarElementSliders Sliders;
@@ -13,7 +16,7 @@ namespace InfinityWorldChess.RoleDomain
         [SerializeField] private AvatarSliderType SliderType;
 
         private AvatarEditor Editor => Sliders.Editor;
-        
+
         private void Awake()
         {
             if (SliderType == AvatarSliderType.Sprite)
@@ -28,7 +31,7 @@ namespace InfinityWorldChess.RoleDomain
             RegistrableDictionary<int, AvatarSpriteContainer> group = Editor.Group[(int)ElementType[0]];
 
             SSlider slider = GetComponent<SSlider>();
-            slider.maxValue = Math.Max(0,group.KeyList.Count-1) ;
+            slider.maxValue = Math.Max(0, group.KeyList.Count - 1);
             slider.minValue = 0;
         }
 
@@ -38,7 +41,9 @@ namespace InfinityWorldChess.RoleDomain
             {
                 AvatarElementImage image = Editor.Elements[(int)type];
                 if (image)
+                {
                     image.SetScale((byte)scale);
+                }
             }
         }
 
@@ -48,7 +53,9 @@ namespace InfinityWorldChess.RoleDomain
             {
                 AvatarElementImage image = Editor.Elements[(int)type];
                 if (image)
+                {
                     image.SetPositionX((byte)positionX);
+                }
             }
         }
 
@@ -58,7 +65,9 @@ namespace InfinityWorldChess.RoleDomain
             {
                 AvatarElementImage image = Editor.Elements[(int)type];
                 if (image)
+                {
                     image.SetPositionY((byte)positionY);
+                }
             }
         }
 

@@ -47,7 +47,7 @@ namespace InfinityWorldChess.ActivityDomain
             Collapsed = Property.Collapsed;
         }
 
-        protected override void ClearUi()
+        protected override void ClearData()
         {
             Content.PrepareLayout();
         }

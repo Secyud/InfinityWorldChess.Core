@@ -37,7 +37,7 @@ namespace InfinityWorldChess.RoleDomain
 
             SetEquipment(ret);
         }
-
+        
         [Guid("6E1D1802-EAA0-EBAE-53A8-FA078B1E010A")]
         public class EquipmentProperty
         {
@@ -68,6 +68,7 @@ namespace InfinityWorldChess.RoleDomain
 
             public void Save(IArchiveWriter writer)
             {
+                //鉴于装备时已经从物品里取出，所以直接保存对象。
                 writer.WriteNullable(_equipment);
             }
 

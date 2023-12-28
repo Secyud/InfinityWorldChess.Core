@@ -17,6 +17,9 @@ namespace InfinityWorldChess.RoleDomain
 			return Math.Max(64 + 256 * speed / (256 + speed), 1);
 		}
 
+		/// <summary>
+		/// 人物属性，生杀灵御。
+		/// </summary>
 		[Guid("CC2E89F1-40B1-5F26-560C-6CF66998E710")]
 		public class BodyPartProperty 
 		{

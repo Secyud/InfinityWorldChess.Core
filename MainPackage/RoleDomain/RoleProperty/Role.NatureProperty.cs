@@ -43,7 +43,12 @@ namespace InfinityWorldChess.RoleDomain
             // 渊博
             public float Intelligent { get; set; }
 
-            public float this[int i]
+            /// <summary>
+            /// 好像没啥用，简化保存？或者提供给后续使用。
+            /// </summary>
+            /// <param name="i"></param>
+            /// <exception cref="ArgumentOutOfRangeException"></exception>
+            private float this[int i]
             {
                 get
                 {
@@ -102,7 +107,9 @@ namespace InfinityWorldChess.RoleDomain
             public void Load(IArchiveReader reader)
             {
                 for (int i = 0; i < MainPackageConsts.NatureCount; i++)
+                {
                     this[i] = reader.ReadSingle();
+                }
             }
         }
     }

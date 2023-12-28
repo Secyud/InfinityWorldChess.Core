@@ -15,7 +15,7 @@ namespace InfinityWorldChess.BattleDomain
 
         private TableDelegate<IBattleUnitBuff> _buffDelegate;
 
-        protected override void ClearUi()
+        protected override void ClearData()
         {
             gameObject.SetActive(false);
         }

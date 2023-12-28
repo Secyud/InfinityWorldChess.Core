@@ -22,7 +22,7 @@ namespace InfinityWorldChess.SkillDomain
             Cells = new TSkillCell[CellCount];
         }
 
-        protected override void ClearUi()
+        protected override void ClearData()
         {
             for (int i = 0; i < CellCount; i++)
                 Cells[i].Bind(null);

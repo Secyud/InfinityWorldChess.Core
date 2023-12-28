@@ -21,7 +21,7 @@ namespace InfinityWorldChess.ItemDomain.EquipmentDomain
             Cell.BindShowable(Property.Equipment.Get());
         }
 
-        protected override void ClearUi()
+        protected override void ClearData()
         {
             Cell.BindShowable(null);
         }

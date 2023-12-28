@@ -28,7 +28,7 @@ namespace InfinityWorldChess.ActivityDomain
                 instance.Bind(group);
             }
         }
-        protected override void ClearUi()
+        protected override void ClearData()
         {
             Content.PrepareLayout();
             List.PrepareLayout();
