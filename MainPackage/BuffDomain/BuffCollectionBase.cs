@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using InfinityWorldChess.FunctionDomain;
 using InfinityWorldChess.GlobalDomain;
+using InfinityWorldChess.Ugf;
 using Secyud.Ugf;
 using Secyud.Ugf.Archiving;
 

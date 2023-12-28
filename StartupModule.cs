@@ -38,7 +38,7 @@ public class StartupModule : IUgfModule, IOnPostConfigure
                 _ = container.Sprite;
             }
         }
-            
+
 
         // 打开游戏需要启用的域，域其实是管理资源用的。
         U.M.CreateScope<GlobalScope>();

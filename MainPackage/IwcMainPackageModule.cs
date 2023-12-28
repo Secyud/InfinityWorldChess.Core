@@ -19,6 +19,9 @@ using UnityEngine;
 
 namespace InfinityWorldChess
 {
+    /// <summary>
+    /// 核心模块 
+    /// </summary>
     [DependsOn(
         typeof(UgfCoreModule),
         typeof(UgfHexMapModule),
@@ -27,16 +30,11 @@ namespace InfinityWorldChess
     public class IwcMainPackageModule : IUgfModule, IOnPostConfigure,
         IOnPreInitialization, IOnInitialization, IOnPostInitialization, IOnArchiving
     {
-        public const string AssetBundleName = "infinityworldchess";
-
         public void Configure(ConfigurationContext context)
         {
             context.Manager.AddAssembly(typeof(IwcMainPackageModule).Assembly);
 
-            context.AddStringResource<MainPackageResource>();
-
-            context.Get<WorldCellButtons>().Register(new TravelButtonDescriptor());
-            
+            // 虚拟路径 映射一下本地化目录 和数据目录 以在将来加载数据和翻译文本。
             IVirtualPathManager virtualPathManager = context.Get<IVirtualPathManager>();
             virtualPathManager.AddDirectory("Data", Path.Combine(U.Path, "Data"));
             virtualPathManager.AddDirectory("Localization", Path.Combine(U.Path, "Localization"));
@@ -44,22 +42,24 @@ namespace InfinityWorldChess
 
         public void PostConfigure(ConfigurationContext context)
         {
-            U.Get<PassiveSkillButtons>()
-                .Register(new PassiveSkillPointDivisionButton());
-            U.Get<FormSkillButtons>()
-                .Register(new FormSkillPointDivisionButton());
-            U.Get<CoreSkillButtons>()
-                .Register(new CoreSkillPointDivisionButton());
+            // 注册几个按钮，世界地图右击格子增加一个旅行按钮，
+            // 几个技能浏览窗格的右击添加点数分配的按钮。
+            context.Get<WorldCellButtons>().Register(new TravelButtonDescriptor());
+            context.Get<PassiveSkillButtons>().Register(new PassiveSkillPointDivisionButton());
+            context.Get<FormSkillButtons>().Register(new FormSkillPointDivisionButton());
+            context.Get<CoreSkillButtons>().Register(new CoreSkillPointDivisionButton());
         }
 
         public IEnumerator OnGamePreInitialization(GameInitializeContext context)
         {
+            // 在游戏初始化时应当优先创建游戏域
             U.M.CreateScope<GameScope>();
             yield return null;
         }
 
         public IEnumerator OnGameInitializing(GameInitializeContext context)
         {
+            // 不加载存档时 从 Creator 获取游戏初始信息。
             yield return GameScope.Instance.World.OnGameCreation();
             yield return GameScope.Instance.Role.OnGameCreation();
             yield return GameScope.Instance.Player.OnGameCreation();
@@ -67,25 +67,17 @@ namespace InfinityWorldChess
 
         public IEnumerator OnGamePostInitialization(GameInitializeContext context)
         {
+            // 尝试回收 Creator Scope，即使没有创建也没关系，它什么都不做。
             U.M.DestroyScope<GameCreatorScope>();
-
-            WorldMap map = GameScope.Instance.Map;
-            Role role = GameScope.Instance.Player.Role;
-            HexUnit unit = GameScope.Instance.World
-                .WorldUnitPrefab.Instantiate(map.transform);
-            unit.Initialize(role.Id, map, role.Position);
-            GameScope.Instance.Player.Unit = unit;
-            U.Get<CurrentTabService>().Cell = role.Position;
-            unit.GetComponentInChildren<AvatarEditor>().OnInitialize(role.Basic);
-            map.MapCamera.transform.position = unit.transform.position;
-
-
+            // 在后边将玩家人物绑定到地图上。
+            context.Get<GameScope>().PostInitializeRole();
             yield return null;
         }
 
         public IEnumerator SaveGame()
         {
             {
+                // 保存时先保存描述信息，以显示存档
                 using FileStream stream = File.OpenWrite(MainPackageConsts.SaveFilePath("slot"));
                 using DefaultArchiveWriter writer = new(stream);
                 GameScope.Instance.Player.Role.Basic.Save(writer);
@@ -101,40 +93,5 @@ namespace InfinityWorldChess
             yield return GameScope.Instance.Role.OnGameLoading();
             yield return GameScope.Instance.Player.OnGameLoading();
         }
-
-        //
-        // private static void RegisterWorldModel(WorldGlobalService service, IAssetLoader ab)
-        // {
-        //     PrefabContainer<Transform> GetPrefab(string name, string level, string type)
-        //     {
-        //         return PrefabContainer<Transform>.Create(ab, $"Features/{name}/{name} {level} {type}.prefab");
-        //     }
-        //
-        //     service.RegistrarResourceFeature(
-        //         new FeatureDescriptor(0, 0, GetPrefab("Ore", "Low", "1")),
-        //         new FeatureDescriptor(0, 0, GetPrefab("Ore", "Low", "2")),
-        //         new FeatureDescriptor(0, 1, GetPrefab("Ore", "Medium", "1")),
-        //         new FeatureDescriptor(0, 1, GetPrefab("Ore", "Medium", "2")),
-        //         new FeatureDescriptor(0, 2, GetPrefab("Ore", "High", "1")),
-        //         new FeatureDescriptor(0, 2, GetPrefab("Ore", "High", "2")),
-        //         new FeatureDescriptor(1, 0, GetPrefab("Plant", "Low", "1")),
-        //         new FeatureDescriptor(1, 0, GetPrefab("Plant", "Low", "2")),
-        //         new FeatureDescriptor(1, 1, GetPrefab("Plant", "Medium", "1")),
-        //         new FeatureDescriptor(1, 1, GetPrefab("Plant", "Medium", "2")),
-        //         new FeatureDescriptor(1, 2, GetPrefab("Plant", "High", "1")),
-        //         new FeatureDescriptor(1, 2, GetPrefab("Plant", "High", "2")),
-        //         new FeatureDescriptor(2, 0, GetPrefab("Farm", "Low", "1")),
-        //         new FeatureDescriptor(2, 0, GetPrefab("Farm", "Low", "2")),
-        //         new FeatureDescriptor(2, 1, GetPrefab("Farm", "Medium", "1")),
-        //         new FeatureDescriptor(2, 1, GetPrefab("Farm", "Medium", "2")),
-        //         new FeatureDescriptor(2, 2, GetPrefab("Farm", "High", "1")),
-        //         new FeatureDescriptor(2, 2, GetPrefab("Farm", "High", "2"))
-        //     );
-        //
-        //     service.RegistrarSpecialFeature(0,
-        //         PrefabContainer<Transform>.Create(ab, "Features/Special/Castle.prefab"));
-        //     service.RegistrarSpecialFeature(1,
-        //         PrefabContainer<Transform>.Create(ab, "Features/Special/Village.prefab"));
-        // }
     }
 }

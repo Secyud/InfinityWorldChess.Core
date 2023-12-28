@@ -8,7 +8,7 @@ using Secyud.Ugf.TableComponents.SorterComponents;
 
 namespace InfinityWorldChess.ItemDomain
 {
-	public class ItemSorterType : SorterToggleDescriptor<IItem>
+	public class ItemSorterForType : SorterToggleDescriptor<IItem>
 	{
 		public override int SortValue(IItem target)
 		{
@@ -18,7 +18,6 @@ namespace InfinityWorldChess.ItemDomain
 				Consumable => 2,
 				ReadableItem => 4,
 				EquipmentMaterial => 5,
-				EquipmentBlueprint => 6,
 				_ => 0
 			};
 		}

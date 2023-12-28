@@ -20,7 +20,6 @@ namespace InfinityWorldChess.GameDomain.WorldMapDomain
     [Registry(DependScope = typeof(GameScope))]
     public class WorldGameContext : IRegistry
     {
-        public readonly IObjectAccessor<HexUnit> WorldUnitPrefab;
 
         private static readonly string SavePath = MainPackageConsts.SaveFilePath(nameof(WorldGameContext));
 
@@ -64,13 +63,6 @@ namespace InfinityWorldChess.GameDomain.WorldMapDomain
             }
 
             WorldMessage.Remove(message.Id);
-        }
-
-        public WorldGameContext(IwcAssets assets)
-        {
-            WorldUnitPrefab = PrefabContainer<HexUnit>.Create(
-                assets, U.TypeToPath<WorldGameContext>() + "Unit.prefab"
-            );
         }
 
         public virtual IEnumerator OnGameLoading()

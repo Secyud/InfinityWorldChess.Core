@@ -2,9 +2,9 @@ using System.Collections.Generic;
 using System.Linq;
 using Secyud.Ugf;
 
-namespace InfinityWorldChess.GlobalDomain
+namespace InfinityWorldChess.Ugf
 {
-    public static class GlobalExtension
+    public static class UgfGlobalExtension
     {
         public static IList<TItem> GetVisible<TItem>(this IEnumerable<TItem> list)
         {

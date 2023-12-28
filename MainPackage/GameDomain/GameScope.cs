@@ -11,6 +11,7 @@ using InfinityWorldChess.RoleDomain;
 using Secyud.Ugf;
 using Secyud.Ugf.AssetComponents;
 using Secyud.Ugf.DependencyInjection;
+using Secyud.Ugf.HexMap;
 using Secyud.Ugf.HexMapExtensions;
 using UnityEngine;
 
@@ -19,6 +20,7 @@ namespace InfinityWorldChess.GameDomain
     [Registry(DependScope = typeof(GlobalScope))]
     public class GameScope : DependencyScopeProvider
     {
+        public readonly PrefabContainer<HexUnit> WorldUnitPrefab;
         public readonly IMonoContainer<SystemMenuPanel> SystemMenu;
         public readonly IMonoContainer<GameMenuPanel> GameMenu;
 
@@ -40,6 +42,10 @@ namespace InfinityWorldChess.GameDomain
             GameMenu = MonoContainer<GameMenuPanel>.Create(assets);
             _map = MonoContainer<WorldMap>.Create(assets, onCanvas: false);
             _pointPanel = MonoContainer<PointDivisionPanel>.Create(assets);
+            
+            WorldUnitPrefab = PrefabContainer<HexUnit>.Create(
+                assets, U.TypeToPath<WorldGameContext>() + "Unit.prefab"
+            );
         }
 
         public override void OnInitialize()
@@ -120,6 +126,16 @@ namespace InfinityWorldChess.GameDomain
         public void ExitGame()
         {
             U.Factory.Shutdown();
+        }
+
+        internal void PostInitializeRole()
+        {
+            HexUnit unit = WorldUnitPrefab.Instantiate(Map.transform);
+            Player.Unit = unit;
+            unit.Initialize(Player.Role.Id, Map, Player.Role.Position);
+            U.Get<CurrentTabService>().Cell = Player.Role.Position;
+            unit.GetComponentInChildren<AvatarEditor>().OnInitialize(Player.Role.Basic);
+            Map.MapCamera.transform.position = unit.transform.position;
         }
     }
 }
