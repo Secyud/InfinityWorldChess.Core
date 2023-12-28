@@ -5,7 +5,6 @@ using InfinityWorldChess.FunctionDomain;
 using InfinityWorldChess.SkillDomain;
 using InfinityWorldChess.Ugf;
 using Secyud.Ugf;
-using Secyud.Ugf.DataManager;
 using Secyud.Ugf.HexUtilities;
 using UnityEngine;
 

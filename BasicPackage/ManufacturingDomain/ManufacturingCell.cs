@@ -1,4 +1,4 @@
-﻿using InfinityWorldChess.Ugf;
+﻿using InfinityWorldChess.GlobalDomain;
 
 namespace InfinityWorldChess.ManufacturingDomain
 {

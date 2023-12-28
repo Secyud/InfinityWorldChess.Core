@@ -1,5 +1,6 @@
 #region
 
+using InfinityWorldChess.Ugf;
 using Secyud.Ugf;
 using Secyud.Ugf.BasicComponents;
 using Secyud.Ugf.FunctionalComponents;
@@ -8,7 +9,7 @@ using UnityEngine;
 
 #endregion
 
-namespace InfinityWorldChess.Ugf
+namespace InfinityWorldChess.GlobalDomain
 {
     public class ShownCell : TableCell
     {

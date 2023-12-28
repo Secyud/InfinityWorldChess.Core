@@ -3,7 +3,6 @@ using InfinityWorldChess.BattleBuffDomain;
 using InfinityWorldChess.BattleDomain;
 using InfinityWorldChess.FunctionDomain;
 using InfinityWorldChess.Ugf;
-using Secyud.Ugf.DataManager;
 using UnityEngine;
 
 namespace InfinityWorldChess.BattleInteractionFunctions

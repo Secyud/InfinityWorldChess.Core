@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace InfinityWorldChess.Ugf
+namespace InfinityWorldChess.GlobalDomain
 {
 	public class SelectOptionCell : MonoBehaviour
 	{

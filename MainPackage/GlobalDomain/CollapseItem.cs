@@ -5,7 +5,7 @@ using UnityEngine;
 
 #endregion
 
-namespace InfinityWorldChess.Ugf
+namespace InfinityWorldChess.GlobalDomain
 {
 	public class CollapseItem : MonoBehaviour
 	{

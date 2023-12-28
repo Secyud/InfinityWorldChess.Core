@@ -1,7 +1,6 @@
 ﻿using System.Runtime.InteropServices;
 using InfinityWorldChess.BattleDomain;
 using InfinityWorldChess.Ugf;
-using Secyud.Ugf.DataManager;
 using UnityEngine;
 
 namespace InfinityWorldChess.BattleInteractionFunctions

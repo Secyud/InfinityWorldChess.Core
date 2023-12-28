@@ -1,6 +1,7 @@
 ﻿#region
 
 using InfinityWorldChess.GameDomain;
+using InfinityWorldChess.GlobalDomain;
 using InfinityWorldChess.Ugf;
 using Secyud.Ugf.BasicComponents;
 using Secyud.Ugf.TableComponents;

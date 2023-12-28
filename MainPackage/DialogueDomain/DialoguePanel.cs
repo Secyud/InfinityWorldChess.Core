@@ -3,6 +3,7 @@
 using System.Collections.Generic;
 using System.Ugf.Collections.Generic;
 using InfinityWorldChess.FunctionDomain;
+using InfinityWorldChess.GlobalDomain;
 using InfinityWorldChess.InteractionDomain;
 using InfinityWorldChess.RoleDomain;
 using InfinityWorldChess.Ugf;

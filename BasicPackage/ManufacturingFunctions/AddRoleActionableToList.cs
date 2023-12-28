@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using InfinityWorldChess.FunctionDomain;
 using InfinityWorldChess.ItemTemplates;
 using InfinityWorldChess.RoleDomain;

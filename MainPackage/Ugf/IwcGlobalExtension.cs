@@ -4,7 +4,7 @@ using Secyud.Ugf;
 
 namespace InfinityWorldChess.Ugf
 {
-    public static class UgfGlobalExtension
+    public static class IwcGlobalExtension
     {
         public static IList<TItem> GetVisible<TItem>(this IEnumerable<TItem> list)
         {

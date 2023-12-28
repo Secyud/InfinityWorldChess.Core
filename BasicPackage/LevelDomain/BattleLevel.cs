@@ -1,13 +1,6 @@
-using System;
 using System.Runtime.InteropServices;
 using InfinityWorldChess.BattleTemplates;
-using InfinityWorldChess.FunctionDomain;
-using InfinityWorldChess.GameDomain;
-using InfinityWorldChess.RoleDomain;
-using InfinityWorldChess.Ugf;
-using Secyud.Ugf;
 using Secyud.Ugf.DataManager;
-using UnityEngine;
 
 namespace InfinityWorldChess.LevelDomain
 {

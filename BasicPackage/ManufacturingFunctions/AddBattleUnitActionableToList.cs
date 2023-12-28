@@ -1,8 +1,6 @@
-using System.Collections.Generic;
 using InfinityWorldChess.BattleDomain;
 using InfinityWorldChess.FunctionDomain;
 using InfinityWorldChess.ItemTemplates;
-using InfinityWorldChess.RoleDomain;
 using Secyud.Ugf.DataManager;
 
 namespace InfinityWorldChess.ManufacturingFunctions

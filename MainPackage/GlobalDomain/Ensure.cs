@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace InfinityWorldChess.Ugf
+namespace InfinityWorldChess.GlobalDomain
 {
 	public sealed class Ensure:MonoBehaviour
 	{
