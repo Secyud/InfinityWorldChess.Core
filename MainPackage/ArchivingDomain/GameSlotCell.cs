@@ -55,7 +55,7 @@ namespace InfinityWorldChess.ArchivingDomain
             ArchivingScope.Instance.CloseGameLoadPanel();
             if (File.Exists(_slotMessagePath))
             {
-                IwcAssets.Instance.LoadingPanelInk.Instantiate();
+                U.Get<IwcAssets>().LoadingPanelInk.Instantiate();
                 U.Factory.LoadGame();
             }
             else

@@ -15,7 +15,7 @@ namespace InfinityWorldChess.GameCreatorDomain
             if (!validator.CheckValid())
                 return;
 
-            IwcAssets.Instance.LoadingPanelInk.Instantiate();
+            U.Get<IwcAssets>().LoadingPanelInk.Instantiate();
 
             U.Factory.InitializeGame();
         }

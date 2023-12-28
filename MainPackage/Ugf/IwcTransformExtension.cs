@@ -20,6 +20,9 @@ namespace InfinityWorldChess.Ugf
 {
     public static class IwcTransformExtension
     {
+        private static IwcAssets _assetsLoader;
+        private static IwcAssets AssetsLoader => _assetsLoader ??= U.Get<IwcAssets>();
+        
         public static string Point(this string str)
         {
             return " · " + str;
@@ -32,22 +35,22 @@ namespace InfinityWorldChess.Ugf
 
         public static SText AddTitle1(this Transform transform, string text)
         {
-            return IwcAssets.Instance.TitleText1.Value.Create(transform, U.T[text]);
+            return AssetsLoader.TitleText1.Value.Create(transform, U.T[text]);
         }
 
         public static SText AddTitle2(this Transform transform, string text)
         {
-            return IwcAssets.Instance.TitleText2.Value.Create(transform, " " + U.T[text]);
+            return AssetsLoader.TitleText2.Value.Create(transform, " " + U.T[text]);
         }
 
         public static SText AddTitle3(this Transform transform, string text)
         {
-            return IwcAssets.Instance.TitleText3.Value.Create(transform, "  " + U.T[text]);
+            return AssetsLoader.TitleText3.Value.Create(transform, "  " + U.T[text]);
         }
 
         public static SText AddParagraph(this Transform transform, string text)
         {
-            return IwcAssets.Instance.BodyFieldText.Value.Create(transform, U.T.Translate(text));
+            return AssetsLoader.BodyFieldText.Value.Create(transform, U.T.Translate(text));
         }
 
         public static void AddSimpleShown(this Transform transform, IShowable shown)
@@ -72,14 +75,14 @@ namespace InfinityWorldChess.Ugf
                              $"<size=18><color=#202000ff><b>【{U.T.Translate(item.Name)}】</b> {U.T.Translate(item.Description)}</color></size>"
                      ))
             {
-                IwcAssets.Instance.BodyFieldText.Value.Create(transform, str.Point());
+                AssetsLoader.BodyFieldText.Value.Create(transform, str.Point());
             }
         }
 
         public static void AddShapeProperty(this Transform transform, IAttachProperty property, string title = "形状")
         {
             transform.AddTitle3(title);
-            PropertyRect e = IwcAssets.Instance.PropertyRect.Instantiate(transform);
+            PropertyRect e = AssetsLoader.PropertyRect.Instantiate(transform);
             e.OnInitialize(property);
         }
 

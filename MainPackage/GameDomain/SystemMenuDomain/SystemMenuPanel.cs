@@ -32,7 +32,7 @@ namespace InfinityWorldChess.GameDomain.SystemMenuDomain
 
 		private void SaveGame(Action endAction)
 		{
-			LoadingPanel loading = IwcAssets.Instance.LoadingPanelCircle.Instantiate();
+			LoadingPanel loading = U.Get<IwcAssets>().LoadingPanelCircle.Instantiate();
 			loading.DestroyAction = endAction;
 			
 			

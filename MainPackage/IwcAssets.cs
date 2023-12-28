@@ -2,8 +2,6 @@
 
 using System.Runtime.InteropServices;
 using InfinityWorldChess.ItemDomain.EquipmentDomain;
-using InfinityWorldChess.RoleDomain;
-using InfinityWorldChess.Ugf;
 using Secyud.Ugf;
 using Secyud.Ugf.AssetComponents;
 using Secyud.Ugf.AssetLoading;
@@ -17,12 +15,10 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace InfinityWorldChess
 {
+	// 一个使用AA加载资源的loader
     [Guid("11E30167-E0BD-61B9-8F41-46776AF49A11")]
 	public class IwcAssets : IAssetLoader
 	{
-		public static IwcAssets Instance => _instance ??= U.Get<IwcAssets>();
-		private static IwcAssets _instance;
-
 		public readonly IObjectAccessor<SPopup> AutoCloseFloating;
 		public readonly IObjectAccessor<SText> BodyFieldText;
 		public readonly IObjectAccessor<SButtonGroup> ButtonGroupInk;
@@ -34,13 +30,9 @@ namespace InfinityWorldChess
 		public readonly IObjectAccessor<SText> TitleText2;
 		public readonly IObjectAccessor<SText> TitleText3;
 		public readonly IObjectAccessor<PropertyRect> PropertyRect;
-		public readonly IObjectAccessor<AvatarEditor> RoleAvatarCell;
-		public readonly IObjectAccessor<SelectOptionCell> SelectOptionCell;
 
 		public IwcAssets()
 		{
-			RoleAvatarCell = PrefabContainer<AvatarEditor>.Create(this);
-			SelectOptionCell = PrefabContainer<SelectOptionCell>.Create(this);
 			AutoCloseFloating = PrefabContainer<SPopup>.Create(this, nameof(AutoCloseFloating));
 			LoadingPanelInk = PrefabContainer<LoadingPanel>.Create(this, nameof(LoadingPanelInk));
 			LoadingPanelCircle = PrefabContainer<LoadingPanel>.Create(this, nameof(LoadingPanelCircle));

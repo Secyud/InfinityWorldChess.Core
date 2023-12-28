@@ -106,7 +106,7 @@ namespace InfinityWorldChess.GameDomain.WorldMapDomain
 
             Path = _mapFunction.GetPath();
 
-            IwcAssets.Instance.ButtonGroupInk.Value.Create(
+            U.Get<IwcAssets>().ButtonGroupInk.Value.Create(
                 cell, U.Get<WorldCellButtons>().Items.SelectVisibleFor(cell)
             );
         }
