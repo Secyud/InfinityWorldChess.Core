@@ -18,6 +18,9 @@ using UnityEngine;
 
 namespace InfinityWorldChess.Ugf
 {
+    /// <summary>
+    /// 在结构下添加内容
+    /// </summary>
     public static class IwcTransformExtension
     {
         private static IwcAssets _assetsLoader;

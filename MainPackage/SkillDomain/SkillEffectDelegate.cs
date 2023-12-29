@@ -8,6 +8,10 @@ using UnityEngine;
 
 namespace InfinityWorldChess.SkillDomain
 {
+    /// <summary>
+    /// 操控技能效果在何时触发，触发后界面应该处于可操控状态。
+    /// 如果具有技能动作，则技能动作完成后才应该处于可操控状态。
+    /// </summary>
     public class SkillEffectDelegate : UgfUnitEffectDelegate
     {
         public static SkillEffectDelegate Default { get; } = new()

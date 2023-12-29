@@ -19,10 +19,10 @@ namespace InfinityWorldChess.ItemDomain.EquipmentDomain
 				return;
 
 			
-			Cells[0].color = IntToColor(property.Living);
-			Cells[1].color = IntToColor(property.Kiling);
-			Cells[2].color = IntToColor(property.Nimble);
-			Cells[3].color = IntToColor(property.Defend);
+			Cells[0].color = ByteToColor(property.Living);
+			Cells[1].color = ByteToColor(property.Kiling);
+			Cells[2].color = ByteToColor(property.Nimble);
+			Cells[3].color = ByteToColor(property.Defend);
 		}
 
 		private const float LOG = 2.6859453246115805f;
@@ -35,7 +35,7 @@ namespace InfinityWorldChess.ItemDomain.EquipmentDomain
 			 new(1, 1, 0), new(0, 0, 0)
 		};
 
-		private static Color IntToColor(byte i)
+		private static Color ByteToColor(byte i)
 		{
 			float scaled = i / 37.0f;
 			Color color0 = Colors[(int)scaled];

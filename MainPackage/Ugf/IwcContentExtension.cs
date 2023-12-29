@@ -14,6 +14,9 @@ using UnityEngine;
 
 namespace InfinityWorldChess.Ugf
 {
+    /// <summary>
+    /// 一些悬浮窗，不支持同时存在多个悬浮窗，可能需要增加队列功能。
+    /// </summary>
 	public static class IwcContentExtension
 	{
 		private static SPopup _tipPopupInstance;

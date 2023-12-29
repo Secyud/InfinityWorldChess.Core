@@ -2,13 +2,13 @@
 
 using System.Collections.Generic;
 using InfinityWorldChess.BattleDomain;
+using Secyud.Ugf;
 
 #endregion
 
 namespace InfinityWorldChess.SkillDomain
 {
-	public interface ISkillRange
+	public interface ISkillRange:IObjectAccessor<List<BattleCell>>
 	{
-		List<BattleCell> Value { get; }
 	}
 }

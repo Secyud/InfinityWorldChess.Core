@@ -7,6 +7,9 @@ using Secyud.Ugf.Archiving;
 
 namespace InfinityWorldChess.Ugf
 {
+    /// <summary>
+    /// 存档扩展，保存基础属性。
+    /// </summary>
     public static class IwcArchiveExtension
     {
         public static void SaveProperty(this IAttachProperty property, IArchiveWriter writer)

@@ -4,6 +4,10 @@ using Secyud.Ugf.DataManager;
 
 namespace InfinityWorldChess.Ugf
 {
+    /// <summary>
+    /// 资源引用，此资源可以从内存中建立。
+    /// </summary>
+    /// <typeparam name="TResource"></typeparam>
     public abstract class ResourceAccessor<TResource> : IObjectAccessor<TResource>
         where TResource : class
     {
