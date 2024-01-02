@@ -13,10 +13,10 @@ namespace InfinityWorldChess.ManufacturingDomain.Equipments
 {
     public class EquipmentMaterial : Item,IAttachProperty
     {
-        [field:S(6)]public byte Living { get; set; }
-        [field:S(6)]public byte Kiling { get; set; }
-        [field:S(6)]public byte Nimble { get; set; }
-        [field:S(6)]public byte Defend { get; set; }
+        [field:S(6)]public int Living { get; set; }
+        [field:S(6)]public int Kiling { get; set; }
+        [field:S(6)]public int Nimble { get; set; }
+        [field:S(6)]public int Defend { get; set; }
         [field:S(7)]public byte Length { get; set; }
         [field:S(32)]public IActionable<CustomEquipment> StartEffects { get; set; }
         [field:S(32)]public IActionable<CustomEquipment> FinishEffects { get; set; }

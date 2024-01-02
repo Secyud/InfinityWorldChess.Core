@@ -21,7 +21,7 @@ namespace InfinityWorldChess.BattleInteractionFunctions
 
         public bool CheckUseful(BattleInteraction target)
         {
-            return target?.Target?.Buffs[BuffId] is not null;
+            return target.Target && target.Target.Buffs[BuffId] is not null;
         }
     }
 }

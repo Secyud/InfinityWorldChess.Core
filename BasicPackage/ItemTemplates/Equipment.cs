@@ -19,10 +19,10 @@ namespace InfinityWorldChess.ItemTemplates
         [field:S(64)]public  List<IInstallable<Role>> Effects { get; } = new();
         [field:S(5)]public byte TypeCode { get; set; }
         [field:S(5)]public byte Location { get; set; }
-        [field:S(6)]public byte Living { get; set; }
-        [field:S(6)]public byte Kiling { get; set; }
-        [field:S(6)]public byte Nimble { get; set; }
-        [field:S(6)]public byte Defend { get; set; }
+        [field:S(6)]public int Living { get; set; }
+        [field:S(6)]public int Kiling { get; set; }
+        [field:S(6)]public int Nimble { get; set; }
+        [field:S(6)]public int Defend { get; set; }
         
         public void InstallFrom(Role role)
         {

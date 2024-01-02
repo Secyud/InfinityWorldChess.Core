@@ -43,10 +43,10 @@ namespace InfinityWorldChess.SkillDomain
         public ISkillRange Range { get; private set; }
         public ISkillTarget Targets { get; private set; }
 
-        public byte Living { get; set; }
-        public byte Kiling { get; set; }
-        public byte Nimble { get; set; }
-        public byte Defend { get; set; }
+        public int Living { get; set; }
+        public int Kiling { get; set; }
+        public int Nimble { get; set; }
+        public int Defend { get; set; }
 
         public void SetContent(Transform transform)
         {

@@ -59,12 +59,12 @@ namespace InfinityWorldChess.SkillDomain
             }
         }
 
-        public byte Living { get; set; }
-        public byte Kiling { get; set; }
-        public byte Nimble { get; set; }
-        public byte Defend { get; set; }
+        public int Living { get; set; }
+        public int Kiling { get; set; }
+        public int Nimble { get; set; }
+        public int Defend { get; set; }
 
-        public byte this[int i] => i switch
+        public int this[int i] => i switch
         {
             0 => Living,
             1 => Kiling,

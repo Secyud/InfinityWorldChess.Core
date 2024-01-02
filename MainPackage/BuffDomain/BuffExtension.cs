@@ -10,7 +10,7 @@ namespace InfinityWorldChess.BuffDomain
             }
         }
 
-        public static byte Get(this IAttachProperty property, int index)
+        public static int Get(this IAttachProperty property, int index)
         {
             return index switch
             {

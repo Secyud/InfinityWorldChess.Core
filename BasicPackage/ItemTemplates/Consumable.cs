@@ -15,10 +15,10 @@ namespace InfinityWorldChess.ItemTemplates
     {
         [field: S(64)] public List<IActionable<Role>> EffectsInWorld { get; } = new();
         [field: S(64)] public List<IActionable<BattleUnit>> EffectsInBattle { get; } = new();
-        [field: S(6)] public byte Living { get; set; }
-        [field: S(6)] public byte Kiling { get; set; }
-        [field: S(6)] public byte Nimble { get; set; }
-        [field: S(6)] public byte Defend { get; set; }
+        [field: S(6)] public int Living { get; set; }
+        [field: S(6)] public int Kiling { get; set; }
+        [field: S(6)] public int Nimble { get; set; }
+        [field: S(6)] public int Defend { get; set; }
 
         public void Eating(Role role)
         {

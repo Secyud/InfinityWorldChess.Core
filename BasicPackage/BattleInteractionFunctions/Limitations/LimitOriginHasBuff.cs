@@ -14,7 +14,7 @@ namespace InfinityWorldChess.BattleInteractionFunctions
 
         public bool CheckUseful(BattleInteraction target)
         {
-            return target?.Origin?.Buffs[BuffId] is not null;
+            return target.Origin && target.Origin.Buffs[BuffId] is not null;
         }
 
         public void SetContent(Transform transform)

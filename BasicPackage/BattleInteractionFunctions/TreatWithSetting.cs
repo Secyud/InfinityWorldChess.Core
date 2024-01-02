@@ -32,7 +32,10 @@ namespace InfinityWorldChess.BattleInteractionFunctions
                 TreatRecordProperty treatRecord = interaction.GetOrAddTreat();
                 treatRecord.TreatFactor += TreatBaseFactor + 4 *
                     (1 - Pb / (Mathf.Max(0, Property.Kiling) + Pb));
-                treatRecord.Treat = interaction.Origin?.AttackValue ?? 0;
+                if (interaction.Origin)
+                {
+                    treatRecord.Treat = interaction.Origin.AttackValue ;
+                }
 
                 if (Property is ActiveSkillBase skill)
                 {

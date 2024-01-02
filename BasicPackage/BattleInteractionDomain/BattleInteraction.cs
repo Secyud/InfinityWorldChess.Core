@@ -41,10 +41,17 @@ namespace InfinityWorldChess.BattleInteractionDomain
         /// </summary>
         public void BeforeHit()
         {
-            _originRecord = Origin?.Properties.GetOrCreate<BattleEvents>();
-            _originRecord?.PrepareLaunch.ToList().InvokeList(this);
-            _targetRecord = Target?.Properties.GetOrCreate<BattleEvents>();
-            _targetRecord?.PrepareReceive.ToList().InvokeList(this);
+            if (Origin)
+            {
+                _originRecord = Origin.Properties.GetOrCreate<BattleEvents>();
+                _originRecord?.PrepareLaunch.ToList().InvokeList(this);
+            }
+
+            if (Target)
+            {
+                _targetRecord = Target.Properties.GetOrCreate<BattleEvents>();
+                _targetRecord?.PrepareReceive.ToList().InvokeList(this);
+            }
         }
 
         /// <summary>

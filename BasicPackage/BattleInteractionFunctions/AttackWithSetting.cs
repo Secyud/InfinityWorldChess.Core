@@ -28,8 +28,15 @@ namespace InfinityWorldChess.BattleInteractionFunctions
         public override void Invoke(BattleInteraction interaction)
         {
             AttackRecordProperty attackRecord = interaction.GetOrAddAttack();
-            attackRecord.Attack += interaction.Origin?.AttackValue ?? 0;
-            attackRecord.Defend += interaction.Target?.DefendValue ?? 0;
+            if (interaction.Origin)
+            {
+                attackRecord.Attack += interaction.Origin.AttackValue;
+            }
+
+            if (interaction.Target)
+            {
+                attackRecord.Defend += interaction.Target.DefendValue;
+            }
 
             if (Property is not null)
             {
