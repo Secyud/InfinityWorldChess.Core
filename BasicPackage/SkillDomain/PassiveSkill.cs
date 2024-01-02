@@ -53,6 +53,8 @@ namespace InfinityWorldChess.SkillDomain
 
         protected virtual void SetHideContent(Transform transform)
         {
+            transform.AddPassiveSkillInfo(this);
+            
             if (Effect is IHasContent content)
             {
                 content.SetContent(transform);

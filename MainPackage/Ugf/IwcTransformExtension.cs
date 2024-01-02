@@ -25,16 +25,6 @@ namespace InfinityWorldChess.Ugf
     {
         private static IwcAssets _assetsLoader;
         private static IwcAssets AssetsLoader => _assetsLoader ??= U.Get<IwcAssets>();
-        
-        public static string Point(this string str)
-        {
-            return " · " + str;
-        }
-
-        public static string PointAfter(this string str)
-        {
-            return str + "·";
-        }
 
         public static SText AddTitle1(this Transform transform, string text)
         {
@@ -60,9 +50,11 @@ namespace InfinityWorldChess.Ugf
         {
             transform.AddTitle2(shown.Name);
             if (shown.Description.IsNullOrEmpty())
+            {
                 return;
+            }
 
-            transform.AddParagraph(shown.Description.Point());
+            transform.AddParagraph(shown.Description);
         }
 
         public static void AddListShown<TItem>(this Transform transform, string title, IEnumerable<TItem> items)
@@ -78,7 +70,7 @@ namespace InfinityWorldChess.Ugf
                              $"<size=18><color=#202000ff><b>【{U.T.Translate(item.Name)}】</b> {U.T.Translate(item.Description)}</color></size>"
                      ))
             {
-                AssetsLoader.BodyFieldText.Value.Create(transform, str.Point());
+                AssetsLoader.BodyFieldText.Value.Create(transform, str);
             }
         }
 
@@ -104,7 +96,7 @@ namespace InfinityWorldChess.Ugf
                 7 => "<color=#ffff00ff>[绝世]</color>",
                 _ => "<color=#000000ff>[未知]</color>"
             };
-            content.AddParagraph($"[品质]: {s}".Point());
+            content.AddParagraph($"[品质]: {s}");
         }
 
         public static void AddItemHeader(this Transform content, IItem item)
@@ -122,7 +114,7 @@ namespace InfinityWorldChess.Ugf
                 7 => "<color=#ffff00ff>[传世]</color>",
                 _ => "<color=#000000ff>[未知]</color>"
             };
-            content.AddParagraph($"[品质]: {s}".Point());
+            content.AddParagraph($"[品质]: {s}");
         }
 
         // ReSharper restore StringLiteralTypo
@@ -137,27 +129,19 @@ namespace InfinityWorldChess.Ugf
         {
             transform.AddTitle3("详情");
 
-            string text = ("位置: " +
-                           (equipment.Location % 4) switch
-                           {
-                               0 => "生", 1 => "杀", 2 => "灵", 3 => "御", _ => ""
-                           }).Point();
-
-            transform.AddParagraph(text);
-
-            text = "基础:".Point();
+            string text = "基础:";
             text += (equipment.TypeCode & 0b10000000) > 0 ? " 短基" : " 长基";
             text += (equipment.TypeCode & 0b1000000) > 0 ? " 一般" : " 加长";
             transform.AddParagraph(text);
 
-            text = "刃型".Point();
+            text = "刃型";
             text += (equipment.TypeCode & 0b10000) > 0 ? " 有" : " 无";
             text += (equipment.TypeCode & 0b10000) > 0 ? " 轻" : " 重";
             text += (equipment.TypeCode & 0b1000) > 0 ? " 软" : " 硬";
             text += (equipment.TypeCode & 0b100) > 0 ? " 双" : " 单";
             transform.AddParagraph(text);
 
-            text = "类型".Point();
+            text = "类型";
             text += (equipment.TypeCode & 0b10) > 0 ? " 远程" : " 近战";
             text += (equipment.TypeCode & 0b1) > 0 ? " 变体" : " 普通";
             transform.AddParagraph(text);
@@ -168,6 +152,7 @@ namespace InfinityWorldChess.Ugf
             content.AddSkillScoreInfo(coreSkill.Score);
 
             content.AddTitle3("兵器限制");
+
             string s = "";
 
             for (int i = 0; i < 8; i++)
@@ -207,9 +192,11 @@ namespace InfinityWorldChess.Ugf
             }
 
             if (s.IsNullOrEmpty())
+            {
                 s = " 无";
+            }
 
-            content.AddParagraph(" ·" + s);
+            content.AddParagraph(s);
 
             content.AddTitle3("招式顺序");
             s = "";
@@ -220,7 +207,7 @@ namespace InfinityWorldChess.Ugf
                 code >>= 1;
             }
 
-            content.AddParagraph(s.Point());
+            content.AddParagraph(s);
         }
 
         public static void AddFormSkillInfo(this Transform content, IFormSkill formSkill)
@@ -242,14 +229,14 @@ namespace InfinityWorldChess.Ugf
             };
 
             content.AddTitle3("类型");
-            content.AddParagraph($"[{state}] [{type}]".Point());
+            content.AddParagraph($"[{state}] [{type}]");
         }
 
         public static void AddPassiveSkillInfo(this Transform content, IPassiveSkill passiveSkill)
         {
             content.AddSkillScoreInfo(passiveSkill.Score);
-            content.AddParagraph($"[生]: {passiveSkill.Living,-5} [杀]: {passiveSkill.Kiling,-5}".Point());
-            content.AddParagraph($"[灵]: {passiveSkill.Nimble,-5} [御]: {passiveSkill.Defend,-5}".Point());
+            content.AddParagraph($"[生]: {passiveSkill.Living,-5} [杀]: {passiveSkill.Kiling,-5}");
+            content.AddParagraph($"[灵]: {passiveSkill.Nimble,-5} [御]: {passiveSkill.Defend,-5}");
         }
     }
 }
